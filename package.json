@@ -1,0 +1,15 @@
+{
+    "name": "veralex-consulting",
+    "version": "1.0.0",
+    "description": "VERALEX CONSULTING - Legal Consulting Website",
+    "scripts": {
+        "dev": "concurrently \"tsc --watch\" \"live-server --port=3000\"",
+        "build": "tsc",
+        "serve": "live-server --port=3000"
+    },
+    "devDependencies": {
+        "typescript": "^5.0.0",
+        "concurrently": "^8.0.0",
+        "live-server": "^1.2.2"
+    }
+}
