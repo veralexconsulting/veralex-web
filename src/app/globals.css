@@ -40,8 +40,8 @@
     --shadow-gold-strong: 0 0 50px rgba(212, 175, 55, 0.4);
 
     /* Typography */
-    --font-heading: 'Playfair Display', Georgia, serif;
-    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-heading: var(--font-playfair), 'Playfair Display', Georgia, serif;
+    --font-body: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
     /* Spacing */
     --section-padding: 100px 0;
@@ -359,6 +359,28 @@ button {
     z-index: 0;
 }
 
+/* Batik pattern overlay — elaborate kawung + mega mendung fusion */
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    opacity: 0.06;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23D4AF37'/%3E%3Cstop offset='100%25' stop-color='%23F4D47C'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='none' stroke='%23D4AF37' stroke-width='0.5' opacity='0.9'%3E%3C!-- Kawung center ---%3E%3Cellipse cx='60' cy='60' rx='16' ry='16'/%3E%3Cellipse cx='60' cy='60' rx='10' ry='10'/%3E%3Ccircle cx='60' cy='60' r='4' fill='%23D4AF37' fill-opacity='0.3'/%3E%3C!-- Kawung petals ---%3E%3Cellipse cx='60' cy='38' rx='7' ry='12' /%3E%3Cellipse cx='60' cy='82' rx='7' ry='12' /%3E%3Cellipse cx='38' cy='60' rx='12' ry='7' /%3E%3Cellipse cx='82' cy='60' rx='12' ry='7' /%3E%3C!-- Diagonal petals ---%3E%3Cellipse cx='44' cy='44' rx='5' ry='10' transform='rotate(45 44 44)' /%3E%3Cellipse cx='76' cy='44' rx='5' ry='10' transform='rotate(-45 76 44)' /%3E%3Cellipse cx='44' cy='76' rx='5' ry='10' transform='rotate(-45 44 76)' /%3E%3Cellipse cx='76' cy='76' rx='5' ry='10' transform='rotate(45 76 76)' /%3E%3C!-- Corner dots ---%3E%3Ccircle cx='0' cy='0' r='3' fill='%23D4AF37' fill-opacity='0.4'/%3E%3Ccircle cx='120' cy='0' r='3' fill='%23D4AF37' fill-opacity='0.4'/%3E%3Ccircle cx='0' cy='120' r='3' fill='%23D4AF37' fill-opacity='0.4'/%3E%3Ccircle cx='120' cy='120' r='3' fill='%23D4AF37' fill-opacity='0.4'/%3E%3C!-- Mega mendung waves ---%3E%3Cpath d='M0 20 Q15 10 30 20 Q45 30 60 20 Q75 10 90 20 Q105 30 120 20' /%3E%3Cpath d='M0 100 Q15 90 30 100 Q45 110 60 100 Q75 90 90 100 Q105 110 120 100' /%3E%3C!-- Connecting lines ---%3E%3Cline x1='60' y1='26' x2='60' y2='38' stroke-dasharray='2 2'/%3E%3Cline x1='60' y1='82' x2='60' y2='94' stroke-dasharray='2 2'/%3E%3Cline x1='26' y1='60' x2='38' y2='60' stroke-dasharray='2 2'/%3E%3Cline x1='82' y1='60' x2='94' y2='60' stroke-dasharray='2 2'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 120px 120px;
+    background-repeat: repeat;
+    animation: batik-drift 60s linear infinite;
+}
+
+@keyframes batik-drift {
+    0% { background-position: 0 0; }
+    100% { background-position: 120px 120px; }
+}
+
 .hero-particles {
     position: absolute;
     top: 0;
@@ -371,12 +393,12 @@ button {
 
 .particle {
     position: absolute;
-    width: 4px;
-    height: 4px;
-    background: var(--color-gold);
+    width: 3px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.6);
     border-radius: 50%;
-    opacity: 0.3;
-    animation: float 15s infinite ease-in-out;
+    opacity: 0.12;
+    animation: float 20s infinite ease-in-out;
 }
 
 .particle:nth-child(1) {
@@ -1182,7 +1204,7 @@ button {
 .fade-in {
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .fade-in.visible {
@@ -1192,8 +1214,8 @@ button {
 
 .slide-in-left {
     opacity: 0;
-    transform: translateX(-50px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateX(-60px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .slide-in-left.visible {
@@ -1203,13 +1225,25 @@ button {
 
 .slide-in-right {
     opacity: 0;
-    transform: translateX(50px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateX(60px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .slide-in-right.visible {
     opacity: 1;
     transform: translateX(0);
+}
+
+/* Scale-in for cards */
+.scale-in {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scale-in.visible {
+    opacity: 1;
+    transform: scale(1);
 }
 
 /* ===== Responsive ===== */
@@ -1222,9 +1256,17 @@ button {
     .footer-content {
         grid-template-columns: 1fr 1fr;
     }
+
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 @media (max-width: 768px) {
+    :root {
+        --section-padding: 60px 0;
+    }
+
     .navbar-menu {
         position: fixed;
         top: 80px;
@@ -1254,8 +1296,42 @@ button {
         display: none;
     }
 
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .section-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .service-card {
+        padding: 1.25rem;
+    }
+
+    .service-title {
+        font-size: 0.95rem;
+    }
+
+    .service-desc {
+        font-size: 0.85rem;
+    }
+
+    .service-price {
+        font-size: 0.9rem;
+    }
+
     .pricing-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .pricing-card {
+        padding: 2rem 1.5rem;
     }
 
     .pricing-card.featured {
@@ -1264,6 +1340,25 @@ button {
 
     .pricing-card.featured:hover {
         transform: translateY(-8px);
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .benefit-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .benefit-card {
+        padding: 0.75rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .testimonials-grid {
+        grid-template-columns: 1fr;
     }
 
     .footer-content {
@@ -1281,6 +1376,37 @@ button {
 
     .footer-contact-item {
         justify-content: center;
+    }
+
+    .hero {
+        padding: 100px 16px 60px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.75rem, 6vw, 2.5rem);
+    }
+
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .gallery-slide {
+        width: 250px;
+        height: 180px;
+    }
+
+    .btn-lg {
+        padding: 14px 28px;
+        font-size: 1rem;
+    }
+
+    .big-brand-text {
+        font-size: clamp(3rem, 12vw, 6rem);
+    }
+
+    .big-brand-tagline {
+        font-size: 0.9rem;
+        letter-spacing: 0.15em;
     }
 }
 
@@ -1493,10 +1619,12 @@ button {
     margin-top: 2rem;
 }
 
-/* ===== WhatsApp CTA Section ===== */
+/* ===== WhatsApp CTA Section (maroon/gold theme) ===== */
+/* NOTE: WhatsAppCta component now uses inline styles with maroon/gold.
+   These classes are kept as fallback. */
 .whatsapp-cta-section {
     padding: 80px 20px;
-    background: linear-gradient(135deg, #075E54 0%, #128C7E 50%, #25D366 100%);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
     position: relative;
     overflow: hidden;
 }
@@ -1508,8 +1636,7 @@ button {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 0.3;
+    background: radial-gradient(circle at center, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
 }
 
 .whatsapp-cta-content {
@@ -1524,7 +1651,8 @@ button {
     width: 80px;
     height: 80px;
     margin: 0 auto 1.5rem;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(212, 175, 55, 0.15);
+    border: 2px solid rgba(212, 175, 55, 0.3);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1535,39 +1663,39 @@ button {
 .whatsapp-icon-large svg {
     width: 45px;
     height: 45px;
-    fill: white;
+    fill: var(--color-gold);
 }
 
 @keyframes pulse-wa {
-
-    0%,
-    100% {
+    0%, 100% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.3);
     }
-
     50% {
         transform: scale(1.05);
-        box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+        box-shadow: 0 0 0 20px rgba(212, 175, 55, 0);
     }
 }
 
 .whatsapp-cta-content h2 {
     font-family: var(--font-heading);
     font-size: clamp(1.75rem, 4vw, 2.5rem);
-    color: white;
+    background: var(--color-gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 0.75rem;
 }
 
 .whatsapp-cta-content p {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--text-secondary);
     font-size: 1.1rem;
     margin-bottom: 1.5rem;
 }
 
 .btn-whatsapp {
-    background: white;
-    color: #128C7E;
+    background: var(--color-gold-gradient);
+    color: var(--color-primary-dark);
     padding: 16px 36px;
     font-weight: 700;
     display: inline-flex;
@@ -1575,16 +1703,16 @@ button {
     gap: 10px;
     border-radius: var(--radius-md);
     transition: var(--transition-normal);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-gold);
 }
 
 .btn-whatsapp:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--shadow-gold-strong);
 }
 
 .btn-whatsapp svg {
-    fill: #25D366;
+    fill: var(--color-primary-dark);
 }
 
 /* ===== Big Brand Section ===== */
@@ -1738,71 +1866,170 @@ section {
 }
 
 @media (max-width: 480px) {
+    :root {
+        --section-padding: 50px 0;
+    }
+
+    .hero {
+        padding: 90px 12px 50px;
+        min-height: auto;
+    }
+
+    .hero-logo {
+        width: 100px !important;
+        height: 100px !important;
+    }
+
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.6rem;
+        line-height: 1.3;
+    }
+
+    .hero-subtitle {
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+
+    .hero-content {
+        padding: 0 8px;
     }
 
     .section-title {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
     }
 
+    .section-subtitle {
+        font-size: 0.85rem;
+    }
+
+    .category-title {
+        font-size: 1.1rem;
+    }
+
+    /* Services single column on small screens */
     .services-grid,
-    .product-grid {
-        grid-template-columns: 1fr;
-    }
-
+    .product-grid,
     .bundle-grid {
         grid-template-columns: 1fr;
+        gap: 0.75rem;
     }
 
+    .service-card {
+        padding: 1rem;
+    }
+
+    .service-title {
+        font-size: 0.9rem;
+    }
+
+    .service-desc {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+    .service-price {
+        font-size: 0.85rem;
+    }
+
+    .service-icon svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* Pricing */
+    .pricing-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .pricing-name {
+        font-size: 1.2rem;
+    }
+
+    .pricing-price {
+        font-size: 1.8rem;
+    }
+
+    .pricing-feature {
+        font-size: 0.85rem;
+    }
+
+    /* Benefits */
+    .benefit-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .benefit-card {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    .benefit-number {
+        width: 26px;
+        height: 26px;
+        font-size: 0.75rem;
+    }
+
+    /* Testimonials */
     .testimonials-grid {
         grid-template-columns: 1fr;
     }
 
+    /* Gallery */
+    .gallery-slide {
+        width: 220px;
+        height: 160px;
+    }
+
+    /* Buttons */
+    .btn {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+    }
+
+    .btn-lg {
+        padding: 12px 24px;
+        font-size: 0.95rem;
+    }
+
+    /* Brand section */
+    .big-brand-text {
+        font-size: 2.5rem;
+        letter-spacing: 0.05em;
+    }
+
+    .big-brand-tagline {
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+    }
+
+    .big-brand-section {
+        padding: 60px 16px;
+    }
+
+    /* WA CTA */
+    .whatsapp-cta-content h2 {
+        font-size: 1.4rem;
+    }
+
+    /* Floating WA */
     .floating-whatsapp {
-        width: 55px;
-        height: 55px;
-        bottom: 20px;
-        right: 20px;
+        width: 50px;
+        height: 50px;
+        bottom: 16px;
+        right: 16px;
     }
 
     .floating-whatsapp svg {
-        width: 28px;
-        height: 28px;
+        width: 26px;
+        height: 26px;
     }
 
     .floating-wa-text {
         display: none;
     }
 
-    .big-brand-text {
-        font-size: 3rem;
-        letter-spacing: 0.05em;
-    }
-
-    .big-brand-tagline {
-        font-size: 0.9rem;
-        letter-spacing: 0.15em;
-    }
-
-    .gallery-slide {
-        width: 250px;
-        height: 180px;
-    }
-
-    .btn-lg {
-        padding: 14px 28px;
-        font-size: 1rem;
-    }
-
-    .benefit-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .whatsapp-cta-content h2 {
-        font-size: 1.5rem;
-    }
-
+    /* Mobile fullscreen nav */
     .navbar-menu {
         position: fixed;
         top: 0;
@@ -1822,6 +2049,10 @@ section {
         left: 0;
     }
 
+    .navbar-link {
+        font-size: 1.2rem;
+    }
+
     .menu-toggle {
         display: flex;
         z-index: 999;
@@ -1831,11 +2062,29 @@ section {
         display: none;
     }
 
-    .hero-content {
-        padding: 0 10px;
+    /* CTA section */
+    .cta-section {
+        padding: 50px 16px;
     }
 
-    .hero-subtitle {
-        font-size: 0.95rem;
+    .cta-title {
+        font-size: 1.4rem;
+    }
+
+    .cta-subtitle {
+        font-size: 0.85rem;
+    }
+
+    /* Product cards */
+    .product-card {
+        padding: 1rem;
+    }
+
+    .product-title {
+        font-size: 0.85rem;
+    }
+
+    .product-desc {
+        font-size: 0.75rem;
     }
 }
