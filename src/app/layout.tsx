@@ -22,17 +22,16 @@ export const metadata: Metadata = {
     "jasa pendirian PT, pendaftaran merek, KITAS Indonesia, PT PMA, konsultan hukum, izin usaha, ITAS investor, legalitas bisnis, hak cipta, desain industri, NIB, OSS, Bekasi, Jakarta",
   authors: [{ name: "VERALEX CONSULTING" }],
   robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
-  metadataBase: new URL("https://veralex.id"),
+  metadataBase: new URL("https://veralexconsulting.com"),
   alternates: {
     canonical: "/",
     languages: {
       id: "/",
-      en: "/en/",
     },
   },
   openGraph: {
     type: "website",
-    url: "https://veralex.id",
+    url: "https://veralexconsulting.com",
     title: "VERALEX CONSULTING | Jasa Pendirian PT & Legalitas Bisnis Indonesia",
     description:
       "Konsultan hukum profesional untuk pendirian PT, pendaftaran merek, KITAS, dan legalitas bisnis. Konsultasi GRATIS via WhatsApp!",
@@ -77,17 +76,18 @@ export default function RootLayout({
               "@type": "LegalService",
               name: "VERALEX CONSULTING",
               alternateName: "Veralex",
-              image: "https://veralex.id/logo.jpg",
-              logo: "https://veralex.id/logo.jpg",
+              image: "https://veralexconsulting.com/logo.jpg",
+              logo: "https://veralexconsulting.com/logo.jpg",
               description: "Konsultan hukum profesional untuk pendirian PT, CV, PT PMA, pendaftaran merek, hak cipta, ITAS, KITAS, dan legalitas bisnis di Indonesia.",
-              url: "https://veralex.id",
+              url: "https://veralexconsulting.com",
               telephone: "+6281219476385",
               email: "veralexconsulting@gmail.com",
               address: {
                 "@type": "PostalAddress",
+                streetAddress: "Kawasan Bisnis Bekasi",
                 addressLocality: "Bekasi",
                 addressRegion: "Jawa Barat",
-                postalCode: "17000",
+                postalCode: "17148",
                 addressCountry: "ID",
               },
               geo: { "@type": "GeoCoordinates", latitude: -6.2383, longitude: 106.9756 },
@@ -95,16 +95,38 @@ export default function RootLayout({
               areaServed: [
                 { "@type": "City", name: "Bekasi" },
                 { "@type": "City", name: "Jakarta" },
+                { "@type": "City", name: "Tangerang" },
+                { "@type": "City", name: "Depok" },
                 { "@type": "Country", name: "Indonesia" },
               ],
-              openingHoursSpecification: {
-                "@type": "OpeningHoursSpecification",
-                dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                opens: "09:00",
-                closes: "17:00",
-              },
-              aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", bestRating: "5", ratingCount: "127" },
-              sameAs: ["https://wa.me/6281219476385"],
+              openingHoursSpecification: [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                  opens: "09:00",
+                  closes: "17:00",
+                },
+                {
+                  "@type": "OpeningHoursSpecification",
+                  dayOfWeek: ["Saturday"],
+                  opens: "09:00",
+                  closes: "13:00"
+                }
+              ],
+              aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", bestRating: "5", ratingCount: "138" },
+              sameAs: [
+                "https://wa.me/6281219476385",
+                "https://veralexconsulting.com"
+              ],
+              hasOfferCatalog: {
+                "@type": "OfferCatalog",
+                name: "Legal Services",
+                itemListElement: [
+                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "Pendirian PT" } },
+                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "Pendaftaran Merek" } },
+                  { "@type": "Offer", itemOffered: { "@type": "Service", name: "Pengurusan KITAS" } }
+                ]
+              }
             }),
           }}
         />
@@ -133,7 +155,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebSite",
               name: "VERALEX CONSULTING",
-              url: "https://veralex.id",
+              url: "https://veralexconsulting.com",
               inLanguage: ["id", "en"],
             }),
           }}

@@ -95,6 +95,12 @@ export const translations: Record<Lang, Record<string, string>> = {
         'promo.save': 'Hemat hingga Rp3.000.000+ dibanding beli satuan',
         'promo.cta': 'Ambil Paket Ini Sekarang',
         'promo.allPackages': 'Lihat Semua Paket',
+        'promo.b1': 'Pendirian PT PMDN lengkap',
+        'promo.b2': 'Pendaftaran Merek (1 kelas)',
+        'promo.b3': 'Website Company Profile GRATIS',
+        'promo.b4': 'NIB + Izin Usaha',
+        'promo.b5': 'NPWP Perusahaan',
+        'promo.b6': 'Konsultasi Hukum Bisnis',
 
         // Pricing
         'pricing.title': 'Paket Bundling',
@@ -114,9 +120,16 @@ export const translations: Record<Lang, Record<string, string>> = {
         // Testimonials
         'testimonials.title': 'Testimoni Klien',
         'testimonials.subtitle': 'Apa kata klien tentang layanan VERALEX CONSULTING',
+        'testimonials.t1.content': 'VERALEX sangat profesional dalam membantu pendirian PT kami. Prosesnya cepat dan transparan, semua dokumen selesai tepat waktu. Sangat direkomendasikan!',
+        'testimonials.t2.content': 'Kami sangat puas dengan layanan pendaftaran merek dari VERALEX. Tim mereka responsif dan memahami kebutuhan bisnis kami dengan baik.',
+        'testimonials.t3.content': 'Proses KITAS untuk karyawan asing kami berjalan lancar berkat bantuan VERALEX. Mereka menangani semua dokumen dan regulasi dengan sangat ahli.',
+        'testimonials.t3.role': 'Direktur, Perusahaan Asing',
 
         // Why Legal
         'whyLegal.title': 'Mengapa Legalitas Penting?',
+        'whyLegal.p1': 'Legalitas bukan sekadar formalitas — ini adalah fondasi kepercayaan dan keberlanjutan bisnis Anda.',
+        'whyLegal.p2': 'Tanpa legalitas yang lengkap, bisnis Anda berisiko menghadapi sanksi hukum, kehilangan akses ke pasar, dan kesulitan dalam mendapatkan pendanaan.',
+        'whyLegal.p3': 'VERALEX hadir untuk memastikan bisnis Anda berjalan sesuai regulasi Indonesia dengan proses yang mudah dan transparan.',
         'whyLegal.l1': 'Mitigasi risiko hukum dan reputasi',
         'whyLegal.l2': 'Meningkatkan akses pasar, tender, dan perbankan',
         'whyLegal.l3': 'Mempercepat proses pendanaan dan kemitraan',
@@ -151,6 +164,15 @@ export const translations: Record<Lang, Record<string, string>> = {
         'footer.services': 'Layanan',
         'footer.contact': 'Kontak',
         'footer.copyright': '© 2026 VERALEX CONSULTING. All rights reserved.',
+        'footer.allServices': 'Semua Layanan',
+        'footer.address': 'Bekasi, Jawa Barat, Indonesia',
+        'footer.itas': 'ITAS Tenaga Kerja Asing',
+
+        // Gallery
+        'gallery.title': 'Bukti Kerja Kami',
+        'gallery.subtitle': 'Dokumentasi klien yang telah menggunakan jasa VERALEX',
+        'gallery.cta': 'Lihat Semua Galeri →',
+        'gallery.imgAlt': 'Klien VERALEX',
 
         // Service Details
         'detail.back': 'Kembali ke Layanan',
@@ -254,6 +276,12 @@ export const translations: Record<Lang, Record<string, string>> = {
         'promo.save': 'Save over Rp3.000.000+ compared to buying locally',
         'promo.cta': 'Get This Package Now',
         'promo.allPackages': 'View All Packages',
+        'promo.b1': 'Complete PT PMDN Establishment',
+        'promo.b2': 'Trademark Registration (1 class)',
+        'promo.b3': 'FREE Company Profile Website',
+        'promo.b4': 'NIB + Business License',
+        'promo.b5': 'Company Tax ID (NPWP)',
+        'promo.b6': 'Business Legal Consultation',
 
         // Pricing
         'pricing.title': 'Bundle Packages',
@@ -273,9 +301,16 @@ export const translations: Record<Lang, Record<string, string>> = {
         // Testimonials
         'testimonials.title': 'Client Testimonials',
         'testimonials.subtitle': 'What our clients say about VERALEX CONSULTING services',
+        'testimonials.t1.content': 'VERALEX was very professional in helping us establish our company. The process was fast and transparent, all documents were completed on time. Highly recommended!',
+        'testimonials.t2.content': 'We are very satisfied with VERALEX\'s trademark registration service. Their team is responsive and understands our business needs well.',
+        'testimonials.t3.content': 'The KITAS process for our foreign employees went smoothly thanks to VERALEX. They handled all documents and regulations with great expertise.',
+        'testimonials.t3.role': 'Director, Foreign Company',
 
         // Why Legal
         'whyLegal.title': 'Why is Legality Important?',
+        'whyLegal.p1': 'Legality is not just a formality — it is the foundation of trust and sustainability for your business.',
+        'whyLegal.p2': 'Without complete legality, your business risks facing legal sanctions, losing market access, and difficulty in obtaining funding.',
+        'whyLegal.p3': 'VERALEX is here to ensure your business operates in compliance with Indonesian regulations through an easy and transparent process.',
         'whyLegal.l1': 'Mitigate legal and reputational risks',
         'whyLegal.l2': 'Increase access to markets, tenders, and banking',
         'whyLegal.l3': 'Accelerate funding and partnership processes',
@@ -310,6 +345,15 @@ export const translations: Record<Lang, Record<string, string>> = {
         'footer.services': 'Services',
         'footer.contact': 'Contact',
         'footer.copyright': '© 2026 VERALEX CONSULTING. All rights reserved.',
+        'footer.allServices': 'All Services',
+        'footer.address': 'Bekasi, West Java, Indonesia',
+        'footer.itas': 'Foreign Worker ITAS',
+
+        // Gallery
+        'gallery.title': 'Our Work Portfolio',
+        'gallery.subtitle': 'Documentation of clients who have used VERALEX services',
+        'gallery.cta': 'View Full Gallery →',
+        'gallery.imgAlt': 'VERALEX Client',
 
         // Service Details
         'detail.back': 'Back to Services',

@@ -11,7 +11,8 @@ export default function HeroSection() {
     return (
         <section className="hero" id="hero">
             <div className="hero-particles">
-                {Array.from({ length: 8 }).map((_, i) => (
+                {/* Fewer particles on small screens for performance */}
+                {Array.from({ length: 5 }).map((_, i) => (
                     <div key={i} className="particle" />
                 ))}
             </div>

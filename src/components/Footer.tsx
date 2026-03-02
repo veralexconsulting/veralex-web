@@ -22,7 +22,7 @@ export default function Footer() {
                         <h4>{t('footer.services')}</h4>
                         <a href="#services" className="footer-link">{t('services.ip.trademark.title')}</a>
                         <a href="#services" className="footer-link">{t('services.ip.copyright.title')}</a>
-                        <a href="#services" className="footer-link">ITAS TKA</a>
+                        <a href="#services" className="footer-link">{t('footer.itas')}</a>
                         <a href="#services" className="footer-link">{t('footer.allServices')}</a>
                     </div>
 

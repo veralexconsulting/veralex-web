@@ -291,6 +291,8 @@ button {
     display: flex;
     align-items: center;
     gap: 1rem;
+    position: relative;
+    z-index: 1001;
 }
 
 .lang-toggle {
@@ -323,15 +325,16 @@ button {
 }
 
 .menu-toggle.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
+    transform: translateY(7px) rotate(45deg);
 }
 
 .menu-toggle.active span:nth-child(2) {
     opacity: 0;
+    transform: translateX(-10px);
 }
 
 .menu-toggle.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
+    transform: translateY(-7px) rotate(-45deg);
 }
 
 /* ===== Hero Section ===== */
@@ -377,8 +380,13 @@ button {
 }
 
 @keyframes batik-drift {
-    0% { background-position: 0 0; }
-    100% { background-position: 120px 120px; }
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 120px 120px;
+    }
 }
 
 .hero-particles {
@@ -1269,23 +1277,35 @@ button {
 
     .navbar-menu {
         position: fixed;
-        top: 80px;
-        left: 0;
-        right: 0;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100vh;
         background: rgba(26, 10, 10, 0.98);
-        backdrop-filter: blur(20px);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
         flex-direction: column;
-        padding: 2rem;
-        gap: 1rem;
-        transform: translateY(-150%);
+        justify-content: center;
+        align-items: center;
+        padding: 4rem 2rem;
+        gap: 2rem;
+        transform: none;
         opacity: 0;
-        transition: var(--transition-normal);
-        border-bottom: var(--border-gold);
+        visibility: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 998;
     }
 
     .navbar-menu.active {
-        transform: translateY(0);
+        left: 0;
         opacity: 1;
+        visibility: visible;
+    }
+
+    .navbar-link {
+        font-size: 1.5rem;
+        width: 100%;
+        text-align: center;
     }
 
     .menu-toggle {
@@ -1383,11 +1403,14 @@ button {
     }
 
     .hero-title {
-        font-size: clamp(1.75rem, 6vw, 2.5rem);
+        font-size: clamp(2rem, 8vw, 2.75rem);
+        margin-bottom: 1rem;
     }
 
     .hero-subtitle {
-        font-size: 0.95rem;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 2rem;
     }
 
     .gallery-slide {
@@ -1408,6 +1431,18 @@ button {
         font-size: 0.9rem;
         letter-spacing: 0.15em;
     }
+
+    .trust-badges-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem !important;
+    }
+}
+
+.trust-badges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    textAlign: center;
 }
 
 /* ===== Three.js Container ===== */
@@ -1667,10 +1702,13 @@ button {
 }
 
 @keyframes pulse-wa {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
         box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.3);
     }
+
     50% {
         transform: scale(1.05);
         box-shadow: 0 0 0 20px rgba(212, 175, 55, 0);

@@ -28,12 +28,7 @@ export default function TrustBadges() {
     return (
         <section style={{ padding: '40px 0', background: 'var(--color-primary-dark)', borderTop: 'var(--border-gold)', borderBottom: 'var(--border-gold)' }}>
             <div className="container">
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
-                    gap: '1.5rem',
-                    textAlign: 'center',
-                }}>
+                <div className="trust-badges-grid">
                     {badges.map((b) => (
                         <div key={b.label} className="fade-in" style={{ padding: '1rem' }}>
                             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '0.5rem' }}>

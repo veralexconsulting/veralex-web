@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://veralex.id/sitemap.xml
+Sitemap: https://veralexconsulting.com/sitemap.xml
 
 Crawl-delay: 1

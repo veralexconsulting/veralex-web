@@ -17,8 +17,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     if (!service) return {};
     return {
         title: `${service.title} | VERALEX CONSULTING`,
-        description: `${service.description} Harga: ${service.price}. Konsultasi GRATIS!`,
+        description: `${service.description} Kami melayani pengurusan ${service.title} dengan proses cepat, legal, dan transparan. Harga: ${service.price}. Konsultasi GRATIS!`,
+        keywords: `${service.title}, ${service.category}, jasa legalitas, veralex consulting, pendirian usaha, izin usaha, ${service.slug.replace(/-/g, ' ')}`,
         alternates: { canonical: `/services/${slug}` },
+        openGraph: {
+            title: `${service.title} | VERALEX CONSULTING`,
+            description: service.description,
+            images: [{ url: '/logo.jpg' }],
+        },
     };
 }
 
@@ -32,6 +38,37 @@ export default async function ServiceDetailPage({ params }: Props) {
         .slice(0, 4);
 
     return (
-        <ServiceDetailContent service={service} relatedServices={relatedServices} />
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "BreadcrumbList",
+                        "itemListElement": [
+                            {
+                                "@type": "ListItem",
+                                "position": 1,
+                                "name": "Home",
+                                "item": "https://veralexconsulting.com"
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 2,
+                                "name": "Services",
+                                "item": "https://veralexconsulting.com/#services"
+                            },
+                            {
+                                "@type": "ListItem",
+                                "position": 3,
+                                "name": service.title,
+                                "item": `https://veralexconsulting.com/services/${slug}`
+                            }
+                        ]
+                    })
+                }}
+            />
+            <ServiceDetailContent service={service} relatedServices={relatedServices} />
+        </>
     );
 }

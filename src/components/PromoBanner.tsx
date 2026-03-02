@@ -64,12 +64,12 @@ export default function PromoBanner() {
                         textAlign: 'left',
                     }}>
                         {[
-                            'Pendirian PT PMDN lengkap', // Keep these untranslated for now as they are specific legal terms, or create keys later if needed
-                            'Pendaftaran Merek (1 kelas)',
-                            'Website Company Profile GRATIS',
-                            'NIB + Izin Usaha',
-                            'NPWP Perusahaan',
-                            'Konsultasi Hukum Bisnis',
+                            t('promo.b1'),
+                            t('promo.b2'),
+                            t('promo.b3'),
+                            t('promo.b4'),
+                            t('promo.b5'),
+                            t('promo.b6'),
                         ].map((item) => (
                             <div key={item} style={{
                                 padding: '0.6rem 1rem',
