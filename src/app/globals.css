@@ -850,12 +850,6 @@ button {
     color: var(--text-secondary);
 }
 
-.pricing-feature::before {
-    content: '✓';
-    color: var(--color-gold);
-    font-weight: 600;
-}
-
 .pricing-cta {
     width: 100%;
     text-align: center;
@@ -1442,7 +1436,7 @@ button {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
-    textAlign: center;
+    text-align: center;
 }
 
 /* ===== Three.js Container ===== */

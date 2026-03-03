@@ -159,6 +159,9 @@ export const translations: Record<Lang, Record<string, string>> = {
         'contact.address': 'Alamat',
         'contact.send': 'Kirim Pesan',
 
+        // Floating WhatsApp
+        'floating.chat': 'Chat Kami',
+
         // Footer
         'footer.desc': 'Konsultan hukum profesional untuk kebutuhan bisnis Anda. Kami membantu pengurusan legalitas perusahaan, produk, dan tenaga kerja asing secara profesional dan sesuai regulasi Indonesia.',
         'footer.services': 'Layanan',
@@ -173,6 +176,29 @@ export const translations: Record<Lang, Record<string, string>> = {
         'gallery.subtitle': 'Dokumentasi klien yang telah menggunakan jasa VERALEX',
         'gallery.cta': 'Lihat Semua Galeri →',
         'gallery.imgAlt': 'Klien VERALEX',
+        'gallery.pageTitle': 'Galeri Bukti Layanan',
+        'gallery.pageSubtitle': 'Dokumentasi bukti layanan legalitas bisnis yang telah kami selesaikan untuk klien kami',
+        'gallery.ctaTitle': 'Ingin Berdiskusi Lebih Lanjut?',
+        'gallery.ctaSubtitle': 'Konsultasikan kebutuhan hukum bisnis Anda dengan tim profesional kami',
+        'gallery.ctaButton': '💬 Konsultasi Gratis via WhatsApp',
+
+        // Benefit Items
+        'benefit.1': 'Pengecekan dan Pemesanan Nama',
+        'benefit.2': 'Akta Pendirian dari Notaris',
+        'benefit.3': 'SK/SKT Pengesahan Kemenkumham',
+        'benefit.4': 'NPWP Perusahaan/Badan Hukum',
+        'benefit.5': 'Akun OSS RBA (Optional)',
+        'benefit.6': 'NIB / TDP (Nomor Induk Berusaha)',
+        'benefit.7': 'Sertifikat Standar / SIUP',
+        'benefit.8': 'Surat Pernyataan Mandiri',
+        'benefit.9': 'K3L, SPUMKTTR & SPPL',
+        'benefit.10': 'Stample Perusahaan',
+        'benefit.11': 'Free Konsultasi Hukum Bisnis',
+
+        // Pricing Features
+        'pricing.feature.nib': 'NIB + Izin Usaha',
+        'pricing.feature.consult': 'Konsultasi Hukum Bisnis',
+        'pricing.feature.priority': 'Priority Handling',
 
         // Service Details
         'detail.back': 'Kembali ke Layanan',
@@ -340,6 +366,9 @@ export const translations: Record<Lang, Record<string, string>> = {
         'contact.address': 'Address',
         'contact.send': 'Send Message',
 
+        // Floating WhatsApp
+        'floating.chat': 'Chat Us',
+
         // Footer
         'footer.desc': 'Professional legal consultant for your business needs. We help manage company legality, product certification, and foreign worker permits professionally and in compliance with Indonesian regulations.',
         'footer.services': 'Services',
@@ -354,6 +383,29 @@ export const translations: Record<Lang, Record<string, string>> = {
         'gallery.subtitle': 'Documentation of clients who have used VERALEX services',
         'gallery.cta': 'View Full Gallery →',
         'gallery.imgAlt': 'VERALEX Client',
+        'gallery.pageTitle': 'Service Portfolio Gallery',
+        'gallery.pageSubtitle': 'Documentation of business legality services completed for our clients',
+        'gallery.ctaTitle': 'Want to Discuss Further?',
+        'gallery.ctaSubtitle': 'Consult your business legal needs with our professional team',
+        'gallery.ctaButton': '💬 Free Consultation via WhatsApp',
+
+        // Benefit Items
+        'benefit.1': 'Name Checking & Booking',
+        'benefit.2': 'Notarial Deed of Establishment',
+        'benefit.3': 'Ministry of Law Approval (SK/SKT)',
+        'benefit.4': 'Company Tax ID (NPWP)',
+        'benefit.5': 'OSS RBA Account (Optional)',
+        'benefit.6': 'Business Identification Number (NIB/TDP)',
+        'benefit.7': 'Business License (SIUP)',
+        'benefit.8': 'Self-Declaration Letter',
+        'benefit.9': 'K3L, SPUMKTTR & SPPL',
+        'benefit.10': 'Company Stamp',
+        'benefit.11': 'Free Business Legal Consultation',
+
+        // Pricing Features
+        'pricing.feature.nib': 'NIB + Business License',
+        'pricing.feature.consult': 'Business Legal Consultation',
+        'pricing.feature.priority': 'Priority Handling',
 
         // Service Details
         'detail.back': 'Back to Services',

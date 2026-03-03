@@ -7,7 +7,7 @@ const GIFT = 'M20 12v10H4V12M2 7h20v5H2zM12 22V7m0 0H7.5a2.5 2.5 0 110-5C11 2 12
 const ARROW_RIGHT = 'M13 7l5 5m0 0l-5 5m5-5H6';
 
 export default function PromoBanner() {
-    const t = useLang();
+    const { t } = useLang();
 
     return (
         <section style={{

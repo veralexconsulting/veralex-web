@@ -3,7 +3,7 @@
 import { useLang } from '@/lib/useLang';
 
 export default function TestimonialsSection() {
-    const t = useLang();
+    const { t } = useLang();
 
     const testimonials = [
         { initials: 'AP', name: 'Andi Pratama', role: 'CEO, Tech Startup', contentKey: 'testimonials.t1.content' },

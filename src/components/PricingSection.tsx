@@ -6,14 +6,14 @@ const CHECK = 'M5 13l4 4L19 7';
 const FIRE = 'M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z';
 
 export default function PricingSection() {
-    const t = useLang();
+    const { t } = useLang();
 
     const packages = [
         {
             name: t('pricing.starter'),
             price: 'Rp9.900.000',
             originalPrice: 'Rp12.500.000',
-            features: [t('services.company.pt.title'), t('services.ip.trademark.title'), t('services.bonus'), 'NIB + Izin Usaha', 'Konsultasi Hukum Bisnis'],
+            features: [t('services.company.pt.title'), t('services.ip.trademark.title'), t('services.bonus'), t('pricing.feature.nib'), t('pricing.feature.consult')],
             featured: false,
             wa: 'Halo%20VERALEX,%20saya%20tertarik%20Paket%20Starter%20Business',
         },
@@ -22,7 +22,7 @@ export default function PricingSection() {
             price: 'Rp26.000.000',
             originalPrice: 'Rp33.000.000',
             badge: true,
-            features: [t('services.company.pma.title'), '1x ' + t('services.itas.investor1.title'), t('services.ip.trademark.title'), t('services.bonus'), 'NIB + Izin Usaha', 'Konsultasi Hukum Bisnis'],
+            features: [t('services.company.pma.title'), '1x ' + t('services.itas.investor1.title'), t('services.ip.trademark.title'), t('services.bonus'), t('pricing.feature.nib'), t('pricing.feature.consult')],
             featured: true,
             wa: 'Halo%20VERALEX,%20saya%20tertarik%20Paket%20Investor%20Package',
         },
@@ -30,7 +30,7 @@ export default function PricingSection() {
             name: t('pricing.premium'),
             price: 'Rp42.500.000',
             originalPrice: 'Rp55.000.000',
-            features: [t('services.company.pma.title'), '2x ' + t('services.itas.investor1.title'), t('services.ip.trademark.title'), t('services.bonus'), 'NIB + Izin Usaha', 'Priority Handling'],
+            features: [t('services.company.pma.title'), '2x ' + t('services.itas.investor1.title'), t('services.ip.trademark.title'), t('services.bonus'), t('pricing.feature.nib'), t('pricing.feature.priority')],
             featured: false,
             wa: 'Halo%20VERALEX,%20saya%20tertarik%20Paket%20Premium%20Investor',
         },
@@ -48,7 +48,7 @@ export default function PricingSection() {
                             {pkg.badge && (
                                 <span className="pricing-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d={FIRE} /></svg>
-                                    Best Value
+                                    {t('pricing.bestValue')}
                                 </span>
                             )}
                             <h3 className="pricing-name">{pkg.name}</h3>
@@ -94,7 +94,7 @@ export default function PricingSection() {
                                 rel="noopener noreferrer"
                                 className={`btn ${pkg.featured ? 'btn-primary' : 'btn-outline'} pricing-cta`}
                             >
-                                Ambil Paket Ini
+                                {t('pricing.cta')}
                             </a>
                             <p style={{ marginTop: '0.75rem', fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}>
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" strokeWidth="2"><path d={CHECK} /></svg>

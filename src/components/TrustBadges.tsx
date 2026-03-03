@@ -16,7 +16,7 @@ const SvgIcon = ({ d }: { d: string }) => (
 );
 
 export default function TrustBadges() {
-    const t = useLang();
+    const { t } = useLang();
 
     const badges = [
         { icon: ICONS.users, number: '500+', label: 'trust.clients' },

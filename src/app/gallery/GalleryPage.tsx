@@ -5,6 +5,7 @@ import { useState, useCallback } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import FloatingWhatsApp from '@/components/FloatingWhatsApp';
+import { useLang } from '@/lib/useLang';
 
 const galleryImages = [
     'IMG-20260121-WA0006.jpg', 'IMG-20260121-WA0007.jpg', 'IMG-20260121-WA0008.jpg',
@@ -18,6 +19,7 @@ const galleryImages = [
 
 export default function GalleryPage() {
     const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+    const { t } = useLang();
 
     const openLightbox = useCallback((idx: number) => setLightboxIdx(idx), []);
     const closeLightbox = useCallback(() => setLightboxIdx(null), []);
@@ -35,8 +37,8 @@ export default function GalleryPage() {
                 </div>
                 <div className="hero-glow" />
                 <div className="hero-content">
-                    <h1 className="hero-title" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>Galeri Bukti Layanan</h1>
-                    <p className="hero-subtitle">Dokumentasi bukti layanan legalitas bisnis yang telah kami selesaikan untuk klien kami</p>
+                    <h1 className="hero-title" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>{t('gallery.pageTitle')}</h1>
+                    <p className="hero-subtitle">{t('gallery.pageSubtitle')}</p>
                 </div>
             </section>
 
@@ -71,15 +73,15 @@ export default function GalleryPage() {
             <section className="cta-section">
                 <div className="container">
                     <div className="cta-content">
-                        <h2 className="cta-title">Ingin Berdiskusi Lebih Lanjut?</h2>
-                        <p className="cta-subtitle">Konsultasikan kebutuhan hukum bisnis Anda dengan tim profesional kami</p>
+                        <h2 className="cta-title">{t('gallery.ctaTitle')}</h2>
+                        <p className="cta-subtitle">{t('gallery.ctaSubtitle')}</p>
                         <a
                             href="https://wa.me/6281219476385?text=Halo%20VERALEX,%20saya%20ingin%20konsultasi"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="btn btn-primary"
                         >
-                            💬 Konsultasi Gratis via WhatsApp
+                            {t('gallery.ctaButton')}
                         </a>
                     </div>
                 </div>

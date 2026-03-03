@@ -68,6 +68,36 @@ export default async function ServiceDetailPage({ params }: Props) {
                     })
                 }}
             />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "Service",
+                        "name": service.title,
+                        "alternateName": service.titleEn,
+                        "description": service.description,
+                        "provider": {
+                            "@type": "LegalService",
+                            "name": "VERALEX CONSULTING",
+                            "url": "https://veralexconsulting.com",
+                            "telephone": "+6281219476385",
+                        },
+                        "areaServed": {
+                            "@type": "Country",
+                            "name": "Indonesia",
+                        },
+                        "category": service.category,
+                        "offers": {
+                            "@type": "Offer",
+                            "price": service.price.replace(/[^\d]/g, ''),
+                            "priceCurrency": "IDR",
+                            "url": `https://veralexconsulting.com/services/${slug}`,
+                        },
+                        "url": `https://veralexconsulting.com/services/${slug}`,
+                    })
+                }}
+            />
             <ServiceDetailContent service={service} relatedServices={relatedServices} />
         </>
     );

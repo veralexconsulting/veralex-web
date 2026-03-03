@@ -30,7 +30,7 @@ const SvgIcon = ({ d, size = 24 }: { d: string; size?: number }) => (
 );
 
 export default function ServicesSection() {
-    const t = useLang();
+    const { t } = useLang();
 
     return (
         <section className="services" id="services">
@@ -121,22 +121,10 @@ export default function ServicesSection() {
                 <div className="services-category fade-in">
                     <h3 className="category-title">{t('services.benefit.title')}</h3>
                     <div className="benefit-grid">
-                        {[
-                            'Pengecekan dan Pemesanan Nama',
-                            'Akta Pendirian dari Notaris',
-                            'SK/SKT Pengesahan Kemenkumham',
-                            'NPWP Perusahaan/Badan Hukum',
-                            'Akun OSS RBA (Optional)',
-                            'NIB / TDP (Nomor Induk Berusaha)',
-                            'Sertifikat Standar / SIUP',
-                            'Surat Pernyataan Mandiri',
-                            'K3L, SPUMKTTR & SPPL',
-                            'Stample Perusahaan',
-                            'Free Konsultasi Hukum Bisnis',
-                        ].map((item, i) => (
+                        {Array.from({ length: 11 }, (_, i) => (
                             <div key={i} className="benefit-card">
                                 <div className="benefit-number">{i + 1}</div>
-                                <span>{item}</span>
+                                <span>{t(`benefit.${i + 1}`)}</span>
                             </div>
                         ))}
                         <div className="benefit-card bonus">

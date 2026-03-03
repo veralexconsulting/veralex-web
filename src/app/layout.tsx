@@ -19,14 +19,15 @@ export const metadata: Metadata = {
   description:
     "VERALEX CONSULTING - Konsultan hukum profesional untuk pendirian PT, CV, PT PMA, pendaftaran merek, hak cipta, ITAS, KITAS, dan legalitas bisnis di Indonesia. Konsultasi GRATIS!",
   keywords:
-    "jasa pendirian PT, pendaftaran merek, KITAS Indonesia, PT PMA, konsultan hukum, izin usaha, ITAS investor, legalitas bisnis, hak cipta, desain industri, NIB, OSS, Bekasi, Jakarta",
+    "jasa pendirian PT, pendaftaran merek, KITAS Indonesia, PT PMA, konsultan hukum, izin usaha, ITAS investor, legalitas bisnis, hak cipta, desain industri, NIB, OSS, Bekasi, Jakarta, jasa pendirian perusahaan, biaya pendirian PT, daftar merek DJKI, visa kerja Indonesia, work permit Indonesia, trademark registration Indonesia, company registration Indonesia, foreign investment company",
   authors: [{ name: "VERALEX CONSULTING" }],
   robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
   metadataBase: new URL("https://veralexconsulting.com"),
   alternates: {
     canonical: "/",
     languages: {
-      id: "/",
+      'id': '/',
+      'en': '/',
     },
   },
   openGraph: {
@@ -37,6 +38,7 @@ export const metadata: Metadata = {
       "Konsultan hukum profesional untuk pendirian PT, pendaftaran merek, KITAS, dan legalitas bisnis. Konsultasi GRATIS via WhatsApp!",
     images: [{ url: "/logo.jpg", width: 1200, height: 630 }],
     locale: "id_ID",
+    alternateLocale: "en_US",
     siteName: "VERALEX CONSULTING",
   },
   twitter: {
@@ -52,6 +54,7 @@ export const metadata: Metadata = {
     "geo.placename": "Bekasi",
     "geo.position": "-6.2383;106.9756",
     ICBM: "-6.2383, 106.9756",
+    "format-detection": "telephone=no",
   },
   icons: {
     icon: "/logo.jpg",

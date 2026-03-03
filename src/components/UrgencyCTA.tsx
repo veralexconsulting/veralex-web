@@ -3,7 +3,7 @@
 import { useLang } from '@/lib/useLang';
 
 export const UrgencyCTA = () => {
-    const t = useLang();
+    const { t } = useLang();
     return (
         <section className="cta-section">
             <div className="container">

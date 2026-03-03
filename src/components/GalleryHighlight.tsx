@@ -16,7 +16,7 @@ const images = [
 ];
 
 export default function GalleryHighlight() {
-    const t = useLang();
+    const { t } = useLang();
     const slides = [...images, ...images.slice(0, 4)]; // duplicate for infinite scroll
 
     return (

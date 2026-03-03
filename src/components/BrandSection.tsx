@@ -3,7 +3,7 @@
 import { useLang } from '@/lib/useLang';
 
 export const BrandSection = () => {
-    const t = useLang();
+    const { t } = useLang();
     return (
         <section className="big-brand-section">
             <div className="container">

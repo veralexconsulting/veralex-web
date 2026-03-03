@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { translations, Lang } from '@/lib/translations';
 
-export function useLang() {
+export function useLang(): { t: (key: string) => string; lang: Lang } {
     const [lang, setLang] = useState<Lang>('id');
 
     useEffect(() => {
@@ -23,5 +23,5 @@ export function useLang() {
         [lang]
     );
 
-    return t;
+    return { t, lang };
 }

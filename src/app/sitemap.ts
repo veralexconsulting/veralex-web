@@ -3,25 +3,32 @@ import { serviceData } from '@/lib/serviceData';
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = 'https://veralexconsulting.com';
+    const now = new Date().toISOString().split('T')[0];
 
-    // Static routes
-    const routes = [
-        '',
-        '/gallery',
-    ].map((route) => ({
-        url: `${baseUrl}${route}`,
-        lastModified: new Date().toISOString().split('T')[0],
-        changeFrequency: 'weekly' as const,
-        priority: route === '' ? 1 : 0.8,
-    }));
+    // Static routes with appropriate priorities
+    const staticRoutes: MetadataRoute.Sitemap = [
+        {
+            url: baseUrl,
+            lastModified: now,
+            changeFrequency: 'weekly',
+            priority: 1.0,
+        },
+        {
+            url: `${baseUrl}/gallery`,
+            lastModified: now,
+            changeFrequency: 'monthly',
+            priority: 0.6,
+        },
+    ];
 
-    // Dynamic service routes
-    const serviceRoutes = serviceData.map((service) => ({
+    // Dynamic service routes — high priority services get higher scores
+    const highPrioritySlugs = ['pt-pmdn', 'pt-pma', 'pendaftaran-merek', 'kitas-kerja'];
+    const serviceRoutes: MetadataRoute.Sitemap = serviceData.map((service) => ({
         url: `${baseUrl}/services/${service.slug}`,
-        lastModified: new Date().toISOString().split('T')[0],
+        lastModified: now,
         changeFrequency: 'monthly' as const,
-        priority: 0.7,
+        priority: highPrioritySlugs.includes(service.slug) ? 0.9 : 0.7,
     }));
 
-    return [...routes, ...serviceRoutes];
+    return [...staticRoutes, ...serviceRoutes];
 }

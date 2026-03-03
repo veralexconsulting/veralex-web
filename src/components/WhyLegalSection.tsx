@@ -3,7 +3,7 @@
 import { useLang } from '@/lib/useLang';
 
 export default function WhyLegalSection() {
-    const t = useLang();
+    const { t } = useLang();
 
     return (
         <section className="why-legal" id="why-legal">

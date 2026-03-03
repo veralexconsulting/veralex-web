@@ -6,7 +6,7 @@ import { useLang } from '@/lib/useLang';
 const ARROW_RIGHT = 'M13 7l5 5m0 0l-5 5m5-5H6';
 
 export default function HeroSection() {
-    const t = useLang();
+    const { t } = useLang();
 
     return (
         <section className="hero" id="hero">

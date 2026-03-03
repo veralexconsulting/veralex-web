@@ -3,7 +3,7 @@
 import { useLang } from '@/lib/useLang';
 
 export default function ContactSection() {
-    const t = useLang();
+    const { t } = useLang();
 
     return (
         <section className="contact" id="contact">

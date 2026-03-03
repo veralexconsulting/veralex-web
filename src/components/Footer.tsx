@@ -4,7 +4,7 @@ import { useLang } from '@/lib/useLang';
 import Image from 'next/image';
 
 export default function Footer() {
-    const t = useLang();
+    const { t } = useLang();
 
     return (
         <footer className="footer">
