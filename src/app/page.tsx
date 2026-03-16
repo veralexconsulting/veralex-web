@@ -3,18 +3,14 @@ import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import TrustBadges from '@/components/TrustBadges';
 import ServicesSection from '@/components/ServicesSection';
-import PromoBanner from '@/components/PromoBanner';
 import PricingSection from '@/components/PricingSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import WhyLegalSection from '@/components/WhyLegalSection';
 import ContactSection from '@/components/ContactSection';
 import GalleryHighlight from '@/components/GalleryHighlight';
-import WhatsAppCta from '@/components/WhatsAppCta';
 import Footer from '@/components/Footer';
 import FloatingWhatsApp from '@/components/FloatingWhatsApp';
 import ScrollAnimator from '@/components/ScrollAnimator';
-import UrgencyCTA from '@/components/UrgencyCTA';
-import BrandSection from '@/components/BrandSection';
 
 export const metadata: Metadata = {
   title: 'VERALEX CONSULTING | Jasa Pendirian PT, Pendaftaran Merek & KITAS',
@@ -32,15 +28,11 @@ export default function Home() {
       <HeroSection />
       <TrustBadges />
       <ServicesSection />
-      <PromoBanner />
       <PricingSection />
       <TestimonialsSection />
       <WhyLegalSection />
-      <UrgencyCTA />
       <ContactSection />
       <GalleryHighlight />
-      <WhatsAppCta />
-      <BrandSection />
       <FloatingWhatsApp />
       <Footer />
     </>

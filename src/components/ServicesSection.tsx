@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useLang } from '@/lib/useLang';
 
-/* SVG icon paths for service categories */
+/* SVG icon paths for service categories and tags */
 const ICONS = {
     doc: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
     refresh: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15',
@@ -21,6 +21,7 @@ const ICONS = {
     flask: 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z',
     bolt: 'M13 10V3L4 14h7v7l9-11h-7z',
     wifi: 'M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0',
+    info: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
 };
 
 const SvgIcon = ({ d, size = 24 }: { d: string; size?: number }) => (
@@ -40,80 +41,116 @@ export default function ServicesSection() {
 
                 {/* Kekayaan Intelektual */}
                 <div className="services-category fade-in">
-                    <h3 className="category-title">{t('services.ip.title')}</h3>
-                    <div className="services-grid">
-                        <div className="service-card">
-                            <div className="service-icon"><SvgIcon d={ICONS.doc} /></div>
-                            <h4 className="service-title">{t('services.ip.trademark.title')}</h4>
-                            <p className="service-desc">{t('services.ip.trademark.desc')}</p>
-                            <p className="service-price"><span className="price-discount">Rp3.000.000</span> <strong>Rp2.500.000</strong></p>
-                            <span className="price-badge">{t('services.discount')}</span>
-                            <Link href="/services/pendaftaran-merek" className="service-link">{t('services.learnMore')}</Link>
-                        </div>
-                        <div className="service-card">
-                            <div className="service-icon"><SvgIcon d={ICONS.refresh} /></div>
-                            <h4 className="service-title">{t('services.ip.renewal.title')}</h4>
-                            <p className="service-desc">{t('services.ip.renewal.desc')}</p>
-                            <p className="service-price"><strong>Rp6.000.000</strong></p>
-                            <Link href="/services/perpanjangan-merek" className="service-link">{t('services.learnMore')}</Link>
-                        </div>
-                        <div className="service-card">
-                            <div className="service-icon"><SvgIcon d={ICONS.swap} /></div>
-                            <h4 className="service-title">{t('services.ip.transfer.title')}</h4>
-                            <p className="service-desc">{t('services.ip.transfer.desc')}</p>
-                            <p className="service-price"><strong>Rp3.000.000</strong></p>
-                            <Link href="/services/pengalihan-merek" className="service-link">{t('services.learnMore')}</Link>
-                        </div>
-                        <div className="service-card">
-                            <div className="service-icon"><SvgIcon d={ICONS.shield} /></div>
-                            <h4 className="service-title">{t('services.ip.copyright.title')}</h4>
-                            <p className="service-desc">{t('services.ip.copyright.desc')}</p>
-                            <p className="service-price"><strong>Rp2.500.000</strong></p>
-                            <Link href="/services/hak-cipta" className="service-link">{t('services.learnMore')}</Link>
-                        </div>
-                        <div className="service-card">
-                            <div className="service-icon"><SvgIcon d={ICONS.layout} /></div>
-                            <h4 className="service-title">{t('services.ip.design.title')}</h4>
-                            <p className="service-desc">{t('services.ip.design.desc')}</p>
-                            <p className="service-price"><strong>Rp4.500.000</strong></p>
-                            <Link href="/services/desain-industri" className="service-link">{t('services.learnMore')}</Link>
-                        </div>
+                    <h3 className="category-title-luxury">{t('services.ip.title')}</h3>
+                    <div className="services-list-luxury">
+
+                        <Link href="/services/pendaftaran-merek" className="service-row-luxury">
+                            <div className="service-row-left">
+                                <h4 className="service-row-title">{t('services.ip.trademark.title')}</h4>
+                                <p className="service-row-desc">{t('services.ip.trademark.desc')}</p>
+                            </div>
+                            <div className="service-row-right">
+                                <span className="service-row-price">Rp2.500.000</span>
+                                <SvgIcon d={ICONS.bolt} size={20} />
+                            </div>
+                        </Link>
+
+                        <Link href="/services/perpanjangan-merek" className="service-row-luxury">
+                            <div className="service-row-left">
+                                <h4 className="service-row-title">{t('services.ip.renewal.title')}</h4>
+                                <p className="service-row-desc">{t('services.ip.renewal.desc')}</p>
+                            </div>
+                            <div className="service-row-right">
+                                <span className="service-row-price">Rp6.000.000</span>
+                                <SvgIcon d={ICONS.bolt} size={20} />
+                            </div>
+                        </Link>
+
+                        <Link href="/services/pengalihan-merek" className="service-row-luxury">
+                            <div className="service-row-left">
+                                <h4 className="service-row-title">{t('services.ip.transfer.title')}</h4>
+                                <p className="service-row-desc">{t('services.ip.transfer.desc')}</p>
+                            </div>
+                            <div className="service-row-right">
+                                <span className="service-row-price">Rp3.000.000</span>
+                                <SvgIcon d={ICONS.bolt} size={20} />
+                            </div>
+                        </Link>
+
+                        <Link href="/services/hak-cipta" className="service-row-luxury">
+                            <div className="service-row-left">
+                                <h4 className="service-row-title">{t('services.ip.copyright.title')}</h4>
+                                <p className="service-row-desc">{t('services.ip.copyright.desc')}</p>
+                            </div>
+                            <div className="service-row-right">
+                                <span className="service-row-price">Rp2.500.000</span>
+                                <SvgIcon d={ICONS.bolt} size={20} />
+                            </div>
+                        </Link>
+
+                        <Link href="/services/desain-industri" className="service-row-luxury">
+                            <div className="service-row-left">
+                                <h4 className="service-row-title">{t('services.ip.design.title')}</h4>
+                                <p className="service-row-desc">{t('services.ip.design.desc')}</p>
+                            </div>
+                            <div className="service-row-right">
+                                <span className="service-row-price">Rp4.500.000</span>
+                                <SvgIcon d={ICONS.bolt} size={20} />
+                            </div>
+                        </Link>
+
                     </div>
                 </div>
 
                 {/* Legalitas Perusahaan */}
-                <div className="services-category fade-in">
-                    <h3 className="category-title">{t('services.company.title')}</h3>
-                    <div className="services-grid">
-                        <div className="service-card featured-card">
-                            <div className="service-icon"><SvgIcon d={ICONS.globe} /></div>
-                            <h4 className="service-title">{t('services.company.pt.title')}</h4>
-                            <p className="service-desc">{t('services.company.pt.desc')}</p>
-                            <p className="service-price"><strong>Rp6.500.000</strong></p>
-                            <span className="bonus-badge">{t('services.bonus')}</span>
-                            <Link href="/services/pt-pmdn" className="service-link">{t('services.learnMore')}</Link>
-                        </div>
-                        <div className="service-card">
-                            <div className="service-icon"><SvgIcon d={ICONS.building} /></div>
-                            <h4 className="service-title">{t('services.company.cv.title')}</h4>
-                            <p className="service-desc">{t('services.company.cv.desc')}</p>
-                            <p className="service-price"><strong>Rp3.000.000</strong></p>
-                            <Link href="/services/pendirian-cv" className="service-link">{t('services.learnMore')}</Link>
-                        </div>
-                        <div className="service-card">
-                            <div className="service-icon"><SvgIcon d={ICONS.bank} /></div>
-                            <h4 className="service-title">{t('services.company.perorangan.title')}</h4>
-                            <p className="service-desc">{t('services.company.perorangan.desc')}</p>
-                            <p className="service-price"><strong>Rp1.500.000</strong></p>
-                            <Link href="/services/pt-perorangan" className="service-link">{t('services.learnMore')}</Link>
-                        </div>
-                        <div className="service-card">
-                            <div className="service-icon"><SvgIcon d={ICONS.world} /></div>
-                            <h4 className="service-title">{t('services.company.pma.title')}</h4>
-                            <p className="service-desc">{t('services.company.pma.desc')}</p>
-                            <p className="service-price"><strong>Rp9.900.000</strong></p>
-                            <Link href="/services/pt-pma" className="service-link">{t('services.learnMore')}</Link>
-                        </div>
+                <div className="services-category fade-in" style={{ marginTop: '80px' }}>
+                    <h3 className="category-title-luxury">{t('services.company.title')}</h3>
+                    <div className="services-list-luxury">
+
+                        <Link href="/services/pt-pmdn" className="service-row-luxury">
+                            <div className="service-row-left">
+                                <h4 className="service-row-title">{t('services.company.pt.title')}</h4>
+                                <p className="service-row-desc">{t('services.company.pt.desc')}</p>
+                            </div>
+                            <div className="service-row-right">
+                                <span className="service-row-price">Rp6.500.000</span>
+                                <SvgIcon d={ICONS.bolt} size={20} />
+                            </div>
+                        </Link>
+
+                        <Link href="/services/pendirian-cv" className="service-row-luxury">
+                            <div className="service-row-left">
+                                <h4 className="service-row-title">{t('services.company.cv.title')}</h4>
+                                <p className="service-row-desc">{t('services.company.cv.desc')}</p>
+                            </div>
+                            <div className="service-row-right">
+                                <span className="service-row-price">Rp3.000.000</span>
+                                <SvgIcon d={ICONS.bolt} size={20} />
+                            </div>
+                        </Link>
+
+                        <Link href="/services/pt-perorangan" className="service-row-luxury">
+                            <div className="service-row-left">
+                                <h4 className="service-row-title">{t('services.company.perorangan.title')}</h4>
+                                <p className="service-row-desc">{t('services.company.perorangan.desc')}</p>
+                            </div>
+                            <div className="service-row-right">
+                                <span className="service-row-price">Rp1.500.000</span>
+                                <SvgIcon d={ICONS.bolt} size={20} />
+                            </div>
+                        </Link>
+
+                        <Link href="/services/pt-pma" className="service-row-luxury">
+                            <div className="service-row-left">
+                                <h4 className="service-row-title">{t('services.company.pma.title')}</h4>
+                                <p className="service-row-desc">{t('services.company.pma.desc')}</p>
+                            </div>
+                            <div className="service-row-right">
+                                <span className="service-row-price">Rp9.900.000</span>
+                                <SvgIcon d={ICONS.bolt} size={20} />
+                            </div>
+                        </Link>
+
                     </div>
                 </div>
 
@@ -127,42 +164,32 @@ export default function ServicesSection() {
                                 <span>{t(`benefit.${i + 1}`)}</span>
                             </div>
                         ))}
-                        <div className="benefit-card bonus">
-                            <div className="benefit-number">
-                                <SvgIcon d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" size={16} />
-                            </div>
-                            <span>{t('services.bonus')}</span>
-                        </div>
                     </div>
                 </div>
 
                 {/* Visa & ITAS */}
-                <div className="services-category fade-in">
-                    <h3 className="category-title">{t('services.itas.title')}</h3>
-                    <div className="services-grid">
+                <div className="services-category fade-in" style={{ marginTop: '80px' }}>
+                    <h3 className="category-title-luxury">{t('services.itas.title')}</h3>
+                    <div className="services-list-luxury">
                         {[
                             { title: t('services.itas.investor1.title'), desc: t('services.itas.investor1.desc'), price: 'Rp16.000.000', slug: 'itas-investor-1-tahun' },
                             { title: t('services.itas.investor2.title'), desc: t('services.itas.investor2.desc'), price: 'Rp18.000.000', slug: 'itas-investor-2-tahun' },
                             { title: t('services.itas.visac2.title'), desc: t('services.itas.visac2.desc'), price: 'Rp3.500.000', slug: 'visa-c2' },
                             { title: t('services.itas.visad2.1.title'), desc: t('services.itas.visad2.1.desc'), price: 'Rp6.000.000', slug: 'visa-d2-1-tahun' },
                             { title: t('services.itas.visad2.2.title'), desc: t('services.itas.visad2.2.desc'), price: 'Rp9.500.000', slug: 'visa-d2-2-tahun' },
+                            { title: t('services.itas.kitas.title'), desc: t('services.itas.kitas.desc'), price: 'Rp45.000.000', slug: 'kitas-kerja' },
                         ].map((item) => (
-                            <div key={item.slug} className="service-card">
-                                <div className="service-icon"><SvgIcon d={ICONS.briefcase} /></div>
-                                <h4 className="service-title">{item.title}</h4>
-                                <p className="service-desc">{item.desc}</p>
-                                <p className="service-price"><strong>{item.price}</strong></p>
-                                <Link href={`/services/${item.slug}`} className="service-link">{t('services.learnMore')}</Link>
-                            </div>
+                            <Link key={item.slug} href={`/services/${item.slug}`} className="service-row-luxury">
+                                <div className="service-row-left">
+                                    <h4 className="service-row-title">{item.title}</h4>
+                                    <p className="service-row-desc">{item.desc}</p>
+                                </div>
+                                <div className="service-row-right">
+                                    <span className="service-row-price">{item.price}</span>
+                                    <SvgIcon d={ICONS.bolt} size={20} />
+                                </div>
+                            </Link>
                         ))}
-                        <div className="service-card featured-card">
-                            <div className="service-icon"><SvgIcon d={ICONS.user} /></div>
-                            <h4 className="service-title">{t('services.itas.kitas.title')}</h4>
-                            <p className="service-desc">{t('services.itas.kitas.desc')}</p>
-                            <p className="service-price"><strong>Rp45.000.000</strong></p>
-                            <span className="included-badge">{t('services.included')}</span>
-                            <Link href="/services/kitas-kerja" className="service-link">{t('services.learnMore')}</Link>
-                        </div>
                     </div>
                 </div>
 

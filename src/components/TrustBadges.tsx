@@ -19,7 +19,7 @@ export default function TrustBadges() {
     const { t } = useLang();
 
     const badges = [
-        { icon: ICONS.users, number: '500+', label: 'trust.clients' },
+        { icon: ICONS.users, number: '150+', label: 'trust.clients' },
         { icon: ICONS.trending, number: '99%', label: 'trust.success' },
         { icon: ICONS.award, number: '5+', label: 'trust.experience' },
         { icon: ICONS.headset, number: '24/7', label: 'trust.consultation' },

@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { translations, Lang } from '@/lib/translations';
 
-export function useLang(): { t: (key: string) => string; lang: Lang } {
+export function useLang(): { t: (key: string) => string; lang: Lang; toggleLang: () => void } {
     const [lang, setLang] = useState<Lang>('id');
 
     useEffect(() => {
@@ -18,10 +18,18 @@ export function useLang(): { t: (key: string) => string; lang: Lang } {
         return () => window.removeEventListener('langchange', handler);
     }, []);
 
+    const toggleLang = useCallback(() => {
+        const next = lang === 'id' ? 'en' : 'id';
+        setLang(next);
+        localStorage.setItem('veralex-lang', next);
+        document.documentElement.lang = next;
+        window.dispatchEvent(new CustomEvent('langchange', { detail: next }));
+    }, [lang]);
+
     const t = useCallback(
         (key: string) => translations[lang]?.[key] || key,
         [lang]
     );
 
-    return { t, lang };
+    return { t, lang, toggleLang };
 }

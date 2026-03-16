@@ -121,6 +121,27 @@ CREATE TRIGGER trg_orders_updated_at
 CREATE TRIGGER trg_progress_updated_at
     BEFORE UPDATE ON order_progress FOR EACH ROW EXECUTE FUNCTION update_updated_at();
 
+-- ===== AUTO-CREATE USER PROFILE ON SIGNUP =====
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO public.users (id, email, role, full_name, phone)
+    VALUES (
+        NEW.id,
+        NEW.email,
+        'client',
+        COALESCE(NEW.raw_user_meta_data->>'full_name', 'User'),
+        COALESCE(NEW.raw_user_meta_data->>'phone', NULL)
+    )
+    ON CONFLICT (id) DO NOTHING;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+CREATE TRIGGER on_auth_user_created
+    AFTER INSERT ON auth.users
+    FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+
 -- ================================================
 -- ROW-LEVEL SECURITY (RLS) POLICIES
 -- ================================================
@@ -139,6 +160,10 @@ ALTER TABLE users ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Users can read own profile"
     ON users FOR SELECT
     USING (id = auth.uid() OR is_admin());
+
+CREATE POLICY "Users can insert own profile"
+    ON users FOR INSERT
+    WITH CHECK (id = auth.uid());
 
 CREATE POLICY "Users can update own profile"
     ON users FOR UPDATE
@@ -246,18 +271,23 @@ CREATE POLICY "Admin can manage documents"
 -- SAMPLE DATA
 -- ================================================
 
--- Services
+-- Services (all 15 Veralex services)
 INSERT INTO services (name, slug, price, estimated_days, description, category) VALUES
-('Pendirian PT PMDN', 'pt-pmdn', 6500000, 14, 'Pendirian PT PMDN lengkap dengan legalitas dan izin usaha', 'company'),
-('Pendaftaran Merek', 'pendaftaran-merek', 2500000, 180, 'Pendaftaran merek dagang melalui DJKI Kemenkumham', 'ip'),
-('KITAS Kerja (1 Tahun)', 'kitas-kerja', 45000000, 30, 'KITAS untuk pekerja asing, termasuk DPKK dan RPTKA', 'visa');
-
--- Progress templates (example for PT PMDN)
--- In production, you'd insert these when an order is created:
--- Step 1: Pengecekan Nama
--- Step 2: Pembuatan Akta Notaris
--- Step 3: Pengesahan Kemenkumham
--- Step 4: NPWP Perusahaan
--- Step 5: NIB / OSS
--- Step 6: Izin Usaha
--- Step 7: Serah Terima Dokumen
+-- Kekayaan Intelektual
+('Pendaftaran Merek', 'pendaftaran-merek', 2500000, 180, 'Jasa pendaftaran merek dagang di Indonesia melalui DJKI Kemenkumham. Kami membantu dari pengecekan hingga sertifikat merek terbit.', 'Kekayaan Intelektual'),
+('Perpanjangan Merek', 'perpanjangan-merek', 6000000, 90, 'Jasa perpanjangan hak merek yang sudah terdaftar agar tetap terlindungi secara hukum.', 'Kekayaan Intelektual'),
+('Pengalihan Merek', 'pengalihan-merek', 3000000, 60, 'Jasa pengalihan hak kepemilikan merek dari satu pihak ke pihak lain secara legal.', 'Kekayaan Intelektual'),
+('Pendaftaran Hak Cipta', 'hak-cipta', 2500000, 90, 'Perlindungan karya cipta Anda secara hukum melalui pendaftaran di Kemenkumham.', 'Kekayaan Intelektual'),
+('Pendaftaran Desain Industri', 'desain-industri', 4500000, 120, 'Lindungi desain produk Anda dari peniruan dengan pendaftaran desain industri.', 'Kekayaan Intelektual'),
+-- Legalitas Perusahaan
+('Pendirian PT PMDN / PT Umum', 'pt-pmdn', 6500000, 14, 'Pendirian PT PMDN lengkap dengan legalitas dan izin usaha. Sudah termasuk website company profile GRATIS.', 'Legalitas Perusahaan'),
+('Pendirian CV', 'pendirian-cv', 3000000, 10, 'Pendirian CV untuk usaha kecil dan menengah dengan proses cepat dan legalitas lengkap.', 'Legalitas Perusahaan'),
+('Pendirian PT Perorangan', 'pt-perorangan', 1500000, 7, 'PT dengan pemilik tunggal — solusi legal terjangkau untuk wirausaha.', 'Legalitas Perusahaan'),
+('Pendirian PT PMA', 'pt-pma', 9900000, 21, 'Pendirian perusahaan penanaman modal asing (PMA) di Indonesia dengan legalitas lengkap.', 'Legalitas Perusahaan'),
+-- Visa & ITAS
+('ITAS Investor 1 Tahun', 'itas-investor-1-tahun', 16000000, 30, 'Izin tinggal terbatas untuk investor asing di Indonesia selama 1 tahun.', 'Visa & ITAS'),
+('ITAS Investor 2 Tahun', 'itas-investor-2-tahun', 18000000, 45, 'Izin tinggal terbatas untuk investor asing di Indonesia selama 2 tahun.', 'Visa & ITAS'),
+('Visa C2', 'visa-c2', 3500000, 14, 'Visa kunjungan sosial budaya untuk tinggal sementara di Indonesia.', 'Visa & ITAS'),
+('Visa D2 (1 Tahun)', 'visa-d2-1-tahun', 6000000, 21, 'Visa tinggal terbatas untuk berbagai keperluan selama 1 tahun.', 'Visa & ITAS'),
+('Visa D2 (2 Tahun)', 'visa-d2-2-tahun', 9500000, 30, 'Visa tinggal terbatas untuk berbagai keperluan selama 2 tahun.', 'Visa & ITAS'),
+('KITAS Kerja (1 Tahun)', 'kitas-kerja', 45000000, 30, 'KITAS untuk pekerja asing, sudah termasuk DPKK ($1200 USD) dan RPTKA.', 'Visa & ITAS');

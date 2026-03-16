@@ -39,6 +39,7 @@ export default function Navbar() {
         { key: 'nav.services', href: '#services' },
         { key: 'nav.pricing', href: '#pricing' },
         { key: 'nav.gallery', href: '/gallery' },
+        { key: 'Pesanan Saya', href: '/dashboard/orders' },
         { key: 'nav.contact', href: '#contact' },
     ];
 
@@ -68,50 +69,56 @@ export default function Navbar() {
     return (
         <nav id="navbar" className={`navbar${scrolled ? ' scrolled' : ''}`}>
             <div className="container">
-                <Link href="/" className="navbar-brand">
-                    <Image src="/logo.jpg" alt="VERALEX CONSULTING" width={50} height={50} className="navbar-logo" priority />
-                    <span className="navbar-name">VERALEX</span>
-                </Link>
-
-                <div className={`navbar-menu${menuOpen ? ' active' : ''}`} id="navMenu">
-                    {navLinks.map((link) =>
+                {/* Left Links (Desktop) */}
+                <div className={`navbar-menu navbar-left desktop-only`}>
+                    {navLinks.slice(0, 3).map((link) =>
                         link.href.startsWith('/') ? (
-                            <Link
-                                key={link.key}
-                                href={link.href}
-                                className="navbar-link"
-                                onClick={() => setMenuOpen(false)}
-                            >
+                            <Link key={link.key} href={link.href} className="navbar-link" onClick={() => setMenuOpen(false)}>
                                 {t(link.key)}
                             </Link>
                         ) : (
-                            <a
-                                key={link.key}
-                                href={getFullHref(link.href)}
-                                className="navbar-link"
-                                onClick={(e) => handleNavClick(e, link.href)}
-                            >
+                            <a key={link.key} href={getFullHref(link.href)} className="navbar-link" onClick={(e) => handleNavClick(e, link.href)}>
                                 {t(link.key)}
                             </a>
                         )
                     )}
                 </div>
 
-                <div className="navbar-actions">
-                    <button className="lang-toggle" id="langToggle" onClick={toggleLang}>
-                        {lang === 'id' ? 'EN' : 'ID'}
-                    </button>
-                    <a
-                        href="https://wa.me/6281219476385?text=Halo%20VERALEX,%20saya%20ingin%20konsultasi%20tentang%20layanan%20legalitas%20bisnis."
-                        className="btn btn-primary btn-nav"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        {t('nav.cta')}
-                    </a>
+                {/* Centered Brand Motif */}
+                <Link href="/" className={`navbar-brand-centered ${scrolled ? 'scrolled-brand' : ''}`} aria-label="VERALEX Home" onClick={() => setMenuOpen(false)}>
+                    <div className="navbar-logo-wrapper">
+                        <Image src="/logo.jpg" alt="VERALEX CONSULTING" fill sizes="(max-width: 768px) 45px, 60px" className="navbar-logo-image" priority />
+                    </div>
+                </Link>
+
+                {/* Right Links & Desktop Actions (Desktop) */}
+                <div className={`navbar-menu navbar-right desktop-only`}>
+                    {navLinks.slice(3).map((link) =>
+                        link.href.startsWith('/') ? (
+                            <Link key={link.key} href={link.href} className="navbar-link" onClick={() => setMenuOpen(false)}>
+                                {t(link.key)}
+                            </Link>
+                        ) : (
+                            <a key={link.key} href={getFullHref(link.href)} className="navbar-link" onClick={(e) => handleNavClick(e, link.href)}>
+                                {t(link.key)}
+                            </a>
+                        )
+                    )}
+
+                    <div className="navbar-desktop-actions">
+                        <button className="lang-toggle" onClick={toggleLang}>
+                            {lang === 'id' ? 'EN' : 'ID'}
+                        </button>
+                        <Link href="/auth/login" className="navbar-link auth-link-nav">
+                            Masuk
+                        </Link>
+                    </div>
+                </div>
+
+                {/* Mobile Hamburger Toggle Only */}
+                <div className="navbar-mobile-controls">
                     <button
                         className={`menu-toggle${menuOpen ? ' active' : ''}`}
-                        id="menuToggle"
                         onClick={() => setMenuOpen(!menuOpen)}
                         aria-label="Toggle menu"
                     >
@@ -119,6 +126,37 @@ export default function Navbar() {
                         <span></span>
                         <span></span>
                     </button>
+                </div>
+            </div>
+
+            {/* Mobile Menu Full Overlay */}
+            <div className={`navbar-mobile-menu ${menuOpen ? 'active' : ''}`}>
+                <div className="navbar-mobile-menu-inner">
+                    <div className="mobile-nav-links">
+                        {navLinks.map((link) =>
+                            link.href.startsWith('/') ? (
+                                <Link key={link.key} href={link.href} className="mobile-nav-link" onClick={() => setMenuOpen(false)}>
+                                    {t(link.key)}
+                                </Link>
+                            ) : (
+                                <a key={link.key} href={getFullHref(link.href)} className="mobile-nav-link" onClick={(e) => handleNavClick(e, link.href)}>
+                                    {t(link.key)}
+                                </a>
+                            )
+                        )}
+                    </div>
+
+                    <div className="navbar-mobile-actions">
+                        <Link href="/auth/login" className="btn-editorial" onClick={() => setMenuOpen(false)}>
+                            Masuk
+                        </Link>
+                        <a href="https://wa.me/6281219476385?text=Halo%20VERALEX,%20saya%20ingin%20konsultasi%20tentang%20layanan%20legalitas%20bisnis." className="btn-editorial-solid" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>
+                            {t('nav.cta')}
+                        </a>
+                        <button className="lang-toggle-mobile" onClick={toggleLang}>
+                            Language: {lang === 'id' ? 'EN' : 'ID'}
+                        </button>
+                    </div>
                 </div>
             </div>
         </nav>
