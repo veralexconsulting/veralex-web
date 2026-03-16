@@ -1,6 +1,8 @@
 import { requireUser } from '@/lib/auth';
 import { createServerClient } from '@/lib/supabase/server';
 
+export const dynamic = 'force-dynamic';
+
 export default async function OrdersPage() {
     const user = await requireUser();
     const supabase = createServerClient();

@@ -3,6 +3,8 @@ import { createServerClient } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import OrderDetailClient from './OrderDetailClient';
 
+export const dynamic = 'force-dynamic';
+
 interface OrderDetailProps {
     params: Promise<{ id: string }>;
 }
