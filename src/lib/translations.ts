@@ -120,9 +120,9 @@ export const translations: Record<Lang, Record<string, string>> = {
         // Testimonials
         'testimonials.title': 'Testimoni Klien',
         'testimonials.subtitle': 'Apa kata klien tentang layanan VERALEX CONSULTING',
-        'testimonials.t1.content': 'Awalnya bingung banget ngurus izin usaha sama PT, tapi tim Veralex bener-bener bantu dari A sampai Z. CS-nya fast response dan sabar banget ngejelasin!',
-        'testimonials.t2.content': 'Daftarin merek brand baju aku di sini ternyata se-gampang itu. Tinggal percayain dapet beres, terus suka dikabarin progress dari DJKI-nya sampe sertifikat turun. Mantep pokoknya.',
-        'testimonials.t3.content': 'Ngurusin KITAS & RPTKA buat direksi expat perusahaanku jadi cepet banget kelarnya berkat Veralex. Semuanya di-handle dengan profesional dan transparan biayanya.',
+        'testimonials.t1.content': 'Saya baru pertama kali bikin PT, jadi banyak hal yang belum paham soal nama perusahaan, KBLI, sampai NIB. Tim Veralex bantu jelasin step by step dan update dokumen tanpa harus saya follow up terus.',
+        'testimonials.t2.content': 'Untuk pendaftaran merek, mereka bantu cek kelas yang sesuai dan kasih arahan sebelum pengajuan. Progress dari DJKI juga dikabarin berkala, jadi saya tahu posisi berkasnya sudah sampai mana.',
+        'testimonials.t3.content': 'Kami butuh pengurusan KITAS untuk direksi asing dengan timeline yang cukup ketat. Veralex bantu susun dokumen perusahaan, koordinasi prosesnya rapi, dan biaya yang disampaikan dari awal tidak berubah.',
         'testimonials.t3.role': 'HR Manager, Perusahaan IT',
 
         // Why Legal
@@ -426,9 +426,9 @@ export const translations: Record<Lang, Record<string, string>> = {
         // Testimonials
         'testimonials.title': 'Client Testimonials',
         'testimonials.subtitle': 'What our clients say about VERALEX CONSULTING services',
-        'testimonials.t1.content': 'Initially I was really confused about business licenses and PT setup, but the Veralex team helped us from A to Z. Their support is super fast and very patient in explaining things!',
-        'testimonials.t2.content': 'Registering my clothing brand trademark here was so easy. Just handed it over and they took care of everything, even kept updating me on the progress until the certificate was issued. Awesome.',
-        'testimonials.t3.content': 'Processing KITAS & RPTKA for our expat directors was completed remarkably fast thanks to Veralex. Everything was handled professionally with transparent costs.',
+        'testimonials.t1.content': 'It was my first time setting up a PT, so I had many questions about company names, KBLI, and NIB. Veralex explained each step clearly and kept the document progress updated without constant follow-up.',
+        'testimonials.t2.content': 'For our trademark registration, they helped confirm the right class and reviewed the filing direction before submission. DJKI progress was shared regularly, so we knew exactly where the application stood.',
+        'testimonials.t3.content': 'We needed KITAS processing for a foreign director on a tight timeline. Veralex helped organize the company documents, coordinated the process neatly, and the quoted costs stayed consistent.',
         'testimonials.t3.role': 'HR Manager, IT Company',
 
         // Why Legal

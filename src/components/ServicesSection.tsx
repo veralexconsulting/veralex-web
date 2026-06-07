@@ -50,7 +50,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.ip.trademark.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <span className="service-row-price">Rp2.500.000</span>
+                                <span className="service-row-price">Rp6.000.000</span>
                                 <SvgIcon d={ICONS.bolt} size={20} />
                             </div>
                         </Link>
@@ -113,7 +113,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.company.pt.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <span className="service-row-price">Rp6.500.000</span>
+                                <span className="service-row-price">Rp7.000.000</span>
                                 <SvgIcon d={ICONS.bolt} size={20} />
                             </div>
                         </Link>

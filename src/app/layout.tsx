@@ -150,8 +150,8 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "FAQPage",
               mainEntity: [
-                { "@type": "Question", name: "Berapa biaya pendirian PT di Indonesia?", acceptedAnswer: { "@type": "Answer", text: "Biaya pendirian PT mulai dari Rp1.500.000 untuk PT Perorangan, Rp3.000.000 untuk CV, Rp7.500.000 untuk PT PMDN, dan Rp9.900.000 untuk PT PMA." } },
-                { "@type": "Question", name: "Berapa lama proses pendaftaran merek di DJKI?", acceptedAnswer: { "@type": "Answer", text: "Proses pendaftaran merek di DJKI memakan waktu sekitar 6-12 bulan. VERALEX CONSULTING membantu dari pengecekan hingga penerbitan sertifikat dengan biaya mulai Rp2.500.000." } },
+                { "@type": "Question", name: "Berapa biaya pendirian PT di Indonesia?", acceptedAnswer: { "@type": "Answer", text: "Biaya pendirian PT mulai dari Rp1.500.000 untuk PT Perorangan, Rp3.000.000 untuk CV, Rp7.000.000 untuk PT PMDN, dan Rp9.900.000 untuk PT PMA." } },
+                { "@type": "Question", name: "Berapa lama proses pendaftaran merek di DJKI?", acceptedAnswer: { "@type": "Answer", text: "Proses pendaftaran merek di DJKI memakan waktu sekitar 6-12 bulan. VERALEX CONSULTING membantu dari pengecekan hingga penerbitan sertifikat dengan biaya mulai Rp6.000.000." } },
                 { "@type": "Question", name: "Apa saja dokumen untuk mengurus KITAS Kerja?", acceptedAnswer: { "@type": "Answer", text: "Dokumen meliputi: paspor TKA, foto, CV, ijazah, surat sponsor, RPTKA, dan bukti DPKK ($1200 USD). Biaya layanan Rp45.000.000 sudah termasuk DPKK dan RPTKA." } },
                 { "@type": "Question", name: "Apakah bisa konsultasi gratis?", acceptedAnswer: { "@type": "Answer", text: "Ya, VERALEX CONSULTING menyediakan konsultasi gratis melalui WhatsApp di +62 812 1947 6385." } },
                 { "@type": "Question", name: "Apa perbedaan PT PMDN dan PT PMA?", acceptedAnswer: { "@type": "Answer", text: "PT PMDN modalnya dimiliki WNI atau badan hukum Indonesia. PT PMA memiliki modal dari investor asing dan memerlukan izin khusus." } },

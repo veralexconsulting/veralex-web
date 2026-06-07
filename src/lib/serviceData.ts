@@ -19,7 +19,7 @@ export const serviceData: ServiceItem[] = [
         titleEn: 'Trademark Registration',
         description: 'Jasa pendaftaran merek dagang di Indonesia melalui DJKI Kemenkumham. Kami membantu dari pengecekan hingga sertifikat merek terbit.',
         descriptionEn: 'Trademark registration service in Indonesia through DJKI Ministry of Law. We assist from checking to certificate issuance.',
-        price: 'Rp2.500.000',
+        price: 'Rp6.000.000',
         features: ['Pengecekan ketersediaan merek', 'Pengajuan ke DJKI', 'Konsultasi kelas merek', 'Monitoring status pendaftaran', 'Pengurusan hingga sertifikat terbit'],
         featuresEn: ['Trademark availability check', 'Submission to DJKI', 'Trademark class consultation', 'Registration status monitoring', 'Processing until certificate issuance'],
     },
@@ -76,7 +76,7 @@ export const serviceData: ServiceItem[] = [
         titleEn: 'Domestic Company (PT PMDN) Establishment',
         description: 'Pendirian PT PMDN lengkap dengan legalitas dan izin usaha. Sudah termasuk website company profile GRATIS.',
         descriptionEn: 'Complete PT PMDN establishment with business legality and permits. Includes FREE company profile website.',
-        price: 'Rp6.500.000',
+        price: 'Rp7.000.000',
         features: [
             'Pengecekan dan Pemesanan Nama', 'Akta Pendirian dari Notaris', 'SK/SKT Pengesahan Kemenkumham',
             'NPWP Perusahaan', 'NIB / TDP', 'Sertifikat Standar / SIUP',
