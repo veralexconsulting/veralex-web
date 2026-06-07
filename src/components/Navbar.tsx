@@ -6,6 +6,24 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { translations, Lang } from '@/lib/translations';
 
+function LanguageToggle({ lang, onClick, className = '' }: { lang: Lang; onClick: () => void; className?: string }) {
+    return (
+        <button
+            className={`flag-lang-toggle ${className}`}
+            onClick={onClick}
+            type="button"
+            aria-label={lang === 'id' ? 'Switch language to English' : 'Ubah bahasa ke Indonesia'}
+        >
+            <span className={`flag-lang-option${lang === 'id' ? ' active' : ''}`} aria-hidden="true">
+                🇮🇩
+            </span>
+            <span className={`flag-lang-option${lang === 'en' ? ' active' : ''}`} aria-hidden="true">
+                🇬🇧
+            </span>
+        </button>
+    );
+}
+
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
@@ -106,9 +124,7 @@ export default function Navbar() {
                     )}
 
                     <div className="navbar-desktop-actions">
-                        <button className="lang-toggle" onClick={toggleLang}>
-                            {lang === 'id' ? 'EN' : 'ID'}
-                        </button>
+                        <LanguageToggle lang={lang} onClick={toggleLang} />
                         <Link href="/auth/login" className="navbar-link auth-link-nav">
                             Masuk
                         </Link>
@@ -117,6 +133,7 @@ export default function Navbar() {
 
                 {/* Mobile Hamburger Toggle Only */}
                 <div className="navbar-mobile-controls">
+                    <LanguageToggle lang={lang} onClick={toggleLang} className="flag-lang-toggle-mobile" />
                     <button
                         className={`menu-toggle${menuOpen ? ' active' : ''}`}
                         onClick={() => setMenuOpen(!menuOpen)}
@@ -153,9 +170,6 @@ export default function Navbar() {
                         <a href="https://wa.me/6281219476385?text=Halo%20VERALEX,%20saya%20ingin%20konsultasi%20tentang%20layanan%20legalitas%20bisnis." className="btn-editorial-solid" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>
                             {t('nav.cta')}
                         </a>
-                        <button className="lang-toggle-mobile" onClick={toggleLang}>
-                            Language: {lang === 'id' ? 'EN' : 'ID'}
-                        </button>
                     </div>
                 </div>
             </div>

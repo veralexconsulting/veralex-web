@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
-import TrustBadges from '@/components/TrustBadges';
 import ServicesSection from '@/components/ServicesSection';
 import PricingSection from '@/components/PricingSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
@@ -26,7 +25,6 @@ export default function Home() {
       <ScrollAnimator />
       <Navbar />
       <HeroSection />
-      <TrustBadges />
       <ServicesSection />
       <PricingSection />
       <TestimonialsSection />
