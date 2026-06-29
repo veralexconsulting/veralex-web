@@ -4,6 +4,21 @@ import type { NextRequest } from 'next/server';
 
 export async function middleware(req: NextRequest) {
     const res = NextResponse.next();
+    const pathname = req.nextUrl.pathname;
+    const isAuthPage = pathname.startsWith('/auth');
+    const isDashboard = pathname.startsWith('/dashboard');
+    const isAdminArea = pathname.startsWith('/admin');
+    const hasSupabaseConfig =
+        Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL) &&
+        Boolean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+
+    if (!hasSupabaseConfig) {
+        if (isDashboard || isAdminArea) {
+            return NextResponse.redirect(new URL('/auth/login', req.url));
+        }
+
+        return res;
+    }
 
     const supabase = createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -26,11 +41,6 @@ export async function middleware(req: NextRequest) {
     const {
         data: { session },
     } = await supabase.auth.getSession();
-
-    const pathname = req.nextUrl.pathname;
-    const isAuthPage = pathname.startsWith('/auth');
-    const isDashboard = pathname.startsWith('/dashboard');
-    const isAdminArea = pathname.startsWith('/admin');
 
     // Redirect users away from protected areas if they don't have a session
     if (!session && (isDashboard || isAdminArea)) {

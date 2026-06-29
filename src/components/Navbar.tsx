@@ -57,7 +57,6 @@ export default function Navbar() {
         { key: 'nav.services', href: '#services' },
         { key: 'nav.pricing', href: '#pricing' },
         { key: 'nav.gallery', href: '/gallery' },
-        { key: 'Pesanan Saya', href: '/dashboard/orders' },
         { key: 'nav.contact', href: '#contact' },
     ];
 
@@ -125,9 +124,6 @@ export default function Navbar() {
 
                     <div className="navbar-desktop-actions">
                         <LanguageToggle lang={lang} onClick={toggleLang} />
-                        <Link href="/auth/login" className="navbar-link auth-link-nav">
-                            Masuk
-                        </Link>
                     </div>
                 </div>
 
@@ -164,9 +160,6 @@ export default function Navbar() {
                     </div>
 
                     <div className="navbar-mobile-actions">
-                        <Link href="/auth/login" className="btn-editorial" onClick={() => setMenuOpen(false)}>
-                            Masuk
-                        </Link>
                         <a href="https://wa.me/6281219476385?text=Halo%20VERALEX,%20saya%20ingin%20konsultasi%20tentang%20layanan%20legalitas%20bisnis." className="btn-editorial-solid" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>
                             {t('nav.cta')}
                         </a>

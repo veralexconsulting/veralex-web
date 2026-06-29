@@ -118,13 +118,13 @@ export default function ServicesSection() {
                             </div>
                         </Link>
 
-                        <Link href="/services/pendirian-cv" className="service-row-luxury">
+                        <Link href="/services/pt-pma" className="service-row-luxury">
                             <div className="service-row-left">
-                                <h4 className="service-row-title">{t('services.company.cv.title')}</h4>
-                                <p className="service-row-desc">{t('services.company.cv.desc')}</p>
+                                <h4 className="service-row-title">{t('services.company.pma.title')}</h4>
+                                <p className="service-row-desc">{t('services.company.pma.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <span className="service-row-price">Rp3.000.000</span>
+                                <span className="service-row-price">Rp9.900.000</span>
                                 <SvgIcon d={ICONS.bolt} size={20} />
                             </div>
                         </Link>
@@ -140,13 +140,13 @@ export default function ServicesSection() {
                             </div>
                         </Link>
 
-                        <Link href="/services/pt-pma" className="service-row-luxury">
+                        <Link href="/services/pendirian-cv" className="service-row-luxury">
                             <div className="service-row-left">
-                                <h4 className="service-row-title">{t('services.company.pma.title')}</h4>
-                                <p className="service-row-desc">{t('services.company.pma.desc')}</p>
+                                <h4 className="service-row-title">{t('services.company.cv.title')}</h4>
+                                <p className="service-row-desc">{t('services.company.cv.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <span className="service-row-price">Rp9.900.000</span>
+                                <span className="service-row-price">Rp3.000.000</span>
                                 <SvgIcon d={ICONS.bolt} size={20} />
                             </div>
                         </Link>

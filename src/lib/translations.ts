@@ -11,6 +11,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         'nav.cta': 'Chat WhatsApp',
 
         // Hero
+        'hero.badge': 'Konsultan Hukum & Legalitas Bisnis Terpercaya',
         'hero.title': 'Solusi Legalitas & Perizinan Terlengkap untuk Bisnis Anda',
         'hero.subtitle': 'Veralex Consulting membantu pengurusan legalitas perusahaan, produk, dan tenaga kerja asing secara profesional dan sesuai regulasi Indonesia.',
         'hero.promo': 'Konsultasi GRATIS + Diskon untuk Klien Baru',
@@ -18,6 +19,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         'hero.viewServices': 'Lihat Layanan Kami',
         'hero.response': 'Respon cepat dalam hitungan menit',
         'hero.privacy': 'Privasi klien terjamin',
+        'hero.visual_badge': 'Izin Resmi & Terverifikasi',
 
         // Trust Badges
         'trust.clients': 'Klien Terlayani',
@@ -157,6 +159,10 @@ export const translations: Record<Lang, Record<string, string>> = {
         'contact.title': 'Hubungi Kami',
         'contact.subtitle': 'Kami siap membantu kebutuhan legal Anda',
         'contact.address': 'Alamat',
+        'contact.address_value': 'Jl. Utama Raya No.348, RT.003/RW.026, Kayuringin Jaya, Kec. Bekasi Sel., Kota Bks, Jawa Barat 17144',
+        'contact.email_sub': 'Hubungi kami via email formal',
+        'contact.wa_sub': 'Respon cepat & gratis konsultasi',
+        'contact.address_sub': 'Klik untuk melihat di Google Maps',
         'contact.send': 'Kirim Pesan',
 
         // Floating WhatsApp
@@ -168,7 +174,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         'footer.contact': 'Kontak',
         'footer.copyright': '© 2026 VERALEX CONSULTING. All rights reserved.',
         'footer.allServices': 'Semua Layanan',
-        'footer.address': 'Bekasi, Jawa Barat, Indonesia',
+        'footer.address': 'Jl. Utama Raya No.348, RT.003/RW.026, Kayuringin Jaya, Kec. Bekasi Sel., Kota Bks, Jawa Barat 17144',
         'footer.itas': 'ITAS Tenaga Kerja Asing',
 
         // Gallery
@@ -317,6 +323,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         'nav.cta': 'Chat WhatsApp',
 
         // Hero
+        'hero.badge': 'Trusted Business Legality & Law Consultant',
         'hero.title': 'Complete Legal & Licensing Solutions for Your Business',
         'hero.subtitle': 'Veralex Consulting helps manage company legality, product certification, and foreign worker permits professionally and in compliance with Indonesian regulations.',
         'hero.promo': 'FREE Consultation + Discount for New Clients',
@@ -324,6 +331,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         'hero.viewServices': 'View Our Services',
         'hero.response': 'Fast response in minutes',
         'hero.privacy': 'Client privacy guaranteed',
+        'hero.visual_badge': 'Official & Verified Licensing',
 
         // Trust Badges
         'trust.clients': 'Happy Clients',
@@ -463,6 +471,10 @@ export const translations: Record<Lang, Record<string, string>> = {
         'contact.title': 'Contact Us',
         'contact.subtitle': 'We are ready to help with your legal needs',
         'contact.address': 'Address',
+        'contact.address_value': 'Jl. Utama Raya No.348, RT.003/RW.026, Kayuringin Jaya, Kec. Bekasi Sel., Kota Bks, Jawa Barat 17144',
+        'contact.email_sub': 'Contact us via formal email',
+        'contact.wa_sub': 'Fast response & free consultation',
+        'contact.address_sub': 'Click to view on Google Maps',
         'contact.send': 'Send Message',
 
         // Floating WhatsApp
@@ -474,7 +486,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         'footer.contact': 'Contact',
         'footer.copyright': '© 2026 VERALEX CONSULTING. All rights reserved.',
         'footer.allServices': 'All Services',
-        'footer.address': 'Bekasi, West Java, Indonesia',
+        'footer.address': 'Jl. Utama Raya No.348, RT.003/RW.026, Kayuringin Jaya, Kec. Bekasi Sel., Kota Bks, Jawa Barat 17144',
         'footer.itas': 'Foreign Worker ITAS',
 
         // Gallery
