@@ -16,6 +16,11 @@ export const metadata: Metadata = {
   description: 'Konsultan hukum profesional di Indonesia. Ahli dalam pendirian PT, CV, PT PMA, pendaftaran merek, hak cipta, dan pengurusan ITAS/KITAS. Konsultasi gratis untuk legalitas bisnis Anda.',
   alternates: {
     canonical: '/',
+    languages: {
+      'en': '/',
+      'id': '/id',
+      'zh': '/zh',
+    },
   },
 };
 

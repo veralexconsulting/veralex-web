@@ -1,0 +1,50 @@
+{
+    "slug": "pt-pma",
+    "title": "PT PMA Registration in Indonesia",
+    "metaTitle": "PT PMA Registration in Indonesia | Foreign Company Setup — VERALEX CONSULTING",
+    "metaDescription": "Professional PT PMA (Foreign Investment Company) registration in Indonesia. Complete legal compliance with BKPM regulations. Starting from Rp9,900,000. Free consultation via WhatsApp!",
+    "keywords": "PT PMA registration, foreign company Indonesia, register company Indonesia, PT PMA cost, establish company Indonesia, foreign investment company, start business in Indonesia, open company Indonesia, Indonesia company formation",
+    "category": "Company Formation",
+    "categorySlug": "company-formation",
+    "intro": "A PT PMA (Penanaman Modal Asing) is the required legal entity for foreign nationals or foreign companies wishing to operate commercially in Indonesia. Establishing a PT PMA involves stricter regulations under BKPM (Badan Koordinasi Penanaman Modal) and minimum investment requirements compared to a domestic PT PMDN. VERALEX CONSULTING provides end-to-end PT PMA registration services, from deed of establishment through to OSS RBA account activation and LKPM reporting setup.",
+    "requirements": [
+        { "item": "Valid passport for all foreign directors and commissioners (minimum 18 months validity)" },
+        { "item": "Proof of registered company in the investor's home country (apostilled/legalized)" },
+        { "item": "Proposed company name — minimum 3 words in Bahasa Indonesia" },
+        { "item": "Domicile address for the PT PMA in Indonesia" },
+        { "item": "Selected KBLI business classification codes matching your investment activity" },
+        { "item": "Minimum total investment exceeding Rp 10 Billion (excluding land and buildings)" },
+        { "item": "Minimum placed and paid-up capital of Rp 10 Billion" },
+        { "item": "Shareholding structure showing foreign ownership percentage" }
+    ],
+    "processSteps": [
+        { "step": 1, "title": "Free Consultation & Feasibility Review", "description": "We assess your business plan, identify the correct KBLI codes under the Positive Investment List (DPI), and confirm whether your sector allows 100% foreign ownership or has caps." },
+        { "step": 2, "title": "Company Name Reservation", "description": "We reserve your proposed PT PMA name through the AHU Online system to ensure it is available and complies with naming regulations." },
+        { "step": 3, "title": "Deed of Establishment (Akta Pendirian)", "description": "A notarial deed is prepared and signed by all founders (Indonesian notary), defining the company's articles of association, shareholding structure, and capital details." },
+        { "step": 4, "title": "Ministry of Law Approval (SK Kemenkumham)", "description": "The deed is submitted to the Ministry of Law and Human Rights for official approval. Digital SK issuance typically takes 1–3 working days." },
+        { "step": 5, "title": "Tax ID & OSS RBA Registration", "description": "We register your company NPWP (Tax ID) and set up your OSS RBA (Online Single Submission Risk-Based Approach) account for the NIB (Business Identification Number)." },
+        { "step": 6, "title": "Investment Permit & LKPM Setup", "description": "BKPM investment approval is obtained, and your LKPM (Investment Activity Report) reporting account is configured for periodic compliance." },
+        { "step": 7, "title": "Company Stamp & Document Handover", "description": "Your official company stamp is produced and all legal documents are handed over: deed, SK, NPWP, NIB, OSS account credentials, and business license." }
+    ],
+    "price": "Rp9.900.000",
+    "priceNote": "All-inclusive package — covers deed, SK Kemenkumham, NPWP, OSS RBA, NIB, and BKPM consultation. No hidden fees.",
+    "features": [
+        "PMA Establishment Deed (Akta Pendirian PMA)",
+        "Ministry of Law Approval (SK Kemenkumham)",
+        "Company Tax ID (NPWP Badan Hukum)",
+        "OSS RBA Account with NIB",
+        "Investment Permit (Izin Investasi)",
+        "BKPM Consultation & LKPM Setup",
+        "Company Stamp"
+    ],
+    "faqs": [
+        { "question": "How much does it cost to register a PT PMA in Indonesia?", "answer": "The PT PMA registration service fee at VERALEX CONSULTING starts from Rp 9,900,000. This is an all-inclusive package covering the notarial deed, Ministry of Law approval (SK), company tax ID (NPWP), OSS RBA account, NIB, and BKPM consultation. Note that this excludes government fees that may apply depending on your business sector." },
+        { "question": "What is the minimum capital requirement for PT PMA in Indonesia?", "answer": "Based on BKPM regulations, the total investment for a PT PMA must exceed Rp 10 Billion (excluding land and buildings), with minimum placed and paid-up capital of Rp 10 Billion. This applies to most business sectors, though some sectors may have different thresholds." },
+        { "question": "Does a PT PMA director have to live in Indonesia?", "answer": "It is not mandatory for all directors to reside in Indonesia. However, at least one director must be domiciled in Indonesia and appointed as the company's responsible party. Foreign directors who actively work in Indonesia must hold a Work KITAS." },
+        { "question": "Can a PT PMA have 100% foreign ownership?", "answer": "It depends on the business sector. The Positive Investment List (DPI) determines which sectors allow 100% foreign ownership, which have caps, and which are closed. VERALEX consultants will help identify the right KBLI codes for your investment." },
+        { "question": "Is a PT PMA required to submit LKPM reports?", "answer": "Yes. PT PMA must submit LKPM (Laporan Kegiatan Penanaman Modal) periodically to BKPM/OSS as required by regulation. Failure to submit can result in sanctions including blacklisting from the OSS system." },
+        { "question": "How long does PT PMA registration take?", "answer": "The complete PT PMA establishment process at VERALEX CONSULTING typically takes 3–7 working days from the date all documents are signed and submitted. This includes name reservation, deed preparation, Ministry approval, and NIB registration." }
+    ],
+    "relatedSlugs": ["itas-investor-1-tahun", "itas-investor-2-tahun", "kitas-kerja"],
+    "ogImage": "/logo.jpg"
+}

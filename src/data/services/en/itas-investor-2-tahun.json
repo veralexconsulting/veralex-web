@@ -1,0 +1,44 @@
+{
+    "slug": "itas-investor-2-tahun",
+    "title": "Investor KITAS 2 Year — Indonesia",
+    "metaTitle": "Investor KITAS (2 Year) in Indonesia | Extended Stay Permit — VERALEX CONSULTING",
+    "metaDescription": "Professional Investor KITAS (2-Year ITAS) processing for foreign investors in Indonesia. Longer validity, fewer renewals. Starting from Rp18,000,000. Free consultation!",
+    "keywords": "investor KITAS 2 year, ITAS investor 2 tahun, Indonesia investor visa 2 year, KITAS consultant Indonesia, foreign investor stay permit, ITAS investor Indonesia",
+    "category": "Visa & ITAS",
+    "categorySlug": "visa-itas",
+    "intro": "A 2-Year Investor ITAS provides a longer limited stay permit for foreign investors in Indonesia. With a 2-year validity period, investors can more freely carry out investment oversight activities without needing to renew their stay permit annually. This option is more cost-effective in the long term compared to renewing a 1-year ITAS each year.",
+    "requirements": [
+        { "item": "Original passport with minimum 18 months validity" },
+        { "item": "Company deed of establishment showing applicant's shareholding" },
+        { "item": "Company recommendation letter (surat rekomendasi perusahaan)" },
+        { "item": "Recent passport-sized photographs" },
+        { "item": "Proof of investment / company registration documents" },
+        { "item": "Other identity documents as per immigration requirements" }
+    ],
+    "processSteps": [
+        { "step": 1, "title": "Document Preparation", "description": "Our team reviews all your documents to ensure completeness and compliance with immigration requirements before submission." },
+        { "step": 2, "title": "Company Recommendation Letter", "description": "We coordinate with your Indonesian company to prepare the official recommendation letter required for the ITAS application." },
+        { "step": 3, "title": "Immigration Application Submission", "description": "The ITAS application is submitted to the immigration office (Kantor Imigrasi) with all supporting documents." },
+        { "step": 4, "title": "Verification & Processing", "description": "We assist during the verification process and monitor your application status until approval." },
+        { "step": 5, "title": "e-ITAS Issuance", "description": "Your electronic ITAS is issued and you can download it from the immigration portal. We guide you through the entire process." }
+    ],
+    "price": "Rp18.000.000",
+    "priceNote": "All-inclusive 2-year package — more economical than renewing 1-year ITAS annually. Covers document prep, application, immigration assistance, and monitoring.",
+    "features": [
+        "2-year ITAS processing",
+        "Requirements consultation",
+        "Immigration assistance",
+        "Status monitoring",
+        "e-ITAS issuance guidance",
+        "Cost-effective vs annual renewal"
+    ],
+    "faqs": [
+        { "question": "What is the benefit of 2-year ITAS over 1-year ITAS?", "answer": "The 2-year ITAS is more cost-effective in the long run. While the upfront cost is higher (Rp 18 million vs Rp 16 million for 1 year), you save on renewal processing fees and spend less time on immigration administration each year." },
+        { "question": "Can a 2-year ITAS be renewed again?", "answer": "Yes. ITAS can be renewed as long as the holder still holds active shares in a legally registered Indonesian company. Renewal should be initiated before the current ITAS expires." },
+        { "question": "Are the requirements for 2-year ITAS different from 1-year ITAS?", "answer": "The document requirements are essentially the same for both. The main difference is in the immigration fees, which are higher for the 2-year duration." },
+        { "question": "Can family members stay in Indonesia on 2-year ITAS?", "answer": "Yes. Spouse and children can apply for a Family ITAS (dependent permit) sponsored by the 2-year Investor ITAS holder, allowing the family to reside in Indonesia for the same period." },
+        { "question": "How long does 2-year ITAS processing take?", "answer": "Estimated processing time is around 2–4 working weeks after all documents are declared complete. The timeline is similar to the 1-year ITAS process." }
+    ],
+    "relatedSlugs": ["itas-investor-1-tahun", "pt-pma", "kitas-kerja"],
+    "ogImage": "/logo.jpg"
+}

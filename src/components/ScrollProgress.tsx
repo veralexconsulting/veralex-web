@@ -38,7 +38,7 @@ export default function ScrollProgress() {
                 style={{
                     height: '100%',
                     width: `${progress}%`,
-                    background: 'linear-gradient(90deg, var(--color-gold), #fff, var(--color-gold))',
+                    background: 'linear-gradient(90deg, var(--color-gold), #ffffff, var(--color-gold))',
                     backgroundSize: '200% 100%',
                     animation: 'shimmer 2s infinite linear',
                     transition: 'width 0.1s ease-out'

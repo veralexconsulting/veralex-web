@@ -1,0 +1,44 @@
+{
+    "slug": "itas-investor-1-tahun",
+    "title": "1年期投资者居留许可 (Investor KITAS/ITAS)",
+    "metaTitle": "1年期印尼投资者居留许可 (Investor KITAS) 办理 — VERALEX",
+    "metaDescription": "专业办理外籍投资者1年期印尼居留许可 (ITAS Investor)。全流程移民局代理申办，费用 Rp16.000.000 起。免费前置咨询！",
+    "keywords": "印尼投资者签证, investor KITAS, 印尼居留许可, 1年期 ITAS, 印尼投资移民, 印尼外籍居留, 投资者居留卡",
+    "category": "签证与居留许可",
+    "categorySlug": "visa-itas",
+    "intro": "投资者居留许可 (ITAS Investor) 是印尼官方颁发给在印尼投资的外籍股东的合法限期居留许可。与工作许可 KITAS 不同，投资者 ITAS 的持有人不能在公司担任具体操作性工作并领取薪资，其法定身份为股东兼投资者。该1年期许可为外籍投资人监督项目、参加董事会及合法管理印尼商业资产提供了坚实的法律基础。",
+    "requirements": [
+        { "item": "有效护照原件（剩余有效期至少18个月以上）" },
+        { "item": "体现申请人持有股份的印尼公司设立公证书及司法部批文" },
+        { "item": "印尼公司出具的官方推荐担保信 (Surat Rekomendasi)" },
+        { "item": "近期白底证件照片" },
+        { "item": "企业验资证明及相关商务注册文件" },
+        { "item": "印尼移民局要求的其他身份辅助材料" }
+    ],
+    "processSteps": [
+        { "step": 1, "title": "材料审核与前置合规检查", "description": "由我们的移民专员审核所有材料，确保符合印尼移民局最新的递交标准。" },
+        { "step": 2, "title": "出具公司推荐担保信", "description": "协调您的印尼公司起草并签署办理 ITAS 所需的官方推荐担保文件。" },
+        { "step": 3, "title": "提交至印尼移民局", "description": "将全套申请材料正本及电子件递交至印尼移民局 (Kantor Imigrasi) 审批。" },
+        { "step": 4, "title": "进度追踪与官方核验", "description": "全程跟踪移民局审核动态，协助完成身份核验与信息备案。" },
+        { "step": 5, "title": "签发电子居留许可 (e-ITAS)", "description": "官方签发电子版居留许可 e-ITAS，指导您完成后续印尼本地落户或出入境备案。" }
+    ],
+    "price": "Rp16.000.000",
+    "priceNote": "全包式套餐——涵盖材料整理、官方递交、移民局协助及进度追踪全流程。",
+    "features": [
+        "全流程 ITAS 申办代理",
+        "申请条件与合规咨询",
+        "移民局现场与线上协调",
+        "办结进度实时追踪",
+        "e-ITAS 电子居留卡签发指导"
+    ],
+    "faqs": [
+        { "question": "投资者 ITAS 与外籍员工工作 KITAS 有何区别？", "answer": "投资者 ITAS 专为不在公司从事具体操作性工作、不从印尼公司领取工资的股东设计，只需具备合规持股即可，无需申请 DPKK 发展基金和 RPTKA 劳工配额；而工作 KITAS 则是为在印尼实际工作领薪的外籍员工办理，必须缴纳每年 $1200 美元的 DPKK 基金。" },
+        { "question": "办理投资者 ITAS 需要多长时间？", "answer": "在移民局材料确认无误后，整体办理周期通常为 2–4 个工作周。VERALEX CONSULTING 会负责全流程跟进并定期反馈进度。" },
+        { "question": "持有投资者 ITAS 是否可以在印尼当地银行开户？", "answer": "可以。取得官方 e-ITAS 电子居留许可后，持卡人可凭护照和 ITAS 在印尼各大主流商业银行（如 BCA、Mandiri、BNI 等）开设个人印尼盾及外币账户。" },
+        { "question": "投资者 ITAS 持有人能否为其家属办理随行居留许可？", "answer": "可以。配偶及未成年子女均可以投资者 ITAS 持有人为担保人，申请家属随行居留许可 (Family ITAS)，实现全家在印尼合法居留。" },
+        { "question": "投资者 ITAS 可以转为工作 KITAS 吗？", "answer": "可以，但需要重新提交劳工部的 RPTKA 申请并缴纳 DPKK 基金。我们的法务团队可协助办理相关转换变更手续。" },
+        { "question": "如果投资者 ITAS 到期未续展会怎样？", "answer": "居留许可到期前必须办理续展或注销手续。逾期未续展将面临印尼移民局每天 1,000,000 印尼盾的逾期滞留罚款，甚至可能影响后续入境。建议至少提前30天联系我们办理续展。" }
+    ],
+    "relatedSlugs": ["itas-investor-2-tahun", "pt-pma", "kitas-kerja"],
+    "ogImage": "/logo.jpg"
+}

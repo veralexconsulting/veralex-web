@@ -10,15 +10,17 @@ export default function WhatsAppCta() {
     return (
         <section style={{
             padding: '80px 0',
-            background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%)',
+            background: 'var(--bg-card)',
+            borderTop: 'var(--border-gold)',
+            borderBottom: 'var(--border-gold)',
             position: 'relative',
             overflow: 'hidden',
         }}>
-            {/* Subtle gold glow */}
+            {/* Subtle maroon glow */}
             <div style={{
                 position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
                 width: '400px', height: '400px', borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%)',
+                background: 'radial-gradient(circle, rgba(74, 14, 14, 0.05) 0%, transparent 70%)',
                 pointerEvents: 'none',
             }} />
 
@@ -26,8 +28,8 @@ export default function WhatsAppCta() {
                 <div className="fade-in" style={{ textAlign: 'center' }}>
                     <div style={{
                         width: '80px', height: '80px', borderRadius: '50%',
-                        background: 'rgba(212, 175, 55, 0.15)',
-                        border: '2px solid rgba(212, 175, 55, 0.3)',
+                        background: 'rgba(74, 14, 14, 0.08)',
+                        border: '2px solid rgba(74, 14, 14, 0.2)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         margin: '0 auto 1.5rem',
                     }}>

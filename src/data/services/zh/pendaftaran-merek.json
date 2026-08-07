@@ -1,0 +1,42 @@
+{
+    "slug": "pendaftaran-merek",
+    "title": "印尼商标注册服务 (Trademark Registration)",
+    "metaTitle": "印尼商标注册服务 | DJKI 知识产权申请 — VERALEX CONSULTING",
+    "metaDescription": "专业办理印尼商标注册代理服务。提供前置检索、分类咨询、DJKI 线上递交至官方证书发放全流程。费用 Rp6.000.000 起。免费咨询！",
+    "keywords": "印尼商标注册, 印尼商标申请, 印尼商标局 DJKI, 印尼商标费用, 印尼知识产权代理, 印尼品牌保护",
+    "category": "知识产权保护",
+    "categorySlug": "intellectual-property",
+    "intro": "商标是企业最具核心价值的无形资产，也是区分您的产品或服务与竞争对手的关键标识。在印尼，商标权遵循“申请在先原则”（First-to-File），未经法律注册的商标、Logo或品牌名称极易被他人抢注。VERALEX CONSULTING 为您提供向印尼知识产权局 (DJKI Kemenkumham) 申请商标注册的专业代理服务，从前置检索查重到官方证书发放全程把关。",
+    "requirements": [
+        { "item": "商标图样高清电子件（Logo、文字、组合设计）" },
+        { "item": "拟申请的商品或服务类别清单及具体项目描述" },
+        { "item": "申请人身份证明文件（个人名义：护照/身份证；公司名义：公司营业执照/公证书及法人身份证明）" },
+        { "item": "签署的知识产权代理授权书 (Surat Kuasa)" },
+        { "item": "签署的商标所有权与使用承诺声明书" }
+    ],
+    "processSteps": [
+        { "step": 1, "title": "商标数据库检索与可行性分析", "description": "在 DJKI 官方数据库中进行全面检索，从视觉、读音和含义三个维度比对，评估注册成功率并规避抢注与近似驳回风险。" },
+        { "step": 2, "title": "尼斯分类 (Nice Classification) 咨询", "description": "根据 Nice 分类标准（共 45 个类别）帮助您选定最匹配的商品/服务类别及具体项，确保保护范围全面无死角。" },
+        { "step": 3, "title": "DJKI 线上提交申请", "description": "整理材料并通过 DJKI 官方系统线上递交申请，获取官方受理回执与申请号 (Nomor Permohonan)。" },
+        { "step": 4, "title": "公告期 (Publikasi 2个月)", "description": "进入为期2个月的法定官方公告期，在此期间公众有权依法提出异议或抗辩。" },
+        { "step": 5, "title": "实质审查 (Pemeriksaan Substantif)", "description": "DJKI 官方审查员对商标是否符合《印尼商标法》进行实质审查与合规评估。" },
+        { "step": 6, "title": "官方商标注册证书签发", "description": "审查通过后，DJKI 签发官方商标注册证书。证书有效期为 10 年，全国范围内有效。" }
+    ],
+    "price": "Rp6.000.000",
+    "priceNote": "全包式费用——包含单类别前置检索、分类咨询、DJKI 官方规费、审查跟踪及证书发放。",
+    "features": [
+        "DJKI 数据库商标查重与风险评估",
+        "DJKI 线上系统提交与全流程跟进",
+        "尼斯分类 (Nice Classification) 选类指导",
+        "实质审查阶段专业法务跟进",
+        "官方商标注册证书交付"
+    ],
+    "faqs": [
+        { "question": "印尼商标注册保护期有多长？", "answer": "印尼注册商标的法律保护期为 10 年，自申请受理之日起计算。到期前可申请续展，每次续展有效期延长 10 年。" },
+        { "question": "没有印尼公司，外籍个人或海外公司可以注册印尼商标吗？", "answer": "可以。印尼商标注册允许以海外个人（凭借护照）或海外公司（凭借企业注册证明）名义直接提交申请。" },
+        { "question": "为什么在注册商标前必须进行前置检索？", "answer": "印尼知识产权局 (DJKI) 对近似商标审查极其严格。前置检索可以提前发现是否有相同或极度近似的已注册商标，大幅降低被驳回的风险，避免损失申请规费和时间成本。" },
+        { "question": "印尼商标注册全流程需要多长时间？", "answer": "由于涉及公告期和实质审查，印尼商标注册的全流程官方周期通常为 12–18 个月。但在提交申请并取得受理回执后，即可享有申请优先权。" }
+    ],
+    "relatedSlugs": ["perpanjangan-merek", "pengalihan-merek", "hak-cipta"],
+    "ogImage": "/logo.jpg"
+}

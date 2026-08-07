@@ -1,0 +1,44 @@
+{
+    "slug": "itas-investor-1-tahun",
+    "title": "Investor KITAS 1 Year — Indonesia",
+    "metaTitle": "Investor KITAS (1 Year) in Indonesia | Stay Permit for Foreign Investors — VERALEX",
+    "metaDescription": "Professional Investor KITAS (1-Year ITAS) processing for foreign investors in Indonesia. Complete immigration assistance from Rp16,000,000. Free consultation via WhatsApp!",
+    "keywords": "investor KITAS, Indonesia investor visa, investor ITAS 1 year, foreign investor Indonesia, KITAS consultant Indonesia, Indonesia work permit, ITAS investor, investor stay permit Indonesia",
+    "category": "Visa & ITAS",
+    "categorySlug": "visa-itas",
+    "intro": "Investor ITAS (Izin Tinggal Terbatas) is an official limited stay permit issued to foreign nationals who make investments in Indonesia. Unlike a Work KITAS, the holder of an Investor ITAS is not permitted to actively work at the company — they act solely as shareholders and investors. This 1-year permit provides the legal basis for foreign investors to oversee their investments, attend board meetings, and manage their Indonesian business interests.",
+    "requirements": [
+        { "item": "Original passport with minimum 18 months validity" },
+        { "item": "Company deed of establishment showing applicant's shareholding" },
+        { "item": "Company recommendation letter (surat rekomendasi perusahaan)" },
+        { "item": "Recent passport-sized photographs" },
+        { "item": "Proof of investment / company registration documents" },
+        { "item": "Other identity documents as per immigration requirements" }
+    ],
+    "processSteps": [
+        { "step": 1, "title": "Document Preparation", "description": "Our team reviews all your documents to ensure completeness and compliance with immigration requirements before submission." },
+        { "step": 2, "title": "Company Recommendation Letter", "description": "We coordinate with your Indonesian company to prepare the official recommendation letter required for the ITAS application." },
+        { "step": 3, "title": "Immigration Application Submission", "description": "The ITAS application is submitted to the immigration office (Kantor Imigrasi) with all supporting documents." },
+        { "step": 4, "title": "Verification & Processing", "description": "We assist during the verification process and monitor your application status until approval." },
+        { "step": 5, "title": "e-ITAS Issuance", "description": "Your electronic ITAS is issued and you can download it from the immigration portal. We guide you through the process." }
+    ],
+    "price": "Rp16.000.000",
+    "priceNote": "All-inclusive package — covers document preparation, application submission, immigration assistance, and status monitoring.",
+    "features": [
+        "Complete ITAS processing",
+        "Requirements consultation",
+        "Immigration assistance",
+        "Status monitoring",
+        "e-ITAS issuance guidance"
+    ],
+    "faqs": [
+        { "question": "What is the difference between Investor ITAS and Work KITAS?", "answer": "Investor ITAS is for shareholders who do not actively work in the company — they can only oversee their investment. Work KITAS is for foreign employees who actively work and receive a salary from an Indonesian company. The Work KITAS requires DPKK and RPTKA approvals, while the Investor ITAS does not." },
+        { "question": "How long does Investor ITAS processing take?", "answer": "Estimated processing time is around 2–4 working weeks after all documents are declared complete by immigration. VERALEX CONSULTING handles the entire process and provides regular status updates." },
+        { "question": "Can an Investor ITAS holder open a bank account in Indonesia?", "answer": "Yes. Official e-ITAS holders can open bank accounts in Indonesia by presenting the ITAS card as proof of legal stay status. Most major banks in Indonesia accept e-ITAS for account opening." },
+        { "question": "Can family members stay in Indonesia with an Investor ITAS holder?", "answer": "Yes. Spouse and children can apply for a Family ITAS (dependent permit) sponsored by the Investor ITAS holder. This allows the entire family to reside in Indonesia legally." },
+        { "question": "Can Investor ITAS be converted to Work KITAS?", "answer": "Converting from Investor ITAS to Work KITAS requires a new application process. The investor would need to obtain DPKK approval and RPTKA from the Ministry of Manpower. We can assist with the conversion process." },
+        { "question": "What happens if my Investor ITAS expires?", "answer": "If your ITAS expires, you must leave Indonesia or apply for an extension before the expiry date. A 60-day grace period may apply, but overstaying results in fines and potential deportation. It is strongly recommended to renew well before the deadline." }
+    ],
+    "relatedSlugs": ["itas-investor-2-tahun", "pt-pma", "kitas-kerja"],
+    "ogImage": "/logo.jpg"
+}

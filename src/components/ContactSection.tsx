@@ -16,9 +16,10 @@ export default function ContactSection() {
                 <style>{`
                     .corporate-contact-container {
                         display: grid;
-                        grid-template-columns: 1fr;
+                        grid-template-columns: minmax(0, 1fr);
                         gap: 2.5rem;
                         max-width: 1100px;
+                        width: 100%;
                         margin: 0 auto;
                     }
 
@@ -34,6 +35,7 @@ export default function ContactSection() {
                         flex-direction: column;
                         justify-content: flex-start;
                         gap: 1.25rem;
+                        min-width: 0;
                     }
 
                     .corporate-contact-item {
@@ -46,6 +48,8 @@ export default function ContactSection() {
                         border-radius: var(--radius-lg);
                         text-decoration: none;
                         transition: var(--transition-normal);
+                        min-width: 0;
+                        width: 100%;
                     }
 
                     .corporate-contact-item:hover {
@@ -60,7 +64,7 @@ export default function ContactSection() {
                         justify-content: center;
                         width: 48px;
                         height: 48px;
-                        background: rgba(212, 175, 55, 0.1);
+                        background: rgba(74, 14, 14, 0.08);
                         border-radius: 50%;
                         color: var(--color-gold);
                         flex-shrink: 0;
@@ -69,7 +73,7 @@ export default function ContactSection() {
 
                     .corporate-contact-item:hover .contact-item-icon {
                         background: var(--color-gold);
-                        color: #000;
+                        color: #ffffff;
                     }
 
                     .contact-item-icon svg {
@@ -80,6 +84,7 @@ export default function ContactSection() {
                     .contact-item-content {
                         display: flex;
                         flex-direction: column;
+                        min-width: 0;
                     }
 
                     .contact-item-content h5 {
@@ -95,6 +100,8 @@ export default function ContactSection() {
                         color: var(--text-secondary);
                         font-size: 0.95rem;
                         line-height: 1.5;
+                        overflow-wrap: break-word;
+                        word-break: break-word;
                     }
 
                     .contact-map-side {
@@ -102,9 +109,26 @@ export default function ContactSection() {
                         border: var(--border-gold);
                         border-radius: var(--radius-lg);
                         overflow: hidden;
-                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
                         min-height: 350px;
-                        background: rgba(0,0,0,0.2);
+                        background: rgba(255, 255, 255, 0.4);
+                        min-width: 0;
+                        width: 100%;
+                    }
+
+                    .contact-map-side iframe {
+                        position: absolute;
+                        inset: 0;
+                        width: 100%;
+                        height: 100%;
+                        border: 0;
+                        display: block;
+                    }
+
+                    @media (max-width: 480px) {
+                        .contact-map-side {
+                            min-height: 320px;
+                        }
                     }
                 `}</style>
 
@@ -159,9 +183,6 @@ export default function ContactSection() {
                     <div className="contact-map-side">
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.1158580649774!2d106.9859546!3d-6.2484439!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e698c17bbf5cbb7%3A0x6b4122d251f28b4d!2sJl.%20Utama%20Raya%20No.348%2C%20RT.003%2BRW.026%2C%20Kayuringin%20Jaya%2C%20Kec.%20Bekasi%20Sel.%2C%20Kota%20Bks%2C%20Jawa%20Barat%2017144!5e0!3m2!1sid!2sid!4v1719416000000!5m2!1sid!2sid"
-                            width="100%"
-                            height="100%"
-                            style={{ border: 0, minHeight: '350px', display: 'block' }}
                             allowFullScreen={true}
                             loading="lazy"
                             referrerPolicy="no-referrer-when-downgrade"

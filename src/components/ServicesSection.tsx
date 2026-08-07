@@ -30,8 +30,16 @@ const SvgIcon = ({ d, size = 24 }: { d: string; size?: number }) => (
     </svg>
 );
 
+const Price = ({ from, amount }: { from: string; amount: string }) => (
+    <span className="service-row-price">
+        <span className="price-start-from">{from} </span>
+        {amount}
+    </span>
+);
+
 export default function ServicesSection() {
     const { t } = useLang();
+    const priceFrom = t('price.startFrom');
 
     return (
         <section className="services" id="services">
@@ -50,7 +58,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.ip.trademark.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <span className="service-row-price">Rp6.000.000</span>
+                                <Price from={priceFrom} amount="Rp6.000.000" />
                                 <SvgIcon d={ICONS.bolt} size={20} />
                             </div>
                         </Link>
@@ -61,7 +69,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.ip.renewal.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <span className="service-row-price">Rp6.000.000</span>
+                                <Price from={priceFrom} amount="Rp6.000.000" />
                                 <SvgIcon d={ICONS.bolt} size={20} />
                             </div>
                         </Link>
@@ -72,7 +80,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.ip.transfer.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <span className="service-row-price">Rp3.000.000</span>
+                                <Price from={priceFrom} amount="Rp3.000.000" />
                                 <SvgIcon d={ICONS.bolt} size={20} />
                             </div>
                         </Link>
@@ -83,7 +91,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.ip.copyright.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <span className="service-row-price">Rp2.500.000</span>
+                                <Price from={priceFrom} amount="Rp2.500.000" />
                                 <SvgIcon d={ICONS.bolt} size={20} />
                             </div>
                         </Link>
@@ -94,7 +102,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.ip.design.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <span className="service-row-price">Rp4.500.000</span>
+                                <Price from={priceFrom} amount="Rp4.500.000" />
                                 <SvgIcon d={ICONS.bolt} size={20} />
                             </div>
                         </Link>
@@ -113,7 +121,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.company.pt.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <span className="service-row-price">Rp7.000.000</span>
+                                <Price from={priceFrom} amount="Rp7.000.000" />
                                 <SvgIcon d={ICONS.bolt} size={20} />
                             </div>
                         </Link>
@@ -124,7 +132,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.company.pma.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <span className="service-row-price">Rp9.900.000</span>
+                                <Price from={priceFrom} amount="Rp9.900.000" />
                                 <SvgIcon d={ICONS.bolt} size={20} />
                             </div>
                         </Link>
@@ -135,7 +143,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.company.perorangan.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <span className="service-row-price">Rp1.500.000</span>
+                                <Price from={priceFrom} amount="Rp1.500.000" />
                                 <SvgIcon d={ICONS.bolt} size={20} />
                             </div>
                         </Link>
@@ -146,24 +154,11 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.company.cv.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <span className="service-row-price">Rp3.000.000</span>
+                                <Price from={priceFrom} amount="Rp3.000.000" />
                                 <SvgIcon d={ICONS.bolt} size={20} />
                             </div>
                         </Link>
 
-                    </div>
-                </div>
-
-                {/* Benefit Pendirian PT */}
-                <div className="services-category fade-in">
-                    <h3 className="category-title">{t('services.benefit.title')}</h3>
-                    <div className="benefit-grid">
-                        {Array.from({ length: 11 }, (_, i) => (
-                            <div key={i} className="benefit-card">
-                                <div className="benefit-number">{i + 1}</div>
-                                <span>{t(`benefit.${i + 1}`)}</span>
-                            </div>
-                        ))}
                     </div>
                 </div>
 
@@ -185,7 +180,7 @@ export default function ServicesSection() {
                                     <p className="service-row-desc">{item.desc}</p>
                                 </div>
                                 <div className="service-row-right">
-                                    <span className="service-row-price">{item.price}</span>
+                                    <span className="service-row-price"><span className="price-start-from">{priceFrom} </span>{item.price}</span>
                                     <SvgIcon d={ICONS.bolt} size={20} />
                                 </div>
                             </Link>

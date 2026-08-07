@@ -2,12 +2,20 @@ import { createServerClient } from '@supabase/auth-helpers-nextjs';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+const SUPPORTED_LOCALES = ['en', 'zh', 'id'];
+
 export async function middleware(req: NextRequest) {
     const res = NextResponse.next();
     const pathname = req.nextUrl.pathname;
-    const isAuthPage = pathname.startsWith('/auth');
-    const isDashboard = pathname.startsWith('/dashboard');
-    const isAdminArea = pathname.startsWith('/admin');
+
+    // Skip locale-prefixed paths for auth detection
+    const pathnameHasLocale = SUPPORTED_LOCALES.some(
+        (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+    );
+
+    const isAuthPage = pathname.startsWith('/auth') || (pathnameHasLocale && pathname.replace(/^\/(en|zh|id)/, '').startsWith('/auth'));
+    const isDashboard = pathname.startsWith('/dashboard') || (pathnameHasLocale && pathname.replace(/^\/(en|zh|id)/, '').startsWith('/dashboard'));
+    const isAdminArea = pathname.startsWith('/admin') || (pathnameHasLocale && pathname.replace(/^\/(en|zh|id)/, '').startsWith('/admin'));
     const hasSupabaseConfig =
         Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL) &&
         Boolean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
@@ -49,7 +57,6 @@ export async function middleware(req: NextRequest) {
 
     // Redirect logged-in users away from auth pages
     if (session && isAuthPage) {
-        // Fetch role to redirect to correct area
         const { data: profile } = await supabase
             .from('users')
             .select('role')

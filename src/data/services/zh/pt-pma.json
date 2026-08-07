@@ -1,0 +1,50 @@
+{
+    "slug": "pt-pma",
+    "title": "印尼外资公司设立 (PT PMA)",
+    "metaTitle": "印尼外资公司设立 (PT PMA) 注册服务 — VERALEX CONSULTING",
+    "metaDescription": "专业办理印尼外商独资及合资公司 (PT PMA) 注册设立，严格符合印尼投资协调委员会 (BKPM) 法规。费用 Rp9.900.000 起。提供免费前置咨询！",
+    "keywords": "印尼外资公司注册, PT PMA 设立, 印尼开公司, 外商独资企业印尼, 印尼投资合规, 印尼商业许可, 印尼开办企业",
+    "category": "公司设立与合规",
+    "categorySlug": "company-formation",
+    "intro": "外商投资公司 (PT PMA) 是外国公民或跨国企业在印尼开展合法商业运营的法定企业实体。相比印尼本土内资公司 (PT PMDN)，设立 PT PMA 涉及印尼投资协调委员会 (BKPM) 更严格的监管及最低投资额规定。VERALEX CONSULTING 提供从公司核名、公证书起草、司法部批文、到 OSS RBA 系统激活及 LKPM 投资报告账号配置的一站式全流程服务。",
+    "requirements": [
+        { "item": "所有外籍董事与监事的有效护照扫描件（有效期至少18个月以上）" },
+        { "item": "母公司或投资方所在国的企业注册证明公据（需经过领事认证/公证）" },
+        { "item": "预订的公司名称——至少包含3个印尼语单词" },
+        { "item": "PT PMA 在印尼的法定注册办公地址" },
+        { "item": "匹配投资业务领域的 KBLI 印尼行业分类代码" },
+        { "item": "投资总额规定：需超过100亿印尼盾（不含土地和建筑）" },
+        { "item": "最低实缴资本及认缴资本为100亿印尼盾" },
+        { "item": "明确外资持股比例与股权分配架构" }
+    ],
+    "processSteps": [
+        { "step": 1, "title": "免费前置咨询与可行性评估", "description": "评估您的商业计划，在印尼正面投资清单 (DPI) 中核对正确的 KBLI 代码，确认该行业是否允许100%外资独资或有持股上限。" },
+        { "step": 2, "title": "公司名称核准与预订", "description": "通过 AHU Online 系统预订拟定的 PT PMA 名称，确保名称可用且符合印尼公司命名法规。" },
+        { "step": 3, "title": "签署设立公证书 (Akta Pendirian)", "description": "由印尼法定公证人起草并由各创始人签署公司章程、股权结构及资本细节公证书。" },
+        { "step": 4, "title": "获取印尼司法部批文 (SK Kemenkumham)", "description": "将公证书提交至印尼司法与人权部审核，通常1-3个工作日内签发电子批文 SK。" },
+        { "step": 5, "title": "注册公司税号 (NPWP) 与 OSS RBA 账号", "description": "办理企业专属 NPWP 税务登记证，并在 OSS RBA 系统注册激活以获取商业登记号 NIB。" },
+        { "step": 6, "title": "获取投资许可与配置 LKPM 账号", "description": "获取 BKPM 官方投资许可，并配置用于定期提交 LKPM 投资活动报告的系统账号。" },
+        { "step": 7, "title": "刻制实体印章与全套资质交接", "description": "制作企业官方实体印章，交付全套法定文件：公证书、司法部 SK、NPWP、NIB 及账号凭据。" }
+    ],
+    "price": "Rp9.900.000",
+    "priceNote": "全包套餐——包含公证书、司法部批文 SK、NPWP、OSS RBA、NIB 及 BKPM 顾问服务。绝无隐形费用。",
+    "features": [
+        "外资公司设立公证书 (Akta Pendirian PMA)",
+        "印尼司法部官方批文 (SK Kemenkumham)",
+        "企业专属税务登记证 (NPWP Badan Hukum)",
+        "OSS RBA 账号及商业登记号 (NIB)",
+        "投资许可文件 (Izin Investasi)",
+        "BKPM 顾问服务与 LKPM 系统配置",
+        "企业官方实体印章"
+    ],
+    "faqs": [
+        { "question": "在印尼设立一家外资公司 (PT PMA) 费用是多少？", "answer": "VERALEX CONSULTING 的外资公司注册服务费为 Rp 9.900.000 起。此全包套餐涵盖公证契约、司法部批文 (SK)、公司税号 (NPWP)、OSS RBA 系统注册、NIB 及 BKPM 咨询服务。请注意，不含特定特殊行业可能收取的官方行政规费。" },
+        { "question": "印尼外资公司 (PT PMA) 的最低资本要求是多少？", "answer": "根据印尼 BKPM 最新法规，PT PMA 的总投资额需超过 100 亿印尼盾（不含土地和房屋），实缴及认缴资本最低为 100 亿印尼盾。此规定适用于绝大多数行业。" },
+        { "question": "外资公司的董事必须居住在印尼吗？", "answer": "不强制所有董事都住在印尼。但至少需有一位常驻印尼的董事被指定为公司的法定负责人。若外籍董事在印尼当地实际参与工作，须依法办理工作许可 KITAS。" },
+        { "question": "印尼外资公司可以 100% 外商独资吗？", "answer": "取决于具体行业。印尼正面投资清单 (DPI) 规定了允许 100% 外资独资、有持股比例限制或禁止外资进入的行业。VERALEX 顾问将协助您精准核对该行业的合规政策。" },
+        { "question": "PT PMA 公司是否必须提交 LKPM 投资报告？", "answer": "是的。根据印尼法规，PT PMA 必须定期向 BKPM/OSS 系统提交 LKPM 投资活动报告。未按时提交可能导致警告甚至封禁 OSS 系统的处罚。" },
+        { "question": "注册一家 PT PMA 外资公司需要多长时间？", "answer": "在材料齐全且签署完成的前提下，VERALEX CONSULTING 办理全套 PT PMA 设立通常需要 3–7 个工作日。包含核名、公证、司法部批文及 NIB 注册。" }
+    ],
+    "relatedSlugs": ["itas-investor-1-tahun", "itas-investor-2-tahun", "kitas-kerja"],
+    "ogImage": "/logo.jpg"
+}

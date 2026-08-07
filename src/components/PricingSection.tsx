@@ -57,14 +57,15 @@ export default function PricingSection() {
                                     {pkg.originalPrice}
                                 </p>
                             )}
+                            <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '0.15rem' }}>{t('price.startFrom')}</p>
                             <p className="pricing-price">{pkg.price}</p>
                             {pkg.originalPrice && (
                                 <span style={{
                                     display: 'inline-flex',
                                     alignItems: 'center',
                                     gap: '0.35rem',
-                                    background: 'rgba(212, 175, 55, 0.15)',
-                                    border: '1px solid rgba(212, 175, 55, 0.3)',
+                                    background: 'rgba(74, 14, 14, 0.08)',
+                                    border: '1px solid rgba(74, 14, 14, 0.2)',
                                     borderRadius: 'var(--radius-xl)',
                                     padding: '4px 14px',
                                     fontSize: '0.8rem',

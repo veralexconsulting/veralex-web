@@ -1,47 +1,47 @@
 /* ========================================
-   VERALEX CONSULTING - Premium Maroon & Gold Theme
+   VERALEX CONSULTING - Light Neutral & Maroon Accent Theme
    ======================================== */
 
 /* ===== CSS Custom Properties ===== */
 :root {
-    /* Primary Colors - Maroon */
+    /* Primary Colors - Maroon (accent only) */
     --color-primary: #4A0E0E;
     --color-primary-dark: #2D0808;
     --color-primary-darker: #1A0505;
     --color-primary-light: #6B1515;
 
-    /* Accent Colors - Gold */
-    --color-gold: #D4AF37;
-    --color-gold-light: #F4D47C;
-    --color-gold-dark: #B8960C;
-    --color-gold-gradient: linear-gradient(135deg, #D4AF37 0%, #F4D47C 50%, #D4AF37 100%);
+    /* Accent Colors - Maroon (replaces former gold) */
+    --color-gold: #4A0E0E;
+    --color-gold-light: #6B1515;
+    --color-gold-dark: #2D0808;
+    --color-gold-gradient: linear-gradient(135deg, #6B1515 0%, #4A0E0E 50%, #2D0808 100%);
 
     /* Background Colors */
-    --bg-dark: #1A0A0A;
-    --bg-card: rgba(74, 14, 14, 0.4);
-    --bg-card-hover: rgba(74, 14, 14, 0.6);
-    --bg-glass: rgba(45, 8, 8, 0.7);
+    --bg-dark: #FAFAFA;
+    --bg-card: #FFFFFF;
+    --bg-card-hover: #F5F5F5;
+    --bg-glass: #FFFFFF;
 
     /* Text Colors */
-    --text-primary: #FAF8F5;
-    --text-secondary: rgba(250, 248, 245, 0.8);
-    --text-muted: rgba(250, 248, 245, 0.6);
-    --text-gold: #D4AF37;
+    --text-primary: #1A1A1A;
+    --text-secondary: rgba(26, 26, 26, 0.78);
+    --text-muted: rgba(26, 26, 26, 0.55);
+    --text-gold: #4A0E0E;
 
     /* Borders */
-    --border-gold: 1px solid rgba(212, 175, 55, 0.3);
-    --border-gold-strong: 1px solid rgba(212, 175, 55, 0.6);
+    --border-gold: 1px solid rgba(74, 14, 14, 0.16);
+    --border-gold-strong: 1px solid rgba(74, 14, 14, 0.32);
 
     /* Shadows */
-    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.5);
-    --shadow-gold: 0 0 30px rgba(212, 175, 55, 0.2);
-    --shadow-gold-strong: 0 0 50px rgba(212, 175, 55, 0.4);
+    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.09);
+    --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.12);
+    --shadow-gold: 0 6px 24px rgba(74, 14, 14, 0.1);
+    --shadow-gold-strong: 0 10px 40px rgba(74, 14, 14, 0.18);
 
-    /* Typography */
-    --font-heading: var(--font-playfair), 'Playfair Display', Georgia, serif;
-    --font-body: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* Typography — CJK fallback added for Chinese (zh) locale */
+    --font-heading: var(--font-playfair), 'Playfair Display', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', Georgia, serif;
+    --font-body: var(--font-inter), 'Inter', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
 
     /* ===== Spacing ===== */
     --section-padding: 200px 0;
@@ -179,8 +179,8 @@ button {
 
 .btn-editorial-solid {
     display: inline-block;
-    background: linear-gradient(135deg, #d4af37 0%, #aa801a 100%);
-    color: #0f0505;
+    background: linear-gradient(135deg, #6B1515 0%, #4A0E0E 100%);
+    color: #ffffff;
     padding: 16px 45px;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -189,14 +189,14 @@ button {
     text-align: center;
     transition: all 0.4s ease;
     border: none;
-    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    box-shadow: 0 5px 20px rgba(74, 14, 14, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4);
     border-radius: 2px;
 }
 
 .btn-editorial-solid:hover {
-    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 25px rgba(74, 14, 14, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5);
     transform: translateY(-2px);
-    color: #0f0505;
+    color: #ffffff;
 }
 
 .btn {
@@ -228,13 +228,13 @@ button {
 
 .btn-primary {
     background: var(--color-gold-gradient);
-    color: var(--color-primary-darker);
-    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(74, 14, 14, 0.2);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+    box-shadow: 0 8px 25px rgba(74, 14, 14, 0.3);
 }
 
 .btn-primary::before {
@@ -255,12 +255,12 @@ button {
 .btn-outline {
     background: transparent;
     color: var(--text-primary);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(26, 26, 26, 0.3);
 }
 
 .btn-outline:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(26, 26, 26, 0.05);
+    border-color: rgba(26, 26, 26, 0.55);
 }
 
 .btn-nav {
@@ -278,15 +278,15 @@ button {
     padding: 25px 0;
     transition: var(--transition-normal);
     background: transparent;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(26, 26, 26, 0.08);
 }
 
 .navbar.scrolled {
-    background: rgba(15, 5, 5, 0.98);
+    background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     padding: 15px 0;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    border-bottom: 1px solid rgba(74, 14, 14, 0.15);
 }
 
 .navbar .container {
@@ -337,14 +337,14 @@ button {
 }
 
 .auth-link-nav {
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    border: 1px solid rgba(74, 14, 14, 0.3);
     padding: 8px 24px;
     border-radius: 0;
     /* Sharp corners for luxury */
 }
 
 .auth-link-nav:hover {
-    background: rgba(212, 175, 55, 0.1);
+    background: rgba(74, 14, 14, 0.06);
     border-color: var(--color-gold);
 }
 
@@ -422,18 +422,18 @@ button {
     align-items: center;
     gap: 2px;
     padding: 4px;
-    min-width: 68px;
+    min-width: 96px;
     min-height: 34px;
-    background: rgba(15, 5, 5, 0.72);
-    border: 1px solid rgba(212, 175, 55, 0.22);
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(74, 14, 14, 0.22);
     border-radius: 999px;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
     transition: var(--transition-fast);
 }
 
 .flag-lang-toggle:hover {
-    border-color: rgba(212, 175, 55, 0.5);
-    background: rgba(45, 8, 8, 0.9);
+    border-color: rgba(74, 14, 14, 0.5);
+    background: rgba(255, 255, 255, 0.95);
 }
 
 .flag-lang-option {
@@ -453,8 +453,60 @@ button {
 .flag-lang-option.active {
     opacity: 1;
     filter: none;
-    background: rgba(212, 175, 55, 0.18);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+    background: rgba(74, 14, 14, 0.12);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.flag-lang-toggle-wrapper {
+    position: relative;
+    display: inline-flex;
+}
+
+.flag-lang-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    min-width: 168px;
+    padding: 6px;
+    background: rgba(255, 255, 255, 0.98);
+    border: 1px solid rgba(74, 14, 14, 0.18);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.flag-lang-dropdown-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--text-primary);
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: var(--transition-fast);
+}
+
+.flag-lang-dropdown-option:hover {
+    background: rgba(74, 14, 14, 0.06);
+}
+
+.flag-lang-dropdown-option.active {
+    font-weight: 700;
+    color: var(--color-primary);
+    background: rgba(74, 14, 14, 0.08);
+}
+
+.flag-lang-dropdown-flag {
+    font-size: 1.1rem;
+    line-height: 1;
 }
 
 /* Mobile Responsive */
@@ -574,7 +626,7 @@ button {
     position: absolute;
     inset: 0;
     z-index: 0;
-    opacity: 0.32;
+    opacity: 0.12;
 }
 
 .hero-bg-image img {
@@ -586,8 +638,8 @@ button {
     inset: 0;
     z-index: 1;
     background:
-        linear-gradient(180deg, rgba(26, 10, 10, 0.74) 0%, rgba(26, 10, 10, 0.9) 70%, var(--bg-dark) 100%),
-        linear-gradient(90deg, rgba(26, 10, 10, 0.92) 0%, rgba(26, 10, 10, 0.5) 55%, rgba(26, 10, 10, 0.7) 100%);
+        linear-gradient(180deg, rgba(250, 250, 250, 0.55) 0%, rgba(250, 250, 250, 0.8) 70%, var(--bg-dark) 100%),
+        linear-gradient(90deg, rgba(250, 250, 250, 0.6) 0%, rgba(250, 250, 250, 0.15) 55%, rgba(250, 250, 250, 0.4) 100%);
 }
 
 /* ── Two-column inner wrapper ── */
@@ -616,7 +668,7 @@ button {
     display: inline-flex;
     align-items: center;
     padding-bottom: 0.55rem;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+    border-bottom: 1px solid rgba(74, 14, 14, 0.35);
     color: var(--color-gold);
     font-size: 0.72rem;
     letter-spacing: 2.4px;
@@ -628,12 +680,11 @@ button {
 .hero-title {
     font-family: var(--font-heading);
     font-size: clamp(2.2rem, 3.4vw, 3.75rem);
-    color: #ffffff;
+    color: var(--color-primary);
     font-weight: 400;
     line-height: 1.1;
     margin-bottom: 1.4rem;
     letter-spacing: 0;
-    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
 }
 
 .hero-subtitle {
@@ -663,7 +714,7 @@ button {
     align-items: center;
     gap: 0;
     padding-top: 1.6rem;
-    border-top: 1px solid rgba(212, 175, 55, 0.15);
+    border-top: 1px solid rgba(74, 14, 14, 0.15);
     width: 100%;
 }
 
@@ -694,7 +745,7 @@ button {
 .hero-stat-divider {
     width: 1px;
     height: 40px;
-    background: rgba(212, 175, 55, 0.2);
+    background: rgba(74, 14, 14, 0.2);
     margin: 0 1rem;
     flex-shrink: 0;
 }
@@ -714,16 +765,16 @@ button {
     max-width: 430px;
     border-radius: 2px;
     overflow: hidden;
-    border: 1px solid rgba(212, 175, 55, 0.18);
+    border: 1px solid rgba(74, 14, 14, 0.18);
     box-shadow:
-        0 0 60px rgba(212, 175, 55, 0.07),
-        0 32px 80px rgba(0, 0, 0, 0.5);
+        0 0 60px rgba(74, 14, 14, 0.07),
+        0 32px 80px rgba(0, 0, 0, 0.14);
 }
 
 .hero-visual-glow {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center bottom, rgba(212, 175, 55, 0.12) 0%, transparent 65%);
+    background: radial-gradient(ellipse at center bottom, rgba(74, 14, 14, 0.1) 0%, transparent 65%);
     pointer-events: none;
     z-index: 1;
 }
@@ -733,9 +784,9 @@ button {
     position: absolute;
     bottom: -1rem;
     left: -1rem;
-    background: rgba(26, 10, 10, 0.92);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(212, 175, 55, 0.3);
+    border: 1px solid rgba(74, 14, 14, 0.3);
     padding: 0.6rem 1.1rem;
     display: flex;
     align-items: center;
@@ -809,7 +860,7 @@ button {
     justify-content: space-between;
     align-items: center;
     padding: 2.5rem 0;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    border-bottom: 1px solid rgba(74, 14, 14, 0.15);
     transition: var(--transition-slow);
     position: relative;
     overflow: hidden;
@@ -832,7 +883,7 @@ button {
 
 .service-row-luxury:hover {
     padding-left: 2rem;
-    background: linear-gradient(90deg, rgba(212, 175, 55, 0.03) 0%, transparent 100%);
+    background: linear-gradient(90deg, rgba(74, 14, 14, 0.03) 0%, transparent 100%);
 }
 
 .service-row-left {
@@ -854,7 +905,7 @@ button {
 }
 
 .service-row-desc {
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-muted);
     font-size: 0.95rem;
     line-height: 1.6;
     font-weight: 300;
@@ -875,6 +926,13 @@ button {
     color: var(--text-primary);
     letter-spacing: 1px;
     font-weight: 300;
+}
+
+.price-start-from {
+    font-size: 0.8em;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
 }
 
 .service-row-luxury:hover .service-row-right svg {
@@ -901,7 +959,7 @@ button {
 
 .product-card:hover {
     transform: translateY(-3px);
-    border-color: rgba(212, 175, 55, 0.5);
+    border-color: rgba(74, 14, 14, 0.5);
     box-shadow: var(--shadow-gold);
 }
 
@@ -912,7 +970,7 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(212, 175, 55, 0.1);
+    background: rgba(74, 14, 14, 0.08);
     border-radius: var(--radius-sm);
     padding: 8px;
 }
@@ -957,6 +1015,7 @@ button {
     transition: var(--transition-normal);
     position: relative;
     overflow: hidden;
+    box-shadow: var(--shadow-sm);
 }
 
 .pricing-card.featured {
@@ -988,7 +1047,7 @@ button {
     top: 20px;
     right: 20px;
     background: var(--color-gold-gradient);
-    color: var(--color-primary-dark);
+    color: #ffffff;
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.75rem;
@@ -1061,6 +1120,7 @@ button {
     border-radius: var(--radius-lg);
     padding: 2rem;
     transition: var(--transition-normal);
+    box-shadow: var(--shadow-sm);
 }
 
 .bundle-card:hover {
@@ -1112,7 +1172,7 @@ button {
 /* ===== Testimonials Section ===== */
 .testimonials {
     padding: var(--section-padding);
-    background: linear-gradient(180deg, var(--bg-dark) 0%, var(--color-primary-darker) 100%);
+    background: var(--bg-dark);
 }
 
 .testimonials-grid {
@@ -1127,6 +1187,7 @@ button {
     border-radius: var(--radius-lg);
     padding: 2rem;
     transition: var(--transition-normal);
+    box-shadow: var(--shadow-sm);
 }
 
 .testimonial-card:hover {
@@ -1156,7 +1217,7 @@ button {
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    color: var(--color-primary-dark);
+    color: #ffffff;
 }
 
 .testimonial-info h4 {
@@ -1211,6 +1272,7 @@ button {
     padding: 1rem 1.5rem;
     color: var(--text-secondary);
     transition: var(--transition-normal);
+    box-shadow: var(--shadow-sm);
 }
 
 .why-legal-item:hover {
@@ -1221,7 +1283,9 @@ button {
 /* ===== CTA Section ===== */
 .cta-section {
     padding: 80px 20px;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    background: var(--bg-card);
+    border-top: var(--border-gold);
+    border-bottom: var(--border-gold);
     text-align: center;
 }
 
@@ -1265,6 +1329,7 @@ button {
     text-align: center;
     transition: var(--transition-normal);
     display: block;
+    box-shadow: var(--shadow-sm);
 }
 
 .contact-card:hover {
@@ -1279,7 +1344,7 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(212, 175, 55, 0.1);
+    background: rgba(74, 14, 14, 0.08);
     border-radius: var(--radius-md);
 }
 
@@ -1303,11 +1368,12 @@ button {
 
 /* ===== Footer ===== */
 .footer {
-    background: var(--color-primary-darker);
+    background: var(--bg-card);
     padding: 60px 20px 30px;
     border-top: var(--border-gold);
     position: relative;
     z-index: 10;
+    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.05);
 }
 
 .footer-content {
@@ -1450,7 +1516,7 @@ button {
         left: -100%;
         width: 100%;
         height: 100vh;
-        background: rgba(26, 10, 10, 0.98);
+        background: rgba(250, 250, 250, 0.98);
         backdrop-filter: blur(25px);
         -webkit-backdrop-filter: blur(25px);
         flex-direction: column;
@@ -1696,8 +1762,8 @@ button {
 
 .price-badge {
     display: inline-block;
-    background: linear-gradient(135deg, #FF6B6B 0%, #EE5A5A 100%);
-    color: white;
+    background: var(--color-gold-gradient);
+    color: #ffffff;
     font-size: 0.7rem;
     font-weight: 700;
     padding: 4px 10px;
@@ -1709,8 +1775,8 @@ button {
 
 .bonus-badge {
     display: block;
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.1) 100%);
-    border: 1px solid rgba(212, 175, 55, 0.4);
+    background: linear-gradient(135deg, rgba(74, 14, 14, 0.1) 0%, rgba(74, 14, 14, 0.05) 100%);
+    border: 1px solid rgba(74, 14, 14, 0.25);
     color: var(--color-gold);
     font-size: 0.75rem;
     font-weight: 600;
@@ -1736,7 +1802,7 @@ button {
 /* ===== Featured Card ===== */
 .service-card.featured-card {
     border-color: var(--color-gold);
-    background: linear-gradient(135deg, rgba(74, 14, 14, 0.6) 0%, rgba(45, 8, 8, 0.8) 100%);
+    background: linear-gradient(135deg, rgba(74, 14, 14, 0.06) 0%, rgba(74, 14, 14, 0.12) 100%);
 }
 
 .service-card.featured-card::before {
@@ -1761,16 +1827,17 @@ button {
     border-radius: var(--radius-md);
     padding: 1rem 1.25rem;
     transition: var(--transition-normal);
+    box-shadow: var(--shadow-sm);
 }
 
 .benefit-card:hover {
     transform: translateY(-2px);
-    border-color: rgba(212, 175, 55, 0.5);
+    border-color: rgba(74, 14, 14, 0.4);
     box-shadow: var(--shadow-gold);
 }
 
 .benefit-card.bonus {
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.05) 100%);
+    background: linear-gradient(135deg, rgba(74, 14, 14, 0.08) 0%, rgba(74, 14, 14, 0.03) 100%);
     border-color: var(--color-gold);
 }
 
@@ -1781,7 +1848,7 @@ button {
     width: 32px;
     height: 32px;
     background: var(--color-gold-gradient);
-    color: var(--color-primary-dark);
+    color: #ffffff;
     font-weight: 700;
     font-size: 0.9rem;
     border-radius: 50%;
@@ -1880,12 +1947,14 @@ button {
     margin-top: 2rem;
 }
 
-/* ===== WhatsApp CTA Section (maroon/gold theme) ===== */
-/* NOTE: WhatsAppCta component now uses inline styles with maroon/gold.
+/* ===== WhatsApp CTA Section (light neutral / maroon accent) ===== */
+/* NOTE: WhatsAppCta component now uses inline styles with maroon.
    These classes are kept as fallback. */
 .whatsapp-cta-section {
     padding: 80px 20px;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    background: var(--bg-card);
+    border-top: var(--border-gold);
+    border-bottom: var(--border-gold);
     position: relative;
     overflow: hidden;
 }
@@ -1897,7 +1966,7 @@ button {
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at center, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
+    background: radial-gradient(circle at center, rgba(74, 14, 14, 0.05) 0%, transparent 60%);
 }
 
 .whatsapp-cta-content {
@@ -1912,8 +1981,8 @@ button {
     width: 80px;
     height: 80px;
     margin: 0 auto 1.5rem;
-    background: rgba(212, 175, 55, 0.15);
-    border: 2px solid rgba(212, 175, 55, 0.3);
+    background: rgba(74, 14, 14, 0.08);
+    border: 2px solid rgba(74, 14, 14, 0.2);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -1932,12 +2001,12 @@ button {
     0%,
     100% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.3);
+        box-shadow: 0 0 0 0 rgba(74, 14, 14, 0.25);
     }
 
     50% {
         transform: scale(1.05);
-        box-shadow: 0 0 0 20px rgba(212, 175, 55, 0);
+        box-shadow: 0 0 0 20px rgba(74, 14, 14, 0);
     }
 }
 
@@ -1959,7 +2028,7 @@ button {
 
 .btn-whatsapp {
     background: var(--color-gold-gradient);
-    color: var(--color-primary-dark);
+    color: #ffffff;
     padding: 16px 36px;
     font-weight: 700;
     display: inline-flex;
@@ -1976,7 +2045,7 @@ button {
 }
 
 .btn-whatsapp svg {
-    fill: var(--color-primary-dark);
+    fill: #ffffff;
 }
 
 /* ===== Big Brand Section ===== */
@@ -1997,7 +2066,7 @@ button {
     transform: translate(-50%, -50%);
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(74, 14, 14, 0.06) 0%, transparent 70%);
     border-radius: 50%;
 }
 
@@ -2013,7 +2082,7 @@ button {
     line-height: 1;
     position: relative;
     z-index: 1;
-    text-shadow: 0 0 80px rgba(212, 175, 55, 0.3);
+    text-shadow: 0 0 80px rgba(74, 14, 14, 0.12);
 }
 
 .big-brand-tagline {
@@ -2147,7 +2216,7 @@ section {
     }
 
     .flag-lang-toggle {
-        min-width: 60px;
+        min-width: 86px;
         min-height: 31px;
         padding: 3px;
     }
@@ -4317,4 +4386,45 @@ section {
         border-left: none;
         border-right: none;
     }
+}
+
+/* ================================================
+   ADMIN / DASHBOARD / AUTH — KEEP DARK THEME
+   (Scoped token restoration so dark admin components
+   stay legible after the public-site token update.
+   Custom properties cascade to all descendants.)
+   ================================================ */
+
+.panel-sidebar,
+.panel-sidebar-toggle,
+.split-left,
+.stat-card,
+.orders-table-wrapper,
+.order-card,
+.detail-section,
+.document-item,
+.service-select-card,
+.admin-select,
+.admin-textarea,
+.progress-form,
+.payment-card,
+.payment-instructions-card,
+.empty-state-inline,
+.settings-input {
+    --color-gold: #D4AF37;
+    --color-gold-light: #F4D47C;
+    --color-gold-dark: #B8960C;
+    --color-gold-gradient: linear-gradient(135deg, #D4AF37 0%, #F4D47C 50%, #D4AF37 100%);
+    --bg-dark: #1A0A0A;
+    --bg-card: rgba(74, 14, 14, 0.4);
+    --bg-card-hover: rgba(74, 14, 14, 0.6);
+    --bg-glass: rgba(45, 8, 8, 0.7);
+    --text-primary: #FAF8F5;
+    --text-secondary: rgba(250, 248, 245, 0.8);
+    --text-muted: rgba(250, 248, 245, 0.6);
+    --text-gold: #D4AF37;
+    --border-gold: 1px solid rgba(212, 175, 55, 0.3);
+    --border-gold-strong: 1px solid rgba(212, 175, 55, 0.6);
+    --shadow-gold: 0 0 30px rgba(212, 175, 55, 0.2);
+    --shadow-gold-strong: 0 0 50px rgba(212, 175, 55, 0.4);
 }

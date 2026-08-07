@@ -2,7 +2,7 @@
 
 import { useLang } from '@/lib/useLang';
 import { ServiceItem } from '@/lib/serviceData';
-import { detailedServiceContent, defaultFaqs, defaultFaqsEn } from '@/lib/serviceContent';
+import { detailedServiceContent, defaultFaqs, defaultFaqsEn, defaultFaqsZh } from '@/lib/serviceContent';
 import Link from 'next/link';
 import { useState, useRef, useEffect, useCallback } from 'react';
 
@@ -27,14 +27,19 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
     const nameInputRef = useRef<HTMLInputElement>(null);
 
     const isEn = lang === 'en';
-    const displayTitle = isEn ? service.titleEn : service.title;
-    const displayDesc = isEn ? service.descriptionEn : service.description;
-    const displayFeatures = isEn ? service.featuresEn : service.features;
+    const isZh = lang === 'zh';
+    const displayTitle = isZh ? (service.titleZh || service.titleEn) : (isEn ? service.titleEn : service.title);
+    const displayDesc = isZh ? (service.descriptionZh || service.descriptionEn) : (isEn ? service.descriptionEn : service.description);
+    const displayFeatures = isZh ? (service.featuresZh || service.featuresEn) : (isEn ? service.featuresEn : service.features);
 
     const detailContent = detailedServiceContent[service.slug];
-    const introText = detailContent ? (isEn ? detailContent.introEn : detailContent.intro) : '';
+    const introText = detailContent 
+        ? (isZh ? (detailContent.introZh || detailContent.introEn) : (isEn ? detailContent.introEn : detailContent.intro)) 
+        : '';
     const sectionsText = detailContent ? detailContent.sections : [];
-    const faqsList = detailContent ? (isEn ? detailContent.faqsEn : detailContent.faqs) : (isEn ? defaultFaqsEn : defaultFaqs);
+    const faqsList = detailContent 
+        ? (isZh ? (detailContent.faqsZh || detailContent.faqsEn) : (isEn ? detailContent.faqsEn : detailContent.faqs)) 
+        : (isZh ? defaultFaqsZh : (isEn ? defaultFaqsEn : defaultFaqs));
 
     // General WA link for the "Chat via WhatsApp" button
     const waTextGeneral = encodeURIComponent(
@@ -103,8 +108,8 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
                 <div className="container" style={{ maxWidth: '800px' }}>
                     <span style={{
                         display: 'inline-block',
-                        background: 'rgba(212, 175, 55, 0.15)',
-                        border: '1px solid rgba(212, 175, 55, 0.3)',
+                        background: 'rgba(74, 14, 14, 0.08)',
+                        border: '1px solid rgba(74, 14, 14, 0.2)',
                         borderRadius: 'var(--radius-xl)',
                         padding: '6px 18px',
                         fontSize: '0.85rem',
@@ -199,7 +204,7 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
                                         marginBottom: '1rem',
                                         lineHeight: 1.4
                                     }}>
-                                        {isEn ? section.titleEn : section.title}
+                                        {isZh ? (section.titleZh || section.titleEn) : (isEn ? section.titleEn : section.title)}
                                     </h2>
                                     <p style={{
                                         fontSize: '1.05rem',
@@ -207,7 +212,7 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
                                         color: 'var(--text-secondary)',
                                         whiteSpace: 'pre-line'
                                     }}>
-                                        {isEn ? section.contentEn : section.content}
+                                        {isZh ? (section.contentZh || section.contentEn) : (isEn ? section.contentEn : section.content)}
                                     </p>
                                 </div>
                             ))}
@@ -304,8 +309,8 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
                                     className="service-card"
                                     style={{ padding: '1.25rem', textDecoration: 'none' }}
                                 >
-                                    <h4 className="service-title" style={{ fontSize: '0.95rem' }}>{isEn ? s.titleEn : s.title}</h4>
-                                    <p className="service-price" style={{ fontSize: '0.9rem' }}><strong>{s.price}</strong></p>
+                                    <h4 className="service-title" style={{ fontSize: '0.95rem' }}>{isZh ? (s.titleZh || s.titleEn) : (isEn ? s.titleEn : s.title)}</h4>
+                                    <p className="service-price" style={{ fontSize: '0.9rem' }}><strong>{t('price.startFrom')} {s.price}</strong></p>
                                 </Link>
                             ))}
                         </div>
@@ -358,7 +363,7 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
                             <div style={{
                                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                                 width: '52px', height: '52px',
-                                background: 'rgba(212,175,55,0.12)',
+                                background: 'rgba(74,14,14,0.08)',
                                 borderRadius: '50%', marginBottom: '1rem',
                             }}>
                                 <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" style={{ color: 'var(--color-gold)' }}>
@@ -383,15 +388,15 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
 
                         {/* Service Summary */}
                         <div style={{
-                            background: 'rgba(212,175,55,0.06)',
-                            border: '1px solid rgba(212,175,55,0.2)',
+                            background: 'rgba(74,14,14,0.04)',
+                            border: '1px solid rgba(74,14,14,0.12)',
                             borderRadius: 'var(--radius-md)',
                             padding: '0.85rem 1rem',
                             marginBottom: '1.5rem',
                             display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '0.5rem',
                         }}>
                             <span style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>{displayTitle}</span>
-                            <span style={{ color: 'var(--color-gold)', fontWeight: 700, fontSize: '0.95rem', flexShrink: 0 }}>{service.price}</span>
+                            <span style={{ color: 'var(--color-gold)', fontWeight: 700, fontSize: '0.95rem', flexShrink: 0 }}>{t('price.startFrom')} {service.price}</span>
                         </div>
 
                         {/* Form */}
@@ -504,7 +509,7 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
                     to { opacity: 1; transform: translateY(0) scale(1); }
                 }
                 input::placeholder { color: var(--text-muted); }
-                input:focus { border-color: var(--color-gold) !important; box-shadow: 0 0 0 3px rgba(212,175,55,0.15); }
+                input:focus { border-color: var(--color-gold) !important; box-shadow: 0 0 0 3px rgba(74,14,14,0.15); }
             `}</style>
         </>
     );

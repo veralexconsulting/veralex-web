@@ -1,0 +1,46 @@
+{
+    "slug": "pendaftaran-merek",
+    "title": "Trademark Registration in Indonesia",
+    "metaTitle": "Trademark Registration in Indonesia | DJKI — VERALEX CONSULTING",
+    "metaDescription": "Professional trademark registration in Indonesia through DJKI Ministry of Law. Complete protection from Rp6,000,000/class. Free consultation via WhatsApp!",
+    "keywords": "trademark registration Indonesia, register trademark Indonesia, trademark lawyer Indonesia, DJKI trademark, brand registration Indonesia, trademark consultant Indonesia, intellectual property Indonesia",
+    "category": "Intellectual Property",
+    "categorySlug": "intellectual-property",
+    "intro": "A trademark is the most valuable asset that differentiates your products or services from competitors. Without legal protection, your brand name, logo, or slogan could be claimed by another party first. VERALEX CONSULTING provides comprehensive trademark registration services through DJKI (Direktorat Jenderal Kekayaan Intelektual) at the Ministry of Law and Human Rights, from initial availability search through to official certificate issuance.",
+    "requirements": [
+        { "item": "Trademark sample (logo, word mark, or combination)" },
+        { "item": "Owner identity: KTP (Indonesian) or Passport (foreign national)" },
+        { "item": "Tax ID (NPWP) of the trademark owner" },
+        { "item": "List of goods/services to be covered (mapped to Nice Classification classes)" },
+        { "item": "Power of attorney (if filing through an agent)" }
+    ],
+    "processSteps": [
+        { "step": 1, "title": "Trademark Availability Search", "description": "We conduct a comprehensive search of the DJKI database to check if your proposed trademark is available. This includes visual, phonetic, and conceptual comparison to maximize approval chances." },
+        { "step": 2, "title": "Classification Consultation", "description": "Our experts help you identify the correct Nice Classification classes (out of 45 classes) for your goods and services, ensuring optimal coverage." },
+        { "step": 3, "title": "Online Application Submission", "description": "We file your trademark application through the DJKI online system (Merek DJKI) with all required documents and specifications." },
+        { "step": 4, "title": "Publication Period (2 Months)", "description": "Your trademark is published in the official gazette for 2 months, during which third parties may file oppositions. We monitor this period for you." },
+        { "step": 5, "title": "Substantive Examination", "description": "DJKI examiners conduct a substantive examination of your application. We respond to any office actions or objections if they arise." },
+        { "step": 6, "title": "Certificate Issuance", "description": "Upon approval, DJKI issues your official trademark registration certificate. The entire process typically takes 12–18 months from filing date." }
+    ],
+    "price": "Rp6.000.000",
+    "priceNote": "Per class of goods/services. All-inclusive: database search, classification consultation, filing, monitoring, and certificate issuance.",
+    "features": [
+        "Trademark availability check",
+        "DJKI database search",
+        "Classification consultation (45 Nice Classes)",
+        "Online application submission",
+        "Publication monitoring",
+        "Substantive examination assistance",
+        "Certificate issuance"
+    ],
+    "faqs": [
+        { "question": "How long does trademark registration take in Indonesia?", "answer": "The entire trademark registration process in Indonesia takes approximately 12–18 months from the filing date. This includes the 2-month publication period and the substantive examination by DJKI. VERALEX CONSULTING handles every step and keeps you updated on progress." },
+        { "question": "How much does trademark registration cost in Indonesia?", "answer": "The trademark registration service fee at VERALEX CONSULTING is Rp 6,000,000 per class. This covers the availability search, classification consultation, online filing, monitoring, and certificate issuance. Additional government fees may apply." },
+        { "question": "How long does trademark protection last?", "answer": "A registered trademark is protected for 10 years from the filing date and can be renewed every 10 years. It is important to track your renewal deadline to maintain uninterrupted protection." },
+        { "question": "Can an individual register a trademark without a company?", "answer": "Yes. Trademark registration can be filed under personal ownership using your national ID (KTP) and tax ID (NPWP). You do not need to own a company to register a trademark in Indonesia." },
+        { "question": "What happens if my trademark is similar to an existing one?", "answer": "If your trademark is too similar to a previously registered mark, DJKI may reject your application. This is why the initial availability search is critical — it helps identify potential conflicts before you invest time and money in filing." },
+        { "question": "Does one trademark registration cover all of Indonesia?", "answer": "Yes. A trademark registered with DJKI provides nationwide protection across the entire territory of the Republic of Indonesia." }
+    ],
+    "relatedSlugs": ["perpanjangan-merek", "pengalihan-merek", "hak-cipta"],
+    "ogImage": "/logo.jpg"
+}

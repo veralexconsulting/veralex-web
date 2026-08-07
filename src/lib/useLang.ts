@@ -3,11 +3,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { translations, Lang } from '@/lib/translations';
 
-export function useLang(): { t: (key: string) => string; lang: Lang; toggleLang: () => void } {
-    const [lang, setLang] = useState<Lang>('id');
+export function useLang(): { t: (key: string) => string; lang: Lang; toggleLang: () => void; setLanguage: (newLang: Lang) => void } {
+    const [lang, setLang] = useState<Lang>('en');
 
     useEffect(() => {
-        const saved = (localStorage.getItem('veralex-lang') || 'id') as Lang;
+        const saved = (localStorage.getItem('veralex-lang') || 'en') as Lang;
         setLang(saved);
 
         const handler = (e: Event) => {
@@ -18,18 +18,26 @@ export function useLang(): { t: (key: string) => string; lang: Lang; toggleLang:
         return () => window.removeEventListener('langchange', handler);
     }, []);
 
+    const setLanguage = useCallback((newLang: Lang) => {
+        setLang(newLang);
+        localStorage.setItem('veralex-lang', newLang);
+        document.documentElement.lang = newLang;
+        window.dispatchEvent(new CustomEvent('langchange', { detail: newLang }));
+    }, []);
+
     const toggleLang = useCallback(() => {
-        const next = lang === 'id' ? 'en' : 'id';
-        setLang(next);
-        localStorage.setItem('veralex-lang', next);
-        document.documentElement.lang = next;
-        window.dispatchEvent(new CustomEvent('langchange', { detail: next }));
-    }, [lang]);
+        const nextMap: Record<Lang, Lang> = {
+            id: 'en',
+            en: 'zh',
+            zh: 'id',
+        };
+        setLanguage(nextMap[lang] || 'en');
+    }, [lang, setLanguage]);
 
     const t = useCallback(
-        (key: string) => translations[lang]?.[key] || key,
+        (key: string) => translations[lang]?.[key] || translations['en']?.[key] || key,
         [lang]
     );
 
-    return { t, lang, toggleLang };
+    return { t, lang, toggleLang, setLanguage };
 }

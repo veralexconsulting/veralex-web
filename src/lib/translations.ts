@@ -1,4 +1,4 @@
-export type Lang = 'id' | 'en';
+export type Lang = 'id' | 'en' | 'zh';
 
 export const translations: Record<Lang, Record<string, string>> = {
     id: {
@@ -209,6 +209,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         // Service Details
         'detail.back': 'Kembali ke Layanan',
         'detail.priceStart': 'Harga mulai dari',
+        'price.startFrom': 'Mulai dari',
         'detail.whatYouGet': 'Yang Anda Dapatkan:',
         'detail.consultFree': 'Konsultasi GRATIS — Tim kami akan merespon dalam hitungan menit',
         'detail.email': 'Kirim Email',
@@ -521,6 +522,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         // Service Details
         'detail.back': 'Back to Services',
         'detail.priceStart': 'Price starts from',
+        'price.startFrom': 'Starting from',
         'detail.whatYouGet': 'What You Get:',
         'detail.consultFree': 'FREE Consultation — Our team will respond in minutes',
         'detail.email': 'Send Email',
@@ -624,5 +626,318 @@ export const translations: Record<Lang, Record<string, string>> = {
         'auth.split.title': 'The Foundation of Your Legal Certainty.',
         'auth.split.sub1': 'Access the exclusive client area to track licensing processes, download legal documents, and communicate directly with your consultant.',
         'auth.split.sub2': 'Join hundreds of companies that entrust their business legality to Veralex Consulting.',
+    },
+    zh: {
+        // Nav
+        'nav.home': '首页',
+        'nav.services': '服务项目',
+        'nav.pricing': '套餐价格',
+        'nav.gallery': '服务案例',
+        'nav.contact': '联系我们',
+        'nav.cta': 'WhatsApp 咨询',
+
+        // Hero
+        'hero.badge': '值得信赖的印尼企业合规与法律咨询专家',
+        'hero.title': '为您提供一站式印尼公司设立与商务许可解决方案',
+        'hero.subtitle': 'VERALEX CONSULTING 致力于为全球投资者提供专业的公司注册、知识产权保护及外籍人员工作签证办理服务，全面符合印尼最新法律法规。',
+        'hero.promo': '免费法律咨询 + 新客户专属优惠',
+        'hero.cta': '通过 WhatsApp 免费咨询',
+        'hero.viewServices': '探索我们的服务',
+        'hero.response': '几分钟内快速响应',
+        'hero.privacy': '严格保障客户隐私与商业机密',
+        'hero.visual_badge': '官方合规资质认证',
+
+        // Trust Badges
+        'trust.clients': '服务企业与客户',
+        'trust.success': '申办成功率',
+        'trust.experience': '行业资深经验',
+        'trust.consultation': '免费前置咨询',
+
+        // Services
+        'services.title': '核心服务领域',
+        'services.subtitle': '我们提供全方位的印尼商业法律咨询，满足您在印尼拓展业务的所有合规需求',
+        'services.learnMore': '了解详情',
+        'services.discount': '限时特惠',
+        'services.bonus': '+ 赠送企业官网设计制作',
+        'services.included': '已包含 DPKK 基金与 RPTKA 配额',
+
+        // Service Categories
+        'services.ip.title': '知识产权保护',
+        'services.company.title': '公司设立与合规',
+        'services.itas.title': '签证与居留许可 (ITAS)',
+        'services.product.title': '产品认证与准入',
+        'services.benefit.title': '成立印尼公司的核心优势',
+
+        // Service Items (IP)
+        'services.ip.trademark.title': '商标注册服务',
+        'services.ip.trademark.desc': '向印尼知识产权局 (DJKI) 申请品牌商标注册，全方位保护您的品牌资产',
+        'services.ip.renewal.title': '商标续展服务',
+        'services.ip.renewal.desc': '为已注册商标办理法定续展，确保您的独占专用权持续有效',
+        'services.ip.transfer.title': '商标转让服务',
+        'services.ip.transfer.desc': '依法办理商标所有权变更与转让手续，出具公证文件',
+        'services.ip.copyright.title': '著作权/版权登记',
+        'services.ip.copyright.desc': '为文学、艺术、软件及数字内容提供印尼官方版权登记保护',
+        'services.ip.design.title': '工业设计专利登记',
+        'services.ip.design.desc': '申请产品外观设计及工业外观专利，防止市场仿冒',
+
+        // Service Items (Company)
+        'services.company.pt.title': '印尼内资公司 (PT PMDN)',
+        'services.company.pt.desc': '印尼本土企业设立，含完整公证书、税务登记及商业许可',
+        'services.company.cv.title': 'CV 合伙企业设立',
+        'services.company.cv.desc': '适合中小型初创企业与轻资产经营的合伙公司结构',
+        'services.company.perorangan.title': '个人独资公司 (PT Perorangan)',
+        'services.company.perorangan.desc': '单人即可成立的微型独立法人企业，门槛低且手续简便',
+        'services.company.pma.title': '外商独资/合资公司 (PT PMA)',
+        'services.company.pma.desc': '外国投资者在印尼开办合规企业的法定标准实体结构',
+
+        // Service Items (ITAS)
+        'services.itas.investor1.title': '1年期投资者居留许可 (ITAS Investor)',
+        'services.itas.investor1.desc': '专为外籍股东及投资者办理的1年期印尼官方居留许可',
+        'services.itas.investor2.title': '2年期投资者居留许可 (ITAS Investor)',
+        'services.itas.investor2.desc': '长期稳定管理印尼投资项目的2年期居留许可，性价比更高',
+        'services.itas.visac2.title': 'C2 商务文化签证',
+        'services.itas.visac2.desc': '用于商务考察、学术交流及文化活动的印尼短期入境签证',
+        'services.itas.visad2.1.title': '1年期 D2 多次往返签证',
+        'services.itas.visad2.1.desc': '1年有效期的多次入境签证，方便高管频繁往返印尼',
+        'services.itas.visad2.2.title': '2年期 D2 多次往返签证',
+        'services.itas.visad2.2.desc': '2年有效期的多次入境签证，满足中长期商务出行需求',
+        'services.itas.kitas.title': '1年期外籍员工工作许可 (KITAS Kerja)',
+        'services.itas.kitas.desc': '含 DPKK 发展基金 ($1200美元) 与 RPTKA 用工配额包干办理',
+
+        // Service Items (Product)
+        'services.product.halal.title': '清真认证 (Halal Certificate)',
+        'services.product.halal.desc': '食品、饮料及化妆品进入印尼市场的强制性清真合规认证',
+        'services.product.sni.title': '印尼国家标准认证 (SNI)',
+        'services.product.sni.desc': '保障工业品及消费品质量安全的印尼强制与自愿性标准认证',
+        'services.product.bpom.title': '印尼食品药品监督局许可 (BPOM)',
+        'services.product.bpom.desc': '进口食品、药品、保健品与美妆用品的销售许可分发批文',
+        'services.product.k3l.title': 'K3L 安全健康环境认证',
+        'services.product.k3l.desc': '电子电器产品及相关消费品的安全标准合规备案',
+        'services.product.postel.title': 'Postel 电信设备认证',
+        'services.product.postel.desc': '带蓝牙、Wi-Fi或无线通讯功能设备的通信局强制认证',
+
+        // Promo Banner
+        'promo.tag': '特别优惠套餐',
+        'promo.title': '同时办理公司设立与商标注册？',
+        'promo.subtitle': '选择 Starter Business 初创套餐，仅需 Rp9.900.000，即可尊享：',
+        'promo.save': '相比单独办理，省去高达 Rp3.000.000+ 费用',
+        'promo.cta': '立即申购此套餐',
+        'promo.allPackages': '查看所有套餐',
+        'promo.b1': '全套 PT PMDN 公司设立服务',
+        'promo.b2': '1个类别的商标注册申请',
+        'promo.b3': '免费赠送企业官网设计与上线',
+        'promo.b4': 'NIB 商业登记号 + 经营许可',
+        'promo.b5': '企业专属税务登记证 (NPWP)',
+        'promo.b6': '一对一商业法律咨询服务',
+
+        // Pricing
+        'pricing.title': '精选打包套餐',
+        'pricing.subtitle': '选择全合规打包套餐，享受更优惠的价格与优先加急处理服务',
+        'pricing.bestValue': '最高性价比',
+        'pricing.save': '直降',
+        'pricing.cta': '选择此套餐',
+        'pricing.noHiddenFees': '无任何隐藏费用',
+        'pricing.custom.question': '需要根据您的具体业务量身定制方案？',
+        'pricing.custom.cta': '获取专属定制报价',
+
+        // Pricing Packages
+        'pricing.starter': '初创企业套餐 (Starter Business)',
+        'pricing.investor': '投资人合规套餐 (Investor Package)',
+        'pricing.premium': '尊享投资人套餐 (Premium Investor)',
+
+        // Testimonials
+        'testimonials.title': '客户真实评价',
+        'testimonials.subtitle': '倾听全球投资者与企业对 VERALEX CONSULTING 的认可',
+        'testimonials.t1.content': '我们第一次在印尼设立公司，对核名、KBLI 行业代码和 NIB 手续一无所知。Veralex 团队耐心地逐步讲解，全程主动更新进度，省去了我们频繁跟进的麻烦。',
+        'testimonials.t2.content': '在商标注册方面，他们帮助我们在提交前精准核对商品类别。印尼知识产权局 (DJKI) 的审查状态每有更新就会及时通知，让我们对进度非常放心。',
+        'testimonials.t3.content': '我们当时需要在紧迫的时限内为外籍高管办理工作许可 (KITAS)。Veralex 规范高效地准备好了所有公司材料，全流程安排得井井有条，而且实际费用与预估完全一致。',
+        'testimonials.t3.role': '某跨国科技公司 HR 总监',
+
+        // Why Legal
+        'whyLegal.title': '为什么合规设立至关重要？',
+        'whyLegal.p1': '企业合规不仅仅是完成法律手续，更是建立商业信任与企业可持续发展的核心根基。',
+        'whyLegal.p2': '缺乏完整的合规资质，企业将面临执法处罚、无法进入正规市场、以及无法获得机构融资或银行贷款的风险。',
+        'whyLegal.p3': 'VERALEX 致力于通过透明、高效的服务，确保您的印尼业务完全符合印尼国家法规，为您的海外投资保驾护航。',
+        'whyLegal.l1': '全面规避法律风险与声誉损失',
+        'whyLegal.l2': '打通正规市场准入、招投标及银行金融开户',
+        'whyLegal.l3': '加速项目融资与跨国战略合作进程',
+        'whyLegal.l4': '通过强制性法定认证保障产品合法销售',
+        'whyLegal.l5': '保障外籍高管及员工符合印尼移民与劳动法规',
+
+        // Urgency CTA
+        'urgency.tag': '本月限时特惠',
+        'urgency.title': '本月限定尊享折扣！',
+        'urgency.subtitle': '申购任意打包套餐即享 15% 现金折扣。提供不限时免费前置法律咨询！',
+        'urgency.cta': '立即领取优惠名额',
+        'urgency.note': '*优惠仅在本月底前有效，名额有限！',
+
+        // WhatsApp CTA
+        'wa.title': '立即联系我们！',
+        'wa.subtitle': '我们的专业法务团队随时准备解答您的印尼投资与合规疑问',
+        'wa.cta': '通过 WhatsApp 在线沟通',
+
+        // Brand Section
+        'brand.tagline': '您在印尼值得信赖的商业法律伙伴',
+        'brand.consult': '免费前置咨询',
+        'brand.call': '立即拨打电话',
+
+        // Contact
+        'contact.title': '联系我们',
+        'contact.subtitle': '我们竭诚为您在印尼的业务发展提供法律支持',
+        'contact.address': '办公地址',
+        'contact.address_value': 'Jl. Utama Raya No.348, RT.003/RW.026, Kayuringin Jaya, Kec. Bekasi Sel., Kota Bks, Jawa Barat 17144',
+        'contact.email_sub': '通过正式电子邮件与我们沟通',
+        'contact.wa_sub': '快速响应与免费在线咨询',
+        'contact.address_sub': '点击在谷歌地图中查看导航',
+        'contact.send': '发送留言',
+
+        // Floating WhatsApp
+        'floating.chat': '在线咨询',
+
+        // Footer
+        'footer.desc': '专业的印尼商业法律咨询服务商。我们帮助全球企业与投资者高效办理印尼公司设立、产品认证及外籍人员签证，严格符合印尼法律规范。',
+        'footer.services': '服务项目',
+        'footer.contact': '联系方式',
+        'footer.copyright': '© 2026 VERALEX CONSULTING. 版权所有。',
+        'footer.allServices': '全部服务浏览',
+        'footer.address': 'Jl. Utama Raya No.348, RT.003/RW.026, Kayuringin Jaya, Kec. Bekasi Sel., Kota Bks, Jawa Barat 17144',
+        'footer.itas': '外籍员工居留许可 (ITAS/KITAS)',
+
+        // Gallery
+        'gallery.title': '服务案例与成果展示',
+        'gallery.subtitle': '记录我们为全球客户成功办理印尼合规业务的精彩瞬间',
+        'gallery.cta': '查看完整案例库 →',
+        'gallery.imgAlt': 'VERALEX 客户案例',
+        'gallery.pageTitle': '案例成果展示图库',
+        'gallery.pageSubtitle': '展示我们为跨国企业及中资企业顺利完成印尼商务合规的真实凭据',
+        'gallery.ctaTitle': '希望了解更多投资合规细节？',
+        'gallery.ctaSubtitle': '欢迎就您的印尼业务需求与我们的法律顾问团队直接沟通',
+        'gallery.ctaButton': '💬 通过 WhatsApp 免费咨询',
+
+        // Benefit Items
+        'benefit.1': '印尼公司名称核准与预订',
+        'benefit.2': '公证人起草并签署公司设立公证书',
+        'benefit.3': '印尼司法部 (Kemenkumham) 官方批文',
+        'benefit.4': '公司专属税务登记证 (NPWP Badan)',
+        'benefit.5': '印尼系统注册账号 (OSS RBA)',
+        'benefit.6': '商业登记号 (NIB / TDP)',
+        'benefit.7': '标准经营许可 / 经营证书',
+        'benefit.8': '企业自主承诺声明文件',
+        'benefit.9': 'K3L、SPUMKTTR 与 SPPL 环境备案',
+        'benefit.10': '企业官方实体印章制作',
+        'benefit.11': '赠送免费商业法律顾问咨询',
+
+        // Pricing Features
+        'pricing.feature.nib': 'NIB 商业登记号 + 经营许可',
+        'pricing.feature.consult': '商业法律与合规咨询',
+        'pricing.feature.priority': '专属顾问优先加急处理',
+
+        // Service Details
+        'detail.back': '返回服务列表',
+        'detail.priceStart': '起价',
+        'price.startFrom': '起价',
+        'detail.whatYouGet': '套餐包含内容：',
+        'detail.consultFree': '免费前置咨询 — 我们的团队将在几分钟内与您联系',
+        'detail.email': '发送电子邮件',
+        'detail.other': '其他相关服务',
+
+        // Tags
+        'tag.hki': '知识产权',
+        'tag.certificate': '官方证书',
+        'tag.renewal': '续展办理',
+        'tag.legal': '法律合规',
+        'tag.transfer': '所有权转让',
+        'tag.ownership': '产权证明',
+        'tag.copyright': '著作权',
+        'tag.protection': '法律保护',
+        'tag.design': '工业外观',
+        'tag.kemenkumham': '印尼司法部',
+        'tag.ptBiasa': '标准内资公司',
+        'tag.aktaSk': '公证书 + 司法部批文',
+        'tag.cv': 'CV 合伙',
+        'tag.aktaNotaris': '公证契约',
+        'tag.ptPerorangan': '个人独资公司',
+        'tag.pma': '外资公司 PMA',
+        'tag.foreign': '外商投资',
+        'tag.investor': '投资者',
+        'tag.1year': '1年有效',
+        'tag.2years': '2年有效',
+        'tag.visa': '入境签证',
+        'tag.multipleEntry': '多次往返',
+        'tag.kitas': '工作居留许可',
+        'tag.work': '合法工作',
+
+        // Statuses
+        'status.fastProcess': '快速办理',
+        'status.readyProcess': '随时递交',
+        'status.est3Days': '预计3天完成',
+        'status.fast': '高效办结',
+        'status.trusted': '官方认证',
+        'status.immigration': '印尼移民局',
+
+        // Dashboard Nav
+        'nav.dash.home': '控制台',
+        'nav.dash.orders': '我的订单',
+        'nav.dash.new_order': '新建订单',
+        'nav.dash.logout': '退出登录',
+
+        // Dashboard Orders
+        'dash.orders.back': '返回订单列表',
+        'dash.orders.detail': '订单详情',
+        'dash.orders.progress': '办理进度',
+        'dash.orders.payment': '支付结算',
+        'dash.orders.documents': '法定文件',
+        'dash.orders.info': '订单基本信息',
+        'dash.orders.adminNotes': '顾问备注',
+        'dash.orders.emptyProgress': '暂无进度更新。我们的顾问团队将立即处理您的申请。',
+        'dash.orders.emptyDocs': '暂无文件。办结的文件将在处理完成后在此处列出。',
+        'dash.orders.status': '当前状态',
+        'dash.orders.service': '申办项目',
+        'dash.orders.price': '费用',
+        'dash.orders.est': '预计周期',
+        'dash.orders.date': '下单日期',
+        'dash.orders.payment.instTitle': '付款指引',
+        'dash.orders.payment.instDesc': '请按照账单金额转账至以下官方银行账户：',
+        'dash.orders.payment.instFooter': '上传付款凭证后，审核将在1x24工作小时内完成。',
+        'dash.orders.payment.info': '您的付款凭证正在审核中。如有填错可重新上传。',
+        'dash.orders.payment.verified': '付款已成功核验',
+        'dash.orders.payment.rejectReason': '驳回原因：',
+        'dash.orders.payment.btn': '提交付款凭证',
+        'dash.orders.payment.btnLoading': '正在上传...',
+        'dash.orders.payment.uploadCta': '选择付款凭证文件',
+        'dash.orders.payment.step': '步骤',
+        'dash.status.pending': '待处理',
+        'dash.status.paid': '已付款',
+        'dash.status.in_progress': '办理中',
+        'dash.status.completed': '已办结',
+        'dash.status.cancelled': '已取消',
+        'dash.status.uploaded': '已提交凭证',
+        'dash.status.verified': '已完成核验',
+        'dash.status.rejected': '已驳回',
+        'dash.status.skipped': '已跳过',
+
+        // Auth
+        'auth.login.title': '欢迎回来',
+        'auth.login.subtitle': '登录以进入客户专属服务门户。',
+        'auth.login.email': '企业电子邮箱',
+        'auth.login.password': '登录密码',
+        'auth.login.submit': '进入门户',
+        'auth.login.loading': '正在验证身份...',
+        'auth.google': '使用 Google 账号继续',
+        'auth.login.footer': '还没有账户？',
+        'auth.login.link': '点此注册新账户',
+        'auth.register.title': '开启印尼投资之旅',
+        'auth.register.subtitle': '填写基本信息以创建客户门户账户。',
+        'auth.register.name': '姓名全称',
+        'auth.register.phone': '联系电话',
+        'auth.register.confirmPassword': '确认密码',
+        'auth.register.submit': '创建账户',
+        'auth.register.loading': '正在创建账户...',
+        'auth.register.footer': '已有注册账户？',
+        'auth.register.link': '点此直接登录',
+        'auth.split.badge': 'Veralex Consulting 客户中心',
+        'auth.split.title': '为您的印尼投资筑牢法律保障。',
+        'auth.split.sub1': '登录专属客户区域，实时追踪许可办理进度、下载法定资质文件，并与您的专属顾问直接沟通。',
+        'auth.split.sub2': '加入数百家将印尼合规业务托付给 Veralex Consulting 的知名企业。',
     }
 };

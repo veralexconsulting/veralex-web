@@ -1,37 +1,80 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { translations, Lang } from '@/lib/translations';
 
-function LanguageToggle({ lang, onClick, className = '' }: { lang: Lang; onClick: () => void; className?: string }) {
+const LANG_FLAGS: Record<Lang, string> = { en: '🇬🇧', id: '🇮🇩', zh: '🇨🇳' };
+const LANG_NAMES: Record<Lang, string> = { en: 'English', id: 'Indonesia', zh: '中文' };
+
+function LanguageToggle({ lang, onSelect, className = '' }: { lang: Lang; onSelect: (l: Lang) => void; className?: string }) {
+    const [open, setOpen] = useState(false);
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const onClickOutside = (e: MouseEvent) => {
+            if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+        };
+        document.addEventListener('mousedown', onClickOutside);
+        return () => document.removeEventListener('mousedown', onClickOutside);
+    }, []);
+
     return (
-        <button
-            className={`flag-lang-toggle ${className}`}
-            onClick={onClick}
-            type="button"
-            aria-label={lang === 'id' ? 'Switch language to English' : 'Ubah bahasa ke Indonesia'}
-        >
-            <span className={`flag-lang-option${lang === 'id' ? ' active' : ''}`} aria-hidden="true">
-                🇮🇩
-            </span>
-            <span className={`flag-lang-option${lang === 'en' ? ' active' : ''}`} aria-hidden="true">
-                🇬🇧
-            </span>
-        </button>
+        <div className="flag-lang-toggle-wrapper" ref={ref}>
+            <button
+                className={`flag-lang-toggle ${className}`}
+                onClick={() => setOpen((v) => !v)}
+                type="button"
+                aria-label="Change language / Switch language"
+                aria-haspopup="listbox"
+                aria-expanded={open}
+            >
+                <span className={`flag-lang-option${lang === 'en' ? ' active' : ''}`} aria-hidden="true">
+                    🇬🇧
+                </span>
+                <span className={`flag-lang-option${lang === 'id' ? ' active' : ''}`} aria-hidden="true">
+                    🇮🇩
+                </span>
+                <span className={`flag-lang-option${lang === 'zh' ? ' active' : ''}`} aria-hidden="true">
+                    🇨🇳
+                </span>
+            </button>
+            {open && (
+                <div className="flag-lang-dropdown" role="listbox">
+                    {(Object.keys(LANG_NAMES) as Lang[]).map((l) => (
+                        <button
+                            key={l}
+                            type="button"
+                            role="option"
+                            aria-selected={l === lang}
+                            className={`flag-lang-dropdown-option${l === lang ? ' active' : ''}`}
+                            onClick={() => {
+                                onSelect(l);
+                                setOpen(false);
+                            }}
+                        >
+                            <span className="flag-lang-dropdown-flag" aria-hidden="true">
+                                {LANG_FLAGS[l]}
+                            </span>
+                            <span className="flag-lang-dropdown-name">{LANG_NAMES[l]}</span>
+                        </button>
+                    ))}
+                </div>
+            )}
+        </div>
     );
 }
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
-    const [lang, setLang] = useState<Lang>('id');
+    const [lang, setLang] = useState<Lang>('en');
     const pathname = usePathname();
 
     useEffect(() => {
-        const saved = (localStorage.getItem('veralex-lang') || 'id') as Lang;
+        const saved = (localStorage.getItem('veralex-lang') || 'en') as Lang;
         setLang(saved);
     }, []);
 
@@ -42,13 +85,21 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
-    const toggleLang = useCallback(() => {
-        const next = lang === 'id' ? 'en' : 'id';
+    useEffect(() => {
+        const handler = (e: Event) => {
+            const detail = (e as CustomEvent).detail as Lang;
+            setLang(detail);
+        };
+        window.addEventListener('langchange', handler);
+        return () => window.removeEventListener('langchange', handler);
+    }, []);
+
+    const setLanguage = useCallback((next: Lang) => {
         setLang(next);
         localStorage.setItem('veralex-lang', next);
         document.documentElement.lang = next;
         window.dispatchEvent(new CustomEvent('langchange', { detail: next }));
-    }, [lang]);
+    }, []);
 
     const t = (key: string) => translations[lang]?.[key] || key;
 
@@ -123,13 +174,13 @@ export default function Navbar() {
                     )}
 
                     <div className="navbar-desktop-actions">
-                        <LanguageToggle lang={lang} onClick={toggleLang} />
+                        <LanguageToggle lang={lang} onSelect={setLanguage} />
                     </div>
                 </div>
 
                 {/* Mobile Hamburger Toggle Only */}
                 <div className="navbar-mobile-controls">
-                    <LanguageToggle lang={lang} onClick={toggleLang} className="flag-lang-toggle-mobile" />
+                    <LanguageToggle lang={lang} onSelect={setLanguage} className="flag-lang-toggle-mobile" />
                     <button
                         className={`menu-toggle${menuOpen ? ' active' : ''}`}
                         onClick={() => setMenuOpen(!menuOpen)}

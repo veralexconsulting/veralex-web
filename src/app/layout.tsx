@@ -27,8 +27,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
     languages: {
-      'id': '/',
       'en': '/',
+      'id': '/id',
+      'zh': '/zh',
     },
   },
   openGraph: {
@@ -38,19 +39,19 @@ export const metadata: Metadata = {
     description:
       "Jasa pendirian PT, CV, PT PMA, pendaftaran merek, KITAS kerja, ITAS investor, sertifikasi halal & BPOM. Konsultasi GRATIS, proses cepat & transparan. Hubungi WhatsApp sekarang!",
     images: [{ url: "/logo.jpg", width: 1200, height: 630, alt: "VERALEX CONSULTING - Jasa Legalitas Perusahaan" }],
-    locale: "id_ID",
-    alternateLocale: "en_US",
+    locale: "en_US",
+    alternateLocale: "id_ID",
     siteName: "VERALEX CONSULTING",
   },
   twitter: {
     card: "summary_large_image",
     title: "Jasa Pendirian PT, Daftar Merek & KITAS | VERALEX CONSULTING",
     description:
-      "Jasa pendirian PT, pendaftaran merek dagang, KITAS, dan legalitas bisnis. Konsultasi GRATIS via WhatsApp!",
+      "Jasa pendirian PT, pendaftaran merek dagang, KITAS, and legalitas bisnis. Konsultasi GRATIS via WhatsApp!",
     images: ["/logo.jpg"],
   },
   other: {
-    "theme-color": "#4A0E0E",
+    "theme-color": "#FAFAFA",
     "geo.region": "ID-JB",
     "geo.placename": "Bekasi, Jawa Barat",
     "geo.position": "-6.2484;106.9860",
@@ -77,7 +78,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id">
+    <html lang="en">
       <head>
         {/* Structured Data - LegalService */}
         <script

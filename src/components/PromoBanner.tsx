@@ -12,7 +12,7 @@ export default function PromoBanner() {
     return (
         <section style={{
             padding: '60px 0',
-            background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%)',
+            background: 'var(--bg-card)',
             borderTop: 'var(--border-gold-strong)',
             borderBottom: 'var(--border-gold-strong)',
             position: 'relative',
@@ -20,7 +20,7 @@ export default function PromoBanner() {
         }}>
             <div style={{
                 position: 'absolute', top: '-50%', left: '-10%', width: '120%', height: '200%',
-                background: 'radial-gradient(ellipse at center, rgba(212, 175, 55, 0.08) 0%, transparent 70%)',
+                background: 'radial-gradient(ellipse at center, rgba(74, 14, 14, 0.05) 0%, transparent 70%)',
                 pointerEvents: 'none',
             }} />
 
@@ -31,7 +31,7 @@ export default function PromoBanner() {
                         alignItems: 'center',
                         gap: '0.5rem',
                         background: 'var(--color-gold-gradient)',
-                        color: 'var(--color-primary-dark)',
+                        color: '#ffffff',
                         padding: '6px 20px',
                         borderRadius: 'var(--radius-xl)',
                         fontWeight: 700,
@@ -73,9 +73,9 @@ export default function PromoBanner() {
                         ].map((item) => (
                             <div key={item} style={{
                                 padding: '0.6rem 1rem',
-                                background: 'rgba(212, 175, 55, 0.08)',
+                                background: 'rgba(74, 14, 14, 0.05)',
                                 borderRadius: 'var(--radius-sm)',
-                                border: '1px solid rgba(212, 175, 55, 0.15)',
+                                border: '1px solid rgba(74, 14, 14, 0.12)',
                                 color: 'var(--text-primary)',
                                 fontSize: '0.9rem',
                                 display: 'flex',
