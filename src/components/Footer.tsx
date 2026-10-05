@@ -15,7 +15,7 @@ export default function Footer() {
                     {/* Col 1: Brand */}
                     <div className="footer-brand">
                         <div className="footer-logo">
-                            <Image src="/logo.jpg" alt="PT. Veralex Consulting Indonesia" width={44} height={44} />
+                            <Image src="/logo.webp" alt="PT. Veralex Consulting Indonesia" width={44} height={44} />
                             <span className="footer-logo-text">VERALEX CONSULTING</span>
                         </div>
                         <p style={{

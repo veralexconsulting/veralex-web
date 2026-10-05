@@ -41,15 +41,15 @@ export const metadata: Metadata = {
         type: 'website',
         url: 'https://veralexconsulting.com',
         siteName: 'VERALEX CONSULTING',
-        images: [{ url: '/logo.jpg', width: 1200, height: 630, alt: 'VERALEX CONSULTING' }],
+        images: [{ url: '/logo.webp', width: 1200, height: 630, alt: 'VERALEX CONSULTING' }],
     },
     other: {
         'theme-color': '#4A0E0E',
     },
     icons: {
-        icon: '/logo.jpg',
-        shortcut: '/logo.jpg',
-        apple: '/logo.jpg',
+        icon: '/logo.webp',
+        shortcut: '/logo.webp',
+        apple: '/logo.webp',
     },
 };
 

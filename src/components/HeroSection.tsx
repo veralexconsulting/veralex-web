@@ -10,7 +10,7 @@ export default function HeroSection() {
         <section className="hero" id="hero">
             <div className="hero-bg-image">
                 <Image
-                    src="/bg-indo-premium.png"
+                    src="/bg-indo-premium.webp"
                     alt="VERALEX Consulting background"
                     fill
                     priority
@@ -89,7 +89,7 @@ export default function HeroSection() {
                     <div className="hero-visual-backdrop" />
                     <div className="hero-visual-frame">
                         <Image
-                            src="/talent-hero-legal-visual.png"
+                            src="/talent-hero-legal-visual.webp"
                             alt="Tim Konsultan Hukum VERALEX CONSULTING"
                             fill
                             priority

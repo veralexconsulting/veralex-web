@@ -58,7 +58,7 @@ export default function RegisterPage() {
             {/* Left Box: Imagery */}
             <div className="split-left">
                 <Image
-                    src="/bg-indo-premium.png"
+                    src="/bg-indo-premium.webp"
                     alt="Veralex Legal Luxury"
                     fill
                     priority
@@ -82,7 +82,7 @@ export default function RegisterPage() {
                 <div className="auth-form-wrapper">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
                         <Link href="/" className="auth-brand-link" style={{ display: 'inline-flex' }}>
-                            <Image src="/logo.jpg" alt="Veralex" width={50} height={50} className="auth-logo" style={{ borderRadius: '50%' }} />
+                            <Image src="/logo.webp" alt="Veralex" width={50} height={50} className="auth-logo" style={{ borderRadius: '50%' }} />
                         </Link>
                         <LanguageToggle />
                     </div>

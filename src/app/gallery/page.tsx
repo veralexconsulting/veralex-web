@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: 'Galeri Bukti Layanan | VERALEX CONSULTING',
         description: 'Dokumentasi bukti layanan legalitas bisnis oleh VERALEX CONSULTING.',
-        images: [{ url: '/logo.jpg' }],
+        images: [{ url: '/logo.webp' }],
     },
 };
 

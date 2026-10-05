@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     title: "Jasa Pendirian PT, Daftar Merek & KITAS | VERALEX CONSULTING",
     description:
       "Jasa pendirian PT, CV, PT PMA, pendaftaran merek, KITAS kerja, ITAS investor, sertifikasi halal & BPOM. Konsultasi GRATIS, proses cepat & transparan. Hubungi WhatsApp sekarang!",
-    images: [{ url: "/logo.jpg", width: 1200, height: 630, alt: "VERALEX CONSULTING - Jasa Legalitas Perusahaan" }],
+    images: [{ url: "/logo.webp", width: 1200, height: 630, alt: "VERALEX CONSULTING - Jasa Legalitas Perusahaan" }],
     locale: "en_US",
     alternateLocale: "id_ID",
     siteName: "VERALEX CONSULTING",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     title: "Jasa Pendirian PT, Daftar Merek & KITAS | VERALEX CONSULTING",
     description:
       "Jasa pendirian PT, pendaftaran merek dagang, KITAS, and legalitas bisnis. Konsultasi GRATIS via WhatsApp!",
-    images: ["/logo.jpg"],
+    images: ["/logo.webp"],
   },
   other: {
     "theme-color": "#FAFAFA",
@@ -67,9 +67,9 @@ export const metadata: Metadata = {
     "format-detection": "telephone=no",
   },
   icons: {
-    icon: "/logo.jpg",
-    shortcut: "/logo.jpg",
-    apple: "/logo.jpg",
+    icon: "/logo.webp",
+    shortcut: "/logo.webp",
+    apple: "/logo.webp",
   },
 };
 
@@ -97,8 +97,8 @@ export default function RootLayout({
               "@type": "LegalService",
               name: "VERALEX CONSULTING",
               alternateName: "Veralex",
-              image: "https://veralexconsulting.com/logo.jpg",
-              logo: "https://veralexconsulting.com/logo.jpg",
+              image: "https://veralexconsulting.com/logo.webp",
+              logo: "https://veralexconsulting.com/logo.webp",
               description: "Konsultan hukum profesional untuk pendirian PT, CV, PT PMA, pendaftaran merek, hak cipta, ITAS, KITAS, dan legalitas bisnis di Indonesia.",
               url: "https://veralexconsulting.com",
               telephone: "+6281219476385",

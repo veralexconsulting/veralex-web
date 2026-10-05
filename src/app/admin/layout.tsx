@@ -73,7 +73,7 @@ export default function AdminLayout({
             {/* Sidebar */}
             <aside className={`panel-sidebar ${sidebarOpen ? 'open' : ''}`}>
                 <a href="/" className="panel-sidebar-brand">
-                    <img src="/logo.jpg" alt="VERALEX" className="panel-sidebar-logo" />
+                    <img src="/logo.webp" alt="VERALEX" className="panel-sidebar-logo" />
                     <span className="panel-sidebar-name">VERALEX</span>
                 </a>
 

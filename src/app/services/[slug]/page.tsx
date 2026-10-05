@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         openGraph: {
             title: `Jasa ${service.title} | VERALEX CONSULTING - Mulai ${service.price}`,
             description: `${service.description} Harga mulai ${service.price}. Konsultasi GRATIS!`,
-            images: [{ url: '/logo.jpg', alt: `Jasa ${service.title} - VERALEX CONSULTING` }],
+            images: [{ url: '/logo.webp', alt: `Jasa ${service.title} - VERALEX CONSULTING` }],
         },
     };
 }

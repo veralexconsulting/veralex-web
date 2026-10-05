@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             title: service.metaTitle,
             description: service.metaDescription,
             url: `/${lang}/services/${slug}`,
-            images: [{ url: service.ogImage || '/logo.jpg', alt: service.title }],
+            images: [{ url: service.ogImage || '/logo.webp', alt: service.title }],
             locale: lang === 'zh' ? 'zh_CN' : (lang === 'en' ? 'en_US' : 'id_ID'),
             type: 'website',
         },

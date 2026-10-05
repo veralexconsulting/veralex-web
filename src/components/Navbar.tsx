@@ -88,7 +88,7 @@ export default function Navbar() {
                 {/* Centered Brand Motif */}
                 <Link href="/" className={`navbar-brand-centered ${scrolled ? 'scrolled-brand' : ''}`} aria-label="VERALEX Home" onClick={() => setMenuOpen(false)}>
                     <div className="navbar-logo-wrapper">
-                        <Image src="/logo.jpg" alt="VERALEX CONSULTING" fill sizes="(max-width: 768px) 45px, 60px" className="navbar-logo-image" priority />
+                        <Image src="/logo.webp" alt="VERALEX CONSULTING" fill sizes="(max-width: 768px) 45px, 60px" className="navbar-logo-image" priority />
                     </div>
                     <span className="navbar-brand-name">Veralex</span>
                 </Link>
