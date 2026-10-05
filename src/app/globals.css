@@ -4764,47 +4764,49 @@ section {
 
 .order-modal-close {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: transparent;
-    border: none;
+    top: 0.9rem;
+    right: 0.9rem;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--bg-card);
+    border: 1px solid rgba(26, 26, 26, 0.12);
     cursor: pointer;
-    color: var(--text-muted);
-    padding: 6px;
+    color: var(--text-secondary);
     border-radius: 50%;
-    transition: color 0.2s;
+    transition: color 0.2s, border-color 0.2s;
 }
 
 .order-modal-close:hover {
     color: var(--color-gold);
+    border-color: var(--border-gold-strong);
 }
 
 .order-modal-head {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
 }
 
 .order-modal-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 52px;
-    height: 52px;
-    background: rgba(74, 14, 14, 0.12);
-    border: 1px solid var(--border-gold);
+    width: 44px;
+    height: 44px;
+    background: rgba(74, 14, 14, 0.1);
     border-radius: 50%;
     color: var(--color-gold);
-    margin-bottom: 0.9rem;
+    margin-bottom: 0.75rem;
 }
 
 .order-modal-title {
     font-family: var(--font-heading);
-    font-size: 1.35rem;
-    background: var(--color-gold-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 0 0 0.4rem;
+    font-size: 1.3rem;
+    color: var(--color-gold);
+    margin: 0 0 0.35rem;
 }
 
 .order-modal-sub {
@@ -4816,20 +4818,21 @@ section {
 
 .order-modal-summary {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-between;
+    gap: 0.35rem 1rem;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    background: rgba(74, 14, 14, 0.08);
-    border: 1px solid rgba(74, 14, 14, 0.15);
-    border-radius: var(--radius-md);
+    background: rgba(74, 14, 14, 0.06);
+    border-left: 2px solid var(--color-gold);
     padding: 0.85rem 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
 }
 
 .order-modal-service {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.35;
 }
 
 .order-modal-price {
@@ -4852,36 +4855,47 @@ section {
     gap: 1.15rem;
 }
 
+.order-modal-fields {
+    display: grid;
+    gap: 1rem;
+}
+
 .order-modal-field label {
     display: block;
-    color: var(--text-primary);
-    font-size: 0.88rem;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
     font-weight: 600;
-    margin-bottom: 0.45rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
 }
 
 .order-modal-field label .req {
-    color: #e74c3c;
+    color: var(--color-gold);
 }
 
 .order-modal-field label em {
     color: var(--text-muted);
     font-weight: 400;
     font-style: normal;
+    text-transform: none;
+    letter-spacing: 0;
 }
 
 .order-modal-field input {
     width: 100%;
     box-sizing: border-box;
-    padding: 0.75rem 1rem;
-    background: var(--bg-glass);
-    border: var(--border-gold);
+    padding: 0.8rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid rgba(26, 26, 26, 0.14);
     border-radius: var(--radius-md);
     color: var(--text-primary);
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-family: inherit;
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .order-modal-field input::placeholder {
@@ -4890,17 +4904,18 @@ section {
 
 .order-modal-field input:focus {
     border-color: var(--color-gold);
-    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+    box-shadow: 0 0 0 3px rgba(74, 14, 14, 0.12);
 }
 
 .order-modal-field input[aria-invalid='true'] {
-    border-color: #e74c3c;
+    border-color: var(--color-gold);
+    background: rgba(74, 14, 14, 0.04);
 }
 
 .order-modal-error {
-    color: #e74c3c;
-    font-size: 0.8rem;
-    margin: 0.35rem 0 0;
+    color: var(--color-gold);
+    font-size: 0.78rem;
+    margin: 0.4rem 0 0;
 }
 
 .order-modal-trigger,
@@ -4915,14 +4930,16 @@ section {
 }
 
 .order-modal-submit {
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
+    min-height: 52px;
 }
 
 .order-modal-note {
     color: var(--text-muted);
-    font-size: 0.76rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
     text-align: center;
-    margin: 0.9rem 0 0;
+    margin: 0.85rem 0 0;
 }
 
 @keyframes svcFadeIn {
@@ -5297,17 +5314,22 @@ span {
     }
 
     .order-modal-close {
-        position: sticky;
-        top: 0;
-        float: right;
-        z-index: 2;
+        position: fixed;
+        top: calc(0.75rem + env(safe-area-inset-top));
+        right: 0.75rem;
         width: 44px;
         height: 44px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: -0.5rem -0.5rem 0 0;
-        background: var(--bg-card);
-        border: 1px solid var(--border-gold);
     }
+}
+
+/* ================================================
+   MODAL OPEN — hide floating CTAs and lock scroll
+   ================================================ */
+
+body.modal-open {
+    overflow: hidden;
+}
+
+body.modal-open .floating-whatsapp {
+    display: none;
 }

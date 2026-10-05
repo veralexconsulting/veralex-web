@@ -38,8 +38,11 @@ export default function OrderModal({ serviceTitle, servicePrice }: Props) {
         if (!showModal) return;
         const prev = document.body.style.overflow;
         document.body.style.overflow = 'hidden';
+        // Floating CTAs sit on top of the sheet otherwise
+        document.body.classList.add('modal-open');
         return () => {
             document.body.style.overflow = prev;
+            document.body.classList.remove('modal-open');
         };
     }, [showModal]);
 
