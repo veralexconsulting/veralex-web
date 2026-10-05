@@ -5135,10 +5135,6 @@ span {
     .split-screen-container {
         height: 100svh;
     }
-
-    .navbar-menu {
-        height: 100svh;
-    }
 }
 
 /* --- Phones: 44px+ tap targets, roomier controls --- */
