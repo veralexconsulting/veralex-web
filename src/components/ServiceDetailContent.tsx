@@ -131,14 +131,6 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
                 </div>
             </main>
 
-            <div className="svc-sticky">
-                <span className="svc-sticky-price">
-                    <small>{t('price.startFrom')}</small>
-                    <strong>{service.price}</strong>
-                </span>
-                <OrderModal serviceTitle={displayTitle} servicePrice={service.price} />
-            </div>
-
             <Footer />
         </>
     );

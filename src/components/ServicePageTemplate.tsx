@@ -200,14 +200,6 @@ export default function ServicePageTemplate({ service, relatedServices, lang }: 
                 </div>
             </main>
 
-            <div className="svc-sticky">
-                <span className="svc-sticky-price">
-                    <small>{dict.startingFrom}</small>
-                    <strong>{service.price}</strong>
-                </span>
-                <OrderModal serviceTitle={service.title} servicePrice={service.price} />
-            </div>
-
             <WhatsAppCta />
             <Footer />
         </>

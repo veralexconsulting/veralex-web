@@ -4730,46 +4730,6 @@ section {
     color: var(--color-gold);
 }
 
-/* Sticky order bar — mobile only */
-.svc-sticky {
-    display: none;
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 900;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
-    background: rgba(26, 10, 10, 0.92);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-top: var(--border-gold-strong);
-}
-
-.svc-sticky-price {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
-}
-
-.svc-sticky-price small {
-    color: var(--text-muted);
-    font-size: 0.7rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-}
-
-.svc-sticky-price strong {
-    color: var(--color-gold);
-    font-size: 1.05rem;
-}
-
-.svc-sticky .order-modal-trigger {
-    flex: 1;
-    margin: 0;
-}
-
 /* ================================================
    ORDER MODAL
    ================================================ */
@@ -4990,14 +4950,6 @@ section {
         padding-top: 2rem;
     }
 
-    .svc-sticky {
-        display: flex;
-    }
-
-    .svc-page {
-        padding-bottom: 5.5rem;
-    }
-
     .order-modal {
         padding: 1.5rem;
     }
@@ -5196,11 +5148,6 @@ span {
     .svc-price-note {
         font-size: 0.9rem;
     }
-
-    /* Floating WhatsApp must clear the sticky order bar on service pages */
-    body:has(.svc-sticky) .floating-whatsapp {
-        bottom: calc(78px + env(safe-area-inset-bottom));
-    }
 }
 
 /* --- Gap band: 481–768px (landscape phone, small tablet) --- */
@@ -5259,18 +5206,6 @@ span {
         max-height: 92svh;
         padding: 1.25rem 1rem 1.5rem;
         border-radius: var(--radius-lg);
-    }
-
-    .svc-sticky {
-        padding: 0.5rem 0 calc(0.5rem + env(safe-area-inset-bottom));
-    }
-
-    .svc-sticky .svc-sticky-actions .btn,
-    .svc-sticky .svc-sticky-actions .order-modal-trigger {
-        flex: 1 1 auto;
-        justify-content: center;
-        padding-left: 12px;
-        padding-right: 12px;
     }
 }
 
