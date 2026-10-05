@@ -20,21 +20,61 @@ const ICONS = {
     check: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
     flask: 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z',
     bolt: 'M13 10V3L4 14h7v7l9-11h-7z',
+    arrowRight: 'M9 5l7 7-7 7',
     wifi: 'M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0',
     info: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
 };
 
-const SvgIcon = ({ d, size = 24 }: { d: string; size?: number }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+const SvgIcon = ({ d, size = 24, strokeWidth = 1.5 }: { d: string; size?: number; strokeWidth?: number }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
         <path d={d} />
     </svg>
 );
 
-const Price = ({ from, amount }: { from: string; amount: string }) => (
-    <span className="service-row-price">
-        <span className="price-start-from">{from} </span>
-        {amount}
-    </span>
+const Price = ({
+    from,
+    amount,
+    originalAmount,
+    discountBadge,
+}: {
+    from: string;
+    amount: string;
+    originalAmount?: string;
+    discountBadge?: string;
+}) => (
+    <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px' }}>
+        {originalAmount && (
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+                {discountBadge && (
+                    <span style={{
+                        background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
+                        color: '#ffffff',
+                        fontSize: '0.65rem',
+                        fontWeight: 700,
+                        padding: '1px 6px',
+                        borderRadius: '4px',
+                        letterSpacing: '0.5px',
+                        textTransform: 'uppercase',
+                        boxShadow: '0 2px 4px rgba(220, 38, 38, 0.25)',
+                    }}>
+                        {discountBadge}
+                    </span>
+                )}
+                <span style={{
+                    textDecoration: 'line-through',
+                    color: 'var(--text-muted)',
+                    fontSize: '0.85rem',
+                    fontWeight: 400,
+                }}>
+                    {originalAmount}
+                </span>
+            </div>
+        )}
+        <span className="service-row-price" style={originalAmount ? { color: 'var(--color-gold)', fontWeight: 600 } : undefined}>
+            <span className="price-start-from">{from} </span>
+            {amount}
+        </span>
+    </div>
 );
 
 export default function ServicesSection() {
@@ -54,12 +94,27 @@ export default function ServicesSection() {
 
                         <Link href="/services/pendaftaran-merek" className="service-row-luxury">
                             <div className="service-row-left">
-                                <h4 className="service-row-title">{t('services.ip.trademark.title')}</h4>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
+                                    <h4 className="service-row-title" style={{ margin: 0 }}>{t('services.ip.trademark.title')}</h4>
+                                    <span style={{
+                                        background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
+                                        color: '#ffffff',
+                                        fontSize: '0.68rem',
+                                        fontWeight: 700,
+                                        padding: '2px 8px',
+                                        borderRadius: '12px',
+                                        letterSpacing: '0.5px',
+                                        textTransform: 'uppercase',
+                                        boxShadow: '0 2px 6px rgba(220, 38, 38, 0.25)',
+                                    }}>
+                                        PROMO 50%
+                                    </span>
+                                </div>
                                 <p className="service-row-desc">{t('services.ip.trademark.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <Price from={priceFrom} amount="Rp6.000.000" />
-                                <SvgIcon d={ICONS.bolt} size={20} />
+                                <Price from={priceFrom} amount="Rp3.000.000" originalAmount="Rp6.000.000" discountBadge="HEMAT 50%" />
+                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
 
@@ -70,7 +125,7 @@ export default function ServicesSection() {
                             </div>
                             <div className="service-row-right">
                                 <Price from={priceFrom} amount="Rp6.000.000" />
-                                <SvgIcon d={ICONS.bolt} size={20} />
+                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
 
@@ -81,7 +136,7 @@ export default function ServicesSection() {
                             </div>
                             <div className="service-row-right">
                                 <Price from={priceFrom} amount="Rp3.000.000" />
-                                <SvgIcon d={ICONS.bolt} size={20} />
+                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
 
@@ -92,7 +147,7 @@ export default function ServicesSection() {
                             </div>
                             <div className="service-row-right">
                                 <Price from={priceFrom} amount="Rp2.500.000" />
-                                <SvgIcon d={ICONS.bolt} size={20} />
+                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
 
@@ -103,7 +158,7 @@ export default function ServicesSection() {
                             </div>
                             <div className="service-row-right">
                                 <Price from={priceFrom} amount="Rp4.500.000" />
-                                <SvgIcon d={ICONS.bolt} size={20} />
+                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
 
@@ -122,7 +177,7 @@ export default function ServicesSection() {
                             </div>
                             <div className="service-row-right">
                                 <Price from={priceFrom} amount="Rp7.000.000" />
-                                <SvgIcon d={ICONS.bolt} size={20} />
+                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
 
@@ -132,8 +187,8 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.company.pma.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <Price from={priceFrom} amount="Rp9.900.000" />
-                                <SvgIcon d={ICONS.bolt} size={20} />
+                                <Price from={priceFrom} amount="Rp15.000.000" />
+                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
 
@@ -144,7 +199,7 @@ export default function ServicesSection() {
                             </div>
                             <div className="service-row-right">
                                 <Price from={priceFrom} amount="Rp1.500.000" />
-                                <SvgIcon d={ICONS.bolt} size={20} />
+                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
 
@@ -155,7 +210,7 @@ export default function ServicesSection() {
                             </div>
                             <div className="service-row-right">
                                 <Price from={priceFrom} amount="Rp3.000.000" />
-                                <SvgIcon d={ICONS.bolt} size={20} />
+                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
 
@@ -181,7 +236,7 @@ export default function ServicesSection() {
                                 </div>
                                 <div className="service-row-right">
                                     <span className="service-row-price"><span className="price-start-from">{priceFrom} </span>{item.price}</span>
-                                    <SvgIcon d={ICONS.bolt} size={20} />
+                                    <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                                 </div>
                             </Link>
                         ))}

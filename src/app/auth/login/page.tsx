@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { login } from '../actions';
 import { createBrowserClient } from '@/lib/supabase/client';
 import { useLang } from '@/lib/useLang';
+import LanguageToggle from '@/components/LanguageToggle';
 
 export default function LoginPage() {
     const [error, setError] = useState<string | null>(null);
@@ -64,9 +65,12 @@ export default function LoginPage() {
             {/* Right Box: Form */}
             <div className="split-right">
                 <div className="auth-form-wrapper">
-                    <Link href="/" className="auth-brand-link mb-8" style={{ display: 'inline-flex', marginBottom: '2rem' }}>
-                        <Image src="/logo.jpg" alt="Veralex" width={50} height={50} className="auth-logo" style={{ borderRadius: '50%' }} />
-                    </Link>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+                        <Link href="/" className="auth-brand-link" style={{ display: 'inline-flex' }}>
+                            <Image src="/logo.jpg" alt="Veralex" width={50} height={50} className="auth-logo" style={{ borderRadius: '50%' }} />
+                        </Link>
+                        <LanguageToggle />
+                    </div>
 
                     <h2 className="auth-heading">{t('auth.login.title')}</h2>
                     <p className="auth-desc">{t('auth.login.subtitle')}</p>

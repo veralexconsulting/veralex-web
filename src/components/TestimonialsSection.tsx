@@ -44,7 +44,7 @@ export default function TestimonialsSection() {
                 }
                 .marquee-item {
                     flex: 0 0 auto;
-                    width: 450px;
+                    width: min(450px, 80vw);
                     margin: 0 15px;
                 }
                 @keyframes marquee {
@@ -58,7 +58,7 @@ export default function TestimonialsSection() {
                     {marqueeImages.map((src, idx) => (
                         <div key={idx} className="marquee-item testimonial-card" style={{
                             padding: '0',
-                            height: '110px',
+                            height: 'clamp(96px, 22vw, 110px)',
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',

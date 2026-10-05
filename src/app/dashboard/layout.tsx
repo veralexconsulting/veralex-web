@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { logout } from '../auth/actions';
 
 import { useLang } from '@/lib/useLang';
+import LanguageToggle from '@/components/LanguageToggle';
 
 export default function DashboardLayout({
     children,
@@ -13,7 +14,7 @@ export default function DashboardLayout({
 }) {
     const pathname = usePathname();
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const { t, lang, toggleLang } = useLang();
+    const { t } = useLang();
 
     const navLinks = [
         {
@@ -96,16 +97,9 @@ export default function DashboardLayout({
 
                     <div className="panel-nav-spacer" />
 
-                    <button
-                        className="panel-nav-link"
-                        onClick={toggleLang}
-                        style={{ width: '100%', marginBottom: '8px', cursor: 'pointer', background: 'rgba(212, 175, 55, 0.1)' }}
-                    >
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                        </svg>
-                        {lang === 'id' ? 'Switch to English' : 'Ubah ke Indonesia'}
-                    </button>
+                    <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '8px' }}>
+                        <LanguageToggle />
+                    </div>
 
                     <form action={logout}>
                         <button type="submit" className="panel-nav-link danger" style={{ width: '100%' }}>

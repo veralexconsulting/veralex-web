@@ -35,6 +35,8 @@ export interface ServicePageData {
     requirements: ServicePageRequirement[];
     processSteps: ServicePageProcessStep[];
     price: string;
+    originalPrice?: string;
+    discountBadge?: string;
     priceNote: string;
     features: string[];
     faqs: ServicePageFaq[];

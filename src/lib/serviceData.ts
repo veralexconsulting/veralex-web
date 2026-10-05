@@ -1,6 +1,8 @@
 export interface ServiceItem {
     slug: string;
     category: string;
+    categoryEn: string;
+    categoryZh: string;
     title: string;
     titleEn: string;
     titleZh: string;
@@ -8,6 +10,10 @@ export interface ServiceItem {
     descriptionEn: string;
     descriptionZh: string;
     price: string;
+    originalPrice?: string;
+    discountBadge?: string;
+    discountBadgeEn?: string;
+    discountBadgeZh?: string;
     features: string[];
     featuresEn: string[];
     featuresZh: string[];
@@ -18,13 +24,19 @@ export const serviceData: ServiceItem[] = [
     {
         slug: 'pendaftaran-merek',
         category: 'Kekayaan Intelektual',
+        categoryEn: 'Intellectual Property',
+        categoryZh: '知识产权保护',
         title: 'Pendaftaran Merek',
         titleEn: 'Trademark Registration',
         titleZh: '商标注册申请',
         description: 'Jasa pendaftaran merek dagang di Indonesia melalui DJKI Kemenkumham. Kami membantu dari pengecekan hingga sertifikat merek terbit.',
         descriptionEn: 'Trademark registration service in Indonesia through DJKI Ministry of Law. We assist from checking to certificate issuance.',
         descriptionZh: '在印尼知识产权局 (DJKI Kemenkumham) 申请商标注册，全流程代理直至拿到官方证书。',
-        price: 'Rp6.000.000',
+        price: 'Rp3.000.000',
+        originalPrice: 'Rp6.000.000',
+        discountBadge: 'DISKON 50%',
+        discountBadgeEn: '50% OFF',
+        discountBadgeZh: '限时5折',
         features: ['Pengecekan ketersediaan merek', 'Pengajuan ke DJKI', 'Konsultasi kelas merek', 'Monitoring status pendaftaran', 'Pengurusan hingga sertifikat terbit'],
         featuresEn: ['Trademark availability check', 'Submission to DJKI', 'Trademark class consultation', 'Registration status monitoring', 'Processing until certificate issuance'],
         featuresZh: ['商标数据库查重检索', '提交申请至 DJKI', '尼斯商标分类指导', '注册审核全流程监控', '代理直至拿到官方证书'],
@@ -32,6 +44,8 @@ export const serviceData: ServiceItem[] = [
     {
         slug: 'perpanjangan-merek',
         category: 'Kekayaan Intelektual',
+        categoryEn: 'Intellectual Property',
+        categoryZh: '知识产权保护',
         title: 'Perpanjangan Merek',
         titleEn: 'Trademark Renewal',
         titleZh: '商标续展服务',
@@ -46,6 +60,8 @@ export const serviceData: ServiceItem[] = [
     {
         slug: 'pengalihan-merek',
         category: 'Kekayaan Intelektual',
+        categoryEn: 'Intellectual Property',
+        categoryZh: '知识产权保护',
         title: 'Pengalihan Merek',
         titleEn: 'Trademark Transfer',
         titleZh: '商标所有权转让',
@@ -60,6 +76,8 @@ export const serviceData: ServiceItem[] = [
     {
         slug: 'hak-cipta',
         category: 'Kekayaan Intelektual',
+        categoryEn: 'Intellectual Property',
+        categoryZh: '知识产权保护',
         title: 'Pendaftaran Hak Cipta',
         titleEn: 'Copyright Registration',
         titleZh: '著作权/版权登记',
@@ -74,6 +92,8 @@ export const serviceData: ServiceItem[] = [
     {
         slug: 'desain-industri',
         category: 'Kekayaan Intelektual',
+        categoryEn: 'Intellectual Property',
+        categoryZh: '知识产权保护',
         title: 'Pendaftaran Desain Industri',
         titleEn: 'Industrial Design Registration',
         titleZh: '工业设计专利登记',
@@ -90,6 +110,8 @@ export const serviceData: ServiceItem[] = [
     {
         slug: 'pt-pmdn',
         category: 'Legalitas Perusahaan',
+        categoryEn: 'Company Formation',
+        categoryZh: '公司设立与合规',
         title: 'Pendirian PT PMDN / PT Umum',
         titleEn: 'Domestic Company (PT PMDN) Establishment',
         titleZh: '印尼内资公司 (PT PMDN)',
@@ -116,13 +138,15 @@ export const serviceData: ServiceItem[] = [
     {
         slug: 'pt-pma',
         category: 'Legalitas Perusahaan',
+        categoryEn: 'Company Formation',
+        categoryZh: '公司设立与合规',
         title: 'Pendirian PT PMA',
         titleEn: 'Foreign Investment Company (PT PMA)',
         titleZh: '外商独资/合资公司 (PT PMA)',
         description: 'Pendirian perusahaan penanaman modal asing (PMA) di Indonesia dengan legalitas lengkap.',
         descriptionEn: 'Foreign investment company establishment in Indonesia with complete legal compliance.',
         descriptionZh: '外国投资者在印尼开办合规企业的法定标准实体结构，全套合规证书。',
-        price: 'Rp9.900.000',
+        price: 'Rp15.000.000',
         features: ['Akta Pendirian PMA', 'SK Kemenkumham', 'NPWP', 'NIB', 'Izin Investasi', 'Konsultasi BKPM'],
         featuresEn: ['PMA Establishment Deed', 'Ministry Approval', 'Tax ID', 'Business ID', 'Investment Permit', 'BKPM Consultation'],
         featuresZh: ['外资设立公证书', '印尼司法部批文 SK', '企业专属税号 NPWP', '商业登记号 NIB', '投资许可证书', 'BKPM 顾问与 LKPM 账号配置'],
@@ -130,6 +154,8 @@ export const serviceData: ServiceItem[] = [
     {
         slug: 'pt-perorangan',
         category: 'Legalitas Perusahaan',
+        categoryEn: 'Company Formation',
+        categoryZh: '公司设立与合规',
         title: 'Pendirian PT Perorangan',
         titleEn: 'Individual Company (PT) Establishment',
         titleZh: '个人独资公司 (PT Perorangan)',
@@ -144,6 +170,8 @@ export const serviceData: ServiceItem[] = [
     {
         slug: 'pendirian-cv',
         category: 'Legalitas Perusahaan',
+        categoryEn: 'Company Formation',
+        categoryZh: '公司设立与合规',
         title: 'Pendirian CV',
         titleEn: 'CV (Partnership) Establishment',
         titleZh: 'CV 合伙企业设立',
@@ -160,6 +188,8 @@ export const serviceData: ServiceItem[] = [
     {
         slug: 'itas-investor-1-tahun',
         category: 'Visa & ITAS',
+        categoryEn: 'Visa & ITAS',
+        categoryZh: '签证与居留许可',
         title: 'ITAS Investor 1 Tahun',
         titleEn: 'Investor ITAS (1 Year)',
         titleZh: '1年期投资者居留许可 (ITAS Investor)',
@@ -174,6 +204,8 @@ export const serviceData: ServiceItem[] = [
     {
         slug: 'itas-investor-2-tahun',
         category: 'Visa & ITAS',
+        categoryEn: 'Visa & ITAS',
+        categoryZh: '签证与居留许可',
         title: 'ITAS Investor 2 Tahun',
         titleEn: 'Investor ITAS (2 Years)',
         titleZh: '2年期投资者居留许可 (ITAS Investor)',
@@ -188,6 +220,8 @@ export const serviceData: ServiceItem[] = [
     {
         slug: 'visa-c2',
         category: 'Visa & ITAS',
+        categoryEn: 'Visa & ITAS',
+        categoryZh: '签证与居留许可',
         title: 'Visa C2',
         titleEn: 'Visa C2 (Social-Cultural)',
         titleZh: 'C2 商务文化签证',
@@ -202,6 +236,8 @@ export const serviceData: ServiceItem[] = [
     {
         slug: 'visa-d2-1-tahun',
         category: 'Visa & ITAS',
+        categoryEn: 'Visa & ITAS',
+        categoryZh: '签证与居留许可',
         title: 'Visa D2 (1 Tahun)',
         titleEn: 'Visa D2 (1 Year)',
         titleZh: '1年期 D2 多次往返签证',
@@ -216,6 +252,8 @@ export const serviceData: ServiceItem[] = [
     {
         slug: 'visa-d2-2-tahun',
         category: 'Visa & ITAS',
+        categoryEn: 'Visa & ITAS',
+        categoryZh: '签证与居留许可',
         title: 'Visa D2 (2 Tahun)',
         titleEn: 'Visa D2 (2 Years)',
         titleZh: '2年期 D2 多次往返签证',
@@ -230,6 +268,8 @@ export const serviceData: ServiceItem[] = [
     {
         slug: 'kitas-kerja',
         category: 'Visa & ITAS',
+        categoryEn: 'Visa & ITAS',
+        categoryZh: '签证与居留许可',
         title: 'KITAS Kerja (1 Tahun)',
         titleEn: 'Work KITAS (1 Year)',
         titleZh: '1年期外籍员工工作许可 (KITAS Kerja)',

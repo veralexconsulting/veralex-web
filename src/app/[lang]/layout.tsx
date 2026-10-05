@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Inter, Playfair_Display, Plus_Jakarta_Sans } from 'next/font/google';
 import ScrollProgress from '@/components/ScrollProgress';
 import '../globals.css';
 
@@ -13,6 +13,13 @@ const playfair = Playfair_Display({
     subsets: ['latin'],
     variable: '--font-playfair',
     display: 'swap',
+});
+
+const jakarta = Plus_Jakarta_Sans({
+    subsets: ['latin'],
+    variable: '--font-jakarta',
+    display: 'swap',
+    weight: ['400', '500', '600', '700', '800'],
 });
 
 export const viewport: Viewport = {
@@ -56,7 +63,7 @@ export default async function LangLayout({
     const { lang } = await params;
     return (
         <html lang={lang || "en"}>
-            <body className={`${inter.variable} ${playfair.variable}`}>
+            <body className={`${inter.variable} ${playfair.variable} ${jakarta.variable}`}>
                 <ScrollProgress />
                 {children}
             </body>

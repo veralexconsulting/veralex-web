@@ -5,13 +5,15 @@ import Link from 'next/link';
 import { useLang } from '@/lib/useLang';
 
 const images = [
+    'IMG-20261005-WA0012.jpg',
+    'IMG-20261005-WA0013.jpg',
+    'IMG-20261005-WA0015.jpg',
+    'IMG-20260121-WA0030.jpg',
+    'IMG-20260121-WA0031.jpg',
+    'IMG-20260121-WA0032.jpg',
+    'IMG-20260121-WA0033.jpg',
     'IMG-20260121-WA0006.jpg',
-    'IMG-20260121-WA0007.jpg',
     'IMG-20260121-WA0008.jpg',
-    'IMG-20260121-WA0009.jpg',
-    'IMG-20260121-WA0010.jpg',
-    'IMG-20260121-WA0011.jpg',
-    'IMG-20260121-WA0012.jpg',
     'IMG-20260121-WA0013.jpg',
 ];
 

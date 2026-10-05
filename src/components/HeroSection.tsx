@@ -23,12 +23,24 @@ export default function HeroSection() {
             <div className="hero-inner">
                 {/* Left: Text Content */}
                 <div className="hero-content">
-                    <div className="hero-badge">
-                        {t('hero.badge')}
-                    </div>
-
                     <h1 className="hero-title">
-                        {t('hero.title')}
+                        {(() => {
+                            const title = t('hero.title');
+                            const delimiter = title.includes('，') ? '，' : (title.includes(',') ? ',' : null);
+                            if (delimiter) {
+                                const idx = title.indexOf(delimiter);
+                                const firstPart = title.slice(0, idx);
+                                const secondPart = title.slice(idx + 1).trim();
+                                return (
+                                    <>
+                                        {firstPart}{delimiter}
+                                        <br />
+                                        <span className="hero-title-accent">{secondPart}</span>
+                                    </>
+                                );
+                            }
+                            return title;
+                        })()}
                     </h1>
                     <p className="hero-subtitle">
                         {t('hero.subtitle')}
@@ -74,16 +86,17 @@ export default function HeroSection() {
 
                 {/* Right: Visual */}
                 <div className="hero-visual">
+                    <div className="hero-visual-backdrop" />
                     <div className="hero-visual-frame">
                         <Image
-                            src="/hero-legal-visual.png"
-                            alt="Layanan Legalitas Bisnis"
+                            src="/talent-hero-legal-visual.png"
+                            alt="Tim Konsultan Hukum VERALEX CONSULTING"
                             fill
                             priority
-                            quality={90}
-                            style={{ objectFit: 'cover', objectPosition: 'center' }}
+                            quality={95}
+                            sizes="(max-width: 768px) 340px, (max-width: 1200px) 460px, 500px"
+                            style={{ objectFit: 'contain', objectPosition: 'bottom center' }}
                         />
-                        <div className="hero-visual-glow" />
                     </div>
                     {/* Floating badge */}
                     <div className="hero-visual-badge">

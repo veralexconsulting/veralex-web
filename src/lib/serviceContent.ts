@@ -35,9 +35,9 @@ export const detailedServiceContent: Record<string, DetailedContent> = {
                 title: 'Berapa Biaya Pendaftaran Merek DJKI Terbaru?',
                 titleEn: 'How Much is the DJKI Trademark Registration Fee?',
                 titleZh: '印尼 DJKI 最新商标注册申请费用是多少？',
-                content: 'Biaya jasa pendaftaran merek di VERALEX CONSULTING adalah Rp 6.000.000 per kelas barang/jasa. Biaya ini all-in, sudah mencakup pengecekan database merek DJKI sebelum pendaftaran, konsultasi kelas klasifikasi yang tepat (ada 45 kelas merek berdasarkan Nice Classification), pengajuan permohonan secara online via Merek DJKI, pendampingan hingga proses pemeriksaan substantif selesai, dan sertifikat hak merek resmi diterbitkan.',
-                contentEn: 'The trademark registration service fee at VERALEX CONSULTING is IDR 6,000,000 per class of goods/services. This is an all-in fee, which covers: DJKI trademark database check before filing, proper classification class consultation (there are 45 trademark classes under Nice Classification), online application submission via DJKI, assistance through the substantive examination process, and official trademark certificate issuance.',
-                contentZh: 'VERALEX CONSULTING 的商标注册服务费为每类别商品/服务 Rp 6.000.000。此费用为全包价，包含：申请前的 DJKI 商标数据库查重检索、尼斯分类 (Nice Classification) 45个类别的精准选类指导、通过 DJKI 系统的线上申请提交、实质审查阶段全程跟进、以及官方商标证书加盖公章发放。'
+                content: 'Biaya jasa pendaftaran merek di VERALEX CONSULTING saat ini sedang promo diskon menjadi Rp 3.000.000 per kelas barang/jasa (harga normal Rp 6.000.000). Biaya ini all-in, sudah mencakup pengecekan database merek DJKI sebelum pendaftaran, konsultasi kelas klasifikasi yang tepat (ada 45 kelas merek berdasarkan Nice Classification), pengajuan permohonan secara online via Merek DJKI, pendampingan hingga proses pemeriksaan substantif selesai, dan sertifikat hak merek resmi diterbitkan.',
+                contentEn: 'The trademark registration service fee at VERALEX CONSULTING is currently on special promotion for IDR 3,000,000 per class of goods/services (regular price IDR 6,000,000). This is an all-in fee, which covers: DJKI trademark database check before filing, proper classification class consultation (there are 45 trademark classes under Nice Classification), online application submission via DJKI, assistance through the substantive examination process, and official trademark certificate issuance.',
+                contentZh: 'VERALEX CONSULTING 的商标注册服务费限时特惠仅需每类别商品/服务 Rp 3.000.000（原价 Rp 6.000.000）。此费用为全包价，包含：申请前的 DJKI 商标数据库查重检索、尼斯分类 (Nice Classification) 45个类别的精准选类指导、通过 DJKI 系统的线上申请提交、实质审查阶段全程跟进、以及官方商标证书加盖公章发放。'
             },
             {
                 title: 'Mengapa Pengecekan Sebelum Daftar Merek Itu Wajib?',
@@ -295,9 +295,9 @@ export const detailedServiceContent: Record<string, DetailedContent> = {
                 title: 'Berapa Biaya Pendirian PT PMA Terbaru?',
                 titleEn: 'How Much is the Latest PT PMA Establishment Cost?',
                 titleZh: '印尼外商独资/合资公司 (PT PMA) 设立最新费用？',
-                content: 'Biaya jasa pendirian PT PMA di VERALEX CONSULTING mulai dari Rp 9.900.000. Sudah mencakup: Akta Pendirian PMA, SK Kemenkumham, NPWP Badan Hukum, Akun OSS RBA investor, NIB, serta asistensi pembuatan akun pelaporan LKPM ke BKPM.',
-                contentEn: 'PT PMA establishment service fees at VERALEX CONSULTING start from IDR 9,900,000. Included: PMA Notarial Deed, Ministry of Law Approval, Company Tax ID, investor OSS RBA account, NIB, and assistance with LKPM reporting account setup at BKPM.',
-                contentZh: 'VERALEX CONSULTING 的 PT PMA 设立服务费为 Rp 9.900.000 起。包含：外资设立公证书、司法部 SK 批文、企业税号 NPWP、投资者 OSS RBA 账号、商业登记号 NIB 及 BKPM LKPM 投资报告账号配置协助。'
+                content: 'Biaya jasa pendirian PT PMA di VERALEX CONSULTING mulai dari Rp 15.000.000. Sudah mencakup: Akta Pendirian PMA, SK Kemenkumham, NPWP Badan Hukum, Akun OSS RBA investor, NIB, serta asistensi pembuatan akun pelaporan LKPM ke BKPM.',
+                contentEn: 'PT PMA establishment service fees at VERALEX CONSULTING start from IDR 15,000,000. Included: PMA Notarial Deed, Ministry of Law Approval, Company Tax ID, investor OSS RBA account, NIB, and assistance with LKPM reporting account setup at BKPM.',
+                contentZh: 'VERALEX CONSULTING 的 PT PMA 设立服务费为 Rp 15.000.000 起。包含：外资设立公证书、司法部 SK 批文、企业税号 NPWP、投资者 OSS RBA 账号、商业登记号 NIB 及 BKPM LKPM 投资报告账号配置协助。'
             },
             {
                 title: 'Apa Ketentuan Modal Minimum PT PMA di Indonesia?',

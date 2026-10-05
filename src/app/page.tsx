@@ -8,7 +8,6 @@ import WhyLegalSection from '@/components/WhyLegalSection';
 import ContactSection from '@/components/ContactSection';
 import GalleryHighlight from '@/components/GalleryHighlight';
 import Footer from '@/components/Footer';
-import FloatingWhatsApp from '@/components/FloatingWhatsApp';
 import ScrollAnimator from '@/components/ScrollAnimator';
 
 export const metadata: Metadata = {
@@ -36,7 +35,6 @@ export default function Home() {
       <WhyLegalSection />
       <ContactSection />
       <GalleryHighlight />
-      <FloatingWhatsApp />
       <Footer />
     </>
   );

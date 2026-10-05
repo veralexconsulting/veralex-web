@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import type { Metadata } from 'next';
 import {
     getServicePageData,
@@ -14,16 +14,16 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-    const locales: SupportedLocale[] = ['en', 'zh', 'id'];
+    const locales: SupportedLocale[] = ['en', 'zh'];
     const params: { lang: string; slug: string }[] = [];
-    
+
     locales.forEach((locale) => {
         const slugs = getAllServicePageSlugs(locale);
         slugs.forEach((slug) => {
             params.push({ lang: locale, slug });
         });
     });
-    
+
     return params;
 }
 
@@ -31,6 +31,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { lang, slug } = await params;
 
     if (!isValidLocale(lang)) return {};
+
+    // Indonesian content lives on the unprefixed route — point crawlers there.
+    if (lang === 'id') {
+        return {
+            alternates: { canonical: `/services/${slug}` },
+        };
+    }
 
     const service = getServicePageData(lang, slug);
     if (!service) return {};
@@ -43,7 +50,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             canonical: lang === 'en' ? `/services/${slug}` : `/${lang}/services/${slug}`,
             languages: {
                 'en': `/services/${slug}`,
-                'id': `/id/services/${slug}`,
+                'id': `/services/${slug}`,
                 'zh': `/zh/services/${slug}`,
             },
         },
@@ -62,6 +69,11 @@ export default async function ServicePage({ params }: Props) {
     const { lang, slug } = await params;
 
     if (!isValidLocale(lang)) notFound();
+
+    // The Indonesian version of this page is /services/[slug] — no id locale
+    // copy exists, so send visitors to the real Indonesian page instead of
+    // silently rendering the English one.
+    if (lang === 'id') redirect(`/services/${slug}`);
 
     const service = getServicePageData(lang, slug);
     if (!service) notFound();

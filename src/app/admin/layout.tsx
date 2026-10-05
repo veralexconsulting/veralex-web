@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { logout } from '../auth/actions';
+import LanguageToggle from '@/components/LanguageToggle';
 
 export default function AdminLayout({
     children,
@@ -92,6 +93,10 @@ export default function AdminLayout({
                     ))}
 
                     <div className="panel-nav-spacer" />
+
+                    <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '8px' }}>
+                        <LanguageToggle />
+                    </div>
 
                     <form action={logout}>
                         <button type="submit" className="panel-nav-link danger" style={{ width: '100%' }}>

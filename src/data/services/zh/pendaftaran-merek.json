@@ -2,7 +2,7 @@
     "slug": "pendaftaran-merek",
     "title": "印尼商标注册服务 (Trademark Registration)",
     "metaTitle": "印尼商标注册服务 | DJKI 知识产权申请 — VERALEX CONSULTING",
-    "metaDescription": "专业办理印尼商标注册代理服务。提供前置检索、分类咨询、DJKI 线上递交至官方证书发放全流程。费用 Rp6.000.000 起。免费咨询！",
+    "metaDescription": "专业办理印尼商标注册代理服务。提供前置检索、分类咨询、DJKI 线上递交至官方证书发放全流程。限时特惠 Rp3.000.000 起（原价 Rp6.000.000）。免费咨询！",
     "keywords": "印尼商标注册, 印尼商标申请, 印尼商标局 DJKI, 印尼商标费用, 印尼知识产权代理, 印尼品牌保护",
     "category": "知识产权保护",
     "categorySlug": "intellectual-property",
@@ -22,8 +22,10 @@
         { "step": 5, "title": "实质审查 (Pemeriksaan Substantif)", "description": "DJKI 官方审查员对商标是否符合《印尼商标法》进行实质审查与合规评估。" },
         { "step": 6, "title": "官方商标注册证书签发", "description": "审查通过后，DJKI 签发官方商标注册证书。证书有效期为 10 年，全国范围内有效。" }
     ],
-    "price": "Rp6.000.000",
-    "priceNote": "全包式费用——包含单类别前置检索、分类咨询、DJKI 官方规费、审查跟踪及证书发放。",
+    "price": "Rp3.000.000",
+    "originalPrice": "Rp6.000.000",
+    "discountBadge": "限时5折",
+    "priceNote": "特惠全包式费用（原价 Rp6.000.000）——包含单类别前置检索、分类咨询、DJKI 官方规费、审查跟踪及证书发放。",
     "features": [
         "DJKI 数据库商标查重与风险评估",
         "DJKI 线上系统提交与全流程跟进",
