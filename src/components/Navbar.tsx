@@ -90,6 +90,7 @@ export default function Navbar() {
                     <div className="navbar-logo-wrapper">
                         <Image src="/logo.jpg" alt="VERALEX CONSULTING" fill sizes="(max-width: 768px) 45px, 60px" className="navbar-logo-image" priority />
                     </div>
+                    <span className="navbar-brand-name">Veralex</span>
                 </Link>
 
                 {/* Right Links & Desktop Actions (Desktop) */}

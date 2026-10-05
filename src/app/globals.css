@@ -375,6 +375,10 @@ button {
     object-fit: contain;
 }
 
+.navbar-brand-name {
+    display: none;
+}
+
 .navbar-emblem {
     font-family: var(--font-heading);
     font-size: 2rem;
@@ -5267,5 +5271,71 @@ span {
         justify-content: center;
         padding-left: 12px;
         padding-right: 12px;
+    }
+}
+
+/* ================================================
+   MOBILE: BRAND LEFT, SERVICE PRICE BELOW TEXT
+   The service rows never collapsed on phones: the
+   left block kept max-width:70% so the price column
+   was crushed and spilled over the description.
+   ================================================ */
+
+@media (max-width: 992px) {
+    .navbar-brand-centered {
+        position: static;
+        transform: none;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.6rem;
+        text-align: left;
+    }
+
+    .navbar-brand-name {
+        display: block;
+        font-family: var(--font-body);
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 4px;
+        color: var(--text-primary);
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 768px) {
+    .service-row-luxury {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.85rem;
+        padding: 1.5rem 0;
+    }
+
+    .service-row-left {
+        max-width: 100%;
+    }
+
+    .service-row-right {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.75rem;
+        width: 100%;
+        padding-top: 0.75rem;
+        border-top: 1px solid rgba(74, 14, 14, 0.12);
+    }
+
+    .service-row-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.35rem;
+    }
+
+    .service-row-price {
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+    }
+
+    .price-start-from {
+        font-size: 0.75em;
     }
 }
