@@ -28,10 +28,19 @@ export default function OrderModal({ serviceTitle, servicePrice }: Props) {
     }, []);
 
     useEffect(() => {
-        if (showModal) {
+        if (showModal && !window.matchMedia('(pointer: coarse)').matches) {
             const focusTimer = setTimeout(() => nameInputRef.current?.focus(), 100);
             return () => clearTimeout(focusTimer);
         }
+    }, [showModal]);
+
+    useEffect(() => {
+        if (!showModal) return;
+        const prev = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = prev;
+        };
     }, [showModal]);
 
     useEffect(() => {
