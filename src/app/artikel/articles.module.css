@@ -104,6 +104,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
     gap: 10px;
 }
 
@@ -338,14 +339,17 @@
     .page, .articlePage { padding: 105px 0 80px; }
     .highlights { padding: 75px 0 85px; }
     .sectionHead { align-items: flex-start; flex-direction: column; }
-    .grid, .related .grid { grid-template-columns: 1fr; }
+    .grid, .related .grid { grid-template-columns: minmax(0, 1fr); }
     .card { min-height: 300px; padding: 24px; }
     .card h3 { margin-top: 23px; }
     .listHero { padding-bottom: 42px; }
     .backLink { margin-bottom: 30px; }
     .articleHero { padding-bottom: 35px; }
+    .listHero h1, .articleHero h1 { font-size: clamp(2rem, 9vw, 3rem); }
     .articleBody { padding-top: 35px; }
     .takeaways { padding: 23px; }
     .articleCta { padding: 28px 24px; }
+    .ctaActions { max-width: 100%; }
+    .allLink, .backLink, .serviceLink { white-space: normal; }
     .related { margin-top: 70px; }
 }

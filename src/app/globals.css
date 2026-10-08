@@ -5287,6 +5287,34 @@ span {
     .price-start-from {
         font-size: 0.75em;
     }
+
+    .svc-price {
+        font-size: clamp(1.65rem, 7vw, 2.1rem);
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+}
+
+@media (max-width: 360px) {
+    .navbar-brand-centered {
+        gap: 0.35rem;
+        min-width: 0;
+    }
+
+    .navbar-brand-name {
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+    }
+
+    .navbar-logo-wrapper {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+    }
+
+    .navbar-mobile-controls {
+        gap: 0.5rem;
+    }
 }
 
 /* ================================================
