@@ -33,7 +33,7 @@ export default function ArticleHighlights() {
                     <Link href="/artikel" className={styles.allLink}>Semua artikel <span aria-hidden="true">↗</span></Link>
                 </div>
                 <div className={styles.grid}>
-                    {articles.map((article, index) => <ArticleCard key={article.slug} article={article} index={index} />)}
+                    {articles.slice(0, 3).map((article, index) => <ArticleCard key={article.slug} article={article} index={index} />)}
                 </div>
             </div>
         </section>

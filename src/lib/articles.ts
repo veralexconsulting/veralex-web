@@ -18,6 +18,148 @@ export interface Article {
 
 export const articles: Article[] = [
     {
+        slug: 'lkpm-triwulan-3-2026-batas-15-oktober',
+        category: 'Tenggat 15 Oktober',
+        title: 'LKPM Triwulan III 2026 Ditutup 15 Oktober: Apa yang Harus Disiapkan Pelaku Usaha Non-UMK?',
+        description: 'Periode pelaporan LKPM Juli–September 2026 berlangsung 1–15 Oktober. Cek siapa yang wajib lapor, data yang perlu disiapkan, dan langkah di OSS.',
+        publishedAt: '2026-10-08',
+        readingMinutes: 4,
+        lead: 'Tinggal beberapa hari menuju akhir periode LKPM Triwulan III 2026. Bagi pelaku usaha non-UMK yang wajib lapor triwulanan, laporan kegiatan Juli sampai September perlu disampaikan melalui OSS pada 1–15 Oktober 2026. Jangan menunggu hari terakhir untuk memeriksa proyek dan angka realisasi.',
+        takeaways: [
+            'Periode penyampaian LKPM Triwulan III 2026 adalah 1–15 Oktober 2026 melalui OSS.',
+            'Pengumuman DPMPTSP menujukan laporan triwulanan ini kepada pelaku usaha non-UMK yang memiliki kewajiban LKPM.',
+            'Penyesuaian KBLI 2025 tidak menghentikan penyampaian LKPM periode ini.',
+        ],
+        sections: [
+            {
+                heading: 'Siapa yang perlu memperhatikan tenggat ini?',
+                paragraphs: [
+                    'Pengumuman DPMPTSP Kulon Progo dan Surakarta secara khusus menyebut pelaku usaha non-UMK untuk LKPM Triwulan III 2026. Jika usaha Anda memiliki kewajiban pelaporan triwulanan, periksa seluruh kegiatan dan lokasi proyek yang terdaftar dalam akun OSS. Jadwal untuk UMK dapat berbeda, jadi jangan menganggap pengingat triwulanan ini berlaku sama untuk semua skala usaha.',
+                    'Periode yang dilaporkan adalah Juli–September 2026. BKPM menampilkan jendela penyampaian pada 1–15 Oktober 2026. Bagi perusahaan dengan beberapa proyek, siapkan data tiap proyek sesuai yang diminta oleh sistem, bukan satu angka gabungan tanpa rincian.',
+                ],
+            },
+            {
+                heading: 'Data yang sebaiknya disiapkan sebelum masuk OSS',
+                paragraphs: [
+                    'Kumpulkan catatan realisasi investasi, perkembangan kegiatan usaha, jumlah tenaga kerja, dan hambatan yang memang terjadi selama periode laporan. Cocokkan angka dengan catatan internal agar isian tidak hanya menyalin laporan triwulan sebelumnya.',
+                ],
+                bullets: [
+                    'Daftar proyek, lokasi, dan NIB yang muncul pada akun OSS.',
+                    'Realisasi investasi Juli–September 2026 beserta dasar pencatatannya.',
+                    'Perkembangan konstruksi atau operasional dan data tenaga kerja sesuai kondisi sebenarnya.',
+                    'Akses akun penanggung jawab serta bukti laporan setelah berhasil disampaikan.',
+                ],
+            },
+            {
+                heading: 'Langkah pelaporan dan hal yang sering terlewat',
+                paragraphs: [
+                    'Masuk ke OSS, buka menu Pelaporan, lalu pilih Laporan Kegiatan Penanaman Modal. Periksa proyek dan periode sebelum mengisi. Setelah selesai, pastikan laporan benar-benar terkirim dan simpan bukti atau status penyampaiannya. Draf yang belum disampaikan tidak menyelesaikan kewajiban pelaporan.',
+                    'DPMPTSP Bantul menegaskan bahwa implementasi KBLI 2025 tidak berdampak pada penyampaian LKPM Triwulan III 2026. Jadi, jika data usaha sedang melalui penyesuaian klasifikasi, jangan otomatis menunda laporan. Periksa mekanisme yang tersedia di OSS dan gunakan kanal bantuan resmi jika ada kendala teknis.',
+                ],
+            },
+        ],
+        sources: [
+            { label: 'BKPM — Periode LKPM Triwulan III 1–15 Oktober 2026', url: 'https://regionalinvestment.bkpm.go.id/' },
+            { label: 'DPMPTSP Surakarta — Pengingat 8 Oktober 2026', url: 'https://dpmptsp.surakarta.go.id/post-detail/berita/penyampaian-lkpm-triwulan-iii-tahun-2026-dimulai' },
+            { label: 'DPMPTSP Bantul — Jadwal, alur OSS, dan KBLI 2025', url: 'https://dpmptsp.bantulkab.go.id/web/berita/detail/1145-penyampaian-lkpm-triwulan-iii-tahun-2026-dibuka-1-15-oktober' },
+            { label: 'DPMPTSP Kulon Progo — Pengingat untuk non-UMK', url: 'https://dpmptsp.kulonprogokab.go.id/publikasi/detail/dpmptsp-kulon-progo-imbau-pelaku-usaha-non-umk-sampaikan-lkpm-triwulan-iii' },
+        ],
+        service: { label: 'Lihat layanan Veralex', href: '/#services', message: 'Halo Kak Vheilljei, saya ingin bertanya tentang pelaporan LKPM Triwulan III 2026 melalui OSS.' },
+    },
+    {
+        slug: 'wajib-halal-18-oktober-2026',
+        category: 'Tenggat 18 Oktober',
+        title: 'Wajib Halal Mulai 18 Oktober 2026: Produk Apa Saja yang Masuk Tahap Ini?',
+        description: 'BPJPH menegaskan tahap wajib halal 18 Oktober 2026 berjalan sesuai jadwal. Pahami kelompok produk yang disebut pemerintah dan langkah cek awal bagi pelaku usaha.',
+        publishedAt: '2026-10-08',
+        readingMinutes: 5,
+        lead: 'Tanggal 18 Oktober 2026 tinggal hitungan hari. BPJPH dan Kantor Staf Presiden kembali menegaskan jadwal pemberlakuan tahap wajib halal ini pada September 2026. Bagi usaha makanan, kosmetik, obat bahan alam, hingga barang gunaan tertentu, pertanyaan mendesaknya adalah: produk saya termasuk kategori yang harus disertifikasi pada tahap ini atau tidak?',
+        takeaways: [
+            'BPJPH menegaskan implementasi tahap wajib halal tetap dijadwalkan pada 18 Oktober 2026.',
+            'Cakupannya dibedakan menurut jenis produk dan tahapan, bukan satu kewajiban yang identik untuk seluruh barang.',
+            'Mulailah dari daftar produk, bahan, pemasok, dan status sertifikat; periksa jalur pengajuan yang sesuai di BPJPH.',
+        ],
+        sections: [
+            {
+                heading: 'Apa yang ditegaskan pemerintah pada September?',
+                paragraphs: [
+                    'Dalam rapat koordinasi 15 September 2026, pemerintah menyatakan tahap wajib halal pada 18 Oktober 2026 harus dilaksanakan. BPJPH sebelumnya juga menjelaskan bahwa kewajiban ini diterapkan bertahap berdasarkan PP 42/2024. Karena ada penahapan, informasi yang paling penting bagi pemilik usaha adalah kategori dan karakter produknya sendiri.',
+                    'Jangan menafsirkan tenggat ini sebagai pernyataan bahwa setiap barang di pasar mempunyai proses sertifikasi yang sama. Produk dan bahan yang masuk ke cakupan harus diperiksa terhadap ketentuan yang berlaku. BPJPH juga menjelaskan bahwa produk berbahan tidak halal memiliki aturan pelabelan tersendiri.',
+                ],
+            },
+            {
+                heading: 'Kelompok produk yang disebut BPJPH',
+                paragraphs: [
+                    'BPJPH menyebut beberapa kelompok produk dalam tahap yang dimulai 18 Oktober 2026. Daftar ini perlu dicocokkan lagi dengan rincian regulasi dan kondisi produk masing-masing sebelum pengajuan.',
+                ],
+                bullets: [
+                    'Makanan dan minuman serta hasil sembelihan dan jasa penyembelihan.',
+                    'Kosmetik; obat bahan alam, obat kuasi, dan suplemen kesehatan.',
+                    'Bahan baku, bahan tambahan pangan, dan bahan penolong untuk makanan dan minuman.',
+                    'Produk kimiawi, produk rekayasa genetik, dan barang gunaan tertentu yang disebut dalam tahapan PP 42/2024.',
+                ],
+            },
+            {
+                heading: 'Persiapan yang bisa dilakukan hari ini',
+                paragraphs: [
+                    'Petakan setiap produk yang dijual, termasuk variasi rasa, bentuk, dan bahan. Kumpulkan daftar pemasok, bahan baku, bahan penolong, alur produksi, serta sertifikat halal yang sudah dimiliki. Setelah itu, cocokkan jalur sertifikasi yang tersedia di BPJPH dengan karakter usaha dan produknya.',
+                    'Bagi UMK, cek apakah produk memenuhi syarat untuk skema yang difasilitasi pemerintah. Jangan memakai klaim “bersertifikat halal” sebelum sertifikat benar-benar terbit. Jika produk juga membutuhkan izin edar, tangani kewajiban halal dan izin edar sebagai dua pemeriksaan yang saling melengkapi.',
+                ],
+            },
+        ],
+        sources: [
+            { label: 'BPJPH — Penegasan jadwal 18 Oktober 2026 pada September', url: 'https://bpjph.halal.go.id/read/wajib-halal-oktober-2026-dilaksanakan-tepat-waktu-sesuai-amanat-undang-undang' },
+            { label: 'BPJPH — Tahapan dan kelompok produk wajib halal', url: 'https://bpjph.halal.go.id/read/raker-dengan-dpr-kepala-bpjph-pastikan-implementasi-wajib-halal-oktober-2026-sesuai-tahapan' },
+        ],
+        service: { label: 'Lihat layanan Veralex', href: '/#services', message: 'Halo Kak Vheilljei, saya ingin mengecek kewajiban sertifikasi halal produk saya menjelang 18 Oktober 2026.' },
+    },
+    {
+        slug: 'perubahan-kbli-september-2026',
+        category: 'Aturan September 2026',
+        title: 'KBLI 2025 Diubah Lagi pada September 2026: Tiga Kode Ini Perlu Diperiksa',
+        description: 'Peraturan BPS 6/2026 memperbarui judul dan deskripsi kode 27201, 27203, dan 68122. Lihat siapa yang perlu membaca perubahan ini dan apa yang tidak perlu disimpulkan.',
+        publishedAt: '2026-10-08',
+        readingMinutes: 4,
+        lead: 'Belum lama pelaku usaha menyesuaikan diri dengan KBLI 2025, BPS menerbitkan perubahan lagi. Peraturan BPS Nomor 6 Tahun 2026 berlaku sejak 10 September 2026 dan menyoroti tiga kode terkait industri baterai serta pengelolaan kawasan pariwisata. Ini pembaruan spesifik, bukan perintah bagi semua perusahaan untuk mengurus ulang izin.',
+        takeaways: [
+            'Peraturan BPS 6/2026 berlaku sejak 10 September 2026 sebagai perubahan atas KBLI 2025.',
+            'Tiga kode yang disebut dalam abstrak resmi: 27201, 27203, dan 68122.',
+            'Pemilik usaha di luar ruang lingkup kode tersebut tidak perlu langsung menyimpulkan ada kewajiban perubahan dokumen.',
+        ],
+        sections: [
+            {
+                heading: 'Apa yang diubah?',
+                paragraphs: [
+                    'Abstrak JDIH BPS menyebut penyempurnaan pada judul dan deskripsi kode 27201 serta 27203, yang berkaitan dengan industri baterai listrik atau kendaraan listrik, dan kode 68122, yang berkaitan dengan pengelolaan kawasan pariwisata. Peraturannya ditetapkan pada 4 September dan diundangkan pada 10 September 2026.',
+                    'Karena perubahan menyangkut uraian kegiatan, perusahaan yang memakai salah satu kode tersebut perlu membaca lampiran resmi secara utuh. Cocokkan uraian terbaru dengan kegiatan faktual, dokumen pendirian, dan data di OSS. Judul kode yang terlihat mirip belum tentu mencakup seluruh kegiatan usaha yang sama.',
+                ],
+            },
+            {
+                heading: 'Siapa yang paling perlu mengecek?',
+                paragraphs: [
+                    'Prioritaskan pemeriksaan bila perusahaan bergerak di industri baterai atau mengelola kawasan pariwisata, sedang mendirikan badan usaha dengan kode itu, atau akan menambah kegiatan tersebut dalam OSS. Pembaruan ini juga relevan bagi penasehat investasi yang menyiapkan struktur usaha untuk proyek di dua sektor itu.',
+                ],
+                bullets: [
+                    'Baca deskripsi kode terbaru pada lampiran Peraturan BPS 6/2026.',
+                    'Bandingkan dengan kegiatan nyata, bukan hanya nama sektor secara umum.',
+                    'Periksa keluaran OSS dan konsultasikan perubahan data jika ruang lingkup bisnis memang berubah.',
+                ],
+            },
+            {
+                heading: 'Apakah semua izin harus diperbarui?',
+                paragraphs: [
+                    'Tidak ada dasar untuk menyimpulkan seluruh izin lama gugur hanya dari perubahan klasifikasi ini. Penjelasan BPS pada April 2026 menyatakan izin yang telah terbit tetap berlaku dan penyesuaian melalui OSS/AHU diperlukan bila ada perubahan substansi usaha. Untuk kasus pada tiga kode yang diperbarui, keputusan praktis harus mengikuti uraian terbaru dan kondisi proyek masing-masing.',
+                    'Jika usaha Anda berada di luar tiga kode tersebut, simpan informasi ini sebagai pembaruan referensi. Fokuskan pemeriksaan pada kode yang benar-benar digunakan di dokumen dan OSS, bukan melakukan perubahan massal tanpa kebutuhan.',
+                ],
+            },
+        ],
+        sources: [
+            { label: 'JDIH BPS — Peraturan BPS Nomor 6 Tahun 2026', url: 'https://jdih.bps.go.id/public/dokumen-hukum/eyJpdiI6IjZNaTh1ajhMeWc2NG1ZSkY5eks5U3c9PSIsInZhbHVlIjoiUUFPMHRZWUdoYys4ak00VGFMR09zQT09IiwibWFjIjoiMjYzNGE0ZDAzNWFiNTA5MDE5N2M0NzY5MmMyYTk4YTBkZTljMDU3OWM1NWNhMTBiNjA5YjliN2JlNWU0NTk1ZiIsInRhZyI6IiJ9' },
+            { label: 'BPS — Penjelasan keberlakuan izin lama', url: 'https://www.bps.go.id/id/news/2026/04/30/908/pemerintah-memastikan-kbli-2025-tidak-memerlukan-perizinan-baru.html' },
+        ],
+        service: { label: 'Lihat layanan pendirian PT', href: '/services/pt-pmdn', message: 'Halo Kak Vheilljei, saya ingin memeriksa dampak Peraturan BPS 6/2026 terhadap kode KBLI usaha saya.' },
+    },
+    {
         slug: 'nib-oss-pp-28-2025',
         category: 'Perizinan Usaha',
         title: 'Sudah Punya NIB, Apakah Usaha Langsung Boleh Berjalan? Ini yang Perlu Dicek Setelah PP 28/2025',

@@ -7,7 +7,7 @@ import styles from './articles.module.css';
 
 export const metadata: Metadata = {
     title: 'Artikel Legalitas Bisnis Terbaru | VERALEX CONSULTING',
-    description: 'Baca pembaruan praktis tentang OSS, KBLI 2025, dan pendaftaran merek UMK 2026 berdasarkan sumber resmi.',
+    description: 'Baca pembaruan terbaru tentang LKPM Oktober 2026, wajib halal, perubahan KBLI, OSS, dan pendaftaran merek berdasarkan sumber resmi.',
     alternates: { canonical: '/artikel' },
     openGraph: {
         title: 'Artikel Legalitas Bisnis | VERALEX CONSULTING',

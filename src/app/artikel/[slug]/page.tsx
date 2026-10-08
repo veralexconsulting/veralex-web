@@ -41,7 +41,7 @@ export default async function ArticlePage({ params }: Props) {
     const article = getArticle(slug);
     if (!article) notFound();
 
-    const related = articles.filter((item) => item.slug !== slug);
+    const related = articles.filter((item) => item.slug !== slug).slice(0, 2);
     const date = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Jakarta' }).format(new Date(`${article.publishedAt}T00:00:00+07:00`));
     const jsonLd = {
         '@context': 'https://schema.org',
