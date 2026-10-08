@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { serviceData } from '@/lib/serviceData';
 import { getAllServicePageSlugs } from '@/lib/servicePageData';
+import { articles } from '@/lib/articles';
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = 'https://www.veralexconsulting.com';
@@ -21,6 +22,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             lastModified: now,
             changeFrequency: 'monthly',
             priority: 0.6,
+        },
+        {
+            url: `${baseUrl}/artikel`,
+            lastModified: now,
+            changeFrequency: 'weekly',
+            priority: 0.7,
         },
     ];
 
@@ -48,6 +55,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     const enServiceRoutes = generateLocaleRoutes('en');
     const zhServiceRoutes = generateLocaleRoutes('zh');
+    const articleRoutes: MetadataRoute.Sitemap = articles.map(({ slug, publishedAt }) => ({
+        url: `${baseUrl}/artikel/${slug}`,
+        lastModified: publishedAt,
+        changeFrequency: 'monthly',
+        priority: 0.7,
+    }));
 
-    return [...staticRoutes, ...serviceRoutes, ...enServiceRoutes, ...zhServiceRoutes];
+    return [...staticRoutes, ...articleRoutes, ...serviceRoutes, ...enServiceRoutes, ...zhServiceRoutes];
 }

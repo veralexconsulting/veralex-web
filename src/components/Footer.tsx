@@ -52,6 +52,7 @@ export default function Footer() {
                         <Link href="/#services" className="footer-link">{t('nav.services')}</Link>
                         <Link href="/#pricing" className="footer-link">{t('nav.pricing')}</Link>
                         <Link href="/gallery" className="footer-link">{t('nav.gallery')}</Link>
+                        <Link href="/artikel" className="footer-link">{t('nav.articles')}</Link>
                         <Link href="/#contact" className="footer-link">{t('nav.contact')}</Link>
                         
                         <div style={{ marginTop: '1.25rem', paddingTop: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>

@@ -7,6 +7,7 @@ import TestimonialsSection from '@/components/TestimonialsSection';
 import WhyLegalSection from '@/components/WhyLegalSection';
 import ContactSection from '@/components/ContactSection';
 import GalleryHighlight from '@/components/GalleryHighlight';
+import ArticleHighlights from '@/components/ArticleHighlights';
 import Footer from '@/components/Footer';
 import ScrollAnimator from '@/components/ScrollAnimator';
 
@@ -28,6 +29,7 @@ export default function Home() {
       <PricingSection />
       <TestimonialsSection />
       <WhyLegalSection />
+      <ArticleHighlights />
       <ContactSection />
       <GalleryHighlight />
       <Footer />
