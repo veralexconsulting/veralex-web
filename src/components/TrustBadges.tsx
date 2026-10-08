@@ -10,7 +10,7 @@ const ICONS = {
 };
 
 const SvgIcon = ({ d }: { d: string }) => (
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--color-gold)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F2D6A2" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d={d} />
     </svg>
 );
@@ -38,14 +38,11 @@ export default function TrustBadges() {
                                 fontSize: 'clamp(1.5rem, 3vw, 2rem)',
                                 fontWeight: 700,
                                 fontFamily: 'var(--font-heading)',
-                                background: 'var(--color-gold-gradient)',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent',
-                                backgroundClip: 'text',
+                                color: '#FFF8EE',
                             }}>
                                 {b.number}
                             </div>
-                            <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginTop: '0.25rem' }}>
+                            <div style={{ color: '#E9D7CF', fontSize: '0.85rem', marginTop: '0.25rem' }}>
                                 {t(b.label)}
                             </div>
                         </div>
