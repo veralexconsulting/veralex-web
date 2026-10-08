@@ -1,6 +1,7 @@
 'use client';
 
 import { useLang } from '@/lib/useLang';
+import { whatsappHref } from '@/lib/marketing';
 
 const CHECK = 'M5 13l4 4L19 7';
 const GIFT = 'M20 12v10H4V12M2 7h20v5H2zM12 22V7m0 0H7.5a2.5 2.5 0 110-5C11 2 12 7 12 7zm0 0h4.5a2.5 2.5 0 100-5C13 2 12 7 12 7z';
@@ -97,7 +98,7 @@ export default function PromoBanner() {
 
                     <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
                         <a
-                            href="https://wa.me/6281219476385?text=Halo%20VERALEX,%20saya%20tertarik%20dengan%20Paket%20Starter%20Business%20Rp9.9jt"
+                            href={whatsappHref(t('wa.message.promo'))}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="btn btn-primary btn-lg"

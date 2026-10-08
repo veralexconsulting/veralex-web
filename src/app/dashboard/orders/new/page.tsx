@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 import { useState, useTransition, Suspense } from 'react';
 import { createBrowserClient } from '@/lib/supabase/client';
 import type { Service } from '@/types/database';
@@ -110,12 +112,12 @@ function NewOrderForm() {
 
     return (
         <>
-            <a href="/dashboard/orders" className="back-link">
+            <Link href="/dashboard/orders" className="back-link">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <polyline points="15 18 9 12 15 6" />
                 </svg>
                 Kembali ke Pesanan
-            </a>
+            </Link>
 
             <div className="panel-header">
                 <h1 className="panel-page-title">Buat Pesanan Baru</h1>

@@ -4550,7 +4550,7 @@ section {
 }
 
 .svc-price-badge {
-    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    background: #4A0E0E;
     color: #ffffff;
     font-size: 0.7rem;
     font-weight: 700;
@@ -4558,7 +4558,8 @@ section {
     border-radius: 4px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    box-shadow: 0 2px 4px rgba(220, 38, 38, 0.25);
+    border: 1px solid rgba(200, 161, 90, 0.45);
+    white-space: nowrap;
 }
 
 .svc-price {
@@ -4570,6 +4571,7 @@ section {
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    white-space: nowrap;
 }
 
 .svc-price-note {
@@ -4848,11 +4850,6 @@ section {
     margin-right: 0.25rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-}
-
-.order-modal-fields {
-    display: grid;
-    gap: 1.15rem;
 }
 
 .order-modal-fields {

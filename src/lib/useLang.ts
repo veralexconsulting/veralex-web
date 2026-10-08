@@ -1,22 +1,41 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
 import { translations, Lang } from '@/lib/translations';
 
+const URL_LANGS: readonly Lang[] = ['en', 'zh', 'id'];
+
+function langFromPath(pathname: string): Lang | null {
+    const seg = pathname.split('/')[1] as Lang;
+    return URL_LANGS.includes(seg) ? seg : null;
+}
+
 export function useLang(): { t: (key: string) => string; lang: Lang; toggleLang: () => void; setLanguage: (newLang: Lang) => void } {
-    const [lang, setLang] = useState<Lang>('en');
+    const pathname = usePathname();
+    const urlLang = langFromPath(pathname);
+
+    // Prefixed routes own their locale (/en, /zh) so those pages never render
+    // Indonesian copy. Unprefixed routes are the original Indonesian site, so
+    // they default to 'id' — an explicit visitor choice still wins there.
+    const [lang, setLang] = useState<Lang>(urlLang ?? 'id');
 
     useEffect(() => {
-        const saved = (localStorage.getItem('veralex-lang') || 'en') as Lang;
-        setLang(saved);
-
         const handler = (e: Event) => {
             const detail = (e as CustomEvent).detail as Lang;
             setLang(detail);
         };
         window.addEventListener('langchange', handler);
-        return () => window.removeEventListener('langchange', handler);
-    }, []);
+
+        const resolved = urlLang ?? ((localStorage.getItem('veralex-lang') as Lang | null) || 'id');
+        const updateTimer = window.setTimeout(() => setLang(resolved), 0);
+        document.documentElement.lang = resolved;
+
+        return () => {
+            window.clearTimeout(updateTimer);
+            window.removeEventListener('langchange', handler);
+        };
+    }, [urlLang]);
 
     const setLanguage = useCallback((newLang: Lang) => {
         setLang(newLang);

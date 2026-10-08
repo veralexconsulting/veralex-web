@@ -23,6 +23,12 @@ const nextConfig: NextConfig = {
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
         ],
       },
+      // App areas are client components and cannot export metadata, so the
+      // noindex directive is sent as a header instead.
+      ...['/dashboard/:path*', '/admin/:path*', '/auth/:path*'].map((source) => ({
+        source,
+        headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
+      })),
     ];
   },
 };

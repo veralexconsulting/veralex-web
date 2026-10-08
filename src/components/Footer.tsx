@@ -1,6 +1,7 @@
 'use client';
 
 import { useLang } from '@/lib/useLang';
+import { whatsappHref } from '@/lib/marketing';
 import Image from 'next/image';
 import Link from 'next/link';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -64,7 +65,7 @@ export default function Footer() {
                     {/* Col 4: Kontak & Kantor */}
                     <div className="footer-links">
                         <h4>{t('footer.contact')}</h4>
-                        <a href="https://wa.me/6281219476385?text=Halo%20VERALEX,%20saya%20ingin%20konsultasi%20legalitas" target="_blank" rel="noopener noreferrer" className="footer-contact-item" style={{ color: 'inherit', textDecoration: 'none' }}>
+                        <a href={whatsappHref(t('wa.message.legal'))} target="_blank" rel="noopener noreferrer" className="footer-contact-item" style={{ color: 'inherit', textDecoration: 'none' }}>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                                 <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                             </svg>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useLang } from '@/lib/useLang';
+import { businessFacts } from '@/lib/businessFacts';
 
 const ICONS = {
     users: 'M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 110 8 4 4 0 010-8zm14 14v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75',
@@ -19,10 +20,10 @@ export default function TrustBadges() {
     const { t } = useLang();
 
     const badges = [
-        { icon: ICONS.users, number: '150+', label: 'trust.clients' },
-        { icon: ICONS.trending, number: '99%', label: 'trust.success' },
-        { icon: ICONS.award, number: '5+', label: 'trust.experience' },
-        { icon: ICONS.headset, number: '24/7', label: 'trust.consultation' },
+        { icon: ICONS.users, number: businessFacts.happyClients, label: 'trust.clients' },
+        { icon: ICONS.trending, number: businessFacts.successRate, label: 'trust.success' },
+        { icon: ICONS.award, number: businessFacts.yearsExperience, label: 'trust.experience' },
+        { icon: ICONS.headset, number: businessFacts.consultationAvailability, label: 'trust.consultation' },
     ];
 
     return (
@@ -30,7 +31,7 @@ export default function TrustBadges() {
             <div className="container">
                 <div className="trust-badges-grid">
                     {badges.map((b) => (
-                        <div key={b.label} className="fade-in" style={{ padding: '1rem' }}>
+                        <div key={b.label} style={{ padding: '1rem' }}>
                             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '0.5rem' }}>
                                 <SvgIcon d={b.icon} />
                             </div>

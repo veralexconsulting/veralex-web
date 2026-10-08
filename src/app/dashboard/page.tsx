@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { requireUser } from '@/lib/auth';
 import { createServerClient } from '@/lib/supabase/server';
 
@@ -99,9 +100,9 @@ export default async function DashboardPage() {
                         </svg>
                         <h3>Belum ada pesanan</h3>
                         <p>Mulai dengan membuat pesanan layanan legal pertama Anda.</p>
-                        <a href="/dashboard/orders/new" className="admin-btn admin-btn-primary">
+                        <Link href="/dashboard/orders/new" className="admin-btn admin-btn-primary">
                             Buat Pesanan
-                        </a>
+                        </Link>
                     </div>
                 ) : (
                     <div className="order-cards">

@@ -5,6 +5,7 @@ import {
     getAllServicePageSlugs,
     getRelatedServices,
     isValidLocale,
+    serviceHreflangs,
     type SupportedLocale,
 } from '@/lib/servicePageData';
 import ServicePageTemplate from '@/components/ServicePageTemplate';
@@ -47,19 +48,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description: service.metaDescription,
         keywords: service.keywords,
         alternates: {
-            canonical: lang === 'en' ? `/services/${slug}` : `/${lang}/services/${slug}`,
-            languages: {
-                'en': `/services/${slug}`,
-                'id': `/services/${slug}`,
-                'zh': `/zh/services/${slug}`,
-            },
+            canonical: `/${lang}/services/${slug}`,
+            languages: serviceHreflangs(slug),
         },
         openGraph: {
             title: service.metaTitle,
             description: service.metaDescription,
             url: `/${lang}/services/${slug}`,
             images: [{ url: service.ogImage || '/logo.webp', alt: service.title }],
-            locale: lang === 'zh' ? 'zh_CN' : (lang === 'en' ? 'en_US' : 'id_ID'),
+            locale: lang === 'zh' ? 'zh_CN' : 'en_US',
             type: 'website',
         },
     };
@@ -78,7 +75,7 @@ export default async function ServicePage({ params }: Props) {
     const service = getServicePageData(lang, slug);
     if (!service) notFound();
 
-    const relatedServices = getRelatedServices(service);
+    const relatedServices = getRelatedServices(service, lang);
 
     const jsonLd = {
         '@context': 'https://schema.org',
@@ -88,7 +85,7 @@ export default async function ServicePage({ params }: Props) {
         provider: {
             '@type': 'LegalService',
             name: 'VERALEX CONSULTING',
-            url: 'https://veralexconsulting.com',
+            url: 'https://www.veralexconsulting.com',
             telephone: '+6281219476385',
         },
         areaServed: {
@@ -100,9 +97,9 @@ export default async function ServicePage({ params }: Props) {
             '@type': 'Offer',
             price: service.price.replace(/[^\d]/g, ''),
             priceCurrency: 'IDR',
-            url: `https://veralexconsulting.com/${lang}/services/${slug}`,
+            url: `https://www.veralexconsulting.com/${lang}/services/${slug}`,
         },
-        url: `https://veralexconsulting.com/${lang}/services/${slug}`,
+        url: `https://www.veralexconsulting.com/${lang}/services/${slug}`,
     };
 
     const breadcrumbLd = {
@@ -113,19 +110,19 @@ export default async function ServicePage({ params }: Props) {
                 '@type': 'ListItem',
                 position: 1,
                 name: 'Home',
-                item: `https://veralexconsulting.com/${lang}`,
+                item: 'https://www.veralexconsulting.com/',
             },
             {
                 '@type': 'ListItem',
                 position: 2,
                 name: 'Services',
-                item: `https://veralexconsulting.com/${lang}#services`,
+                item: 'https://www.veralexconsulting.com/#services',
             },
             {
                 '@type': 'ListItem',
                 position: 3,
                 name: service.title,
-                item: `https://veralexconsulting.com/${lang}/services/${slug}`,
+                item: `https://www.veralexconsulting.com/${lang}/services/${slug}`,
             },
         ],
     };

@@ -163,8 +163,8 @@ export const serviceData: ServiceItem[] = [
         descriptionEn: 'Single-owner PT — affordable legal solution for entrepreneurs.',
         descriptionZh: '单人即可成立的独立法人公司——微型初创企业与自由职业者的经济合规方案。',
         price: 'Rp1.500.000',
-        features: ['Akta Pendirian', 'SK Kemenkumham', 'NPWP', 'NIB', 'Sertifikat Standar'],
-        featuresEn: ['Establishment Deed', 'Ministry Approval', 'Tax ID', 'Business ID', 'Standard Certificate'],
+        features: ['Pernyataan Pendirian PT Perorangan', 'SK Kemenkumham', 'NPWP', 'NIB', 'Sertifikat Standar'],
+        featuresEn: ['Individual Company Establishment Statement', 'Ministry Approval', 'Tax ID', 'Business ID', 'Standard Certificate'],
         featuresZh: ['设立声明文件', '印尼司法部电子批文', '公司专属税号 NPWP', '商业登记号 NIB', '标准经营许可证书'],
     },
     {

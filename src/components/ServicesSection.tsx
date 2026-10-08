@@ -2,6 +2,10 @@
 
 import Link from 'next/link';
 import { useLang } from '@/lib/useLang';
+import { getServiceBySlug } from '@/lib/serviceData';
+
+const servicePrice = (slug: string) => getServiceBySlug(slug)!.price;
+const trademark = getServiceBySlug('pendaftaran-merek')!;
 
 /* SVG icon paths for service categories and tags */
 const ICONS = {
@@ -47,7 +51,7 @@ const Price = ({
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
                 {discountBadge && (
                     <span style={{
-                        background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
+                        background: '#4A0E0E',
                         color: '#ffffff',
                         fontSize: '0.65rem',
                         fontWeight: 700,
@@ -55,7 +59,6 @@ const Price = ({
                         borderRadius: '4px',
                         letterSpacing: '0.5px',
                         textTransform: 'uppercase',
-                        boxShadow: '0 2px 4px rgba(220, 38, 38, 0.25)',
                     }}>
                         {discountBadge}
                     </span>
@@ -97,7 +100,7 @@ export default function ServicesSection() {
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
                                     <h4 className="service-row-title" style={{ margin: 0 }}>{t('services.ip.trademark.title')}</h4>
                                     <span style={{
-                                        background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
+                                        background: '#4A0E0E',
                                         color: '#ffffff',
                                         fontSize: '0.68rem',
                                         fontWeight: 700,
@@ -105,15 +108,14 @@ export default function ServicesSection() {
                                         borderRadius: '12px',
                                         letterSpacing: '0.5px',
                                         textTransform: 'uppercase',
-                                        boxShadow: '0 2px 6px rgba(220, 38, 38, 0.25)',
                                     }}>
-                                        PROMO 50%
+                                        {trademark.discountBadge}
                                     </span>
                                 </div>
                                 <p className="service-row-desc">{t('services.ip.trademark.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <Price from={priceFrom} amount="Rp3.000.000" originalAmount="Rp6.000.000" discountBadge="HEMAT 50%" />
+                                <Price from={priceFrom} amount={trademark.price} originalAmount={trademark.originalPrice} discountBadge={trademark.discountBadge} />
                                 <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
@@ -124,7 +126,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.ip.renewal.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <Price from={priceFrom} amount="Rp6.000.000" />
+                                <Price from={priceFrom} amount={servicePrice('perpanjangan-merek')} />
                                 <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
@@ -135,7 +137,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.ip.transfer.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <Price from={priceFrom} amount="Rp3.000.000" />
+                                <Price from={priceFrom} amount={servicePrice('pengalihan-merek')} />
                                 <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
@@ -146,7 +148,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.ip.copyright.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <Price from={priceFrom} amount="Rp2.500.000" />
+                                <Price from={priceFrom} amount={servicePrice('hak-cipta')} />
                                 <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
@@ -157,7 +159,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.ip.design.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <Price from={priceFrom} amount="Rp4.500.000" />
+                                <Price from={priceFrom} amount={servicePrice('desain-industri')} />
                                 <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
@@ -176,7 +178,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.company.pt.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <Price from={priceFrom} amount="Rp7.000.000" />
+                                <Price from={priceFrom} amount={servicePrice('pt-pmdn')} />
                                 <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
@@ -187,7 +189,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.company.pma.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <Price from={priceFrom} amount="Rp15.000.000" />
+                                <Price from={priceFrom} amount={servicePrice('pt-pma')} />
                                 <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
@@ -198,7 +200,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.company.perorangan.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <Price from={priceFrom} amount="Rp1.500.000" />
+                                <Price from={priceFrom} amount={servicePrice('pt-perorangan')} />
                                 <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
@@ -209,7 +211,7 @@ export default function ServicesSection() {
                                 <p className="service-row-desc">{t('services.company.cv.desc')}</p>
                             </div>
                             <div className="service-row-right">
-                                <Price from={priceFrom} amount="Rp3.000.000" />
+                                <Price from={priceFrom} amount={servicePrice('pendirian-cv')} />
                                 <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                             </div>
                         </Link>
@@ -222,12 +224,12 @@ export default function ServicesSection() {
                     <h3 className="category-title-luxury">{t('services.itas.title')}</h3>
                     <div className="services-list-luxury">
                         {[
-                            { title: t('services.itas.investor1.title'), desc: t('services.itas.investor1.desc'), price: 'Rp16.000.000', slug: 'itas-investor-1-tahun' },
-                            { title: t('services.itas.investor2.title'), desc: t('services.itas.investor2.desc'), price: 'Rp18.000.000', slug: 'itas-investor-2-tahun' },
-                            { title: t('services.itas.visac2.title'), desc: t('services.itas.visac2.desc'), price: 'Rp3.500.000', slug: 'visa-c2' },
-                            { title: t('services.itas.visad2.1.title'), desc: t('services.itas.visad2.1.desc'), price: 'Rp6.000.000', slug: 'visa-d2-1-tahun' },
-                            { title: t('services.itas.visad2.2.title'), desc: t('services.itas.visad2.2.desc'), price: 'Rp9.500.000', slug: 'visa-d2-2-tahun' },
-                            { title: t('services.itas.kitas.title'), desc: t('services.itas.kitas.desc'), price: 'Rp45.000.000', slug: 'kitas-kerja' },
+                            { title: t('services.itas.investor1.title'), desc: t('services.itas.investor1.desc'), slug: 'itas-investor-1-tahun' },
+                            { title: t('services.itas.investor2.title'), desc: t('services.itas.investor2.desc'), slug: 'itas-investor-2-tahun' },
+                            { title: t('services.itas.visac2.title'), desc: t('services.itas.visac2.desc'), slug: 'visa-c2' },
+                            { title: t('services.itas.visad2.1.title'), desc: t('services.itas.visad2.1.desc'), slug: 'visa-d2-1-tahun' },
+                            { title: t('services.itas.visad2.2.title'), desc: t('services.itas.visad2.2.desc'), slug: 'visa-d2-2-tahun' },
+                            { title: t('services.itas.kitas.title'), desc: t('services.itas.kitas.desc'), slug: 'kitas-kerja' },
                         ].map((item) => (
                             <Link key={item.slug} href={`/services/${item.slug}`} className="service-row-luxury">
                                 <div className="service-row-left">
@@ -235,7 +237,7 @@ export default function ServicesSection() {
                                     <p className="service-row-desc">{item.desc}</p>
                                 </div>
                                 <div className="service-row-right">
-                                    <span className="service-row-price"><span className="price-start-from">{priceFrom} </span>{item.price}</span>
+                                    <span className="service-row-price"><span className="price-start-from">{priceFrom} </span>{servicePrice(item.slug)}</span>
                                     <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
                                 </div>
                             </Link>

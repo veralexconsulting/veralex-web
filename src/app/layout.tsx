@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import ScrollProgress from "@/components/ScrollProgress";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import MarketingTracking from "@/components/MarketingTracking";
+import GoogleTagManager from "@/components/GoogleTagManager";
 import "./globals.css";
 
 const inter = Inter({
@@ -28,27 +30,22 @@ export const metadata: Metadata = {
   description:
     "VERALEX CONSULTING — jasa pendirian PT PMDN, PT PMA, CV, pendaftaran merek dagang DJKI, KITAS kerja, ITAS investor, sertifikasi halal & BPOM di Bekasi dan seluruh Indonesia. Proses cepat, harga transparan, konsultasi GRATIS via WhatsApp!",
   keywords:
-    "jasa pendirian PT, biaya pendirian PT, daftar merek dagang, pendaftaran merek DJKI, jasa KITAS, urus KITAS kerja, PT PMA Indonesia, biaya PT PMA, pendirian CV, jasa pembuatan CV, konsultan hukum bisnis, izin usaha NIB OSS, jasa legalitas perusahaan, konsultan perizinan Bekasi, pendirian PT Bekasi, daftar merek Jakarta, ITAS investor Indonesia, jasa pendirian PT perorangan, sertifikasi halal MUI, izin BPOM, hak cipta DJKI, jasa hukum perusahaan, pengurusan SIUP, biaya daftar merek, trademark registration Indonesia, company registration Indonesia, foreign investment company Indonesia, work permit Indonesia, KITAS 2024, pendirian PT 2024, jasa notaris perusahaan",
+    "jasa pendirian PT, biaya pendirian PT, daftar merek dagang, pendaftaran merek DJKI, jasa KITAS, PT PMA Indonesia, pendirian CV, konsultan hukum bisnis, jasa legalitas perusahaan, biaya daftar merek, trademark registration Indonesia, company registration Indonesia, investor kitas indonesia, work kitas indonesia",
   authors: [{ name: "VERALEX CONSULTING" }],
   robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
-  metadataBase: new URL("https://veralexconsulting.com"),
+  metadataBase: new URL("https://www.veralexconsulting.com"),
   alternates: {
     canonical: "/",
-    languages: {
-      'en': '/',
-      'id': '/id',
-      'zh': '/zh',
-    },
   },
   openGraph: {
     type: "website",
-    url: "https://veralexconsulting.com",
+    url: "https://www.veralexconsulting.com",
     title: "Jasa Pendirian PT, Daftar Merek & KITAS | VERALEX CONSULTING",
     description:
       "Jasa pendirian PT, CV, PT PMA, pendaftaran merek, KITAS kerja, ITAS investor, sertifikasi halal & BPOM. Konsultasi GRATIS, proses cepat & transparan. Hubungi WhatsApp sekarang!",
     images: [{ url: "/logo.webp", width: 1200, height: 630, alt: "VERALEX CONSULTING - Jasa Legalitas Perusahaan" }],
-    locale: "en_US",
-    alternateLocale: "id_ID",
+    locale: "id_ID",
+    alternateLocale: "en_US",
     siteName: "VERALEX CONSULTING",
   },
   twitter: {
@@ -76,8 +73,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 };
 
 export default function RootLayout({
@@ -86,7 +81,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="id">
       <head>
         {/* Structured Data - LegalService */}
         <script
@@ -97,10 +92,10 @@ export default function RootLayout({
               "@type": "LegalService",
               name: "VERALEX CONSULTING",
               alternateName: "Veralex",
-              image: "https://veralexconsulting.com/logo.webp",
-              logo: "https://veralexconsulting.com/logo.webp",
+              image: "https://www.veralexconsulting.com/logo.webp",
+              logo: "https://www.veralexconsulting.com/logo.webp",
               description: "Konsultan hukum profesional untuk pendirian PT, CV, PT PMA, pendaftaran merek, hak cipta, ITAS, KITAS, dan legalitas bisnis di Indonesia.",
-              url: "https://veralexconsulting.com",
+              url: "https://www.veralexconsulting.com",
               telephone: "+6281219476385",
               email: "admin@veralexconsulting.com",
               address: {
@@ -112,7 +107,6 @@ export default function RootLayout({
                 addressCountry: "ID",
               },
               geo: { "@type": "GeoCoordinates", latitude: -6.2484, longitude: 106.9860 },
-              priceRange: "Rp1.500.000 - Rp45.000.000",
               areaServed: [
                 { "@type": "City", name: "Bekasi" },
                 { "@type": "City", name: "Jakarta" },
@@ -135,10 +129,9 @@ export default function RootLayout({
                   closes: "13:00"
                 }
               ],
-              aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", bestRating: "5", ratingCount: "138" },
               sameAs: [
                 "https://wa.me/6281219476385",
-                "https://veralexconsulting.com"
+                "https://www.veralexconsulting.com"
               ],
               hasOfferCatalog: {
                 "@type": "OfferCatalog",
@@ -157,23 +150,6 @@ export default function RootLayout({
             }),
           }}
         />
-        {/* Structured Data - FAQPage */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              mainEntity: [
-                { "@type": "Question", name: "Berapa biaya pendirian PT di Indonesia?", acceptedAnswer: { "@type": "Answer", text: "Biaya pendirian PT mulai dari Rp1.500.000 untuk PT Perorangan, Rp3.000.000 untuk CV, Rp7.000.000 untuk PT PMDN, dan Rp15.000.000 untuk PT PMA." } },
-                { "@type": "Question", name: "Berapa lama proses pendaftaran merek di DJKI?", acceptedAnswer: { "@type": "Answer", text: "Proses pendaftaran merek di DJKI memakan waktu sekitar 6-12 bulan. VERALEX CONSULTING membantu dari pengecekan hingga penerbitan sertifikat dengan biaya promo mulai Rp3.000.000 (normal Rp6.000.000)." } },
-                { "@type": "Question", name: "Apa saja dokumen untuk mengurus KITAS Kerja?", acceptedAnswer: { "@type": "Answer", text: "Dokumen meliputi: paspor TKA, foto, CV, ijazah, surat sponsor, RPTKA, dan bukti DPKK ($1200 USD). Biaya layanan Rp45.000.000 sudah termasuk DPKK dan RPTKA." } },
-                { "@type": "Question", name: "Apakah bisa konsultasi gratis?", acceptedAnswer: { "@type": "Answer", text: "Ya, VERALEX CONSULTING menyediakan konsultasi gratis melalui WhatsApp di +62 812 1947 6385." } },
-                { "@type": "Question", name: "Apa perbedaan PT PMDN dan PT PMA?", acceptedAnswer: { "@type": "Answer", text: "PT PMDN modalnya dimiliki WNI atau badan hukum Indonesia. PT PMA memiliki modal dari investor asing dan memerlukan izin khusus." } },
-              ],
-            }),
-          }}
-        />
         {/* Structured Data - WebSite */}
         <script
           type="application/ld+json"
@@ -182,14 +158,16 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebSite",
               name: "VERALEX CONSULTING",
-              url: "https://veralexconsulting.com",
-              inLanguage: ["id", "en"],
+              url: "https://www.veralexconsulting.com",
+              inLanguage: ["id", "en", "zh"],
             }),
           }}
         />
       </head>
       <body className={`${inter.variable} ${playfair.variable} ${jakarta.variable}`}>
         <ScrollProgress />
+        <GoogleTagManager />
+        <MarketingTracking />
         {children}
         <FloatingWhatsApp />
       </body>

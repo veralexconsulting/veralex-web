@@ -8,6 +8,8 @@ import itasInvestor1Zh from '@/data/services/zh/itas-investor-1-tahun.json';
 import itasInvestor2Zh from '@/data/services/zh/itas-investor-2-tahun.json';
 import pendaftaranMerekZh from '@/data/services/zh/pendaftaran-merek.json';
 
+import { serviceData, getServiceBySlug } from '@/lib/serviceData';
+
 export interface ServicePageRequirement {
     item: string;
 }
@@ -61,15 +63,41 @@ const zhServicePages: Record<string, ServicePageData> = {
 export const SUPPORTED_LOCALES = ['en', 'zh', 'id'] as const;
 export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
 
+// Indonesian service pages live on the unprefixed /services/[slug] route.
+const idServiceSlugs = new Set(serviceData.map((s) => s.slug));
+
 export function isValidLocale(locale: string): locale is SupportedLocale {
     return SUPPORTED_LOCALES.includes(locale as SupportedLocale);
 }
 
+function updatePriceCopy(text: string, previous: string | undefined, current: string | undefined): string {
+    if (!previous || !current || previous === current) return text;
+    const oldNumber = previous.replace(/\D/g, '');
+    const newNumber = current.replace(/\D/g, '');
+    const withSeparator = (value: string, separator: string) => value.replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+    return text
+        .replaceAll(withSeparator(oldNumber, '.'), withSeparator(newNumber, '.'))
+        .replaceAll(withSeparator(oldNumber, ','), withSeparator(newNumber, ','));
+}
+
+function refreshCopy(text: string, page: ServicePageData, price: string, originalPrice?: string): string {
+    return updatePriceCopy(updatePriceCopy(text, page.price, price), page.originalPrice, originalPrice);
+}
+
 export function getServicePageData(locale: SupportedLocale, slug: string): ServicePageData | undefined {
-    if (locale === 'zh') {
-        return zhServicePages[slug];
-    }
-    return enServicePages[slug];
+    const page = locale === 'zh' ? zhServicePages[slug] : enServicePages[slug];
+    if (!page) return undefined;
+    const pricing = getServiceBySlug(slug);
+    const price = pricing?.price ?? page.price;
+    const originalPrice = pricing?.originalPrice;
+    return {
+        ...page,
+        price,
+        originalPrice,
+        metaDescription: refreshCopy(page.metaDescription, page, price, originalPrice),
+        priceNote: refreshCopy(page.priceNote, page, price, originalPrice),
+        faqs: page.faqs.map(({ question, answer }) => ({ question, answer: refreshCopy(answer, page, price, originalPrice) })),
+    };
 }
 
 export function getAllServicePageSlugs(locale: SupportedLocale): string[] {
@@ -79,9 +107,30 @@ export function getAllServicePageSlugs(locale: SupportedLocale): string[] {
     return Object.keys(enServicePages);
 }
 
+export function hasServicePage(locale: SupportedLocale, slug: string): boolean {
+    if (locale === 'zh') {
+        return Boolean(zhServicePages[slug]);
+    }
+    if (locale === 'id') {
+        return idServiceSlugs.has(slug);
+    }
+    return Boolean(enServicePages[slug]);
+}
+
+// hreflang set for a service slug. Only locales that really have a page are
+// declared — advertising a missing URL is worse than omitting the alternate.
+export function serviceHreflangs(slug: string): Record<string, string> {
+    const languages: Record<string, string> = {
+        'id': `/services/${slug}`,
+        'x-default': `/services/${slug}`,
+    };
+    if (hasServicePage('en', slug)) languages['en'] = `/en/services/${slug}`;
+    if (hasServicePage('zh', slug)) languages['zh'] = `/zh/services/${slug}`;
+    return languages;
+}
+
 export function getRelatedServices(data: ServicePageData, locale: SupportedLocale = 'en'): ServicePageData[] {
-    const pages = locale === 'zh' ? zhServicePages : enServicePages;
     return data.relatedSlugs
-        .map((slug) => pages[slug])
-        .filter(Boolean);
+        .map((slug) => getServicePageData(locale, slug))
+        .filter((page): page is ServicePageData => Boolean(page));
 }

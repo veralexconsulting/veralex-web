@@ -25,7 +25,7 @@
     "price": "Rp3.000.000",
     "originalPrice": "Rp6.000.000",
     "discountBadge": "50% OFF",
-    "priceNote": "Promo price per class of goods/services (regular Rp6.000.000). All-inclusive: database search, classification consultation, filing, monitoring, and certificate issuance.",
+    "priceNote": "Promo price per class of goods/services (regular Rp6.000.000). Includes search, classification consultation, filing and monitoring. Applicable official fees and final scope are confirmed before ordering.",
     "features": [
         "Trademark availability check",
         "DJKI database search",
@@ -37,7 +37,7 @@
     ],
     "faqs": [
         { "question": "How long does trademark registration take in Indonesia?", "answer": "The entire trademark registration process in Indonesia takes approximately 12–18 months from the filing date. This includes the 2-month publication period and the substantive examination by DJKI. VERALEX CONSULTING handles every step and keeps you updated on progress." },
-        { "question": "How much does trademark registration cost in Indonesia?", "answer": "The trademark registration service fee at VERALEX CONSULTING is currently on promotion for Rp 3,000,000 per class (regular price Rp 6,000,000). This covers the availability search, classification consultation, online filing, monitoring, and certificate issuance. Additional government fees may apply." },
+        { "question": "How much does trademark registration cost in Indonesia?", "answer": "The trademark registration service fee at VERALEX CONSULTING is currently on promotion for Rp 3,000,000 per class (regular price Rp 6,000,000). It covers the availability search, classification consultation, online filing and monitoring. Applicable official fees and final scope are confirmed before ordering." },
         { "question": "How long does trademark protection last?", "answer": "A registered trademark is protected for 10 years from the filing date and can be renewed every 10 years. It is important to track your renewal deadline to maintain uninterrupted protection." },
         { "question": "Can an individual register a trademark without a company?", "answer": "Yes. Trademark registration can be filed under personal ownership using your national ID (KTP) and tax ID (NPWP). You do not need to own a company to register a trademark in Indonesia." },
         { "question": "What happens if my trademark is similar to an existing one?", "answer": "If your trademark is too similar to a previously registered mark, DJKI may reject your application. This is why the initial availability search is critical — it helps identify potential conflicts before you invest time and money in filing." },

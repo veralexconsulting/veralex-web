@@ -2,6 +2,8 @@
 
 import Image from 'next/image';
 import { useLang } from '@/lib/useLang';
+import { whatsappHref } from '@/lib/marketing';
+import { businessFacts } from '@/lib/businessFacts';
 
 export default function HeroSection() {
     const { t } = useLang();
@@ -48,10 +50,11 @@ export default function HeroSection() {
 
                     <div className="hero-cta">
                         <a
-                            href="https://wa.me/6281219476385?text=Halo%20VERALEX,%20saya%20ingin%20konsultasi%20gratis%20tentang%20layanan%20legalitas"
+                            href={whatsappHref(t('wa.message.hero'))}
                             className="btn-editorial-solid"
                             target="_blank"
                             rel="noopener noreferrer"
+                            data-cta-location="hero"
                         >
                             {t('hero.cta')}
                         </a>
@@ -63,22 +66,22 @@ export default function HeroSection() {
                     {/* Stats strip */}
                     <div className="hero-stats">
                         <div className="hero-stat">
-                            <span className="hero-stat-number">150+</span>
+                            <span className="hero-stat-number">{businessFacts.happyClients}</span>
                             <span className="hero-stat-label">{t('trust.clients')}</span>
                         </div>
                         <div className="hero-stat-divider" />
                         <div className="hero-stat">
-                            <span className="hero-stat-number">99%</span>
+                            <span className="hero-stat-number">{businessFacts.successRate}</span>
                             <span className="hero-stat-label">{t('trust.success')}</span>
                         </div>
                         <div className="hero-stat-divider" />
                         <div className="hero-stat">
-                            <span className="hero-stat-number">5+</span>
+                            <span className="hero-stat-number">{businessFacts.yearsExperience}</span>
                             <span className="hero-stat-label">{t('trust.experience')}</span>
                         </div>
                         <div className="hero-stat-divider" />
                         <div className="hero-stat">
-                            <span className="hero-stat-number">24/7</span>
+                            <span className="hero-stat-number">{businessFacts.consultationAvailability}</span>
                             <span className="hero-stat-label">{t('trust.consultation')}</span>
                         </div>
                     </div>

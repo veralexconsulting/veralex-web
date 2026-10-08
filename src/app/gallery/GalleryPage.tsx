@@ -5,6 +5,7 @@ import { useState, useCallback } from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useLang } from '@/lib/useLang';
+import { whatsappHref } from '@/lib/marketing';
 
 const galleryImages = [
     'IMG-20261005-WA0012.jpg', 'IMG-20261005-WA0013.jpg', 'IMG-20261005-WA0015.jpg',
@@ -74,7 +75,7 @@ export default function GalleryPage() {
                         <h2 className="cta-title">{t('gallery.ctaTitle')}</h2>
                         <p className="cta-subtitle">{t('gallery.ctaSubtitle')}</p>
                         <a
-                            href="https://wa.me/6281219476385?text=Halo%20VERALEX,%20saya%20ingin%20konsultasi"
+                            href={whatsappHref(t('wa.message.gallery'))}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="btn btn-primary"

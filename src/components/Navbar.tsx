@@ -4,19 +4,15 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { translations, Lang } from '@/lib/translations';
+import { useLang } from '@/lib/useLang';
+import { whatsappHref } from '@/lib/marketing';
 import LanguageToggle from '@/components/LanguageToggle';
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
-    const [lang, setLang] = useState<Lang>('en');
+    const { t } = useLang();
     const pathname = usePathname();
-
-    useEffect(() => {
-        const saved = (localStorage.getItem('veralex-lang') || 'en') as Lang;
-        setLang(saved);
-    }, []);
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 50);
@@ -24,17 +20,6 @@ export default function Navbar() {
         onScroll();
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
-
-    useEffect(() => {
-        const handler = (e: Event) => {
-            const detail = (e as CustomEvent).detail as Lang;
-            setLang(detail);
-        };
-        window.addEventListener('langchange', handler);
-        return () => window.removeEventListener('langchange', handler);
-    }, []);
-
-    const t = (key: string) => translations[lang]?.[key] || key;
 
     const navLinks = [
         { key: 'nav.home', href: '#hero' },
@@ -145,7 +130,7 @@ export default function Navbar() {
                     </div>
 
                     <div className="navbar-mobile-actions">
-                        <a href="https://wa.me/6281219476385?text=Halo%20VERALEX,%20saya%20ingin%20konsultasi%20tentang%20layanan%20legalitas%20bisnis." className="btn-editorial-solid" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>
+                        <a href={whatsappHref(t('wa.message.legal'))} className="btn-editorial-solid" target="_blank" rel="noopener noreferrer" onClick={() => setMenuOpen(false)}>
                             {t('nav.cta')}
                         </a>
                     </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useLang } from '@/lib/useLang';
+import { whatsappHref } from '@/lib/marketing';
 
 const CHECK = 'M5 13l4 4L19 7';
 const FIRE = 'M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z';
@@ -15,7 +16,6 @@ export default function PricingSection() {
             originalPrice: 'Rp12.500.000',
             features: [t('services.company.pt.title'), t('services.ip.trademark.title'), t('services.bonus'), t('pricing.feature.nib'), t('pricing.feature.consult')],
             featured: false,
-            wa: 'Halo%20VERALEX,%20saya%20tertarik%20Paket%20Starter%20Business',
         },
         {
             name: t('pricing.investor'),
@@ -24,7 +24,6 @@ export default function PricingSection() {
             badge: true,
             features: [t('services.company.pma.title'), '1x ' + t('services.itas.investor1.title'), t('services.ip.trademark.title'), t('services.bonus'), t('pricing.feature.nib'), t('pricing.feature.consult')],
             featured: true,
-            wa: 'Halo%20VERALEX,%20saya%20tertarik%20Paket%20Investor%20Package',
         },
         {
             name: t('pricing.premium'),
@@ -32,7 +31,6 @@ export default function PricingSection() {
             originalPrice: 'Rp55.000.000',
             features: [t('services.company.pma.title'), '2x ' + t('services.itas.investor1.title'), t('services.ip.trademark.title'), t('services.bonus'), t('pricing.feature.nib'), t('pricing.feature.priority')],
             featured: false,
-            wa: 'Halo%20VERALEX,%20saya%20tertarik%20Paket%20Premium%20Investor',
         },
     ];
 
@@ -90,7 +88,9 @@ export default function PricingSection() {
                                 ))}
                             </div>
                             <a
-                                href={`https://wa.me/6281219476385?text=${pkg.wa}`}
+                                href={whatsappHref(`${t('wa.message.package')} ${pkg.name} (${pkg.price}).`)}
+                                data-cta-location="package_card"
+                                data-service="package"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className={`btn ${pkg.featured ? 'btn-primary' : 'btn-outline'} pricing-cta`}
@@ -118,7 +118,7 @@ export default function PricingSection() {
                         {t('pricing.custom.question')}
                     </p>
                     <a
-                        href="https://wa.me/6281219476385?text=Halo%20VERALEX,%20saya%20butuh%20paket%20custom%20sesuai%20kebutuhan%20saya"
+                        href={whatsappHref(t('wa.message.custom'))}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-primary"

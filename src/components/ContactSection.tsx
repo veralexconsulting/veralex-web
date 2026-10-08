@@ -1,6 +1,7 @@
 'use client';
 
 import { useLang } from '@/lib/useLang';
+import { whatsappHref } from '@/lib/marketing';
 
 export default function ContactSection() {
     const { t } = useLang();
@@ -150,7 +151,7 @@ export default function ContactSection() {
                         </a>
 
                         {/* WhatsApp Card */}
-                        <a href="https://wa.me/6281219476385" target="_blank" rel="noopener noreferrer" className="corporate-contact-item">
+                        <a href={whatsappHref(t('wa.message.general'))} target="_blank" rel="noopener noreferrer" className="corporate-contact-item">
                             <div className="contact-item-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                                     <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -160,6 +161,18 @@ export default function ContactSection() {
                                 <h5>WhatsApp</h5>
                                 <p>+62 812 1947 6385</p>
                                 <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>{t('contact.wa_sub')}</p>
+                            </div>
+                        </a>
+
+                        <a href="tel:+6281219476385" className="corporate-contact-item" data-cta-location="contact_phone">
+                            <div className="contact-item-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                    <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                </svg>
+                            </div>
+                            <div className="contact-item-content">
+                                <h5>{t('brand.call')}</h5>
+                                <p>+62 812 1947 6385</p>
                             </div>
                         </a>
 
@@ -183,6 +196,7 @@ export default function ContactSection() {
                     <div className="contact-map-side">
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.1158580649774!2d106.9859546!3d-6.2484439!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e698c17bbf5cbb7%3A0x6b4122d251f28b4d!2sJl.%20Utama%20Raya%20No.348%2C%20RT.003%2BRW.026%2C%20Kayuringin%20Jaya%2C%20Kec.%20Bekasi%20Sel.%2C%20Kota%20Bks%2C%20Jawa%20Barat%2017144!5e0!3m2!1sid!2sid!4v1719416000000!5m2!1sid!2sid"
+                            title={`${t('contact.address')} — ${t('contact.address_value')}`}
                             allowFullScreen={true}
                             loading="lazy"
                             referrerPolicy="no-referrer-when-downgrade"

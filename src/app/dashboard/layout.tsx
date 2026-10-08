@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { logout } from '../auth/actions';
@@ -75,10 +77,10 @@ export default function DashboardLayout({
 
             {/* Sidebar */}
             <aside className={`panel-sidebar ${sidebarOpen ? 'open' : ''}`}>
-                <a href="/" className="panel-sidebar-brand">
+                <Link href="/" className="panel-sidebar-brand">
                     <img src="/logo.webp" alt="VERALEX" className="panel-sidebar-logo" />
                     <span className="panel-sidebar-name">VERALEX</span>
-                </a>
+                </Link>
 
                 <div className="panel-sidebar-role">Client Portal</div>
 

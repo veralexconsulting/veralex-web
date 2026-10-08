@@ -1,6 +1,7 @@
 'use client';
 
 import { useLang } from '@/lib/useLang';
+import { whatsappHref } from '@/lib/marketing';
 
 export const BrandSection = () => {
     const { t } = useLang();
@@ -10,7 +11,7 @@ export const BrandSection = () => {
                 <div className="big-brand-text">VERALEX</div>
                 <p className="big-brand-tagline">{t('brand.tagline')}</p>
                 <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                    <a href="https://wa.me/6281219476385?text=Halo%20VERALEX,%20saya%20ingin%20konsultasi%20gratis" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+                    <a href={whatsappHref(t('wa.message.hero'))} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
                         {t('brand.consult')}
                     </a>
                     <a href="tel:+6281219476385" className="btn btn-outline">

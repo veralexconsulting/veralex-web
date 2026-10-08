@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 import { useState, useTransition } from 'react';
 import { createBrowserClient } from '@/lib/supabase/client';
 import { updateOrderStatus, addProgressStep, updateProgressStep, uploadDocument, verifyPayment, rejectPayment } from '../../actions';
@@ -217,12 +219,12 @@ export default function AdminOrderDetailClient({
 
     return (
         <>
-            <a href="/admin" className="back-link">
+            <Link href="/admin" className="back-link">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <polyline points="15 18 9 12 15 6" />
                 </svg>
                 Kembali ke Dashboard
-            </a>
+            </Link>
 
             <div className="panel-header">
                 <h1 className="panel-page-title">{service?.name || 'Detail Pesanan'}</h1>

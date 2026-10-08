@@ -5,14 +5,13 @@ export default function robots(): MetadataRoute.Robots {
         rules: [
             {
                 userAgent: '*',
+                // Do not block /_next/ — that hides JS/CSS from renderers and
+                // hurts mobile-first indexing. Private app areas use noindex
+                // meta instead of Disallow so crawlers can still read it.
                 allow: '/',
-                disallow: ['/api/', '/_next/'],
-            },
-            {
-                userAgent: 'Googlebot',
-                allow: '/',
+                disallow: ['/api/'],
             },
         ],
-        sitemap: 'https://veralexconsulting.com/sitemap.xml',
+        sitemap: 'https://www.veralexconsulting.com/sitemap.xml',
     };
 }

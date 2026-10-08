@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { requireUser } from '@/lib/auth';
 import { createServerClient } from '@/lib/supabase/server';
 
@@ -39,9 +40,9 @@ export default async function OrdersPage() {
                     </svg>
                     <h3>Belum ada pesanan</h3>
                     <p>Anda belum memiliki pesanan. Mulai dengan memilih layanan yang Anda butuhkan.</p>
-                    <a href="/dashboard/orders/new" className="admin-btn admin-btn-primary">
+                    <Link href="/dashboard/orders/new" className="admin-btn admin-btn-primary">
                         Buat Pesanan Baru
-                    </a>
+                    </Link>
                 </div>
             ) : (
                 <>
@@ -95,9 +96,9 @@ export default async function OrdersPage() {
                     </div>
 
                     <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
-                        <a href="/dashboard/orders/new" className="admin-btn admin-btn-secondary">
+                        <Link href="/dashboard/orders/new" className="admin-btn admin-btn-secondary">
                             + Buat Pesanan Baru
-                        </a>
+                        </Link>
                     </div>
                 </>
             )}

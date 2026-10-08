@@ -1,6 +1,7 @@
 'use client';
 
 import { useLang } from '@/lib/useLang';
+import { whatsappHref } from '@/lib/marketing';
 
 export const UrgencyCTA = () => {
     const { t } = useLang();
@@ -14,7 +15,7 @@ export const UrgencyCTA = () => {
                     </div>
                     <h2 className="cta-title">{t('urgency.title')}</h2>
                     <p className="cta-subtitle">{t('urgency.subtitle')}</p>
-                    <a href="https://wa.me/6281219476385?text=Halo%20VERALEX,%20saya%20ingin%20tahu%20promo%20bulan%20ini" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg">
+                    <a href={whatsappHref(t('wa.message.urgency'))} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg">
                         {t('urgency.cta')}
                     </a>
                     <p style={{ marginTop: '1rem', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
