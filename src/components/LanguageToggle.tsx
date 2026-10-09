@@ -28,6 +28,8 @@ export default function LanguageToggle({ className = '' }: { className?: string 
         setOpen(false);
 
         const [, seg, ...rest] = pathname.split('/');
+        const legalSlug = ['privacy-policy', 'terms-and-conditions'].includes(seg) ? seg : (['en','id','zh'].includes(seg) && ['privacy-policy','terms-and-conditions'].includes(rest[0]) ? rest[0] : null);
+        if (legalSlug) { router.push(`${next === 'en' ? '' : `/${next}`}/${legalSlug}`); return; }
         if (seg === 'en' || seg === 'id' || seg === 'zh') {
             router.push(`/${next}/${rest.join('/')}`);
         }

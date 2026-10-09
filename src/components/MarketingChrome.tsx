@@ -2,11 +2,11 @@
 import { usePathname } from 'next/navigation';
 import ScrollProgress from './ScrollProgress';
 import FloatingWhatsApp from './FloatingWhatsApp';
-import MarketingTracking from './MarketingTracking';
-import GoogleTagManager from './GoogleTagManager';
+import CookiePreferences from './CookiePreferences';
 
 export default function MarketingChrome() {
   const pathname=usePathname();
   if (/^\/(admin|portal|invite|workspace)(\/|$)/.test(pathname)) return null;
-  return <><ScrollProgress/><GoogleTagManager/><MarketingTracking/><FloatingWhatsApp/></>;
+  const legalPage = /^\/(?:id\/|zh\/)?(?:privacy-policy|terms-and-conditions)$/.test(pathname);
+  return <><ScrollProgress/><CookiePreferences/>{!legalPage && <FloatingWhatsApp/>}</>;
 }

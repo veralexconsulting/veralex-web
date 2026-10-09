@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { changeInitialPassword, claimInvitation, getCurrentWorkspaceActor, inspectInvitation } from '@/app/workspace-actions';
 import { workspaceBrowser, workspaceOAuthRedirectTo } from '@/lib/workspace/browser';
 import { whatsappHref } from '@/lib/marketing';
+import PortalLegalNotice from '@/components/PortalLegalNotice';
 import { useWorkspace, currentStage, nextTask, formatDateTime } from './store';
 import { Badge, ConfirmDialog, EmptyState, PageHeader, ProgressSummary, ProjectCard, Timeline } from './ui';
 
@@ -109,6 +110,7 @@ export function InvitationPage() {
   return <div className="workspace ws-invite-page"><div className="ws-invite-card"><BrandLogo compact />
     {!status ? <p role="status">Memeriksa tautan…</p> : status.state==='signin' ? <><p className="ws-eyebrow">Akses proyek</p><h1>Masuk untuk membuka tautan.</h1><p className="ws-muted">Masuk dengan akun Google Anda. Pemilik pertama yang berhasil mengklaim tautan akan memperoleh akses proyek.</p><button className="ws-button ws-button-primary ws-full" disabled={loading} onClick={continueWithGoogle}>{loading?'Menghubungkan…':'Lanjutkan dengan Google'}</button></> : status.state==='unauthorized' ? <><p className="ws-eyebrow">Akses proyek</p><h1>Akun ini tidak dapat mengklaim proyek.</h1><p className="ws-muted">Gunakan akun Google klien yang sesuai untuk membuka tautan. Akun administrator tidak dapat dipakai untuk klaim klien.</p><button className="ws-button ws-button-secondary" onClick={async()=>{await workspaceBrowser().auth.signOut();setStatus({state:'signin'});}}>Keluar dan gunakan akun lain</button></> : status.state==='valid' ? <><p className="ws-eyebrow">Akses proyek</p><h1>Ikuti perkembangan layanan Anda.</h1><p className="ws-muted">Klaim akses hanya jika tautan ini diterima dari tim VERALEX melalui percakapan resmi.</p><div className="ws-invite-project"><strong>{status.projectTitle}</strong><span>{status.serviceName}</span></div><button className="ws-button ws-button-primary ws-full" disabled={loading} onClick={claim}>{loading?'Memproses…':'Klaim akses proyek'}</button></> : <><p className="ws-eyebrow">Status tautan</p><h1>{status.state==='claimed_owned'?'Proyek sudah terhubung':status.state==='claimed_other'?'Tautan sudah digunakan':status.state==='expired'?'Tautan kedaluwarsa':status.state==='revoked'?'Tautan telah dicabut':'Tautan tidak ditemukan'}</h1><p className="ws-muted">Hubungi tim VERALEX melalui percakapan resmi bila Anda memerlukan bantuan akses.</p>{status.state==='claimed_owned'&&status.projectId&&<Link href={`/portal/proyek/${status.projectId}`} className="ws-button ws-button-primary">Buka proyek</Link>}<a href={whatsappHref('Halo Kak Vheilljei, saya membutuhkan bantuan akses proyek VERALEX.')} target="_blank" rel="noopener noreferrer" className="ws-button ws-button-secondary">Hubungi VERALEX</a></>}
     {notice&&<p className="ws-error" role="alert">{notice}</p>}
+    <PortalLegalNotice />
   </div></div>;
 }
 

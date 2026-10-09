@@ -29,6 +29,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'weekly',
             priority: 0.7,
         },
+        ...(['privacy-policy', 'terms-and-conditions'] as const).flatMap((page) =>
+            (['', '/id', '/zh'] as const).map((prefix) => ({
+                url: `${baseUrl}${prefix}/${page}`,
+                lastModified: now,
+                changeFrequency: 'yearly' as const,
+                priority: 0.3,
+            }))
+        ),
     ];
 
     // Dynamic service routes (ID — default, at /services/[slug])

@@ -282,3 +282,4 @@ body:has(.workspace) > .floating-whatsapp, body:has(.workspace) .scroll-progress
 @media(prefers-reduced-motion:reduce) { .workspace *, .workspace *::before, .workspace *::after { scroll-behavior:auto!important; animation-duration:.01ms!important; transition-duration:.01ms!important; } }
 
 @media(max-width:700px) { .ws-workflow-heading { flex-wrap:wrap; } .ws-stage-actions { width:100%; } .ws-task-editor-main { align-items:stretch; flex-direction:column; } .ws-task-editor-controls select { flex:1 1 150px; } .ws-share-link { font-size:11px; } }
+.ws-legal-notice{font-size:.78rem;line-height:1.6;margin:1.35rem 0 0;text-align:center}.ws-legal-notice a{color:#4a0e0e;text-decoration:underline;text-underline-offset:2px}.ws-legal-notice a:focus-visible{outline:2px solid #c8a15a;outline-offset:2px}

@@ -7,7 +7,8 @@ import Link from 'next/link';
 import LanguageToggle from '@/components/LanguageToggle';
 
 export default function Footer() {
-    const { t } = useLang();
+    const { t, lang } = useLang();
+    const legalPrefix = lang === 'en' ? '' : `/${lang}`;
 
     return (
         <footer className="footer">
@@ -54,6 +55,9 @@ export default function Footer() {
                         <Link href="/gallery" className="footer-link">{t('nav.gallery')}</Link>
                         <Link href="/artikel" className="footer-link">{t('nav.articles')}</Link>
                         <Link href="/#contact" className="footer-link">{t('nav.contact')}</Link>
+                        <Link href={`${legalPrefix}/privacy-policy`} className="footer-link">{t('legal.privacy')}</Link>
+                        <Link href={`${legalPrefix}/terms-and-conditions`} className="footer-link">{t('legal.terms')}</Link>
+                        <button type="button" className="footer-link legal-cookie-trigger" onClick={() => window.dispatchEvent(new Event('veralex-cookie-settings'))}>{t('legal.cookies')}</button>
                         
                         <div style={{ marginTop: '1.25rem', paddingTop: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
                             <h5 style={{ color: 'var(--color-gold)', fontSize: '0.9rem', marginBottom: '0.35rem' }}>{t('footer.coverage')}</h5>

@@ -5362,3 +5362,4 @@ body.modal-open {
 body.modal-open .floating-whatsapp {
     display: none;
 }
+.legal-cookie-trigger{background:none;border:0;padding:0;text-align:left;font:inherit;cursor:pointer}.legal-cookie-trigger:focus-visible{outline:2px solid #c8a15a;outline-offset:3px}

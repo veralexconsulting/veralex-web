@@ -2,6 +2,9 @@ export type Lang = 'id' | 'en' | 'zh';
 
 export const translations: Record<Lang, Record<string, string>> = {
     id: {
+        'legal.privacy': 'Kebijakan Privasi',
+        'legal.terms': 'Syarat & Ketentuan',
+        'legal.cookies': 'Pengaturan cookie',
         // Nav
         'nav.home': 'Beranda',
         'nav.services': 'Layanan',
@@ -386,6 +389,9 @@ export const translations: Record<Lang, Record<string, string>> = {
         'auth.split.sub2': 'Bergabunglah dengan ratusan perusahaan yang mempercayakan legalitas bisnis mereka kepada Veralex Consulting.',
     },
     en: {
+        'legal.privacy': 'Privacy Policy',
+        'legal.terms': 'Terms & Conditions',
+        'legal.cookies': 'Cookie settings',
         // Nav
         'nav.home': 'Home',
         'nav.services': 'Services',
@@ -770,6 +776,9 @@ export const translations: Record<Lang, Record<string, string>> = {
         'auth.split.sub2': 'Join hundreds of companies that entrust their business legality to Veralex Consulting.',
     },
     zh: {
+        'legal.privacy': '隐私政策',
+        'legal.terms': '条款与条件',
+        'legal.cookies': 'Cookie 设置',
         // Nav
         'nav.home': '首页',
         'nav.services': '服务项目',
