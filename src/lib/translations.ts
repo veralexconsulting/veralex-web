@@ -48,9 +48,6 @@ export const translations: Record<Lang, Record<string, string>> = {
         'tracking.preview.step2': 'Persiapan Permohonan',
         'tracking.preview.step3': 'Pemeriksaan Permohonan',
         'tracking.preview.step4': 'Keputusan dan Penyerahan',
-        'tracking.promo.title': 'Proses Transparan, Progres Terpantau',
-        'tracking.promo.text': 'Setiap perkembangan pengurusan dapat Anda pantau melalui VERALEX Project Tracking.',
-        'tracking.promo.cta': 'Lihat Fitur Tracking',
 
         // Hero
         'hero.badge': 'RESMI, CEPAT & 100% LEGAL',
@@ -435,9 +432,6 @@ export const translations: Record<Lang, Record<string, string>> = {
         'tracking.preview.step2': 'Application Preparation',
         'tracking.preview.step3': 'Application Review',
         'tracking.preview.step4': 'Decision and Handover',
-        'tracking.promo.title': 'A Clear Process, Progress You Can Follow',
-        'tracking.promo.text': 'Follow each milestone of your legal service through VERALEX Project Tracking.',
-        'tracking.promo.cta': 'Explore Tracking',
 
         // Hero
         'hero.badge': 'FAST, OFFICIAL & 100% COMPLIANT',
@@ -822,9 +816,6 @@ export const translations: Record<Lang, Record<string, string>> = {
         'tracking.preview.step2': '准备申请',
         'tracking.preview.step3': '申请审查',
         'tracking.preview.step4': '决定与交付',
-        'tracking.promo.title': '流程透明，进度可查',
-        'tracking.promo.text': '通过 VERALEX Project Tracking 查看法律服务的每一步进展。',
-        'tracking.promo.cta': '了解进度追踪',
 
         // Hero
         'hero.badge': '官方直办 · 100% 法律合规',

@@ -91,7 +91,7 @@ export default function ServicesSection() {
                 <p className="section-subtitle fade-in">{t('services.subtitle')}</p>
 
                 {/* Kekayaan Intelektual */}
-                <div className="services-category fade-in">
+                <div className="services-category fade-in" id="services-ip">
                     <h3 className="category-title-luxury">{t('services.ip.title')}</h3>
                     <div className="services-list-luxury">
 
@@ -168,7 +168,7 @@ export default function ServicesSection() {
                 </div>
 
                 {/* Legalitas Perusahaan */}
-                <div className="services-category fade-in" style={{ marginTop: '80px' }}>
+                <div className="services-category fade-in" id="services-company" style={{ marginTop: '80px' }}>
                     <h3 className="category-title-luxury">{t('services.company.title')}</h3>
                     <div className="services-list-luxury">
 
@@ -220,7 +220,7 @@ export default function ServicesSection() {
                 </div>
 
                 {/* Visa & ITAS */}
-                <div className="services-category fade-in" style={{ marginTop: '80px' }}>
+                <div className="services-category fade-in" id="services-itas" style={{ marginTop: '80px' }}>
                     <h3 className="category-title-luxury">{t('services.itas.title')}</h3>
                     <div className="services-list-luxury">
                         {[

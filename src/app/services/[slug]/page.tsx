@@ -3,6 +3,7 @@ import { serviceData, getServiceBySlug, getAllSlugs } from '@/lib/serviceData';
 import { serviceHreflangs } from '@/lib/servicePageData';
 import type { Metadata } from 'next';
 import ServiceDetailContent from '@/components/ServiceDetailContent';
+import { serviceBreadcrumbs, serviceBreadcrumbJsonLd } from '@/lib/serviceBreadcrumbs';
 
 interface Props {
     params: Promise<{ slug: string }>;
@@ -67,30 +68,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        "@context": "https://schema.org",
-                        "@type": "BreadcrumbList",
-                        "itemListElement": [
-                            {
-                                "@type": "ListItem",
-                                "position": 1,
-                                "name": "Home",
-                                "item": "https://www.veralexconsulting.com"
-                            },
-                            {
-                                "@type": "ListItem",
-                                "position": 2,
-                                "name": "Services",
-                                "item": "https://www.veralexconsulting.com/#services"
-                            },
-                            {
-                                "@type": "ListItem",
-                                "position": 3,
-                                "name": service.title,
-                                "item": `https://www.veralexconsulting.com/services/${slug}`
-                            }
-                        ]
-                    })
+                    __html: JSON.stringify(serviceBreadcrumbJsonLd(serviceBreadcrumbs(slug, 'id')))
                 }}
             />
             <script

@@ -9,6 +9,7 @@ import {
     type SupportedLocale,
 } from '@/lib/servicePageData';
 import ServicePageTemplate from '@/components/ServicePageTemplate';
+import { serviceBreadcrumbs, serviceBreadcrumbJsonLd } from '@/lib/serviceBreadcrumbs';
 
 interface Props {
     params: Promise<{ lang: string; slug: string }>;
@@ -102,30 +103,7 @@ export default async function ServicePage({ params }: Props) {
         url: `https://www.veralexconsulting.com/${lang}/services/${slug}`,
     };
 
-    const breadcrumbLd = {
-        '@context': 'https://schema.org',
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-            {
-                '@type': 'ListItem',
-                position: 1,
-                name: 'Home',
-                item: 'https://www.veralexconsulting.com/',
-            },
-            {
-                '@type': 'ListItem',
-                position: 2,
-                name: 'Services',
-                item: 'https://www.veralexconsulting.com/#services',
-            },
-            {
-                '@type': 'ListItem',
-                position: 3,
-                name: service.title,
-                item: `https://www.veralexconsulting.com/${lang}/services/${slug}`,
-            },
-        ],
-    };
+    const breadcrumbLd = serviceBreadcrumbJsonLd(serviceBreadcrumbs(slug, lang, service.title));
 
     return (
         <>

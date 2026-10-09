@@ -10,6 +10,7 @@
 .vnav-desktop > a:hover, .vnav-services > button:hover, .vnav-desktop > a:focus-visible, .vnav-services > button:focus-visible { color: #4a0e0e; }
 .vnav-services { display: flex; align-items: center; }
 .vnav-services > button { cursor: pointer; }
+.vnav-services > button.is-active { color: #4a0e0e; box-shadow: inset 0 -2px #4a0e0e; }
 .vnav-chevron { font-size: 1.2rem; line-height: 1; transition: transform .2s ease; }
 .vnav-chevron.open { transform: rotate(180deg); }
 .vnav-actions { gap: 11px; flex: 0 0 auto; }
@@ -52,6 +53,7 @@
     .vnav-mobile-inner { display: flex; flex-direction: column; max-width: 720px; margin: 0 auto; padding: 18px 5% calc(38px + env(safe-area-inset-bottom)); }
     .vnav-mobile-inner > a:not(.vnav-track), .vnav-mobile-accordion { display: flex; width: 100%; align-items: center; justify-content: space-between; text-align: left; padding: 12px 2px; min-height: 48px; border-bottom: 1px solid #eee6e0; color: #302929; font-size: 1rem; font-weight: 600; }
     .vnav-mobile-accordion span { color: #4a0e0e; font-size: 1.4rem; }
+    .vnav-mobile-accordion.is-active { color: #4a0e0e; background: #f8f4f0; border-left: 3px solid #4a0e0e; padding-left: 12px; }
     .vnav-mobile-groups { padding: 18px 16px; background: #f8f4f0; border-radius: 8px; display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 24px; }
     .vnav-mobile-groups .vnav-group a span { display: none; }
     .vnav-mobile-all { color: #4a0e0e; font-weight: 700; }

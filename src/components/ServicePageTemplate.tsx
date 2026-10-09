@@ -5,7 +5,9 @@ import OrderModal from '@/components/OrderModal';
 import WhatsAppCta from '@/components/WhatsAppCta';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
-import ProjectTrackingPromo from '@/components/ProjectTrackingPromo';
+import ServiceBreadcrumb from '@/components/ServiceBreadcrumb';
+import { serviceBreadcrumbs } from '@/lib/serviceBreadcrumbs';
+import type { Lang } from '@/lib/translations';
 
 const CHECK_ICON = "M5 13l4 4L19 7";
 
@@ -73,6 +75,7 @@ export default function ServicePageTemplate({ service, relatedServices, lang }: 
 
             <main style={{ paddingTop: '110px', minHeight: '100vh' }}>
                 <div className="container svc-page">
+                    <ServiceBreadcrumb items={serviceBreadcrumbs(service.slug, activeLang as Lang, service.title)} />
 
                     <header className="svc-hero">
                         <span className="svc-chip">{service.category}</span>
@@ -108,8 +111,6 @@ export default function ServicePageTemplate({ service, relatedServices, lang }: 
                         </div>
                         <p className="svc-cta-note">{dict.freeConsult}</p>
                     </section>
-
-                    <ProjectTrackingPromo />
 
                     {service.requirements.length > 0 && (
                         <section className="svc-section">

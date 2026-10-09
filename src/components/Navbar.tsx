@@ -20,6 +20,7 @@ const products = ['halal', 'bpom', 'sni', 'k3l', 'postel'] as const;
 export default function Navbar() {
     const { t, lang } = useLang();
     const pathname = usePathname();
+    const servicePageActive = /^\/(?:en\/|zh\/|id\/)?services\/[^/]+\/?$/.test(pathname);
     const [scrolled, setScrolled] = useState(false);
     const [servicesOpen, setServicesOpen] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -110,7 +111,7 @@ export default function Navbar() {
             <div className="vnav-desktop">
                 <Link href={navigation[0].href} onClick={close}>{navigation[0].label}</Link>
                 <div className="vnav-services" onPointerEnter={event => { if (event.pointerType === 'mouse') setServicesOpen(true); }} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setServicesOpen(false); }}>
-                    <button ref={triggerRef} type="button" aria-expanded={servicesOpen} aria-controls="vnav-mega" aria-haspopup="true" onClick={() => setServicesOpen(value => !value)}>{t('nav.services')} <span aria-hidden="true" className={servicesOpen ? 'vnav-chevron open' : 'vnav-chevron'}>⌄</span></button>
+                    <button ref={triggerRef} type="button" className={servicePageActive ? 'is-active' : undefined} aria-current={servicePageActive ? 'page' : undefined} aria-expanded={servicesOpen} aria-controls="vnav-mega" aria-haspopup="true" onClick={() => setServicesOpen(value => !value)}>{t('nav.services')} <span aria-hidden="true" className={servicesOpen ? 'vnav-chevron open' : 'vnav-chevron'}>⌄</span></button>
                     {servicesOpen && <div id="vnav-mega" className="vnav-mega" aria-label={t('nav.services')}>
                         <div className="vnav-mega-head"><div><span>{t('nav.explore')}</span><strong>{t('nav.megaTitle')}</strong></div><Link href={homeHref('#services')} onClick={close}>{t('nav.allServices')} <span aria-hidden="true">→</span></Link></div>
                         <div className="vnav-mega-grid">{menuGroups}</div>
@@ -123,7 +124,7 @@ export default function Navbar() {
         </div>
         {mobileOpen && <div id="vnav-mobile" ref={mobilePanelRef} className="vnav-mobile"><div className="vnav-mobile-inner">
             <Link href={navigation[0].href} onClick={close}>{navigation[0].label}</Link>
-            <button type="button" className="vnav-mobile-accordion" aria-controls="vnav-mobile-services" aria-expanded={mobileServicesOpen} onClick={() => setMobileServicesOpen(value => !value)}>{t('nav.services')} <span aria-hidden="true">{mobileServicesOpen ? '−' : '+'}</span></button>
+            <button type="button" className={`vnav-mobile-accordion${servicePageActive ? ' is-active' : ''}`} aria-current={servicePageActive ? 'page' : undefined} aria-controls="vnav-mobile-services" aria-expanded={mobileServicesOpen} onClick={() => setMobileServicesOpen(value => !value)}>{t('nav.services')} <span aria-hidden="true">{mobileServicesOpen ? '−' : '+'}</span></button>
             {mobileServicesOpen && <div id="vnav-mobile-services" className="vnav-mobile-groups">{menuGroups}<Link className="vnav-mobile-all" href={homeHref('#services')} onClick={close}>{t('nav.allServices')} →</Link></div>}
             {navigation.slice(1).map(item => <Link key={item.href} href={item.href} onClick={close}>{item.label}</Link>)}
             <Link className="vnav-track vnav-mobile-track" href="/portal/login" onClick={close}>{t('nav.track')} <span aria-hidden="true">↗</span></Link>

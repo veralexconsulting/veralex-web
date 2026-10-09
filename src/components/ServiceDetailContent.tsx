@@ -6,7 +6,8 @@ import { detailedServiceContent, defaultFaqs, defaultFaqsEn, defaultFaqsZh } fro
 import Link from 'next/link';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
-import ProjectTrackingPromo from '@/components/ProjectTrackingPromo';
+import ServiceBreadcrumb from '@/components/ServiceBreadcrumb';
+import { serviceBreadcrumbs } from '@/lib/serviceBreadcrumbs';
 import OrderModal from '@/components/OrderModal';
 import FaqAccordion from '@/components/FaqAccordion';
 import TrustBadges from '@/components/TrustBadges';
@@ -45,6 +46,7 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
 
             <main style={{ paddingTop: '110px', minHeight: '100vh' }}>
                 <div className="container svc-page">
+                    <ServiceBreadcrumb items={serviceBreadcrumbs(service.slug, lang, displayTitle)} />
 
                     <header className="svc-hero">
                         <span className="svc-chip">{displayCategory}</span>
@@ -79,8 +81,6 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
                         </div>
                         <p className="svc-cta-note">{t('detail.consultFree')}</p>
                     </section>
-
-                    <ProjectTrackingPromo />
 
                     {introText && (
                         <>

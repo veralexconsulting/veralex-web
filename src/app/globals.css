@@ -76,7 +76,7 @@ html {
     font-size: 16px;
 }
 
-:is(#services, #pricing, #contact, [id^="service-"]) {
+:is(#services, #pricing, #contact, [id^="service-"], [id^="services-"]) {
     scroll-margin-top: 110px;
 }
 
@@ -4475,6 +4475,50 @@ section {
     margin: 0 auto;
     padding-bottom: 2rem;
 }
+
+.svc-breadcrumb {
+    padding-top: 1.5rem;
+    color: #665d59;
+    font-size: 0.83rem;
+    line-height: 1.55;
+}
+
+.svc-breadcrumb ol {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    column-gap: 0.7rem;
+    row-gap: 0.25rem;
+    list-style: none;
+    min-width: 0;
+}
+
+.svc-breadcrumb li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+
+.svc-breadcrumb li > :is(a, span) { min-width: 0; overflow-wrap: anywhere; }
+
+.svc-breadcrumb li:not(:first-child)::before {
+    content: '';
+    width: 0.36rem;
+    height: 0.36rem;
+    flex: 0 0 auto;
+    border-top: 1px solid #a99c96;
+    border-right: 1px solid #a99c96;
+    transform: rotate(45deg);
+}
+
+.svc-breadcrumb a { color: #635653; text-decoration: none; }
+.svc-breadcrumb a:hover { color: #4a0e0e; text-decoration: underline; text-underline-offset: 3px; }
+.svc-breadcrumb a:focus-visible { outline: 3px solid #c8a15a; outline-offset: 3px; }
+.svc-breadcrumb [aria-current="page"] { color: #4a0e0e; font-weight: 650; }
+.svc-breadcrumb + .svc-hero { padding-top: 1.65rem; }
 
 .svc-hero {
     position: relative;
