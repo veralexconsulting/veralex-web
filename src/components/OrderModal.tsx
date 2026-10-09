@@ -8,9 +8,10 @@ const WA_ICON = "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.
 interface Props {
     serviceTitle: string;
     servicePrice: string;
+    label?: string;
 }
 
-export default function OrderModal({ serviceTitle, servicePrice }: Props) {
+export default function OrderModal({ serviceTitle, servicePrice, label }: Props) {
     const { t } = useLang();
     const message = [
         t('order.msgIntro'),
@@ -32,7 +33,7 @@ export default function OrderModal({ serviceTitle, servicePrice }: Props) {
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d={WA_ICON} />
             </svg>
-            {t('order.cta')}
+            {label || t('order.cta')}
         </a>
     );
 }

@@ -12,6 +12,7 @@ import OrderModal from '@/components/OrderModal';
 import FaqAccordion from '@/components/FaqAccordion';
 import TrustBadges from '@/components/TrustBadges';
 import WhatsAppCta from '@/components/WhatsAppCta';
+import { trademarkLandingCopy } from '@/lib/trademarkLanding';
 
 const CHECK_ICON = "M5 13l4 4L19 7";
 
@@ -30,6 +31,8 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
     const displayCategory = isZh ? (service.categoryZh || service.categoryEn) : (isEn ? service.categoryEn : service.category);
     const displayFeatures = isZh ? (service.featuresZh || service.featuresEn) : (isEn ? service.featuresEn : service.features);
     const displayBadge = isZh ? (service.discountBadgeZh || service.discountBadge) : (isEn ? service.discountBadgeEn || service.discountBadge : service.discountBadge);
+    const isTrademark = service.slug === 'pendaftaran-merek';
+    const trademarkCopy = trademarkLandingCopy[lang];
 
     const detailContent = detailedServiceContent[service.slug];
     const introText = detailContent
@@ -45,13 +48,14 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
             <Navbar />
 
             <main style={{ paddingTop: '110px', minHeight: '100vh' }}>
-                <div className="container svc-page">
+                <div className={`container svc-page${isTrademark ? ' svc-trademark-page' : ''}`}>
                     <ServiceBreadcrumb items={serviceBreadcrumbs(service.slug, lang, displayTitle)} />
 
                     <header className="svc-hero">
                         <span className="svc-chip">{displayCategory}</span>
                         <h1 className="svc-title">{displayTitle}</h1>
                         <p className="svc-lead">{displayDesc}</p>
+                        {isTrademark && <p className="svc-trademark-value">{trademarkCopy.value}</p>}
                     </header>
 
                     <section className="svc-card">
@@ -63,6 +67,7 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
                             </div>
                         )}
                         <p className="svc-price">{service.price}</p>
+                        {isTrademark && <p className="svc-price-note">{trademarkCopy.priceNote}</p>}
 
                         <h2 className="svc-h3">{t('detail.whatYouGet')}</h2>
                         <ul className="svc-list">
@@ -77,7 +82,7 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
                         </ul>
 
                         <div className="svc-cta">
-                            <OrderModal serviceTitle={displayTitle} servicePrice={service.price} />
+                            <OrderModal serviceTitle={displayTitle} servicePrice={service.price} label={isTrademark ? trademarkCopy.cta : undefined} />
                         </div>
                         <p className="svc-cta-note">{t('detail.consultFree')}</p>
                     </section>

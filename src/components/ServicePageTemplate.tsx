@@ -8,6 +8,7 @@ import Navbar from '@/components/Navbar';
 import ServiceBreadcrumb from '@/components/ServiceBreadcrumb';
 import { serviceBreadcrumbs } from '@/lib/serviceBreadcrumbs';
 import type { Lang } from '@/lib/translations';
+import { trademarkLandingCopy } from '@/lib/trademarkLanding';
 
 const CHECK_ICON = "M5 13l4 4L19 7";
 
@@ -68,19 +69,22 @@ interface Props {
 export default function ServicePageTemplate({ service, relatedServices, lang }: Props) {
     const activeLang = uiText[lang] ? lang : 'en';
     const dict = uiText[activeLang];
+    const isTrademark = service.slug === 'pendaftaran-merek';
+    const trademarkCopy = trademarkLandingCopy[activeLang as Lang];
 
     return (
         <>
             <Navbar />
 
             <main style={{ paddingTop: '110px', minHeight: '100vh' }}>
-                <div className="container svc-page">
+                <div className={`container svc-page${isTrademark ? ' svc-trademark-page' : ''}`}>
                     <ServiceBreadcrumb items={serviceBreadcrumbs(service.slug, activeLang as Lang, service.title)} />
 
                     <header className="svc-hero">
                         <span className="svc-chip">{service.category}</span>
                         <h1 className="svc-title">{service.title}</h1>
                         <p className="svc-lead">{service.intro}</p>
+                        {isTrademark && <p className="svc-trademark-value">{trademarkCopy.value}</p>}
                     </header>
 
                     <section className="svc-card">
@@ -107,7 +111,7 @@ export default function ServicePageTemplate({ service, relatedServices, lang }: 
                         </ul>
 
                         <div className="svc-cta">
-                            <OrderModal serviceTitle={service.title} servicePrice={service.price} />
+                            <OrderModal serviceTitle={service.title} servicePrice={service.price} label={isTrademark ? trademarkCopy.cta : undefined} />
                         </div>
                         <p className="svc-cta-note">{dict.freeConsult}</p>
                     </section>

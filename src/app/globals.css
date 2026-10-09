@@ -5448,3 +5448,83 @@ body.modal-open .floating-whatsapp {
     .hero-visual { width: min(100%, 225px); }
     .hero-stat-label { font-size: .66rem; }
 }
+
+/* Trademark landing page: keep the shared service content, with a focused offer beside the introduction. */
+.svc-trademark-page {
+    max-width: 1120px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(320px, .88fr);
+    grid-template-rows: min-content auto;
+    column-gap: clamp(30px, 4vw, 64px);
+    align-items: start;
+}
+
+.svc-trademark-page > .svc-breadcrumb { grid-column: 1; grid-row: 1; }
+.svc-trademark-page > .svc-hero { grid-column: 1; grid-row: 2; padding: 1.5rem 0 2rem; min-width: 0; }
+.svc-trademark-page > .svc-hero::before { display: none; }
+.svc-trademark-page .svc-title {
+    max-width: 14ch;
+    font-size: clamp(2.6rem, 4.2vw, 3.75rem);
+    line-height: 1.08;
+    letter-spacing: -.035em;
+    color: #4a0e0e;
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    overflow-wrap: anywhere;
+}
+.svc-trademark-page .svc-lead { max-width: 53ch; font-size: clamp(1.04rem, 1.45vw, 1.17rem); line-height: 1.7; }
+.svc-trademark-value { max-width: 50ch; margin-top: 1.5rem; padding-left: 1rem; border-left: 3px solid #c8a15a; color: #433934; font-size: 1rem; line-height: 1.65; }
+
+.svc-trademark-page > .svc-card {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    min-width: 0;
+    margin: 1.5rem 0 0;
+    padding: clamp(1.5rem, 2.7vw, 2.25rem);
+    background: #fff;
+    border: 1px solid #e3d8d1;
+    border-top: 3px solid #4a0e0e;
+    box-shadow: 0 12px 34px rgba(47, 27, 27, .055);
+}
+.svc-trademark-page .svc-card-label { color: #6d605b; font-weight: 700; }
+.svc-trademark-page .svc-price-old { color: #746b67; }
+.svc-trademark-page .svc-price { font-size: clamp(2.2rem, 3.4vw, 3rem); line-height: 1.15; }
+.svc-trademark-page .svc-price-note { margin: .7rem 0 1.65rem; color: #5a514d; font-size: .88rem; line-height: 1.6; }
+.svc-trademark-page .svc-list { gap: .8rem; }
+.svc-trademark-page .svc-list li { min-width: 0; color: #383330; font-size: .96rem; line-height: 1.55; overflow-wrap: anywhere; }
+.svc-trademark-page .svc-cta { margin-top: 1.7rem; }
+.svc-trademark-page .order-modal-trigger { min-height: 52px; padding: 12px 16px; font-size: .9rem; font-weight: 700; line-height: 1.35; text-align: center; white-space: normal; }
+.svc-trademark-page .svc-cta-note { font-size: .81rem; line-height: 1.5; }
+
+.svc-trademark-page > .svc-quote,
+.svc-trademark-page > .svc-prose,
+.svc-trademark-page > .svc-section {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: min(100%, 760px);
+    min-width: 0;
+}
+.svc-trademark-page > .svc-quote { margin-top: 3.4rem; }
+.svc-trademark-page > .svc-prose .svc-section:first-child { margin-top: 0; }
+.svc-trademark-page .svc-prose p { font-size: 1.04rem; line-height: 1.85; }
+.svc-trademark-page .svc-section { scroll-margin-top: 110px; }
+
+@media (max-width: 900px) {
+    .svc-trademark-page { display: block; }
+    .svc-trademark-page > .svc-hero { padding: 1.4rem 0 0; }
+    .svc-trademark-page .svc-title { max-width: 18ch; font-size: clamp(2.3rem, 6vw, 3.35rem); }
+    .svc-trademark-page > .svc-card { margin: 1.8rem 0 0; }
+    .svc-trademark-page > .svc-quote { margin-top: 2.7rem; }
+}
+
+@media (max-width: 480px) {
+    .svc-trademark-page .svc-title { font-size: clamp(2.05rem, 8vw, 2.55rem); }
+    .svc-trademark-page .svc-lead { font-size: 1rem; line-height: 1.65; }
+    .svc-trademark-value { margin-top: 1rem; font-size: .94rem; }
+    .svc-trademark-page > .svc-card { padding: 1.25rem; }
+    .svc-trademark-page .svc-price { font-size: clamp(2rem, 9vw, 2.55rem); }
+    .svc-trademark-page .svc-price-badge { white-space: normal; }
+    .svc-trademark-page .svc-section { margin-top: 2.6rem; padding-top: 2rem; }
+    .svc-trademark-page .svc-prose p { font-size: 1rem; line-height: 1.75; }
+    .svc-trademark-page .svc-related-grid { grid-template-columns: minmax(0, 1fr); }
+}
