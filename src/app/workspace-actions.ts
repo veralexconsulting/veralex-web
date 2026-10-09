@@ -1,11 +1,44 @@
 'use server';
+import { randomUUID } from 'node:crypto';
 import { adminSnapshot, clientSnapshot } from '@/lib/workspace/queries';
 import { runOperation, type Operation } from '@/lib/workspace/operations';
 import { inspectProjectInvitation, claimProjectInvitation, finishFirstPasswordChange } from '@/lib/workspace/claims';
 import { currentActor } from '@/lib/workspace/auth';
 
 export async function getWorkspaceSnapshot(role:'admin'|'client') { return role==='admin' ? adminSnapshot() : clientSnapshot(); }
-export async function mutateWorkspace(input:Operation) { return runOperation(input); }
+const visibleOperationErrors = new Set([
+  'Akses administrator ditolak.',
+  'Akses klien sudah diklaim. Atur ulang klaim sebelum menerbitkan tautan baru.',
+  'Catatan tidak boleh memuat nomor identitas atau isi berkas.',
+  'Data proyek tidak valid.',
+  'Klien yang dipilih tidak ditemukan.',
+  'Layanan tidak tersedia.',
+  'PIC harus administrator aktif.',
+  'Proyek tidak ditemukan.',
+  'Proyek tidak valid.',
+  'SOP layanan belum diterbitkan.',
+]);
+
+export async function mutateWorkspace(input:Operation): Promise<
+  { ok:true; result:{ id?:string; token?:string } } | { ok:false; error:string }
+> {
+  try {
+    return { ok:true, result:await runOperation(input) };
+  } catch (cause) {
+    if (cause instanceof Error && visibleOperationErrors.has(cause.message)) {
+      return { ok:false, error:cause.message };
+    }
+    const reference = randomUUID().slice(0, 8);
+    const databaseError = cause as { code?:unknown; constraint?:unknown };
+    console.error('Workspace operation failed', {
+      reference,
+      operation:input?.type,
+      code:typeof databaseError?.code === 'string' ? databaseError.code : 'unknown',
+      constraint:typeof databaseError?.constraint === 'string' ? databaseError.constraint : undefined,
+    });
+    return { ok:false, error:`Aksi belum dapat disimpan. Kode bantuan: ${reference}.` };
+  }
+}
 export async function inspectInvitation(token:string) { return inspectProjectInvitation(token); }
 export async function claimInvitation(token:string) { return claimProjectInvitation(token); }
 export async function changeInitialPassword(password:string) { return finishFirstPasswordChange(password); }

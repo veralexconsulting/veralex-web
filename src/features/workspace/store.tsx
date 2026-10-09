@@ -36,7 +36,27 @@ export function WorkspaceProvider({children,role}:{children:React.ReactNode;role
   const [actorId,setActorId]=useState(''); const [clientAccountId,setClientAccountId]=useState(''); const [toast,setToast]=useState('');
   const refresh=useCallback(async()=>{ const snapshot=await getWorkspaceSnapshot(role); setData(snapshot.data); setActorId(snapshot.actorId); setClientAccountId(snapshot.clientAccountId); setError('');setReady(true); },[role]);
   useEffect(()=>{let mounted=true; getWorkspaceSnapshot(role).then(snapshot=>{if(!mounted)return;setData(snapshot.data);setActorId(snapshot.actorId);setClientAccountId(snapshot.clientAccountId);setError('');setReady(true);}).catch(cause=>{if(!mounted)return;setError(message(cause));setReady(true);});return()=>{mounted=false;};},[role]);
-  const run=useCallback(async(input:Operation,success:string,projectId?:string)=>{let result:Awaited<ReturnType<typeof mutateWorkspace>>;try{result=await mutateWorkspace(input);}catch(cause){setToast(message(cause));throw cause;}try{await refresh();}catch(cause){setError(message(cause));setToast('Perubahan tersimpan, tetapi tampilan belum dapat dimuat ulang. Coba muat ulang.');return result;}if(result.token && projectId) setData(previous=>({...previous,accessLinks:previous.accessLinks.map(link=>link.projectId===projectId&&link.status==='active'?{...link,token:result.token!}:link)}));setToast(success);return result;},[refresh]);
+  const run=useCallback(async(input:Operation,success:string,projectId?:string)=>{
+    let result:{id?:string;token?:string};
+    try {
+      const response=await mutateWorkspace(input);
+      if (!response.ok) throw new Error(response.error);
+      result=response.result;
+    } catch(cause) {
+      setToast(message(cause));
+      throw cause;
+    }
+    try {
+      await refresh();
+    } catch(cause) {
+      setError(message(cause));
+      setToast('Perubahan tersimpan, tetapi tampilan belum dapat dimuat ulang. Coba muat ulang.');
+      return result;
+    }
+    if(result.token && projectId) setData(previous=>({...previous,accessLinks:previous.accessLinks.map(link=>link.projectId===projectId&&link.status==='active'?{...link,token:result.token!}:link)}));
+    setToast(success);
+    return result;
+  },[refresh]);
   const safe=useCallback(async(input:Operation,success:string,projectId?:string)=>{try{await run(input,success,projectId);}catch{/* Error is shown in the shared toast. */}},[run]);
   const value=useMemo<WorkspaceContextValue>(()=>({data,ready,error,actorId,clientAccountId,toast,refresh,clearToast:()=>setToast(''),
     async createProject(draft){const result=await run({type:'create_project',draft},'Proyek dibuat. Bagikan tautan setelah memverifikasi penerima.');if(!result.id)throw new Error('Proyek belum dibuat.');if(result.token)setData(previous=>({...previous,accessLinks:previous.accessLinks.map(link=>link.projectId===result.id&&link.status==='active'?{...link,token:result.token!}:link)}));return result.id;},
