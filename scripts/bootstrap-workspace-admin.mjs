@@ -1,10 +1,11 @@
 import { createClient } from '@supabase/supabase-js';
 import pg from 'pg';
+import { workspacePgSsl } from '../src/lib/workspace/pg-ssl.mjs';
 
 const { NEXT_PUBLIC_SUPABASE_URL:url, SUPABASE_SERVICE_ROLE_KEY:key, DATABASE_URL:databaseUrl, WORKSPACE_BOOTSTRAP_EMAIL:email, WORKSPACE_BOOTSTRAP_NAME:name, WORKSPACE_BOOTSTRAP_PASSWORD:password }=process.env;
 if (!url || !key || !databaseUrl || !email || !name || !password) throw new Error('Setel NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, DATABASE_URL, WORKSPACE_BOOTSTRAP_EMAIL, WORKSPACE_BOOTSTRAP_NAME, dan WORKSPACE_BOOTSTRAP_PASSWORD.');
 if (password.length<12 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/\d/.test(password)) throw new Error('Kata sandi awal wajib minimal 12 karakter dengan huruf besar, kecil, dan angka.');
-const pool=new pg.Pool({connectionString:databaseUrl,ssl:process.env.DATABASE_SSL==='disable'?false:{rejectUnauthorized:true}});
+const pool=new pg.Pool({connectionString:databaseUrl,ssl:workspacePgSsl()});
 const service=createClient(url,key,{auth:{persistSession:false,autoRefreshToken:false}});
 try {
   const existing=await pool.query("select count(*)::int as count from public.profiles where role='admin' and active=true");

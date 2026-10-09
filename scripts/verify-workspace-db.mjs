@@ -1,7 +1,8 @@
 import pg from 'pg';
+import { workspacePgSsl } from '../src/lib/workspace/pg-ssl.mjs';
 
 if(!process.env.DATABASE_URL)throw new Error('DATABASE_URL belum tersedia; verifikasi database nyata tidak dijalankan.');
-const pool=new pg.Pool({connectionString:process.env.DATABASE_URL,ssl:process.env.DATABASE_SSL==='disable'?false:{rejectUnauthorized:true}});
+const pool=new pg.Pool({connectionString:process.env.DATABASE_URL,ssl:workspacePgSsl()});
 try{
   const tables=['profiles','clients','workspace_services','workflow_templates','workflow_template_steps','workflow_template_tasks','projects','project_steps','project_tasks','project_access_links','client_project_access','project_updates','audit_logs','priority_offerings','priority_requests','workspace_payments','payment_webhook_events','notifications','notification_outbox'];
   const rls=await pool.query('select relname,relrowsecurity from pg_class where relnamespace=$1::regnamespace and relname=any($2::text[])',['public',tables]);

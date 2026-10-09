@@ -4,11 +4,12 @@
 
 The Workspace uses Supabase Auth and PostgreSQL through server-only operations. The old order flow and its tables remain in place. Existing legacy admins are mapped to Workspace admin profiles when `public.users` exists; new team admins also receive the legacy admin role for consistent access. Workspace contains no document upload, download, attachment, or storage path. The Workspace schema is additive and uses `workspace_services` and `workspace_payments` to avoid the legacy `services` and `payments` tables.
 
-No Supabase project URL, keys, or database URI were present in this checkout on 9 October 2026. Migrations were not applied and real authentication, persistence, RLS, and end-to-end claims were not executed. The application fails closed when configuration is absent.
+The local Supabase configuration was added on 9 October 2026. A read-only database check confirmed 19 Workspace tables with RLS and 20 populated SOPs. The deployment history of those schema objects was not verified. Real authentication, mutations, and end-to-end claims have not been exercised. The application fails closed when configuration is absent.
 
 ## Deployment configuration
 
 1. Create a Supabase project and obtain `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, and `DATABASE_URL`. Set the service key and database URI only in server secrets. Use a direct or Session Pooler PostgreSQL connection URI that works from the hosting environment.
+   `DATABASE_SSL=require` encrypts the connection but does not verify the server certificate. For verified TLS, download the Supabase CA certificate from Database Settings, set `DATABASE_SSL=verify-full`, and set `DATABASE_CA_CERT` to the PEM content in server secrets.
 2. Apply `supabase/migrations/202610090001_workspace_schema.sql`, then `202610090002_workspace_seed.sql`, in order to a backed-up test database. Check pre-existing `public.profiles` and auth triggers before applying to an already customized Supabase project. The migration does not drop customer records.
 3. Configure Supabase Auth URL settings and enable Google as an OAuth provider. Allow the exact deployment origin with `/workspace/auth/callback` as a redirect destination. Configure the Google OAuth callback URL supplied by Supabase in Google Cloud. Keep the allow-list narrow for production.
 4. Set a long random `CRON_SECRET` for the reminders route. Configure a daily scheduler to GET `/api/workspace/reminders` with `Authorization: Bearer <CRON_SECRET>`.
@@ -43,7 +44,7 @@ Primary files by phase:
 
 - `workspace_payments` has no active provider. A priority request can be reviewed, but the UI cannot show a successful real payment or activate paid service without a verified provider and webhook implementation.
 - The outbox marks in-app notifications delivered in the same transaction as persistence. Email and push delivery workers are not configured.
-- The row types in `src/types/workspace-database.ts` are generated from the migration because no live Supabase project is configured. Replace them with Supabase CLI generated types after the schema is deployed and validated.
+- The row types in `src/types/workspace-database.ts` are generated from the migration. Replace them with Supabase CLI generated types after the deployed schema is validated.
 - Existing legacy `public.documents` data, if any, is untouched. The Workspace creates no document table or storage integration.
 - Existing published SOP snapshots remain attached to existing projects. New template edits save a draft and require explicit publication.
 
@@ -56,5 +57,5 @@ Primary files by phase:
 | `npm run build` | Passed; public and Workspace routes generated |
 | Production HTTP smoke | `/`, `/services/pendaftaran-merek`, `/admin/login`, `/invite`, `/portal/login` returned 200; protected `/admin` and `/portal` redirected to login; reminders endpoint returned 401 without secret |
 | Invitation headers | `Referrer-Policy: no-referrer`, `Cache-Control: no-store`, and `X-Robots-Tag: noindex, nofollow` confirmed |
-| `npm run workspace:verify-db` | Could not execute: `DATABASE_URL` is absent |
-| Live login, CRUD, RLS and concurrent claim | Not executed: no Supabase project configuration or database connection |
+| `node --env-file=.env scripts/verify-workspace-db.mjs` | Passed: 19 RLS tables and 20 populated services |
+| Live login, CRUD, RLS and concurrent claim | Not executed; needs configured Auth and two-account acceptance run |
