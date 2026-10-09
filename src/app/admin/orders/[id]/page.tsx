@@ -46,13 +46,6 @@ export default async function AdminOrderDetailPage({ params }: AdminOrderDetailP
         .eq('order_id', id)
         .order('step_number', { ascending: true });
 
-    // Fetch documents
-    const { data: documents } = await supabase
-        .from('documents')
-        .select('id, file_name, file_url, doc_type')
-        .eq('order_id', id)
-        .order('uploaded_at', { ascending: false });
-
     // Fetch payments
     const { data: payments } = await supabase
         .from('payments')
@@ -65,7 +58,6 @@ export default async function AdminOrderDetailPage({ params }: AdminOrderDetailP
             order={order}
             service={service}
             progress={progress || []}
-            documents={documents || []}
             payments={payments || []}
             clientName={client?.full_name || 'Unknown'}
             clientEmail={client?.email || ''}

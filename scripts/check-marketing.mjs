@@ -21,6 +21,7 @@ test('campaign survives navigation and lead event excludes click IDs and visitor
     vm.runInNewContext(compiled, {
         exports,
         window,
+        document: { documentElement: { lang: 'id' } },
         URL,
         sessionStorage: {
             getItem: (key) => values.get(key) ?? null,

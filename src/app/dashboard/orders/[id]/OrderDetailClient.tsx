@@ -2,16 +2,14 @@
 
 import Link from 'next/link';
 
-import { useState, useTransition, useEffect } from 'react';
-import { createBrowserClient } from '@/lib/supabase/client';
-import { uploadPaymentProof, cancelOrder } from '../../actions';
-import type { Order, OrderProgress, Service, Payment, Document } from '@/types/database';
+import { useState, useTransition } from 'react';
+import { cancelOrder } from '../../actions';
+import type { Order, OrderProgress, Service, Payment } from '@/types/database';
 
 interface OrderDetailClientProps {
     order: Order;
     service: Pick<Service, 'name' | 'price' | 'estimated_days' | 'category'> | null;
     progress: OrderProgress[];
-    documents: Document[];
     payments: Payment[];
 }
 
@@ -19,39 +17,13 @@ export default function OrderDetailClient({
     order,
     service,
     progress,
-    documents: initialDocuments,
     payments: initialPayments,
 }: OrderDetailClientProps) {
-    const [documents] = useState(initialDocuments);
-    const [payments, setPayments] = useState(initialPayments);
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const payments = initialPayments;
     const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
     const [isPending, startTransition] = useTransition();
     const [showCancelConfirm, setShowCancelConfirm] = useState(false);
     const [currentOrder, setCurrentOrder] = useState(order);
-    const [bankSettings, setBankSettings] = useState({
-        payment_bank_name: 'BCA',
-        payment_account_number: '123 4567 890',
-        payment_account_holder: 'Veralex Consulting',
-        payment_contact_whatsapp: '',
-    });
-
-    useEffect(() => {
-        async function fetchBankSettings() {
-            const supabase = createBrowserClient();
-            const { data } = await supabase
-                .from('site_settings')
-                .select('key, value')
-                .in('key', ['payment_bank_name', 'payment_account_number', 'payment_account_holder', 'payment_contact_whatsapp']);
-            if (data && data.length > 0) {
-                const map: Record<string, string> = {};
-                data.forEach((row: { key: string; value: string }) => { map[row.key] = row.value; });
-                setBankSettings(prev => ({ ...prev, ...map }));
-            }
-        }
-        fetchBankSettings();
-    }, []);
-
     function formatPrice(price: number) {
         return new Intl.NumberFormat('id-ID', {
             style: 'currency',
@@ -91,33 +63,6 @@ export default function OrderDetailClient({
         return labels[status] || status;
     }
 
-    function handleUploadPayment() {
-        if (!selectedFile) return;
-        setMessage(null);
-
-        const formData = new FormData();
-        formData.set('orderId', order.id);
-        formData.set('file', selectedFile);
-
-        startTransition(async () => {
-            const result = await uploadPaymentProof(formData);
-            if (result.error) {
-                setMessage({ type: 'error', text: result.error });
-            } else {
-                setMessage({ type: 'success', text: 'Bukti pembayaran berhasil diunggah.' });
-                setSelectedFile(null);
-                // Refresh payments from DB
-                const supabase = createBrowserClient();
-                const { data } = await supabase
-                    .from('payments')
-                    .select('*')
-                    .eq('order_id', order.id)
-                    .order('created_at', { ascending: false });
-                if (data) setPayments(data);
-            }
-        });
-    }
-
     function handleCancelOrder() {
         setMessage(null);
         const formData = new FormData();
@@ -136,7 +81,6 @@ export default function OrderDetailClient({
     }
 
     const hasVerifiedPayment = payments.some(p => p.status === 'verified');
-    const hasUploadedPayment = payments.some(p => p.status === 'uploaded');
     const completedSteps = progress.filter(s => s.status === 'completed').length;
     const totalSteps = progress.length;
 
@@ -265,77 +209,7 @@ export default function OrderDetailClient({
                             </div>
                         )}
 
-                        {/* Payment Instructions & Upload */}
-                        {!hasVerifiedPayment && (
-                            <div className="payment-upload-wrapper">
-                                <div className="payment-instructions-card">
-                                    <div className="payment-instructions-header">
-                                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <rect x="2" y="5" width="20" height="14" rx="2" ry="2" />
-                                            <line x1="2" y1="10" x2="22" y2="10" />
-                                        </svg>
-                                        <h3>Instruksi Pembayaran</h3>
-                                    </div>
-                                    <p className="payment-instructions-desc">Silakan transfer sesuai tagihan di atas ke rekening berikut:</p>
-                                    <div className="payment-bank-details">
-                                        <div className="bank-logo">{bankSettings.payment_bank_name}</div>
-                                        <div className="bank-info">
-                                            <span className="bank-account">{bankSettings.payment_account_number}</span>
-                                            <span className="bank-name">A.N. {bankSettings.payment_account_holder}</span>
-                                        </div>
-                                    </div>
-                                    <p className="payment-instructions-footer">Proses verifikasi memakan waktu 1x24 jam kerja setelah bukti diunggah.</p>
-                                </div>
-
-                                <div className="payment-upload-section">
-                                    {hasUploadedPayment && (
-                                        <p className="payment-info-text">
-                                            Bukti pembayaran Anda sedang diverifikasi. Anda dapat mengunggah ulang jika terdapat kesalahan.
-                                        </p>
-                                    )}
-                                    <label className="file-upload-premium">
-                                        <div className="file-upload-icon-wrapper">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                                <polyline points="17 8 12 3 7 8" />
-                                                <line x1="12" y1="3" x2="12" y2="15" />
-                                            </svg>
-                                        </div>
-                                        <div className="file-upload-text">
-                                            {selectedFile ? (
-                                                <span className="file-selected-name">{selectedFile.name}</span>
-                                            ) : (
-                                                <>
-                                                    <span className="upload-cta">Pilih File Bukti Pembayaran</span>
-                                                    <span className="upload-hint">JPG, PNG, atau PDF (Maks. 5MB)</span>
-                                                </>
-                                            )}
-                                        </div>
-                                        <input
-                                            type="file"
-                                            accept="image/*,.pdf"
-                                            onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
-                                            style={{ display: 'none' }}
-                                        />
-                                    </label>
-
-                                    <button
-                                        className="btn-editorial-solid payment-submit-btn"
-                                        onClick={handleUploadPayment}
-                                        disabled={isPending || !selectedFile}
-                                    >
-                                        {isPending ? (
-                                            <>
-                                                <span className="auth-spinner" style={{ width: '16px', height: '16px', borderWidth: '2px' }} />
-                                                Mengunggah...
-                                            </>
-                                        ) : (
-                                            'Kirim Bukti Pembayaran'
-                                        )}
-                                    </button>
-                                </div>
-                            </div>
-                        )}
+                        {!hasVerifiedPayment && <p className="payment-info-text">Untuk informasi pembayaran pesanan lama, hubungi tim VERALEX melalui kanal resmi.</p>}
 
                         {hasVerifiedPayment && (
                             <div className="payment-verified-banner">
@@ -348,55 +222,6 @@ export default function OrderDetailClient({
                         )}
                     </div>
 
-                    {/* Documents */}
-                    <div className="detail-section">
-                        <div className="detail-section-title">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                                <polyline points="14 2 14 8 20 8" />
-                            </svg>
-                            Dokumen
-                        </div>
-
-                        {documents && documents.length > 0 ? (
-                            <div className="documents-list">
-                                {documents.map((doc) => (
-                                    <a
-                                        key={doc.id}
-                                        href={doc.file_url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="document-item"
-                                    >
-                                        <div className="document-icon">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                                                <polyline points="14 2 14 8 20 8" />
-                                            </svg>
-                                        </div>
-                                        <div className="document-info">
-                                            <div className="document-name">{doc.file_name}</div>
-                                            <div className="document-type">{doc.doc_type}</div>
-                                        </div>
-                                        <div className="document-download">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                                <polyline points="7 10 12 15 17 10" />
-                                                <line x1="12" y1="15" x2="12" y2="3" />
-                                            </svg>
-                                        </div>
-                                    </a>
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="empty-state-inline">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" />
-                                </svg>
-                                <p>Belum ada dokumen. Dokumen akan tersedia setelah pesanan diproses.</p>
-                            </div>
-                        )}
-                    </div>
                 </div>
 
                 {/* Sidebar */}

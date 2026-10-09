@@ -107,61 +107,6 @@ export async function updateProgressStep(formData: FormData): Promise<ActionResu
     return { success: true };
 }
 
-export async function uploadDocument(formData: FormData): Promise<ActionResult> {
-    await requireAdmin();
-    const supabase = createActionClient();
-
-    const orderId = formData.get('orderId') as string;
-    const docType = formData.get('docType') as string;
-    const file = formData.get('file') as File;
-
-    if (!orderId || !docType || !file) {
-        return { error: 'Order ID, tipe dokumen, dan file wajib diisi.' };
-    }
-
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-        return { error: 'Tidak terautentikasi.' };
-    }
-
-    // Upload to Supabase Storage
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${orderId}/${Date.now()}.${fileExt}`;
-
-    const { error: uploadError } = await supabase
-        .storage
-        .from('order-documents')
-        .upload(fileName, file);
-
-    if (uploadError) {
-        return { error: 'Gagal mengupload file: ' + uploadError.message };
-    }
-
-    // Get public URL
-    const { data: urlData } = supabase
-        .storage
-        .from('order-documents')
-        .getPublicUrl(fileName);
-
-    // Insert document record
-    const { error: insertError } = await supabase
-        .from('documents')
-        .insert({
-            order_id: orderId,
-            doc_type: docType,
-            file_name: file.name,
-            file_url: urlData.publicUrl,
-            uploaded_by: user.id,
-        });
-
-    if (insertError) {
-        return { error: 'Gagal menyimpan data dokumen: ' + insertError.message };
-    }
-
-    revalidatePath(`/admin/orders/${orderId}`);
-    return { success: true };
-}
-
 export async function verifyPayment(formData: FormData): Promise<ActionResult> {
     await requireAdmin();
     const supabase = createActionClient();

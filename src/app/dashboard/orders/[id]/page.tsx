@@ -40,13 +40,6 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
         .eq('order_id', id)
         .order('step_number', { ascending: true });
 
-    // Fetch documents
-    const { data: documents } = await supabase
-        .from('documents')
-        .select('*')
-        .eq('order_id', id)
-        .order('uploaded_at', { ascending: false });
-
     // Fetch payments
     const { data: payments } = await supabase
         .from('payments')
@@ -59,7 +52,6 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
             order={order}
             service={service}
             progress={progress || []}
-            documents={documents || []}
             payments={payments || []}
         />
     );

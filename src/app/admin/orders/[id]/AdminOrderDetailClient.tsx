@@ -4,14 +4,13 @@ import Link from 'next/link';
 
 import { useState, useTransition } from 'react';
 import { createBrowserClient } from '@/lib/supabase/client';
-import { updateOrderStatus, addProgressStep, updateProgressStep, uploadDocument, verifyPayment, rejectPayment } from '../../actions';
+import { updateOrderStatus, addProgressStep, updateProgressStep, verifyPayment, rejectPayment } from '../../actions';
 import type { Order, OrderProgress, Service, Payment } from '@/types/database';
 
 interface OrderDetailClientProps {
     order: Order;
     service: Pick<Service, 'name' | 'price' | 'estimated_days' | 'category'> | null;
     progress: OrderProgress[];
-    documents: { id: string; file_name: string; file_url: string; doc_type: string }[];
     payments: Payment[];
     clientName: string;
     clientEmail: string;
@@ -21,14 +20,12 @@ export default function AdminOrderDetailClient({
     order: initialOrder,
     service,
     progress: initialProgress,
-    documents: initialDocuments,
     payments: initialPayments,
     clientName,
     clientEmail,
 }: OrderDetailClientProps) {
     const [order, setOrder] = useState(initialOrder);
     const [progress, setProgress] = useState(initialProgress);
-    const [documents, setDocuments] = useState(initialDocuments);
     const [payments, setPayments] = useState(initialPayments);
     const [status, setStatus] = useState(order.status);
     const [adminNotes, setAdminNotes] = useState(order.admin_notes || '');
@@ -38,10 +35,6 @@ export default function AdminOrderDetailClient({
     // New progress step form
     const [newStepName, setNewStepName] = useState('');
     const [newStepNotes, setNewStepNotes] = useState('');
-
-    // Document upload
-    const [docType, setDocType] = useState('');
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     // Payment rejection
     const [rejectingPaymentId, setRejectingPaymentId] = useState<string | null>(null);
@@ -138,36 +131,6 @@ export default function AdminOrderDetailClient({
                     p.id === stepId ? { ...p, status: newStatus as OrderProgress['status'] } : p
                 ));
                 setMessage({ type: 'success', text: 'Status langkah diperbarui.' });
-            }
-        });
-    }
-
-    // Handle document upload
-    function handleUploadDocument() {
-        if (!selectedFile || !docType) return;
-        setMessage(null);
-
-        const formData = new FormData();
-        formData.set('orderId', order.id);
-        formData.set('docType', docType);
-        formData.set('file', selectedFile);
-
-        startTransition(async () => {
-            const result = await uploadDocument(formData);
-            if (result.error) {
-                setMessage({ type: 'error', text: result.error });
-            } else {
-                setMessage({ type: 'success', text: 'Dokumen berhasil diunggah.' });
-                setSelectedFile(null);
-                setDocType('');
-                // Refresh documents
-                const supabase = createBrowserClient();
-                const { data } = await supabase
-                    .from('documents')
-                    .select('id, file_name, file_url, doc_type')
-                    .eq('order_id', order.id)
-                    .order('uploaded_at', { ascending: false });
-                if (data) setDocuments(data);
             }
         });
     }
@@ -459,88 +422,6 @@ export default function AdminOrderDetailClient({
                         </div>
                     </div>
 
-                    {/* Document Upload */}
-                    <div className="detail-section">
-                        <div className="detail-section-title">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                                <polyline points="14 2 14 8 20 8" />
-                            </svg>
-                            Dokumen
-                        </div>
-
-                        {documents.length > 0 && (
-                            <div className="documents-list" style={{ marginBottom: '1.5rem' }}>
-                                {documents.map((doc) => (
-                                    <a
-                                        key={doc.id}
-                                        href={doc.file_url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="document-item"
-                                    >
-                                        <div className="document-icon">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                                                <polyline points="14 2 14 8 20 8" />
-                                            </svg>
-                                        </div>
-                                        <div className="document-info">
-                                            <div className="document-name">{doc.file_name}</div>
-                                            <div className="document-type">{doc.doc_type}</div>
-                                        </div>
-                                    </a>
-                                ))}
-                            </div>
-                        )}
-
-                        {/* Upload form */}
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                            <select
-                                className="admin-select"
-                                value={docType}
-                                onChange={(e) => setDocType(e.target.value)}
-                            >
-                                <option value="">Pilih tipe dokumen...</option>
-                                <option value="akta">Akta</option>
-                                <option value="sk">SK</option>
-                                <option value="npwp">NPWP</option>
-                                <option value="nib">NIB</option>
-                                <option value="certificate">Sertifikat</option>
-                                <option value="other">Lainnya</option>
-                            </select>
-
-                            <label className="file-upload">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                                    <polyline points="17 8 12 3 7 8" />
-                                    <line x1="12" y1="3" x2="12" y2="15" />
-                                </svg>
-                                <div className="file-upload-text">
-                                    {selectedFile ? (
-                                        <strong>{selectedFile.name}</strong>
-                                    ) : (
-                                        <>
-                                            <strong>Klik untuk memilih file</strong>
-                                            <br />atau drag &amp; drop
-                                        </>
-                                    )}
-                                </div>
-                                <input
-                                    type="file"
-                                    onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
-                                />
-                            </label>
-
-                            <button
-                                className="admin-btn admin-btn-primary"
-                                onClick={handleUploadDocument}
-                                disabled={isPending || !selectedFile || !docType}
-                            >
-                                {isPending ? 'Mengupload...' : 'Upload Dokumen'}
-                            </button>
-                        </div>
-                    </div>
                 </div>
 
                 {/* Sidebar */}

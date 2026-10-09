@@ -7,18 +7,25 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --test scripts/check-marketing.mjs"
+    "test": "node --test scripts/check-marketing.mjs && node scripts/check-workspace.mjs && node scripts/check-workspace-security.mjs",
+    "workspace:seed": "node scripts/generate-workspace-seed.mjs",
+    "workspace:types": "node scripts/generate-workspace-types.mjs",
+    "workspace:bootstrap": "node scripts/bootstrap-workspace-admin.mjs",
+    "workspace:verify-db": "node scripts/verify-workspace-db.mjs"
   },
   "dependencies": {
     "@supabase/auth-helpers-nextjs": "^0.15.0",
+    "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.98.0",
     "next": "16.1.6",
+    "pg": "^8.23.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "three": "^0.182.0"
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/pg": "^8.23.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/three": "^0.182.0",

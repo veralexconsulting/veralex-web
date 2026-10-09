@@ -1,9 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
-import ScrollProgress from "@/components/ScrollProgress";
-import FloatingWhatsApp from "@/components/FloatingWhatsApp";
-import MarketingTracking from "@/components/MarketingTracking";
-import GoogleTagManager from "@/components/GoogleTagManager";
+import MarketingChrome from "@/components/MarketingChrome";
 import "./globals.css";
 
 const inter = Inter({
@@ -165,11 +162,8 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} ${playfair.variable} ${jakarta.variable}`}>
-        <ScrollProgress />
-        <GoogleTagManager />
-        <MarketingTracking />
+        <MarketingChrome />
         {children}
-        <FloatingWhatsApp />
       </body>
     </html>
   );
