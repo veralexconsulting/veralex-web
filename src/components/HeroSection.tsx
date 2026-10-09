@@ -56,7 +56,7 @@ export default function HeroSection() {
                             rel="noopener noreferrer"
                             data-cta-location="hero"
                         >
-                            {t('hero.cta')}
+                            <span className="hero-cta-full">{t('hero.cta')}</span><span className="hero-cta-mobile">{t('hero.cta.mobile')}</span>
                         </a>
                         <a href="#services" className="btn-editorial">
                             {t('hero.viewServices')}

@@ -68,7 +68,7 @@ export default function Navbar() {
         mobilePanelRef.current?.querySelector<HTMLElement>('a, button')?.focus();
         const trap = (event: KeyboardEvent) => {
             if (event.key !== 'Tab') return;
-            const focusables = mobilePanelRef.current?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])');
+            const focusables = rootRef.current?.querySelectorAll<HTMLElement>('.vnav-mobile-header button:not([disabled]), #vnav-mobile a[href], #vnav-mobile button:not([disabled])');
             if (!focusables?.length) return;
             const first = focusables[0];
             const last = focusables[focusables.length - 1];
@@ -120,7 +120,7 @@ export default function Navbar() {
                 {navigation.slice(1).map(item => <Link key={item.href} href={item.href} onClick={close}>{item.label}</Link>)}
             </div>
             <div className="vnav-actions"><Link className="vnav-track" href="/portal/login" onClick={close}>{t('nav.track')} <span aria-hidden="true">↗</span></Link><div className="vnav-language"><LanguageToggle /></div></div>
-            <button ref={mobileTriggerRef} className="vnav-toggle" type="button" aria-label={mobileOpen ? t('nav.close') : t('nav.open')} aria-controls="vnav-mobile" aria-expanded={mobileOpen} onClick={() => { setMobileOpen(value => !value); setServicesOpen(false); }}><span/><span/><span/></button>
+            <div className="vnav-mobile-header"><LanguageToggle compact /><button ref={mobileTriggerRef} className="vnav-toggle" type="button" aria-label={mobileOpen ? t('nav.close') : t('nav.open')} aria-controls="vnav-mobile" aria-expanded={mobileOpen} onClick={() => { setMobileOpen(value => !value); setServicesOpen(false); }}><span/><span/><span/></button></div>
         </div>
         {mobileOpen && <div id="vnav-mobile" ref={mobilePanelRef} className="vnav-mobile"><div className="vnav-mobile-inner">
             <Link href={navigation[0].href} onClick={close}>{navigation[0].label}</Link>
@@ -128,7 +128,6 @@ export default function Navbar() {
             {mobileServicesOpen && <div id="vnav-mobile-services" className="vnav-mobile-groups">{menuGroups}<Link className="vnav-mobile-all" href={homeHref('#services')} onClick={close}>{t('nav.allServices')} →</Link></div>}
             {navigation.slice(1).map(item => <Link key={item.href} href={item.href} onClick={close}>{item.label}</Link>)}
             <Link className="vnav-track vnav-mobile-track" href="/portal/login" onClick={close}>{t('nav.track')} <span aria-hidden="true">↗</span></Link>
-            <div className="vnav-mobile-language"><span>{t('nav.language')}</span><LanguageToggle /></div>
         </div></div>}
     </nav>;
 }

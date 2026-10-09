@@ -17,6 +17,7 @@
 .vnav-track { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px; min-height: 44px; background: #4a0e0e; color: white; font-size: .84rem; font-weight: 700; line-height: 1.3; white-space: nowrap; border-radius: 7px; box-shadow: 0 7px 16px rgba(74,14,14,.15); }
 .vnav-track:hover { background: #2d0808; color: white; transform: translateY(-1px); }
 .vnav-toggle { display: none; }
+.vnav-mobile-header { display: none; }
 .vnav-mega { position: absolute; top: calc(100% - 1px); left: max(2.5%, calc((100vw - 1400px)/2)); width: min(95vw, 1400px); z-index: 1100; padding: 28px 32px 32px; background: #fffefa; border: 1px solid #e7dfd9; border-radius: 0 0 14px 14px; box-shadow: 0 22px 44px rgba(32,16,16,.15); animation: vnav-enter .18s ease-out; }
 .vnav-mega-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; padding-bottom: 20px; margin-bottom: 20px; border-bottom: 1px solid #e9e1db; }
 .vnav-mega-head div { display: flex; flex-direction: column; gap: 4px; }
@@ -43,13 +44,17 @@
 }
 @media (max-width: 992px) {
     .navbar.vnav { padding: 5px 0; }
-    .vnav .vnav-bar { min-height: 61px; }
+    .vnav .vnav-bar { min-height: 61px; width: 100%; min-width: 0; }
     .vnav-brand img { width: 62px; }
-    .vnav-desktop, .vnav-language { display: none; }
-    .vnav-actions { margin-left: auto; }
+    .vnav-desktop, .vnav-actions { display: none; }
+    .vnav-mobile-header { display: flex; align-items: center; gap: 10px; margin-left: auto; min-width: 0; }
+    .vnav-mobile-header .flag-lang-toggle { min-width: 0; min-height: 44px; padding: 0 10px; gap: 6px; border-radius: 7px; color: #4a0e0e; font-size: .8rem; font-weight: 700; }
+    .vnav-mobile-header .flag-lang-toggle svg { width: 18px; height: 18px; flex: none; }
+    .vnav-mobile-header .flag-lang-caret { font-size: 1rem; line-height: 1; }
+    .vnav-mobile-header .flag-lang-dropdown { right: 0; max-width: calc(100vw - 24px); }
     .vnav-toggle { display: flex; flex: 0 0 44px; width: 44px; height: 44px; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border: 1px solid #ddcfcf; border-radius: 7px; }
     .vnav-toggle span { width: 21px; height: 2px; background: #4a0e0e; border-radius: 2px; }
-    .vnav-mobile { display: block; position: fixed; inset: 71px 0 0; background: #fffefa; z-index: 1090; overflow-y: auto; overscroll-behavior: contain; border-top: 1px solid #ede3dd; }
+    .vnav-mobile { display: block; position: fixed; top: calc(71px + env(safe-area-inset-top)); left: 0; right: 0; bottom: 0; background: #fffefa; z-index: 1090; overflow-y: auto; overscroll-behavior: contain; border-top: 1px solid #ede3dd; }
     .vnav-mobile-inner { display: flex; flex-direction: column; max-width: 720px; margin: 0 auto; padding: 18px 5% calc(38px + env(safe-area-inset-bottom)); }
     .vnav-mobile-inner > a:not(.vnav-track), .vnav-mobile-accordion { display: flex; width: 100%; align-items: center; justify-content: space-between; text-align: left; padding: 12px 2px; min-height: 48px; border-bottom: 1px solid #eee6e0; color: #302929; font-size: 1rem; font-weight: 600; }
     .vnav-mobile-accordion span { color: #4a0e0e; font-size: 1.4rem; }
@@ -58,17 +63,15 @@
     .vnav-mobile-groups .vnav-group a span { display: none; }
     .vnav-mobile-all { color: #4a0e0e; font-weight: 700; }
     .vnav-mobile-track { width: 100%; margin-top: 24px; font-size: 1rem; }
-    .vnav-mobile-language { display: flex; align-items: center; justify-content: space-between; padding: 20px 2px 4px; color: #4b4343; }
-    .vnav-mobile-language .flag-lang-dropdown { top: auto; bottom: calc(100% + 8px); }
 }
 @media (max-width: 560px) {
     .vnav-brand img { width: 58px; }
     .vnav .vnav-bar { gap: 8px; }
-    .vnav-actions > .vnav-track { padding: 8px 10px; font-size: .72rem; }
     .vnav-mobile-groups { grid-template-columns: 1fr; }
 }
 @media (max-width: 375px) {
     .vnav-brand img { width: 54px; }
-    .vnav-actions > .vnav-track { font-size: .67rem; gap: 3px; padding: 8px; }
+    .vnav-mobile-header { gap: 7px; }
+    .vnav-mobile-header .flag-lang-toggle { padding: 0 8px; }
 }
 @media (prefers-reduced-motion: reduce) { .vnav-mega { animation: none; } .vnav-track:hover { transform: none; } }

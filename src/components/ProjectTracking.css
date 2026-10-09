@@ -47,6 +47,6 @@
 .tracking-visual-caption { display: block; position: relative; z-index: 1; margin: 16px 3px 0; color: #867871; font-size: .7rem; text-align: right; }
 .tracking-feature :is(a):focus-visible { outline: 3px solid #a87f41; outline-offset: 3px; }
 @media (max-width: 920px) { .tracking-layout { grid-template-columns: 1fr; gap: 40px; } .tracking-visual { max-width: 620px; width: 100%; margin: 0 auto; } }
-@media (max-width: 640px) { .tracking-feature { padding: 72px 0; } .tracking-copy h2 { font-size: clamp(2rem,8vw,2.8rem); } .tracking-description { font-size: .94rem; } .tracking-visual { padding-right: 12px; } .tracking-visual::before { inset: 5px 0 36px 25px; } }
+@media (max-width: 640px) { .tracking-feature { padding: 60px 0; } .tracking-copy h2 { font-size: clamp(1.85rem,7vw,2.8rem); } .tracking-description { font-size: .94rem; } .tracking-visual { padding: 20px 0 8px; } .tracking-visual::before { inset: 7px 5px 35px 18px; transform: rotate(1deg); } .tracking-preview-top { padding-inline: 12px; } .tracking-preview-top small { display: none; } }
 @media (max-width: 390px) { .tracking-actions a { width: 100%; } .tracking-preview-heading { flex-direction: column; } .tracking-preview-status { align-self: flex-start; } }
 @media (prefers-reduced-motion: reduce) { .tracking-actions a { transition: none; } }
