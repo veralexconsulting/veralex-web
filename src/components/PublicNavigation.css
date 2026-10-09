@@ -3,7 +3,7 @@
 .navbar.vnav.scrolled { padding: 5px 0; background: rgba(255,255,255,.98); }
 .vnav .vnav-bar { max-width: 1480px; display: flex; align-items: center; gap: clamp(14px, 2vw, 36px); min-height: 66px; }
 .vnav-brand { display: flex; align-items: center; flex: 0 0 auto; gap: 8px; min-width: 0; color: #4a0e0e; }
-.vnav-brand img { display: block; width: 128px; height: auto; object-fit: contain; }
+.vnav-brand img { display: block; width: 86px; height: auto; object-fit: contain; }
 .vnav-desktop, .vnav-actions { display: flex; align-items: center; }
 .vnav-desktop { gap: clamp(11px, 1.7vw, 28px); margin-left: auto; }
 .vnav-desktop > a, .vnav-services > button { color: #302b2b; font-weight: 600; font-size: .875rem; line-height: 1.4; letter-spacing: 0; text-transform: none; white-space: nowrap; min-height: 44px; display: inline-flex; align-items: center; gap: 4px; }
@@ -34,7 +34,7 @@
 @keyframes vnav-enter { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 1100px) {
     .vnav .vnav-bar { gap: 12px; }
-    .vnav-brand img { width: 96px; }
+    .vnav-brand img { width: 78px; }
     .vnav-desktop { gap: 11px; }
     .vnav-desktop > a, .vnav-services > button { font-size: .78rem; }
     .vnav-track { padding: 9px 11px; font-size: .78rem; }
@@ -43,7 +43,7 @@
 @media (max-width: 992px) {
     .navbar.vnav { padding: 5px 0; }
     .vnav .vnav-bar { min-height: 61px; }
-    .vnav-brand img { width: 74px; }
+    .vnav-brand img { width: 62px; }
     .vnav-desktop, .vnav-language { display: none; }
     .vnav-actions { margin-left: auto; }
     .vnav-toggle { display: flex; flex: 0 0 44px; width: 44px; height: 44px; flex-direction: column; align-items: center; justify-content: center; gap: 5px; border: 1px solid #ddcfcf; border-radius: 7px; }
@@ -60,13 +60,13 @@
     .vnav-mobile-language .flag-lang-dropdown { top: auto; bottom: calc(100% + 8px); }
 }
 @media (max-width: 560px) {
-    .vnav-brand img { width: 68px; }
+    .vnav-brand img { width: 58px; }
     .vnav .vnav-bar { gap: 8px; }
     .vnav-actions > .vnav-track { padding: 8px 10px; font-size: .72rem; }
     .vnav-mobile-groups { grid-template-columns: 1fr; }
 }
 @media (max-width: 375px) {
-    .vnav-brand img { width: 62px; }
+    .vnav-brand img { width: 54px; }
     .vnav-actions > .vnav-track { font-size: .67rem; gap: 3px; padding: 8px; }
 }
 @media (prefers-reduced-motion: reduce) { .vnav-mega { animation: none; } .vnav-track:hover { transform: none; } }

@@ -105,7 +105,7 @@ export default function Navbar() {
     return <nav id="navbar" ref={rootRef} className={`navbar vnav${scrolled || pathname !== '/' ? ' scrolled' : ''}`} aria-label={t('nav.main')} onPointerLeave={() => setServicesOpen(false)}>
         <div className="container vnav-bar">
             <Link href="/" className="vnav-brand" aria-label="VERALEX CONSULTING — Beranda" onClick={close}>
-                <Image src="/logo.webp" alt="VERALEX CONSULTING" width={1024} height={724} sizes="(max-width: 375px) 62px, (max-width: 992px) 74px, (max-width: 1100px) 96px, 128px" priority />
+                <Image src="/logo.webp" alt="VERALEX CONSULTING" width={1024} height={724} sizes="(max-width: 375px) 54px, (max-width: 560px) 58px, (max-width: 992px) 62px, (max-width: 1100px) 78px, 86px" priority />
             </Link>
             <div className="vnav-desktop">
                 <Link href={navigation[0].href} onClick={close}>{navigation[0].label}</Link>
