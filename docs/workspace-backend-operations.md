@@ -42,6 +42,7 @@ Primary files by phase:
 
 ## Operational constraints
 
+- Workspace data refreshes immediately after a completed mutation, every 20 seconds while the tab is visible, and when the tab regains focus. This is polling, not push-based Supabase Realtime.
 - `workspace_payments` has no active provider. A priority request can be reviewed, but the UI cannot show a successful real payment or activate paid service without a verified provider and webhook implementation.
 - The outbox marks in-app notifications delivered in the same transaction as persistence. Email and push delivery workers are not configured.
 - The row types in `src/types/workspace-database.ts` are generated from the migration. Replace them with Supabase CLI generated types after the deployed schema is validated.

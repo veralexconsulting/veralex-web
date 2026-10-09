@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useWorkspace } from './store';
 import { taskLabels, type Project, type Stage, type Task, type TaskStatus } from './model';
 import { ConfirmDialog } from './ui';
@@ -83,13 +83,17 @@ export function ProjectWorkflowEditor({ project }: { project: Project }) {
 function TaskEditor({ projectId, stage, task, index, count, onEdit, onMove, onRemove }: { projectId: string; stage: Stage; task: Task; index: number; count: number; onEdit: (changes: Partial<Task>, reason: string) => void; onMove: (direction: -1 | 1) => void; onRemove: () => void }) {
   const { setTaskStatus } = useWorkspace();
   const [editing, setEditing] = useState(false); const [title, setTitle] = useState(task.title); const [conditional, setConditional] = useState(task.conditional); const [dueAt,setDueAt]=useState(task.dueAt||'');
-  const [status, setStatus] = useState<TaskStatus>(task.status); const [reason, setReason] = useState(task.note || ''); const [error, setError] = useState('');
-  function saveStatus() {
-    try { setTaskStatus(projectId, task.id, status, reason); setError(''); }
+  const [status, setStatus] = useState<TaskStatus>(task.status); const [reason, setReason] = useState(task.note || ''); const [error, setError] = useState(''); const [saving, setSaving] = useState(false);
+  useEffect(()=>{setStatus(task.status);setReason(task.note||'');setError('');},[task.status,task.note]);
+  useEffect(()=>{setTitle(task.title);setConditional(task.conditional);setDueAt(task.dueAt||'');},[task.title,task.conditional,task.dueAt]);
+  async function saveStatus() {
+    setSaving(true);setError('');
+    try { await setTaskStatus(projectId, task.id, status, reason); }
     catch (cause) { setError(cause instanceof Error ? cause.message : 'Status belum tersimpan.'); }
+    finally { setSaving(false); }
   }
   return <div className="ws-task-editor"><div className="ws-task-editor-main"><span className={`ws-task-mark ${task.status}`}>{task.status === 'completed' ? '✓' : '○'}</span><div><strong>{task.title}</strong><small>{taskLabels[task.status]}{task.conditional ? ' · Kondisional' : ''}{task.note ? ` · ${task.note}` : ''}</small></div></div>
-    <div className="ws-task-editor-controls"><select aria-label={`Status ${task.title}`} value={status} onChange={event => setStatus(event.target.value as TaskStatus)}>{Object.entries(taskLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select><button className="ws-button ws-button-secondary" disabled={status === task.status && reason === (task.note || '')} onClick={saveStatus}>Simpan status</button><button className="ws-button ws-button-quiet" onClick={() => setEditing(!editing)}>{editing ? 'Tutup' : 'Edit'}</button></div>
+    <div className="ws-task-editor-controls"><select aria-label={`Status ${task.title}`} value={status} disabled={saving} onChange={event => setStatus(event.target.value as TaskStatus)}>{Object.entries(taskLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select><button className="ws-button ws-button-secondary" disabled={saving || (status === task.status && reason === (task.note || ''))} onClick={saveStatus}>{saving?'Menyimpan…':'Simpan status'}</button><button className="ws-button ws-button-quiet" onClick={() => setEditing(!editing)}>{editing ? 'Tutup' : 'Edit'}</button></div>
     {(status === 'blocked' || status === 'skipped' || reason) && <label className="ws-task-reason">Alasan operasional<input value={reason} onChange={event => setReason(event.target.value)} placeholder="Jangan tulis data identitas atau isi berkas" /></label>}
     {error && <p className="ws-error" role="alert">{error}</p>}
     {editing && <div className="ws-task-edit-panel"><label>Nama tugas<input value={title} onChange={event => setTitle(event.target.value)} /></label><label>Jadwal tugas<input type="date" value={dueAt} onChange={event=>setDueAt(event.target.value)} /></label><label className="ws-check"><input type="checkbox" checked={conditional} onChange={event => setConditional(event.target.checked)} />Tugas kondisional</label><div className="ws-inline-actions"><button className="ws-button ws-button-secondary" disabled={!title.trim()} onClick={() => { onEdit({ title: title.trim(), conditional, dueAt }, `mengedit tugas ${task.title} pada ${stage.title}`); setEditing(false); }}>Simpan tugas</button><button className="ws-button ws-button-quiet" disabled={index === 0} onClick={() => onMove(-1)}>↑ Naik</button><button className="ws-button ws-button-quiet" disabled={index === count - 1} onClick={() => onMove(1)}>↓ Turun</button><button className="ws-button ws-button-quiet" onClick={onRemove}>Hapus</button></div></div>}

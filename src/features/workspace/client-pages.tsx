@@ -31,7 +31,8 @@ async function authStep<T>(operation: PromiseLike<T>): Promise<T> {
 export function AdminLogin() {
   const router = useRouter();
   const [email, setEmail] = useState(''); const [password, setPassword] = useState(''); const [visible, setVisible] = useState(false);
-  const [error, setError] = useState(''); const [busy,setBusy]=useState(false); const [sent,setSent]=useState(false);
+  const [error, setError] = useState(''); const [busy,setBusy]=useState(false); const [sent,setSent]=useState(false); const [passwordChanged,setPasswordChanged]=useState(false);
+  useEffect(()=>{setPasswordChanged(new URLSearchParams(window.location.search).get('passwordChanged')==='1');},[]);
   async function submit(event: React.FormEvent) {
     event.preventDefault();
     setError('');
@@ -62,14 +63,37 @@ export function AdminLogin() {
   }
   async function resetPassword() { setError(''); if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setError('Isi email terlebih dahulu.'); setBusy(true); try { const {error:authError}=await workspaceBrowser().auth.resetPasswordForEmail(email,{redirectTo:`${window.location.origin}/workspace/auth/callback?next=/admin/aktivasi`}); if(authError) throw authError; setSent(true); } catch {setError('Permintaan pemulihan belum dapat dikirim.');} finally {setBusy(false);} }
   return <div className="workspace ws-auth"><div className="ws-auth-card"><BrandLogo compact /><p className="ws-eyebrow">Workspace administrator</p><h1>Selamat datang kembali.</h1><p className="ws-muted">Kelola proyek dan tindak lanjut klien dalam satu tempat.</p>
-    <form onSubmit={submit}><label>Email<input type="email" autoComplete="email" value={email} onChange={event => setEmail(event.target.value)} required /></label><label>Kata sandi<span className="ws-password-wrap"><input type={visible ? 'text' : 'password'} autoComplete="current-password" value={password} onChange={event => setPassword(event.target.value)} required /><button type="button" onClick={() => setVisible(!visible)}>{visible ? 'Sembunyikan' : 'Lihat'}</button></span></label><button type="button" className="ws-subtle-link" onClick={resetPassword} disabled={busy}>Lupa kata sandi?</button>{sent && <p className="ws-info" role="status">Jika akun terdaftar, tautan pemulihan dikirim ke email tersebut.</p>}{error && <p className="ws-error" role="alert">{error}</p>}<button className="ws-button ws-button-primary ws-full" disabled={busy}>{busy?'Memproses…':'Masuk'}</button></form>
+    <form onSubmit={submit}><label>Email<input type="email" autoComplete="email" value={email} onChange={event => setEmail(event.target.value)} required /></label><label>Kata sandi<span className="ws-password-wrap"><input type={visible ? 'text' : 'password'} autoComplete="current-password" value={password} onChange={event => setPassword(event.target.value)} required /><button type="button" onClick={() => setVisible(!visible)}>{visible ? 'Sembunyikan' : 'Lihat'}</button></span></label><button type="button" className="ws-subtle-link" onClick={resetPassword} disabled={busy}>Lupa kata sandi?</button>{passwordChanged && <p className="ws-info" role="status">Kata sandi berhasil diubah. Masuk dengan kata sandi baru.</p>}{sent && <p className="ws-info" role="status">Jika akun terdaftar, tautan pemulihan dikirim ke email tersebut.</p>}{error && <p className="ws-error" role="alert">{error}</p>}<button className="ws-button ws-button-primary ws-full" disabled={busy}>{busy?'Memproses…':'Masuk'}</button></form>
   </div><div className="ws-auth-aside"><span>VERALEX / WORKSPACE</span><h2>Setiap langkah jelas.<br />Setiap klien terinformasi.</h2><p>Alur operasional untuk tim VERALEX dan pemantauan proyek bagi klien.</p></div></div>;
 }
 
 export function AdminActivation() {
-  const router=useRouter(); const [password, setPassword] = useState(''); const [confirm, setConfirm] = useState(''); const [message, setMessage] = useState(''); const [busy,setBusy]=useState(false);
-  async function submit(event: React.FormEvent) { event.preventDefault(); if (password !== confirm) return setMessage('Konfirmasi kata sandi tidak cocok.'); if (password.length < 12 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/\d/.test(password)) return setMessage('Gunakan minimal 12 karakter, huruf besar, huruf kecil, dan angka.'); setBusy(true); setMessage(''); try { const actor=await getCurrentWorkspaceActor(); if(!actor || actor.role!=='admin') throw new Error('Silakan masuk sebagai administrator.'); if(actor.mustChangePassword) await changeInitialPassword(password); else { const {error}=await workspaceBrowser().auth.updateUser({password}); if(error) throw error; } setPassword('');setConfirm('');router.replace('/admin');router.refresh(); } catch(cause) {setMessage(cause instanceof Error?cause.message:'Kata sandi gagal diubah.');} finally {setBusy(false);} }
-  return <div className="workspace ws-auth-simple"><div className="ws-auth-card"><BrandLogo compact /><Link href="/admin/login" className="ws-back">← Kembali ke Login</Link><p className="ws-eyebrow">Akun tim</p><h1>Ganti kata sandi</h1><p className="ws-muted">Gunakan kata sandi baru yang kuat. Anggota tim baru wajib mengganti kata sandi awal sebelum memakai workspace.</p><form onSubmit={submit}><label>Kata sandi baru<input type="password" autoComplete="new-password" value={password} onChange={event => setPassword(event.target.value)} required /></label><label>Konfirmasi kata sandi<input type="password" autoComplete="new-password" value={confirm} onChange={event => setConfirm(event.target.value)} required /></label><button className="ws-button ws-button-primary" disabled={busy}>{busy?'Menyimpan…':'Simpan kata sandi'}</button></form>{message && <p className="ws-error" role="alert">{message}</p>}</div></div>;
+  const [password, setPassword] = useState(''); const [confirm, setConfirm] = useState(''); const [message, setMessage] = useState(''); const [saved, setSaved] = useState(false); const [busy,setBusy]=useState(false);
+  async function submit(event: React.FormEvent) {
+    event.preventDefault();
+    if (password !== confirm) return setMessage('Konfirmasi kata sandi tidak cocok.');
+    if (password.length < 12 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/\d/.test(password)) return setMessage('Gunakan minimal 12 karakter, huruf besar, huruf kecil, dan angka.');
+    setBusy(true); setMessage('');
+    let passwordUpdated=false;
+    try {
+      const actor=await getCurrentWorkspaceActor();
+      if(!actor || actor.role!=='admin') throw new Error('Silakan masuk sebagai administrator.');
+      const auth=workspaceBrowser();
+      if(actor.mustChangePassword) await changeInitialPassword(password);
+      else { const {error}=await auth.auth.updateUser({password}); if(error) throw error; }
+      passwordUpdated=true;
+      setPassword(''); setConfirm(''); setSaved(true);
+      const {error:sessionError}=await authStep(auth.auth.signInWithPassword({email:actor.email,password}));
+      if(sessionError){setMessage('Kata sandi berhasil diubah. Silakan masuk dengan kata sandi baru.');window.location.replace('/admin/login?passwordChanged=1');return;}
+      setMessage('Kata sandi berhasil diubah. Membuka Dashboard…');
+      window.location.replace('/admin');
+    } catch(cause) {
+      setMessage(passwordUpdated?'Kata sandi berhasil diubah, tetapi sesi belum dapat diperbarui. Masuk ulang dengan kata sandi baru.':cause instanceof Error?cause.message:'Kata sandi gagal diubah.');
+      setBusy(false);
+      if(passwordUpdated)window.location.replace('/admin/login?passwordChanged=1');
+    }
+  }
+  return <div className="workspace ws-auth-simple"><div className="ws-auth-card"><BrandLogo compact /><Link href="/admin/login" className="ws-back">← Kembali ke Login</Link><p className="ws-eyebrow">Akun tim</p><h1>Ganti kata sandi</h1><p className="ws-muted">Gunakan kata sandi baru yang kuat. Anggota tim baru wajib mengganti kata sandi awal sebelum memakai workspace.</p><form onSubmit={submit}><label>Kata sandi baru<input type="password" autoComplete="new-password" value={password} onChange={event => setPassword(event.target.value)} required /></label><label>Konfirmasi kata sandi<input type="password" autoComplete="new-password" value={confirm} onChange={event => setConfirm(event.target.value)} required /></label><button className="ws-button ws-button-primary" disabled={busy}>{busy?'Menyimpan…':'Simpan kata sandi'}</button></form>{message && <p className={saved?'ws-info':'ws-error'} role={saved?'status':'alert'}>{message}</p>}</div></div>;
 }
 
 export function InvitationPage() {

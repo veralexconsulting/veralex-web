@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useWorkspace, currentStage, nextTask, formatDate, formatDateTime } from './store';
 import { statusLabels, priorityLabels, type Project, type ProjectStatus } from './model';
 import { Badge, ConfirmDialog, EmptyState, PageHeader, ProgressSummary, Timeline } from './ui';
@@ -53,7 +53,7 @@ export function ProjectDetail() {
     </div>}
     {tab === 'workflow' && <ProjectWorkflowEditor project={project} />}
     {tab === 'aktivitas' && <section className="ws-surface ws-pad"><h2>Riwayat aktivitas</h2><form className="ws-form-grid" onSubmit={async event=>{event.preventDefault();setUpdateError('');setUpdating(true);try{await addProjectUpdate(project.id,updateMessage.trim(),updateVisible);setUpdateMessage('');}catch(cause){setUpdateError(cause instanceof Error?cause.message:'Pembaruan belum tersimpan.');}finally{setUpdating(false);}}}><label className="ws-span-2">Pembaruan proyek<textarea rows={3} required maxLength={1000} value={updateMessage} onChange={event=>setUpdateMessage(event.target.value)} placeholder="Tulis perkembangan tanpa nomor identitas atau isi berkas" /></label><label className="ws-check ws-span-2"><input type="checkbox" checked={updateVisible} onChange={event=>setUpdateVisible(event.target.checked)} />Tampilkan kepada klien</label>{updateError&&<p className="ws-error ws-span-2" role="alert">{updateError}</p>}<button className="ws-button ws-button-primary" disabled={updating||!updateMessage.trim()}>{updating?'Menyimpan…':'Tambahkan pembaruan'}</button></form><div className="ws-activity-list">{activities.map(activity => <div key={activity.id}><span className="ws-event-dot" /><p><strong>{activity.text}</strong><small>{formatDateTime(activity.at)} · {activity.clientVisible ? 'Pembaruan klien' : 'Internal'}</small></p></div>)}</div></section>}
-    {tab === 'pengaturan' && <ProjectSettings project={project} onArchive={() => setConfirm({ title: project.status === 'archived' ? 'Pulihkan proyek?' : 'Arsipkan proyek?', description: 'Perubahan status akan tercatat dalam aktivitas.', action: () => updateProject(project.id, { status: project.status === 'archived' ? 'active' : 'archived' }, project.status === 'archived' ? 'memulihkan proyek.' : 'mengarsipkan proyek.'), danger: project.status !== 'archived' })} />}
+    {tab === 'pengaturan' && <ProjectSettings project={project} onArchive={() => setConfirm({ title: project.status === 'archived' ? 'Pulihkan proyek?' : 'Arsipkan proyek?', description: 'Perubahan status akan tercatat dalam aktivitas.', action: () => { void updateProject(project.id, { status: project.status === 'archived' ? 'active' : 'archived' }, project.status === 'archived' ? 'memulihkan proyek.' : 'mengarsipkan proyek.').catch(()=>{/* Shared toast shows the error. */}); }, danger: project.status !== 'archived' })} />}
     {confirm && <ConfirmDialog title={confirm.title} description={confirm.description} danger={confirm.danger} onConfirm={confirm.action} onClose={() => setConfirm(null)} />}
   </>;
 }
@@ -62,23 +62,31 @@ function ProjectSettings({ project, onArchive }: { project: Project; onArchive: 
   const { data, updateProject } = useWorkspace();
   const [title, setTitle] = useState(project.title); const [status, setStatus] = useState<ProjectStatus>(project.status);
   const [pic, setPic] = useState(project.picId); const [followUp, setFollowUp] = useState(project.followUpAt);
-  const [notes, setNotes] = useState(project.notes); const [supporting, setSupporting] = useState(project.supportingIds); const [error, setError] = useState('');
-  function save(event: React.FormEvent) {
+  const [notes, setNotes] = useState(project.notes); const [supporting, setSupporting] = useState(project.supportingIds); const [error, setError] = useState(''); const [dirty,setDirty]=useState(false); const [saving,setSaving]=useState(false);
+  useEffect(()=>{
+    if(dirty)return;
+    setTitle(project.title);setStatus(project.status);setPic(project.picId);setFollowUp(project.followUpAt);setNotes(project.notes);setSupporting(project.supportingIds);
+  },[project,dirty]);
+  async function save(event: React.FormEvent) {
     event.preventDefault(); setError(''); if (!title.trim()) return setError('Judul proyek wajib diisi.');
     const changes = [];
     if (pic !== project.picId) changes.push(`mengubah PIC menjadi ${data.admins.find(item => item.id === pic)?.name}`);
     if (status !== project.status) changes.push(`mengubah status menjadi ${statusLabels[status]}`);
     if (title !== project.title || followUp !== project.followUpAt || notes !== project.notes || supporting.join() !== project.supportingIds.join()) changes.push('memperbarui rincian proyek');
-    if (changes.length) updateProject(project.id, { title: title.trim(), status, picId: pic, followUpAt: followUp, notes: notes.trim(), supportingIds: supporting }, `${changes.join(', ')}.`, status !== project.status);
+    if(!changes.length){setDirty(false);return;}
+    setSaving(true);
+    try {await updateProject(project.id, { title: title.trim(), status, picId: pic, followUpAt: followUp, notes: notes.trim(), supportingIds: supporting }, `${changes.join(', ')}.`, status !== project.status);setDirty(false);}
+    catch(cause){setError(cause instanceof Error?cause.message:'Proyek belum dapat diperbarui.');}
+    finally{setSaving(false);}
   }
   return <div className="ws-detail-grid"><form className="ws-surface ws-pad" onSubmit={save}><h2>Pengaturan proyek</h2><div className="ws-form-grid">
-    <label className="ws-span-2">Judul proyek<input required value={title} onChange={event => setTitle(event.target.value)} /></label>
-    <label>Status<select value={status} onChange={event => setStatus(event.target.value as ProjectStatus)}>{Object.entries(statusLabels).filter(([value]) => value !== 'archived').map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
-    <label>PIC utama<select value={pic} onChange={event => setPic(event.target.value)}>{data.admins.filter(item => item.active).map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>
-    <label>Follow-up berikutnya<input type="date" value={followUp} onChange={event => setFollowUp(event.target.value)} /></label>
-    <label>Admin pendukung<select multiple value={supporting} onChange={event => setSupporting(Array.from(event.target.selectedOptions).map(item => item.value))}>{data.admins.filter(item => item.active && item.id !== pic).map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>
-    <label className="ws-span-2">Catatan operasional<textarea rows={3} value={notes} onChange={event => setNotes(event.target.value)} /><small>Jangan menulis nomor identitas atau isi berkas.</small></label>
-  </div>{error && <p className="ws-error" role="alert">{error}</p>}<button className="ws-button ws-button-primary">Simpan perubahan</button></form>
+    <label className="ws-span-2">Judul proyek<input required value={title} onChange={event => {setTitle(event.target.value);setDirty(true);}} /></label>
+    <label>Status<select value={status} onChange={event => {setStatus(event.target.value as ProjectStatus);setDirty(true);}}>{Object.entries(statusLabels).filter(([value]) => value !== 'archived').map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label>
+    <label>PIC utama<select value={pic} onChange={event => {setPic(event.target.value);setDirty(true);}}>{data.admins.filter(item => item.active).map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>
+    <label>Follow-up berikutnya<input type="date" value={followUp} onChange={event => {setFollowUp(event.target.value);setDirty(true);}} /></label>
+    <label>Admin pendukung<select multiple value={supporting} onChange={event => {setSupporting(Array.from(event.target.selectedOptions).map(item => item.value));setDirty(true);}}>{data.admins.filter(item => item.active && item.id !== pic).map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select></label>
+    <label className="ws-span-2">Catatan operasional<textarea rows={3} value={notes} onChange={event => {setNotes(event.target.value);setDirty(true);}} /><small>Jangan menulis nomor identitas atau isi berkas.</small></label>
+  </div>{error && <p className="ws-error" role="alert">{error}</p>}<button className="ws-button ws-button-primary" disabled={saving}>{saving?'Menyimpan…':'Simpan perubahan'}</button></form>
     <section className="ws-surface ws-pad"><h2>Arsip proyek</h2><p className="ws-muted">Proyek yang diarsipkan tetap berada dalam riwayat tim.</p><button className="ws-button ws-button-danger ws-spaced" type="button" onClick={onArchive}>{project.status === 'archived' ? 'Pulihkan proyek' : 'Arsipkan proyek'}</button></section>
   </div>;
 }
