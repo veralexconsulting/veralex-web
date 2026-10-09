@@ -4,10 +4,10 @@ import FaqAccordion from '@/components/FaqAccordion';
 import OrderModal from '@/components/OrderModal';
 import WhatsAppCta from '@/components/WhatsAppCta';
 import Footer from '@/components/Footer';
-import LanguageToggle from '@/components/LanguageToggle';
+import Navbar from '@/components/Navbar';
+import ProjectTrackingPromo from '@/components/ProjectTrackingPromo';
 
 const CHECK_ICON = "M5 13l4 4L19 7";
-const ARROW_LEFT = "M10 19l-7-7m0 0l7-7m-7 7h18";
 
 const uiText: Record<string, Record<string, string>> = {
     en: {
@@ -69,20 +69,7 @@ export default function ServicePageTemplate({ service, relatedServices, lang }: 
 
     return (
         <>
-            <nav className="navbar scrolled" style={{ position: 'fixed' }}>
-                <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Link href="/" className="navbar-brand">
-                        <span className="navbar-name">VERALEX</span>
-                    </Link>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-                        <LanguageToggle />
-                        <Link href="/#services" className="svc-back-link">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={ARROW_LEFT} /></svg>
-                            {dict.back}
-                        </Link>
-                    </div>
-                </div>
-            </nav>
+            <Navbar />
 
             <main style={{ paddingTop: '110px', minHeight: '100vh' }}>
                 <div className="container svc-page">
@@ -121,6 +108,8 @@ export default function ServicePageTemplate({ service, relatedServices, lang }: 
                         </div>
                         <p className="svc-cta-note">{dict.freeConsult}</p>
                     </section>
+
+                    <ProjectTrackingPromo />
 
                     {service.requirements.length > 0 && (
                         <section className="svc-section">

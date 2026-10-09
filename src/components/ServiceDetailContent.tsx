@@ -5,13 +5,13 @@ import { ServiceItem } from '@/lib/serviceData';
 import { detailedServiceContent, defaultFaqs, defaultFaqsEn, defaultFaqsZh } from '@/lib/serviceContent';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
-import LanguageToggle from '@/components/LanguageToggle';
+import Navbar from '@/components/Navbar';
+import ProjectTrackingPromo from '@/components/ProjectTrackingPromo';
 import OrderModal from '@/components/OrderModal';
 import FaqAccordion from '@/components/FaqAccordion';
 import TrustBadges from '@/components/TrustBadges';
 import WhatsAppCta from '@/components/WhatsAppCta';
 
-const ARROW_LEFT = "M10 19l-7-7m0 0l7-7m-7 7h18";
 const CHECK_ICON = "M5 13l4 4L19 7";
 
 interface Props {
@@ -41,20 +41,7 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
 
     return (
         <>
-            <nav className="navbar scrolled" style={{ position: 'fixed' }}>
-                <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Link href="/" className="navbar-brand">
-                        <span className="navbar-name">VERALEX</span>
-                    </Link>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-                        <LanguageToggle />
-                        <Link href="/#services" className="svc-back-link">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={ARROW_LEFT} /></svg>
-                            {t('detail.back')}
-                        </Link>
-                    </div>
-                </div>
-            </nav>
+            <Navbar />
 
             <main style={{ paddingTop: '110px', minHeight: '100vh' }}>
                 <div className="container svc-page">
@@ -92,6 +79,8 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
                         </div>
                         <p className="svc-cta-note">{t('detail.consultFree')}</p>
                     </section>
+
+                    <ProjectTrackingPromo />
 
                     {introText && (
                         <>
@@ -140,4 +129,3 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
         </>
     );
 }
-

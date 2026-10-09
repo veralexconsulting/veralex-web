@@ -76,6 +76,10 @@ html {
     font-size: 16px;
 }
 
+:is(#services, #pricing, #contact, [id^="service-"]) {
+    scroll-margin-top: 110px;
+}
+
 body {
     font-family: var(--font-body);
     background: var(--bg-dark);

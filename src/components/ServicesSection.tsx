@@ -256,7 +256,7 @@ export default function ServicesSection() {
                             { key: 'k3l', icon: ICONS.bolt },
                             { key: 'postel', icon: ICONS.wifi },
                         ].map((item) => (
-                            <div key={item.key} className="product-card">
+                            <div key={item.key} id={`service-${item.key}`} className="product-card">
                                 <div className="product-icon"><SvgIcon d={item.icon} /></div>
                                 <h4 className="product-title">{t(`services.product.${item.key}.title`)}</h4>
                                 <p className="product-desc">{t(`services.product.${item.key}.desc`)}</p>
