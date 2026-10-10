@@ -11,7 +11,7 @@ export type ActionResult = {
 
 export async function updateOrderStatus(formData: FormData): Promise<ActionResult> {
     await requireAdmin();
-    const supabase = createActionClient();
+    const supabase = await createActionClient();
 
     const orderId = formData.get('orderId') as string;
     const status = formData.get('status') as string;
@@ -42,7 +42,7 @@ export async function updateOrderStatus(formData: FormData): Promise<ActionResul
 
 export async function addProgressStep(formData: FormData): Promise<ActionResult> {
     await requireAdmin();
-    const supabase = createActionClient();
+    const supabase = await createActionClient();
 
     const orderId = formData.get('orderId') as string;
     const stepNumber = parseInt(formData.get('stepNumber') as string);
@@ -77,7 +77,7 @@ export async function addProgressStep(formData: FormData): Promise<ActionResult>
 
 export async function updateProgressStep(formData: FormData): Promise<ActionResult> {
     await requireAdmin();
-    const supabase = createActionClient();
+    const supabase = await createActionClient();
 
     const stepId = formData.get('stepId') as string;
     const orderId = formData.get('orderId') as string;
@@ -109,7 +109,7 @@ export async function updateProgressStep(formData: FormData): Promise<ActionResu
 
 export async function verifyPayment(formData: FormData): Promise<ActionResult> {
     await requireAdmin();
-    const supabase = createActionClient();
+    const supabase = await createActionClient();
 
     const paymentId = formData.get('paymentId') as string;
     const orderId = formData.get('orderId') as string;
@@ -146,7 +146,7 @@ export async function verifyPayment(formData: FormData): Promise<ActionResult> {
 
 export async function rejectPayment(formData: FormData): Promise<ActionResult> {
     await requireAdmin();
-    const supabase = createActionClient();
+    const supabase = await createActionClient();
 
     const paymentId = formData.get('paymentId') as string;
     const orderId = formData.get('orderId') as string;

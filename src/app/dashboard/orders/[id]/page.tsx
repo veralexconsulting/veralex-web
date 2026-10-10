@@ -12,7 +12,7 @@ interface OrderDetailProps {
 export default async function OrderDetailPage({ params }: OrderDetailProps) {
     const { id } = await params;
     const user = await requireUser();
-    const supabase = createServerClient();
+    const supabase = await createServerClient();
 
     // Fetch order (RLS ensures client can only see own orders)
     const { data: order, error } = await supabase

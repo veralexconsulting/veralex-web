@@ -36,7 +36,6 @@ async function authStep<T>(operation: PromiseLike<T>): Promise<T> {
 }
 
 export function AdminLogin() {
-  const router = useRouter();
   const [email, setEmail] = useState(''); const [password, setPassword] = useState(''); const [visible, setVisible] = useState(false);
   const [error, setError] = useState(''); const [busy,setBusy]=useState(false); const [sent,setSent]=useState(false); const [passwordChanged,setPasswordChanged]=useState(false);
   useEffect(()=>{setPasswordChanged(new URLSearchParams(window.location.search).get('passwordChanged')==='1');},[]);
@@ -48,6 +47,7 @@ export function AdminLogin() {
       return;
     }
     setBusy(true);
+    let navigating = false;
     try {
       const auth = workspaceBrowser();
       const { data, error: authError } = await authStep(auth.auth.signInWithPassword({ email, password }));
@@ -65,12 +65,16 @@ export function AdminLogin() {
       // problem must not make the login form report a failed sign-in after
       // Supabase has already established the session.
       void recordLoginEvent().catch(() => undefined);
-      router.replace(profile.must_change_password ? '/admin/aktivasi' : '/admin');
-      router.refresh();
+      // A full request makes middleware validate the newly written SSR cookie
+      // after Supabase has completed sign-in. App Router navigation can race
+      // its first protected request against cookie propagation.
+      navigating = true;
+      window.location.replace(profile.must_change_password ? '/admin/aktivasi' : '/admin');
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : 'Gagal masuk.');
     } finally {
-      setBusy(false);
+      // Keep the form locked while the browser leaves for the authenticated page.
+      if (!navigating) setBusy(false);
     }
   }
   async function resetPassword() { setError(''); if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return setError('Isi email terlebih dahulu.'); setBusy(true); try { const {error:authError}=await workspaceBrowser().auth.resetPasswordForEmail(email,{redirectTo:`${window.location.origin}/workspace/auth/callback?next=/admin/aktivasi`}); if(authError) throw authError; setSent(true); } catch {setError('Permintaan pemulihan belum dapat dikirim.');} finally {setBusy(false);} }

@@ -1,5 +1,4 @@
-import { createServerClient as createLegacyServerClient } from '@supabase/auth-helpers-nextjs';
-import { createServerClient as createWorkspaceServerClient } from '@supabase/ssr';
+import { createServerClient as createWorkspaceServerClient, type CookieOptions } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { isTransientAuthError } from '@/lib/workspace/auth-errors';
@@ -32,7 +31,12 @@ export async function middleware(req: NextRequest) {
     }
     return res;
   }
-  const refreshedCookies = new Map<string, {name:string;value:string;options?:Record<string,unknown>}>();
+  const refreshedCookies = new Map<string, {name:string;value:string;options?:CookieOptions}>();
+  const redirectWithCookies = (path:string) => {
+    const response=NextResponse.redirect(new URL(path,req.url));
+    refreshedCookies.forEach(cookie=>response.cookies.set(cookie.name,cookie.value,cookie.options));
+    return response;
+  };
   const workspaceAdmin=pathname==='/admin'||WORKSPACE_ADMIN.some(route=>pathname===route||pathname.startsWith(`${route}/`));
   const portal=pathname==='/portal'||pathname.startsWith('/portal/');
   const adminAuth=pathname==='/admin/login'||pathname==='/admin/aktivasi';
@@ -48,10 +52,10 @@ export async function middleware(req: NextRequest) {
       if(user){const result=await supabase.from('profiles').select('role,active,must_change_password').eq('id',user.id).maybeSingle();profile=result.data;profileError=result.error;}
     } catch { return res; }
     if(profileError&&isTransientAuthError(profileError))return res;
-    if(workspaceAdmin){if(!user||profile?.role!=='admin'||!profile.active)return NextResponse.redirect(new URL('/admin/login',req.url));if(profile.must_change_password)return NextResponse.redirect(new URL('/admin/aktivasi',req.url));}
-    if(pathname==='/admin/aktivasi'&&(!user||profile?.role!=='admin'||!profile.active))return NextResponse.redirect(new URL('/admin/login',req.url));
-    if(portal&&pathname!=='/portal/login'&&(!user||profile?.role!=='client'||!profile.active))return NextResponse.redirect(new URL('/portal/login',req.url));
-    if(pathname==='/portal/login'&&user&&profile?.role==='client'&&profile.active)return NextResponse.redirect(new URL('/portal',req.url));
+    if(workspaceAdmin){if(!user||profile?.role!=='admin'||!profile.active)return redirectWithCookies('/admin/login');if(profile.must_change_password)return redirectWithCookies('/admin/aktivasi');}
+    if(pathname==='/admin/aktivasi'&&(!user||profile?.role!=='admin'||!profile.active))return redirectWithCookies('/admin/login');
+    if(portal&&pathname!=='/portal/login'&&(!user||profile?.role!=='client'||!profile.active))return redirectWithCookies('/portal/login');
+    if(pathname==='/portal/login'&&user&&profile?.role==='client'&&profile.active)return redirectWithCookies('/portal');
     return res;
   }
   const pathnameHasLocale=SUPPORTED_LOCALES.some(locale=>pathname.startsWith(`/${locale}/`)||pathname===`/${locale}`);
@@ -60,15 +64,25 @@ export async function middleware(req: NextRequest) {
   const isDashboard=unlocalized.startsWith('/dashboard');
   const isLegacyAdmin=unlocalized.startsWith('/admin');
   if(!configured){if(isDashboard||isLegacyAdmin)return NextResponse.redirect(new URL('/auth/login',req.url));return res;}
-  const supabase=createLegacyServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,{cookies:{getAll:()=>req.cookies.getAll(),setAll:items=>items.forEach(({name,value,options})=>{req.cookies.set(name,value);res.cookies.set(name,value,options);})}});
-  const {data:{session}}=await supabase.auth.getSession();
-  if(session&&(isDashboard||isLegacyAdmin)){
-    const {data:workspaceProfile}=await supabase.from('profiles').select('active,must_change_password,role').eq('id',session.user.id).maybeSingle();
-    if(workspaceProfile&&!workspaceProfile.active)return NextResponse.redirect(new URL('/auth/login',req.url));
-    if(isLegacyAdmin&&workspaceProfile?.role==='admin'&&workspaceProfile.must_change_password)return NextResponse.redirect(new URL('/admin/aktivasi',req.url));
+  const supabase=createWorkspaceServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,{cookies:{getAll:()=>req.cookies.getAll(),setAll:items=>{items.forEach(({name,value,options})=>{req.cookies.set(name,value);refreshedCookies.set(name,{name,value,options});});res=NextResponse.next({request:req});refreshedCookies.forEach(cookie=>res.cookies.set(cookie.name,cookie.value,cookie.options));}}});
+  let user;
+  try {
+    const result=await supabase.auth.getUser();
+    if(result.error&&isTransientAuthError(result.error))return res;
+    user=result.data.user;
+  } catch { return res; }
+  let profile;
+  if(user){
+    const result=await supabase.from('profiles').select('active,must_change_password,role').eq('id',user.id).maybeSingle();
+    if(result.error&&isTransientAuthError(result.error))return res;
+    profile=result.data;
   }
-  if(!session&&(isDashboard||isLegacyAdmin))return NextResponse.redirect(new URL('/auth/login',req.url));
-  if(session&&isAuthPage){const {data:profile}=await supabase.from('users').select('role').eq('id',session.user.id).single();return NextResponse.redirect(new URL(profile?.role==='admin'?'/admin':'/dashboard',req.url));}
+  if((isDashboard||isLegacyAdmin)&&(!user||!profile?.active))return redirectWithCookies('/auth/login');
+  if(isLegacyAdmin&&profile?.role!=='admin')return redirectWithCookies('/auth/login');
+  if(isLegacyAdmin&&profile?.must_change_password)return redirectWithCookies('/admin/aktivasi');
+  if(isDashboard&&profile?.role==='admin')return redirectWithCookies('/admin');
+  if(isDashboard&&profile?.role!=='client')return redirectWithCookies('/auth/login');
+  if(user&&isAuthPage&&profile?.active)return redirectWithCookies(profile.role==='admin'?'/admin':'/dashboard');
   return res;
 }
 export const config={matcher:['/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)']};

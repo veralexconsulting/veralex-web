@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function DashboardPage() {
     const user = await requireUser();
-    const supabase = createServerClient();
+    const supabase = await createServerClient();
 
     // Fetch user profile
     const { data: profile } = await supabase

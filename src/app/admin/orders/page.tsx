@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function AdminOrdersPage() {
     await requireAdmin();
-    const supabase = createServerClient();
+    const supabase = await createServerClient();
 
     // Fetch all orders
     const { data: orders } = await supabase

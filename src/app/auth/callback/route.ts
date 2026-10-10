@@ -1,20 +1,33 @@
 import { createServerClient } from '@/lib/supabase/server';
-import { NextResponse } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 
-export async function GET(request: Request) {
-    const requestUrl = new URL(request.url);
-    const code = requestUrl.searchParams.get('code');
+export async function GET(request: NextRequest) {
+    const code = request.nextUrl.searchParams.get('code');
+    const failure = new URL('/auth/login?error=OauthError', request.url);
+    if (!code) return NextResponse.redirect(failure);
 
-    if (code) {
-        const supabase = createServerClient();
-        
-        const { error } = await supabase.auth.exchangeCodeForSession(code);
-        if (error) {
-            console.error('OAuth callback error:', error.message);
-            return NextResponse.redirect(`${requestUrl.origin}/auth/login?error=OauthError`);
-        }
+    const supabase = await createServerClient();
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    if (error) {
+        console.error('OAuth callback error:', error.message);
+        return NextResponse.redirect(failure);
     }
 
-    // URL to redirect to after sign in process completes
-    return NextResponse.redirect(`${requestUrl.origin}/dashboard`);
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return NextResponse.redirect(new URL('/auth/login?error=SessionError', request.url));
+
+    const { data: profile } = await supabase
+        .from('profiles')
+        .select('role, active, must_change_password')
+        .eq('id', user.id)
+        .maybeSingle();
+
+    if (!profile?.active) {
+        await supabase.auth.signOut();
+        return NextResponse.redirect(new URL('/auth/login?error=NotAuthorized', request.url));
+    }
+    if (profile?.role === 'admin' && profile.active) {
+        return NextResponse.redirect(new URL(profile.must_change_password ? '/admin/aktivasi' : '/admin', request.url));
+    }
+    return NextResponse.redirect(new URL('/dashboard', request.url));
 }

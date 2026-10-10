@@ -16,7 +16,7 @@ export async function login(formData: FormData): Promise<AuthResult> {
         return { error: 'Email dan password harus diisi.' };
     }
 
-    const supabase = createActionClient();
+    const supabase = await createActionClient();
 
     const { error } = await supabase.auth.signInWithPassword({
         email,
@@ -40,18 +40,19 @@ export async function login(formData: FormData): Promise<AuthResult> {
     }
 
     const { data: profile } = await supabase
-        .from('users')
-        .select('role')
+        .from('profiles')
+        .select('role, active, must_change_password')
         .eq('id', user.id)
-        .single();
+        .maybeSingle();
 
-    const role = profile?.role ?? 'client';
-
-    if (role === 'admin') {
-        redirect('/admin');
-    } else {
-        redirect('/dashboard');
+    if (!profile || !profile.active) {
+        await supabase.auth.signOut();
+        return { error: 'Akun ini belum memiliki akses aktif ke portal.' };
     }
+    if (profile?.role === 'admin' && profile.active) {
+        redirect(profile.must_change_password ? '/admin/aktivasi' : '/admin');
+    }
+    redirect('/dashboard');
 }
 
 export async function register(formData: FormData): Promise<AuthResult> {
@@ -78,7 +79,7 @@ export async function register(formData: FormData): Promise<AuthResult> {
         return { error: 'Konfirmasi password tidak cocok.' };
     }
 
-    const supabase = createActionClient();
+    const supabase = await createActionClient();
 
     // Sign up with Supabase Auth
     // Phone is included in metadata so the DB trigger can use it
@@ -127,7 +128,7 @@ export async function register(formData: FormData): Promise<AuthResult> {
 }
 
 export async function logout(): Promise<void> {
-    const supabase = createActionClient();
+    const supabase = await createActionClient();
     await supabase.auth.signOut();
     redirect('/auth/login');
 }

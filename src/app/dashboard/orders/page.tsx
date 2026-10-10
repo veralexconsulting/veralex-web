@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function OrdersPage() {
     const user = await requireUser();
-    const supabase = createServerClient();
+    const supabase = await createServerClient();
 
     // Fetch orders with service info
     const { data: orders } = await supabase

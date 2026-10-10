@@ -12,7 +12,7 @@ interface AdminOrderDetailProps {
 export default async function AdminOrderDetailPage({ params }: AdminOrderDetailProps) {
     const { id } = await params;
     await requireAdmin();
-    const supabase = createServerClient();
+    const supabase = await createServerClient();
 
     // Fetch order
     const { data: order, error } = await supabase

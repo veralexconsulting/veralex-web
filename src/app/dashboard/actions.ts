@@ -11,7 +11,7 @@ export type ActionResult = {
 
 export async function cancelOrder(formData: FormData): Promise<ActionResult> {
     const user = await requireUser();
-    const supabase = createActionClient();
+    const supabase = await createActionClient();
 
     const orderId = formData.get('orderId') as string;
 
