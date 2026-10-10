@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 import { isTransientAuthError } from '@/lib/workspace/auth-errors';
 
 const SUPPORTED_LOCALES = ['en', 'zh', 'id'];
-const WORKSPACE_ADMIN = ['/admin/proyek','/admin/klien','/admin/tim','/admin/pengaturan','/admin/notifikasi'];
+const WORKSPACE_ADMIN = ['/admin/proyek','/admin/klien','/admin/tim','/admin/riwayat','/admin/pengaturan','/admin/notifikasi'];
 const OWNER_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const OWNER_AREA = ['/aksesraffi','/aksesraffi/login','/aksesraffi/ganti-password'];
 

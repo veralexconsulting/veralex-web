@@ -15,6 +15,8 @@ export default function AdminLayout({
 }) {
     const pathname = usePathname();
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [collapsed,setCollapsed] = useState(false);
+    function toggleCollapsed(){setCollapsed(!collapsed);}
 
     const navLinks = [
         {
@@ -53,7 +55,7 @@ export default function AdminLayout({
     }
 
     return (
-        <div className="panel-layout">
+        <div className={`panel-layout${collapsed?' is-collapsed':''}`}>
             {/* Mobile toggle */}
             <button
                 className="panel-sidebar-toggle"
@@ -75,6 +77,7 @@ export default function AdminLayout({
 
             {/* Sidebar */}
             <aside className={`panel-sidebar ${sidebarOpen ? 'open' : ''}`}>
+                <button type="button" className="panel-sidebar-collapse" onClick={toggleCollapsed} aria-label={collapsed?'Perluas navigasi':'Ciutkan navigasi'} aria-pressed={collapsed}>{collapsed?'›':'‹'}</button>
                 <Link href="/" className="panel-sidebar-brand">
                     <Image src="/logo.webp" alt="VERALEX" className="panel-sidebar-logo" width={36} height={36} />
                     <span className="panel-sidebar-name">VERALEX</span>
@@ -91,7 +94,7 @@ export default function AdminLayout({
                             onClick={() => setSidebarOpen(false)}
                         >
                             {link.icon}
-                            {link.label}
+                            <span className="panel-nav-text">{link.label}</span>
                         </a>
                     ))}
 
@@ -106,7 +109,7 @@ export default function AdminLayout({
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" />
                             </svg>
-                            Keluar
+                            <span className="panel-nav-text">Keluar</span>
                         </button>
                     </form>
                 </nav>

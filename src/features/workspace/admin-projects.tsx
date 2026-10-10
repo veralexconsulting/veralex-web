@@ -37,7 +37,30 @@ export function AdminDashboard() {
       </Link>)}</div> : <EmptyState title="Tidak ada tindakan untuk filter ini" description="Coba pilih PIC atau status lain." />}
     </section>
     <div className="ws-two-col"><section className="ws-section"><div className="ws-section-title"><h2>Baru diperbarui</h2></div><div className="ws-card-grid">{[...data.projects].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)).slice(0, 3).map(project => <ProjectCard key={project.id} project={project} />)}</div></section>
-      <section className="ws-section"><div className="ws-section-title"><h2>Aktivitas tim</h2></div><div className="ws-surface ws-compact-events">{data.activities.slice(0, 5).map(event => <div key={event.id}><span className="ws-event-dot" /><p>{event.text}<small>{formatDateTime(event.at)}</small></p></div>)}</div></section></div>
+      <section className="ws-section"><div className="ws-section-title"><h2>Aktivitas tim</h2><Link href="/admin/riwayat">Lihat riwayat →</Link></div><div className="ws-surface ws-compact-events">{data.activities.slice(0, 5).map(event => <div key={event.id}><span className="ws-event-dot" /><p>{event.text}<small>{formatDateTime(event.at)}</small></p></div>)}</div></section></div>
+  </>;
+}
+
+export function AdminHistory() {
+  const { data } = useWorkspace();
+  const [query,setQuery]=useState('');
+  const [eventType,setEventType]=useState('');
+  const events=data.activities.filter(item=>Boolean(item.eventType))
+    .filter(item=>!eventType||item.eventType===eventType)
+    .filter(item=>!query||`${item.text} ${item.eventType} ${data.admins.find(admin=>admin.id===item.actorId)?.name||''} ${data.projects.find(project=>project.id===item.projectId)?.title||''}`.toLowerCase().includes(query.toLowerCase()));
+  const types=[...new Set(data.activities.map(item=>item.eventType).filter((value):value is string=>Boolean(value)))].sort();
+  return <>
+    <PageHeader eyebrow="Audit operasional" title="Riwayat Aktivitas" description="Catatan tindakan administratif dan perubahan yang tercatat di sistem." />
+    <div className="ws-surface ws-filters ws-history-filters">
+      <input value={query} onChange={event=>setQuery(event.target.value)} placeholder="Cari aktivitas, admin, atau proyek" aria-label="Cari aktivitas" />
+      <select value={eventType} onChange={event=>setEventType(event.target.value)} aria-label="Filter jenis aktivitas"><option value="">Semua aktivitas</option>{types.map(type=><option value={type} key={type}>{type.replaceAll('_',' ')}</option>)}</select>
+      <span className="ws-history-count">{events.length} catatan</span>
+    </div>
+    {events.length ? <ol className="ws-history-list">{events.map(item=>{
+      const actor=data.admins.find(admin=>admin.id===item.actorId);
+      const project=data.projects.find(project=>project.id===item.projectId);
+      return <li className="ws-surface ws-history-item" key={item.id}><span className="ws-event-dot"/><div className="ws-history-detail"><div className="ws-history-heading"><strong>{item.text}</strong><time dateTime={item.at}>{formatDateTime(item.at)}</time></div><div className="ws-history-meta"><span>{actor?.name||'Sistem'}</span><span>{item.eventType?.replaceAll('_',' ')}</span>{project&&<Link href={`/admin/proyek/${project.id}`}>{project.title}</Link>}</div></div></li>;
+    })}</ol> : <EmptyState title="Belum ada aktivitas" description="Aktivitas administratif yang tercatat akan muncul di sini." />}
   </>;
 }
 

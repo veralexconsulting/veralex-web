@@ -11,7 +11,7 @@ export interface Admin { id: string; name: string; email: string; active: boolea
 export interface Client { id: string; name: string; email: string; phone: string; deletedAt?:string }
 export interface ClientAccount { id: string; name: string; email: string }
 export interface ClientAccess { id: string; projectId: string; accountId: string; grantedAt: string; revokedAt?: string }
-export interface Activity { id: string; projectId?: string; actorId: string; text: string; at: string; clientVisible: boolean }
+export interface Activity { id: string; projectId?: string; actorId: string; eventType?: string; text: string; at: string; clientVisible: boolean }
 export interface ProjectAccessLink { id: string; projectId: string; token: string; status: LinkStatus; createdAt: string; expiresAt: string; claimedById?: string }
 export interface Notification { id: string; role: Role; projectId?: string; eventType?: string; title: string; message: string; target: string; read: boolean; at: string }
 export interface PriorityOffering { enabled: boolean; serviceIds: string[]; stageIds: string[]; title: string; description: string; commitment: string; limitations: string; terms: string; price: number }
