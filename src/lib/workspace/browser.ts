@@ -6,7 +6,16 @@ export function workspaceBrowser() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !key) throw new Error('Supabase Auth belum dikonfigurasi.');
-  return createBrowserClient(url, key);
+  return createBrowserClient(url, key, {
+    // Keep the same browser client and persist auth in the SSR cookie format
+    // consumed by middleware and server components on both portal surfaces.
+    isSingleton: true,
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+    },
+  });
 }
 
 export function workspaceOAuthRedirectTo(intent: 'portal' | 'invite') {

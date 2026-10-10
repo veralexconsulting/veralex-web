@@ -60,7 +60,11 @@ export function AdminLogin() {
         await authStep(auth.auth.signOut());
         throw new Error('Akun administrator tidak aktif atau tidak diizinkan.');
       }
-      await recordLoginEvent();
+      // Analytics is best-effort and must never hold up an otherwise valid
+      // authentication. In particular, a transient DATABASE_URL/connection
+      // problem must not make the login form report a failed sign-in after
+      // Supabase has already established the session.
+      void recordLoginEvent().catch(() => undefined);
       router.replace(profile.must_change_password ? '/admin/aktivasi' : '/admin');
       router.refresh();
     } catch (cause) {

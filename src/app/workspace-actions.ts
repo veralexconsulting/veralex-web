@@ -52,7 +52,12 @@ export async function getCurrentWorkspaceActor() { return currentActor(); }
 /** Records one verified sign-in. Called only from a completed login, never from
  *  session restore, so refresh and token rotation are never counted. */
 export async function recordLoginEvent() {
-  const actor = await currentActor();
-  if (!actor) return;
-  try { await logVerifiedLogin(actor.id, actor.role); } catch { /* analytics never blocks a login */ }
+  try {
+    const actor = await currentActor();
+    if (!actor) return;
+    await logVerifiedLogin(actor.id, actor.role);
+  } catch {
+    // Analytics is best-effort. Authenticated navigation must not depend on
+    // an auxiliary profile lookup or audit database write succeeding.
+  }
 }

@@ -8,6 +8,9 @@ import { hasGoogleIdentity } from '../src/lib/workspace/identity.ts';
 const claims = readFileSync('src/lib/workspace/claims.ts', 'utf8');
 const operations = readFileSync('src/lib/workspace/operations.ts', 'utf8');
 const middleware = readFileSync('src/middleware.ts', 'utf8');
+const browserAuth = readFileSync('src/lib/workspace/browser.ts', 'utf8');
+const authCallback = readFileSync('src/app/workspace/auth/callback/route.ts', 'utf8');
+const adminLogin = readFileSync('src/features/workspace/client-pages.tsx', 'utf8');
 const migration = readFileSync('supabase/migrations/202610100001_workspace_safe_admin_removals.sql', 'utf8');
 const schema = readFileSync('supabase/migrations/202610090001_workspace_schema.sql', 'utf8');
 
@@ -41,6 +44,15 @@ test('auth failures distinguish a missing session from transient verification fa
   assert.equal(isTransientAuthError(new Error('Auth session missing')), false);
   assert.match(middleware, /NextResponse\.next\(\{request:req\}\)/);
   assert.match(middleware, /isTransientAuthError\(authResult\.error\)/);
+});
+
+test('admin and client sessions persist in the browser and OAuth callback redirect', () => {
+  assert.match(browserAuth, /persistSession:\s*true/);
+  assert.match(browserAuth, /autoRefreshToken:\s*true/);
+  assert.match(browserAuth, /isSingleton:\s*true/);
+  assert.match(authCallback, /authCookies\.set\(item\.name,item\)/);
+  assert.match(authCallback, /response\.cookies\.set\(cookie\.name,cookie\.value,cookie\.options\)/);
+  assert.match(adminLogin, /void recordLoginEvent\(\)\.catch\(\(\) => undefined\)/);
 });
 
 test('claim transaction serializes on project and invitation rows and preserves first claimant ownership', () => {
