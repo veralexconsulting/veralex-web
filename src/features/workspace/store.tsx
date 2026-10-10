@@ -17,7 +17,8 @@ interface WorkspaceContextValue {
   addProjectUpdate:(projectId:string,message:string,clientVisible:boolean)=>Promise<void>;
   updateClient:(id:string,patch:{name:string;email:string;phone:string})=>Promise<void>;
   deleteClient:(id:string)=>Promise<void>;
-  createTeamMember:(name:string,email:string,initialPassword:string)=>Promise<void>;
+  createTeamMember:(name:string,email:string,phone:string,initialPassword:string)=>Promise<void>;
+  updateTeamContact:(id:string,name:string,phone:string)=>Promise<void>;
   deleteTeamMember:(id:string)=>Promise<void>;
   deleteProject:(id:string)=>Promise<void>;
   setAdminActive:(id:string,active:boolean)=>Promise<void>;
@@ -108,7 +109,8 @@ export function WorkspaceProvider({children,role}:{children:React.ReactNode;role
     async addProjectUpdate(projectId,message,clientVisible){await run({type:'add_project_update',projectId,message,clientVisible},'Pembaruan proyek ditambahkan.');},
     updateClient:async(id,patch)=>{await run({type:'update_client',id,patch},'Kontak klien diperbarui.');},
     deleteClient:async id=>{await run({type:'delete_client',id},'Data kontak klien dihapus.');},
-    async createTeamMember(name,email,password){await run({type:'create_team',name,email,password},'Akun administrator dibuat. Sampaikan kata sandi awal melalui kanal privat.');},
+    async createTeamMember(name,email,phone,password){await run({type:'create_team',name,email,phone,password},'Akun administrator dibuat. Sampaikan kata sandi awal melalui kanal privat.');},
+    updateTeamContact:async(id,name,phone)=>{await run({type:'update_team_contact',id,name,phone},'Kontak WhatsApp anggota tim diperbarui.');},
     deleteTeamMember:async id=>{await run({type:'delete_team',id},'Anggota tim dinonaktifkan dan dikeluarkan dari daftar. Riwayat serta akun Auth dipertahankan.');},
     deleteProject:async id=>{await run({type:'delete_project',id},'Proyek dihapus dari tampilan aktif. Riwayatnya dipertahankan.');},
     setAdminActive:async(id,active)=>{await run({type:'set_admin_active',id,active},'Status administrator diperbarui.');},

@@ -1,7 +1,12 @@
 export const WHATSAPP_NUMBER = '6281219476385';
 
 export function whatsappHref(message: string): string {
-    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    return whatsappNumberHref(WHATSAPP_NUMBER, message);
+}
+
+/** Direct line to a team member. Digits only, so a pasted "+62 (812)…" still works. */
+export function whatsappNumberHref(number: string, message: string): string {
+    return `https://wa.me/${number.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`;
 }
 
 export type LeadEvent = 'whatsapp_click' | 'phone_click' | 'email_click';

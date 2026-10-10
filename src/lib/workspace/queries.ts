@@ -42,7 +42,7 @@ export async function adminSnapshot(): Promise<{ data: WorkspaceData; actorId: s
   const services: Service[] = serviceRows.map(service => { const template = templateByService.get(String(service.slug)); const draft=draftByService.get(String(service.slug)); return { id: String(service.slug), name: String(service.name), approval: template?.legal_review_required ? 'starter' : 'approved', version: Number(template?.version || 0), legalReviewRequired: Boolean(template?.legal_review_required), stages: template ? templateStages.get(String(template.id)) || [] : [], draftStages:draft?templateStages.get(String(draft.id))||[]:undefined,draftVersion:draft?Number(draft.version):undefined }; });
   const stageMap = nestStages(projectSteps, projectTasks, 'project_id');
   const data: WorkspaceData = {
-    admins: profiles.filter(item => item.role === 'admin' && !item.deleted_at).map(item => ({ id: String(item.id), name: String(item.full_name), email: String(item.email), active: Boolean(item.active), mustChangePassword: Boolean(item.must_change_password), createdById: item.created_by ? String(item.created_by) : undefined, createdAt: iso(item.created_at) })),
+    admins: profiles.filter(item => item.role === 'admin' && !item.deleted_at).map(item => ({ id: String(item.id), name: String(item.full_name), email: String(item.email), phone: String(item.phone || ''), active: Boolean(item.active), mustChangePassword: Boolean(item.must_change_password), createdById: item.created_by ? String(item.created_by) : undefined, createdAt: iso(item.created_at) })),
     clientAccounts: profiles.filter(item => item.role === 'client' && (accesses.some(access => access.client_user_id === item.id) || projectRows.some(project=>project.updated_by===item.id) || audits.some(event=>event.actor_user_id===item.id))).map(item => ({ id: String(item.id), name: String(item.full_name), email: String(item.email) })),
     clients: clientRows.map(item => ({ id: String(item.id), name: String(item.name), email: String(item.email), phone: String(item.phone), deletedAt:item.deleted_at?iso(item.deleted_at):undefined })), services,
     projects: projectRows.map(item => projectRow(item, stageMap.get(String(item.id)) || [], supporting.filter(row => row.project_id === item.id).map(row => String(row.admin_user_id)), priorityRows.find(row => row.project_id === item.id))),
@@ -63,7 +63,7 @@ export async function clientSnapshot(): Promise<{ data: WorkspaceData; actorId: 
     ids.length ? rows<Record<string, unknown>>('select * from public.project_steps where project_id=any($1::uuid[]) and client_visible=true order by project_id,position',[ids]) : Promise.resolve([]),
     ids.length ? rows<Record<string, unknown>>('select t.id,t.step_id,t.status from public.project_tasks t join public.project_steps s on s.id=t.step_id where s.project_id=any($1::uuid[]) and s.client_visible=true',[ids]) : Promise.resolve([]),
     rows<Record<string, unknown>>('select slug,name from public.workspace_services'),
-    ids.length ? rows<Record<string, unknown>>('select distinct p.id,p.full_name,p.email from public.profiles p join public.projects j on j.pic_user_id=p.id where j.id=any($1::uuid[])',[ids]) : Promise.resolve([]),
+    ids.length ? rows<Record<string, unknown>>('select distinct p.id,p.full_name,p.phone from public.profiles p join public.projects j on j.pic_user_id=p.id where j.id=any($1::uuid[])',[ids]) : Promise.resolve([]),
     ids.length ? rows<Record<string, unknown>>('select distinct c.id,c.name from public.clients c join public.projects p on p.client_id=c.id where p.id=any($1::uuid[])',[ids]) : Promise.resolve([]),
     ids.length ? rows<Record<string, unknown>>('select * from public.project_updates where project_id=any($1::uuid[]) and client_visible=true order by created_at desc limit 200',[ids]) : Promise.resolve([]),
     rows<Record<string, unknown>>('select * from public.notifications where recipient_user_id=$1 order by created_at desc limit 200',[actor.id]),
@@ -76,7 +76,7 @@ export async function clientSnapshot(): Promise<{ data: WorkspaceData; actorId: 
     const project=projects.find(item=>item.id===step.project_id);
     return project && clientOffering.stageIds.includes(`${project.service_slug}:${step.source_template_step_id}`) ? [`${project.service_slug}:${step.id}`] : [];
   });
-  const data: WorkspaceData = { admins: pics.map(item => ({ id:String(item.id),name:String(item.full_name),email:'',active:true,mustChangePassword:false,createdAt:'' })),
+  const data: WorkspaceData = { admins: pics.map(item => ({ id:String(item.id),name:String(item.full_name),email:'',phone:String(item.phone||''),active:true,mustChangePassword:false,createdAt:'' })),
     clients: clients.map(item => ({ id:String(item.id),name:String(item.name),email:'',phone:'' })), clientAccounts: [{ id:actor.id,name:actor.name,email:actor.email }],
     accesses: accessRows.map(item => ({ id:String(item.id),projectId:String(item.project_id),accountId:actor.id,grantedAt:iso(item.granted_at) })),
     services: services.map(item => ({ id:String(item.slug),name:String(item.name),approval:'starter',version:0,legalReviewRequired:true,stages:[] })),

@@ -193,6 +193,7 @@ body:has(.workspace) > .floating-whatsapp, body:has(.workspace) .scroll-progress
 .ws-client-project,.ws-client-update { border-top:1px solid var(--ws-line); padding:14px 0; }
 .ws-client-project strong,.ws-client-project small,.ws-client-update small { display:block; }
 .ws-client-project .ws-badge { margin:8px 0; }
+.ws-team-phone { font-size:12px; color:var(--ws-gold,#C8A15A); margin:6px 0 0; overflow-wrap:anywhere; }
 .ws-team-stats { display:grid; gap:4px; font-size:11px; color:var(--ws-muted); margin-top:15px; }
 .ws-team-detail { border-top:1px solid var(--ws-line); margin-top:17px; padding-top:12px; display:grid; gap:7px; }
 .ws-team-detail h4 { font-size:12px; margin-top:7px; }

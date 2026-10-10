@@ -7,7 +7,7 @@ export type Role = 'admin' | 'client';
 export interface Task { id: string; title: string; status: TaskStatus; conditional: boolean; note?: string; dueAt?: string }
 export interface Stage { id: string; sourceTemplateStepId?: string; title: string; description: string; clientLabel: string; clientVisible: boolean; waitingKind: 'internal' | 'client' | 'institution'; completionCriteria: string; tasks: Task[] }
 export interface Service { id: string; name: string; approval: 'starter' | 'approved'; version: number; legalReviewRequired: boolean; stages: Stage[]; draftStages?: Stage[]; draftVersion?: number }
-export interface Admin { id: string; name: string; email: string; active: boolean; mustChangePassword: boolean; createdById?: string; createdAt: string }
+export interface Admin { id: string; name: string; email: string; phone: string; active: boolean; mustChangePassword: boolean; createdById?: string; createdAt: string }
 export interface Client { id: string; name: string; email: string; phone: string; deletedAt?:string }
 export interface ClientAccount { id: string; name: string; email: string }
 export interface ClientAccess { id: string; projectId: string; accountId: string; grantedAt: string; revokedAt?: string }
