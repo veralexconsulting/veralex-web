@@ -15,8 +15,11 @@ export type Operation =
  | { type:'set_task_status'; projectId:string; taskId:string; status:TaskStatus; reason?:string }
  | { type:'add_project_update'; projectId:string; message:string; clientVisible:boolean }
  | { type:'update_client'; id:string; patch:{name:string;email:string;phone:string} }
+ | { type:'delete_client'; id:string }
  | { type:'create_team'; name:string; email:string; password:string }
+ | { type:'delete_team'; id:string }
  | { type:'set_admin_active'; id:string; active:boolean }
+ | { type:'delete_project'; id:string }
  | { type:'update_service'; id:string; stages:Stage[] }
  | { type:'publish_service'; id:string }
  | { type:'update_offering'; value:PriorityOffering }
@@ -40,13 +43,14 @@ async function update(c: PoolClient, projectId: string, actorId: string, message
 async function notify(c: PoolClient, userId: string, projectId: string | null, type: string, title: string, message: string, target: string) { const row = (await query(c,'insert into public.notifications(recipient_user_id,project_id,event_type,title,message,target_path) values($1,$2,$3,$4,$5,$6) returning id',[userId,projectId,type,title,message,target])).rows[0]; await query(c,"insert into public.notification_outbox(notification_id,channel,status) values($1,'in_app','sent')",[row.id]); }
 async function notifyProjectClient(c: PoolClient, projectId: string, type: string, title: string, message: string) { const found = (await query(c,'select client_user_id from public.client_project_access where project_id=$1 and revoked_at is null',[projectId])).rows[0]; if (found) await notify(c,found.client_user_id,projectId,type,title,message,`/portal/proyek/${projectId}`); }
 async function notifyAdmins(c: PoolClient, projectId: string, type: string, title: string, message: string) { const users = (await query(c,"select id from public.profiles where role='admin' and active=true and must_change_password=false")).rows; for (const user of users) await notify(c,user.id,projectId,type,title,message,`/admin/proyek/${projectId}`); }
-async function ensureProject(c: PoolClient, id: string) { if (!uuid(id)) throw new Error('Proyek tidak valid.'); const row=(await query(c,'select * from public.projects where id=$1 for update',[id])).rows[0]; if (!row) throw new Error('Proyek tidak ditemukan.'); return row; }
+async function ensureProject(c: PoolClient, id: string) { if (!uuid(id)) throw new Error('Proyek tidak valid.'); const row=(await query(c,'select * from public.projects where id=$1 and deleted_at is null for update',[id])).rows[0]; if (!row) throw new Error('Proyek tidak ditemukan.'); return row; }
 function validateStages(stages: Stage[]) { if (!Array.isArray(stages) || stages.length < 1 || stages.length > 60) throw new Error('Workflow memerlukan 1–60 tahap.'); const ids=new Set<string>(); for (const stage of stages) { if (!required(stage.title,200) || !required(stage.clientLabel,200) || !required(stage.completionCriteria,500) || !['internal','client','institution'].includes(stage.waitingKind) || typeof stage.description !== 'string' || stage.description.length > 1000 || !uuid(stage.id) || ids.has(stage.id)) throw new Error('Tahap workflow tidak valid.'); ids.add(stage.id); operationalText(stage.title); operationalText(stage.description); operationalText(stage.clientLabel); if (!Array.isArray(stage.tasks) || stage.tasks.length > 100) throw new Error('Tugas terlalu banyak.'); for (const task of stage.tasks) { if (!uuid(task.id) || ids.has(task.id) || !required(task.title,250) || !taskStatuses.includes(task.status) || (task.dueAt && !/^\d{4}-\d{2}-\d{2}$/.test(task.dueAt)) || (task.note && task.note.length > 500)) throw new Error('Tugas workflow tidak valid.'); ids.add(task.id); operationalText(task.title); if(task.note)operationalText(task.note); } } }
 async function insertStages(c: PoolClient, projectId: string, stages: Stage[]) { for (let i=0;i<stages.length;i++) { const stage=stages[i]; await query(c,'insert into public.project_steps(id,project_id,source_template_step_id,position,title,description,client_label,client_visible,waiting_kind,completion_criteria) values($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)',[stage.id,projectId,stage.sourceTemplateStepId||null,i+1,stage.title,stage.description,stage.clientLabel,stage.clientVisible,stage.waitingKind,stage.completionCriteria]); for (let j=0;j<stage.tasks.length;j++) { const task=stage.tasks[j]; await query(c,'insert into public.project_tasks(id,step_id,position,title,conditional,status,note,due_at) values($1,$2,$3,$4,$5,$6,$7,$8)',[task.id,stage.id,j+1,task.title,task.conditional,task.status,task.note||'',task.dueAt||null]); } } }
 async function newLink(c: PoolClient, projectId:string, actorId:string) { const owned=(await query(c,'select 1 from public.client_project_access where project_id=$1 and revoked_at is null',[projectId])).rowCount; if(owned)throw new Error('Akses klien sudah diklaim. Atur ulang klaim sebelum menerbitkan tautan baru.'); const token=newProjectToken(); await query(c,"update public.project_access_links set status='revoked',revoked_at=now() where project_id=$1 and status='active'",[projectId]); await query(c,"insert into public.project_access_links(project_id,token_hash,expires_at,created_by) values($1,$2,now()+interval '72 hours',$3)",[projectId,tokenHash(token),actorId]); await touchProject(c,projectId,actorId); await audit(c,actorId,'access_link_created','Tautan akses proyek diterbitkan.',projectId); return token; }
 
 export async function runOperation(input: Operation): Promise<{ id?:string; token?:string }> {
   if (input.type === 'create_team') return createTeam(input);
+  if (input.type === 'delete_team') return deleteTeam(input);
   if (input.type === 'set_admin_active') return setAdminActive(input);
   if (input.type === 'mark_read' || input.type === 'mark_all_read') return markRead(input);
   if (input.type === 'set_priority' && ['requested','cancelled'].includes(input.status)) return setClientPriority(input);
@@ -58,6 +62,8 @@ export async function runOperation(input: Operation): Promise<{ id?:string; toke
     case 'set_task_status': return setTaskStatus(actor,input.projectId,input.taskId,input.status,input.reason);
     case 'add_project_update': return addProjectUpdate(actor,input.projectId,input.message,input.clientVisible);
     case 'update_client': return updateClient(actor,input.id,input.patch);
+    case 'delete_client': return deleteClient(actor,input.id);
+    case 'delete_project': return deleteProject(actor,input.id);
     case 'update_service': return updateService(actor,input.id,input.stages);
     case 'publish_service': return publishService(actor,input.id);
     case 'update_offering': return updateOffering(actor,input.value);
@@ -69,16 +75,67 @@ export async function runOperation(input: Operation): Promise<{ id?:string; toke
   }
 }
 
+async function deleteProject(actor:Actor,id:string) {
+  if (!uuid(id)) throw new Error('Proyek tidak valid.');
+  return transaction(async c => {
+    const project=await ensureProject(c,id);
+    const accesses=await query(c,'update public.client_project_access set revoked_at=coalesce(revoked_at,now()),revoked_by=coalesce(revoked_by,$2) where project_id=$1 and revoked_at is null',[id,actor.id]);
+    await query(c,"update public.project_access_links set status='revoked',revoked_at=coalesce(revoked_at,now()) where project_id=$1 and status <> 'revoked'",[id]);
+    await query(c,"update public.notifications set target_path='/portal' where project_id=$1 and target_path like '/portal/proyek/%'",[id]);
+    await query(c,"update public.projects set status='archived',deleted_at=now(),deleted_by=$2,internal_notes='',updated_by=$2,updated_at=now() where id=$1 and deleted_at is null",[id,actor.id]);
+    await audit(c,actor.id,'project_deleted',`Proyek “${String(project.title)}” dihapus dari tampilan aktif; riwayat dipertahankan dan ${accesses.rowCount||0} akses klien dicabut.`,id);
+    return {};
+  });
+}
+
+async function deleteClient(actor:Actor,id:string) {
+  if (!uuid(id)) throw new Error('Klien tidak valid.');
+  return transaction(async c => {
+    const target=(await query(c,'select id,name from public.clients where id=$1 for update',[id])).rows[0];
+    if (!target) throw new Error('Klien tidak ditemukan.');
+    const dependencies=(await query(c,'select count(*)::int as count from public.projects where client_id=$1 and deleted_at is null',[id])).rows[0];
+    if (Number(dependencies.count)>0) throw new Error(`Klien masih terkait dengan ${dependencies.count} proyek aktif. Hapus proyek terkait terlebih dahulu; riwayat proyek akan tetap tersimpan.`);
+    await query(c,'update public.clients set deleted_at=coalesce(deleted_at,now()),updated_by=$2,updated_at=now() where id=$1',[id,actor.id]);
+    await audit(c,actor.id,'client_deleted',`Data kontak klien “${String(target.name)}” dikeluarkan dari daftar aktif. Akun dan riwayat proyek tidak dihapus.`);
+    return {};
+  });
+}
+
+async function deleteTeam(input:Extract<Operation,{type:'delete_team'}>) {
+  const actor=await requireWorkspaceAdmin();
+  if (!uuid(input.id) || input.id===actor.id) throw new Error('Akun sendiri tidak dapat dihapus.');
+  const service=workspaceServiceClient();
+  return transaction(async c => {
+    await query(c,'select pg_advisory_xact_lock(94613580)');
+    const target=(await query(c,"select id,active,full_name from public.profiles where id=$1 and role='admin' and deleted_at is null for update",[input.id])).rows[0];
+    if (!target) throw new Error('Anggota tim tidak ditemukan.');
+    const count=Number((await query(c,"select count(*)::int as count from public.profiles where role='admin' and active=true and deleted_at is null")).rows[0].count);
+    if (target.active && count<=1) throw new Error('Administrator aktif terakhir tidak dapat dihapus.');
+    const assignments=Number((await query(c,'select count(*)::int as count from public.projects p where p.deleted_at is null and (p.pic_user_id=$1 or exists(select 1 from public.project_supporting_admins s where s.project_id=p.id and s.admin_user_id=$1))',[input.id])).rows[0].count);
+    if (assignments>0) throw new Error(`Anggota tim masih ditugaskan pada ${assignments} proyek. Alihkan seluruh PIC dan penugasan pendukung terlebih dahulu.`);
+    const {error}=await service.auth.admin.updateUserById(input.id,{ban_duration:'876000h'});
+    if(error) throw new Error('Akses akun tidak dapat dicabut.');
+    try {
+      await query(c,'update public.profiles set active=false,deleted_at=now(),updated_at=now() where id=$1',[input.id]);
+      await audit(c,actor.id,'admin_deleted',`Anggota tim ${String(target.full_name)} dinonaktifkan dan dikeluarkan dari daftar tim. Akun Auth serta riwayat dipertahankan.`);
+    } catch(cause) {
+      if(target.active) await service.auth.admin.updateUserById(input.id,{ban_duration:'none'});
+      throw cause;
+    }
+    return {};
+  });
+}
+
 async function createProject(actor:Actor,draft:DraftProject) { if (!required(draft.clientName,200) || !required(draft.title,250) || !uuid(draft.picId) || (draft.clientId && !uuid(draft.clientId)) || !Array.isArray(draft.supportingIds) || draft.supportingIds.length>20 || !validDate(draft.startAt) || !validDate(draft.followUpAt) || typeof draft.notes!=='string' || draft.notes.length > 2000 || typeof draft.clientPhone!=='string' || draft.clientPhone.length>40 || (draft.clientEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(draft.clientEmail))) throw new Error('Data proyek tidak valid.'); operationalText(draft.notes); return transaction(async c => {
   const service=(await query(c,'select slug from public.workspace_services where slug=$1 and active=true',[draft.serviceId])).rows[0]; if (!service) throw new Error('Layanan tidak tersedia.');
   const template=(await query(c,"select id,version from public.workflow_templates where service_slug=$1 and status='published' order by version desc limit 1",[draft.serviceId])).rows[0]; if (!template) throw new Error('SOP layanan belum diterbitkan.');
-  const pic=(await query(c,"select id from public.profiles where id=$1 and role='admin' and active=true and must_change_password=false",[draft.picId])).rows[0]; if (!pic) throw new Error('PIC harus administrator aktif.');
-  const client=draft.clientId ? (await query(c,'select id from public.clients where id=$1',[draft.clientId])).rows[0] : (await query(c,'insert into public.clients(name,email,phone,created_by,updated_by) values($1,$2,$3,$4,$4) returning id',[draft.clientName.trim(),draft.clientEmail.trim(),draft.clientPhone.trim(),actor.id])).rows[0];
+  const pic=(await query(c,"select id from public.profiles where id=$1 and role='admin' and active=true and must_change_password=false and deleted_at is null for update",[draft.picId])).rows[0]; if (!pic) throw new Error('PIC harus administrator aktif.');
+  const client=draft.clientId ? (await query(c,'select id from public.clients where id=$1 and deleted_at is null for update',[draft.clientId])).rows[0] : (await query(c,'insert into public.clients(name,email,phone,created_by,updated_by) values($1,$2,$3,$4,$4) returning id',[draft.clientName.trim(),draft.clientEmail.trim(),draft.clientPhone.trim(),actor.id])).rows[0];
   if(!client)throw new Error('Klien yang dipilih tidak ditemukan.');
   const project=(await query(c,'insert into public.projects(client_id,service_slug,workflow_template_id,workflow_version,title,pic_user_id,created_by,updated_by,start_at,follow_up_at,internal_notes) values($1,$2,$3,$4,$5,$6,$7,$7,$8,$9,$10) returning id',[client.id,draft.serviceId,template.id,template.version,draft.title.trim(),draft.picId,actor.id,draft.startAt||null,draft.followUpAt||null,draft.notes.trim()])).rows[0];
   await query(c,'insert into public.project_steps(project_id,source_template_step_id,position,title,description,client_label,client_visible,waiting_kind,completion_criteria) select $1,id,position,title,description,client_label,client_visible,waiting_kind,completion_criteria from public.workflow_template_steps where template_id=$2 order by position',[project.id,template.id]);
   await query(c,"insert into public.project_tasks(step_id,position,title,conditional,status) select p.id,t.position,t.title,t.conditional,'pending' from public.workflow_template_tasks t join public.workflow_template_steps s on s.id=t.step_id join public.project_steps p on p.project_id=$1 and p.position=s.position where s.template_id=$2",[project.id,template.id]);
-  for (const id of new Set(draft.supportingIds)) if (uuid(id) && id!==draft.picId) await query(c,"insert into public.project_supporting_admins(project_id,admin_user_id) select $1,id from public.profiles where id=$2 and role='admin' and active=true",[project.id,id]);
+  for (const id of new Set(draft.supportingIds)) if (uuid(id) && id!==draft.picId) { const supporting=(await query(c,"select id from public.profiles where id=$1 and role='admin' and active=true and deleted_at is null for update",[id])).rows[0]; if(supporting)await query(c,'insert into public.project_supporting_admins(project_id,admin_user_id) values($1,$2)',[project.id,id]); }
   await audit(c,actor.id,'project_created','Proyek dibuat.',project.id); await update(c,project.id,actor.id,'Proyek dibuat dan alur kerja disiapkan.',true);
   if (draft.picId !== actor.id) await notify(c,draft.picId,project.id,'pic_assigned','Penugasan PIC',draft.title.trim(),`/admin/proyek/${project.id}`);
   const token=await newLink(c,project.id,actor.id); return {id:project.id as string,token};
@@ -86,9 +143,9 @@ async function createProject(actor:Actor,draft:DraftProject) { if (!required(dra
 
 async function updateProject(actor:Actor,id:string,patch:Record<string,unknown>) { if (!uuid(id)) throw new Error('Proyek tidak valid.'); return transaction(async c => { const old=await ensureProject(c,id); const title=patch.title === undefined ? old.title : patch.title; const status=patch.status === undefined ? old.status : patch.status; const pic=patch.picId === undefined ? old.pic_user_id : patch.picId; const follow=patch.followUpAt === undefined ? old.follow_up_at : patch.followUpAt; const notes=patch.notes === undefined ? old.internal_notes : patch.notes;
   if (!required(title,250) || !statuses.includes(status as ProjectStatus) || !uuid(pic as string) || (!validDate(follow) && !(follow instanceof Date)) || typeof notes !== 'string' || notes.length > 2000) throw new Error('Perubahan proyek tidak valid.'); operationalText(notes);
-  if (!(await query(c,"select 1 from public.profiles where id=$1 and role='admin' and active=true and must_change_password=false",[pic])).rowCount) throw new Error('PIC harus administrator aktif.');
+  if (!(await query(c,"select 1 from public.profiles where id=$1 and role='admin' and active=true and must_change_password=false and deleted_at is null for update",[pic])).rowCount) throw new Error('PIC harus administrator aktif.');
   await query(c,'update public.projects set title=$2,status=$3,pic_user_id=$4,follow_up_at=$5,internal_notes=$6,updated_by=$7,updated_at=now() where id=$1',[id,String(title).trim(),status,pic,follow||null,notes,actor.id]);
-  if (Array.isArray(patch.supportingIds)) { await query(c,'delete from public.project_supporting_admins where project_id=$1',[id]); for (const admin of new Set(patch.supportingIds)) if (typeof admin === 'string' && uuid(admin) && admin!==pic) await query(c,"insert into public.project_supporting_admins(project_id,admin_user_id) select $1,id from public.profiles where id=$2 and role='admin' and active=true",[id,admin]); }
+  if (Array.isArray(patch.supportingIds)) { await query(c,'delete from public.project_supporting_admins where project_id=$1',[id]); for (const admin of new Set(patch.supportingIds)) if (typeof admin === 'string' && uuid(admin) && admin!==pic) { const supporting=(await query(c,"select id from public.profiles where id=$1 and role='admin' and active=true and deleted_at is null for update",[admin])).rows[0]; if(supporting)await query(c,'insert into public.project_supporting_admins(project_id,admin_user_id) values($1,$2)',[id,admin]); } }
   const changes=[old.title!==title?'judul':'',old.status!==status?'status':'',old.pic_user_id!==pic?'PIC':'',old.internal_notes!==notes?'catatan internal':''].filter(Boolean).join(', ') || 'rincian';
   await audit(c,actor.id,'project_updated',`Memperbarui ${changes} proyek.`,id); if (old.status!==status) await update(c,id,actor.id,`Status proyek menjadi ${statusLabels[status as ProjectStatus]}.`,true);
   if (old.pic_user_id!==pic) await notify(c,pic as string,id,'pic_assigned','Penugasan PIC',String(title),`/admin/proyek/${id}`); return {};
@@ -110,7 +167,7 @@ async function setTaskStatus(actor:Actor,projectId:string,taskId:string,status:T
   return {};
 }); }
 async function addProjectUpdate(actor:Actor,projectId:string,message:string,clientVisible:boolean){if(!uuid(projectId)||!required(message,1000)||typeof clientVisible!=='boolean')throw new Error('Pembaruan proyek tidak valid.');const clean=operationalText(message);return transaction(async c=>{await ensureProject(c,projectId);await update(c,projectId,actor.id,clean,clientVisible);await touchProject(c,projectId,actor.id);await audit(c,actor.id,'project_update_added',clientVisible?'Pembaruan untuk klien diterbitkan.':'Catatan aktivitas internal ditambahkan.',projectId);return {};});}
-async function updateClient(actor:Actor,id:string,patch:{name:string;email:string;phone:string}) { if (!uuid(id) || !required(patch.name,200) || typeof patch.email!=='string' || typeof patch.phone!=='string' || (patch.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(patch.email)) || patch.phone.length>40) throw new Error('Kontak klien tidak valid.'); return transaction(async c => { const result=await query(c,'update public.clients set name=$2,email=$3,phone=$4,updated_by=$5,updated_at=now() where id=$1 returning id',[id,patch.name.trim(),patch.email.trim(),patch.phone.trim(),actor.id]); if (!result.rowCount) throw new Error('Klien tidak ditemukan.'); const projects=(await query(c,'select id from public.projects where client_id=$1',[id])).rows; for (const project of projects) await audit(c,actor.id,'client_updated','Kontak bisnis klien diperbarui.',project.id); return {}; }); }
+async function updateClient(actor:Actor,id:string,patch:{name:string;email:string;phone:string}) { if (!uuid(id) || !required(patch.name,200) || typeof patch.email!=='string' || typeof patch.phone!=='string' || (patch.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(patch.email)) || patch.phone.length>40) throw new Error('Kontak klien tidak valid.'); return transaction(async c => { const result=await query(c,'update public.clients set name=$2,email=$3,phone=$4,updated_by=$5,updated_at=now() where id=$1 and deleted_at is null returning id',[id,patch.name.trim(),patch.email.trim(),patch.phone.trim(),actor.id]); if (!result.rowCount) throw new Error('Klien tidak ditemukan.'); const projects=(await query(c,'select id from public.projects where client_id=$1 and deleted_at is null',[id])).rows; for (const project of projects) await audit(c,actor.id,'client_updated','Kontak bisnis klien diperbarui.',project.id); return {}; }); }
 async function createTeam(input:Extract<Operation,{type:'create_team'}>) { const actor=await requireWorkspaceAdmin(); const {name,email,password}=input; if (!required(name,120) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || password.length<12 || password.length>128 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/\d/.test(password)) throw new Error('Nama, email, atau kekuatan kata sandi tidak memenuhi syarat.');
   await workspaceRateLimit(actor.id,'create_team',10);
   const service=workspaceServiceClient(); const {data,error}=await service.auth.admin.createUser({email:email.trim().toLowerCase(),password,email_confirm:true,user_metadata:{full_name:name.trim()},app_metadata:{workspace_role:'admin',must_change_password:true}});
@@ -119,7 +176,7 @@ async function createTeam(input:Extract<Operation,{type:'create_team'}>) { const
   catch (cause) { await service.auth.admin.deleteUser(data.user.id); throw cause; }
   return {id:data.user.id};
 }
-async function setAdminActive(input:Extract<Operation,{type:'set_admin_active'}>) { const actor=await requireWorkspaceAdmin(); if (!uuid(input.id) || input.id===actor.id) throw new Error('Akun sendiri tidak dapat dinonaktifkan.'); const service=workspaceServiceClient(); return transaction(async c => { await query(c,'select pg_advisory_xact_lock(94613580)'); const target=(await query(c,"select id,role,active from public.profiles where id=$1 and role='admin' for update",[input.id])).rows[0]; if (!target) throw new Error('Administrator tidak ditemukan.'); if (!input.active) { const count=(await query(c,"select count(*)::int as count from public.profiles where role='admin' and active=true")).rows[0].count; if (count<=1) throw new Error('Administrator aktif terakhir tidak dapat dinonaktifkan.'); const assigned=(await query(c,"select 1 from public.projects where pic_user_id=$1 and status not in ('completed','cancelled','archived') limit 1",[input.id])).rowCount; if (assigned) throw new Error('Pindahkan PIC proyek aktif terlebih dahulu.'); }
+async function setAdminActive(input:Extract<Operation,{type:'set_admin_active'}>) { const actor=await requireWorkspaceAdmin(); if (!uuid(input.id) || input.id===actor.id) throw new Error('Akun sendiri tidak dapat dinonaktifkan.'); const service=workspaceServiceClient(); return transaction(async c => { await query(c,'select pg_advisory_xact_lock(94613580)'); const target=(await query(c,"select id,role,active from public.profiles where id=$1 and role='admin' and deleted_at is null for update",[input.id])).rows[0]; if (!target) throw new Error('Administrator tidak ditemukan.'); if (!input.active) { const count=(await query(c,"select count(*)::int as count from public.profiles where role='admin' and active=true and deleted_at is null")).rows[0].count; if (count<=1) throw new Error('Administrator aktif terakhir tidak dapat dinonaktifkan.'); const assigned=(await query(c,"select 1 from public.projects p where p.deleted_at is null and p.status not in ('completed','cancelled','archived') and (p.pic_user_id=$1 or exists(select 1 from public.project_supporting_admins s where s.project_id=p.id and s.admin_user_id=$1)) limit 1",[input.id])).rowCount; if (assigned) throw new Error('Pindahkan PIC proyek aktif terlebih dahulu.'); }
   const {error}=await service.auth.admin.updateUserById(input.id,{ban_duration:input.active?'none':'876000h'}); if (error) throw new Error('Status Auth tidak dapat diubah.');
   try { await query(c,'update public.profiles set active=$2,updated_at=now() where id=$1',[input.id,input.active]); await audit(c,actor.id,input.active?'admin_reactivated':'admin_deactivated',`Status administrator ${input.id} diubah.`); }
   catch (cause) { await service.auth.admin.updateUserById(input.id,{ban_duration:target.active?'none':'876000h'}); throw cause; }

@@ -12,6 +12,10 @@ const visibleOperationErrors = new Set([
   'Catatan tidak boleh memuat nomor identitas atau isi berkas.',
   'Data proyek tidak valid.',
   'Klien yang dipilih tidak ditemukan.',
+  'Administrator aktif terakhir tidak dapat dihapus.',
+  'Akun sendiri tidak dapat dihapus.',
+  'Akses akun tidak dapat dicabut.',
+  'Anggota tim tidak ditemukan.',
   'Layanan tidak tersedia.',
   'PIC harus administrator aktif.',
   'Proyek tidak ditemukan.',
@@ -28,6 +32,7 @@ export async function mutateWorkspace(input:Operation): Promise<
     if (cause instanceof Error && visibleOperationErrors.has(cause.message)) {
       return { ok:false, error:cause.message };
     }
+    if(cause instanceof Error && (cause.message.startsWith('Klien masih terkait dengan')||cause.message.startsWith('Anggota tim masih ditugaskan pada'))) return {ok:false,error:cause.message};
     const reference = randomUUID().slice(0, 8);
     const databaseError = cause as { code?:unknown; constraint?:unknown };
     console.error('Workspace operation failed', {

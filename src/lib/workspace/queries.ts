@@ -29,7 +29,7 @@ export async function adminSnapshot(): Promise<{ data: WorkspaceData; actorId: s
     rows<Record<string, unknown>>('select * from public.profiles order by full_name'), rows<Record<string, unknown>>('select * from public.clients order by name'),
     rows<Record<string, unknown>>('select * from public.workspace_services order by name'), rows<Record<string, unknown>>("select * from public.workflow_templates where status in ('published','draft') order by service_slug, version desc"),
     rows<Record<string, unknown>>('select * from public.workflow_template_steps order by template_id,position'), rows<Record<string, unknown>>('select * from public.workflow_template_tasks order by step_id,position'),
-    rows<Record<string, unknown>>('select *, start_at::text as start_date, follow_up_at::text as follow_up_date from public.projects order by updated_at desc'),
+    rows<Record<string, unknown>>('select *, start_at::text as start_date, follow_up_at::text as follow_up_date from public.projects where deleted_at is null order by updated_at desc'),
     rows<Record<string, unknown>>('select * from public.project_steps order by project_id,position'), rows<Record<string, unknown>>('select * from public.project_tasks order by step_id,position'),
     rows<Record<string, unknown>>('select * from public.project_supporting_admins'), rows<Record<string, unknown>>('select * from public.client_project_access where revoked_at is null'),
     rows<Record<string, unknown>>('select id,project_id,status,created_at,expires_at,claimed_by from public.project_access_links order by created_at desc'),
@@ -42,9 +42,9 @@ export async function adminSnapshot(): Promise<{ data: WorkspaceData; actorId: s
   const services: Service[] = serviceRows.map(service => { const template = templateByService.get(String(service.slug)); const draft=draftByService.get(String(service.slug)); return { id: String(service.slug), name: String(service.name), approval: template?.legal_review_required ? 'starter' : 'approved', version: Number(template?.version || 0), legalReviewRequired: Boolean(template?.legal_review_required), stages: template ? templateStages.get(String(template.id)) || [] : [], draftStages:draft?templateStages.get(String(draft.id))||[]:undefined,draftVersion:draft?Number(draft.version):undefined }; });
   const stageMap = nestStages(projectSteps, projectTasks, 'project_id');
   const data: WorkspaceData = {
-    admins: profiles.filter(item => item.role === 'admin').map(item => ({ id: String(item.id), name: String(item.full_name), email: String(item.email), active: Boolean(item.active), mustChangePassword: Boolean(item.must_change_password), createdById: item.created_by ? String(item.created_by) : undefined, createdAt: iso(item.created_at) })),
+    admins: profiles.filter(item => item.role === 'admin' && !item.deleted_at).map(item => ({ id: String(item.id), name: String(item.full_name), email: String(item.email), active: Boolean(item.active), mustChangePassword: Boolean(item.must_change_password), createdById: item.created_by ? String(item.created_by) : undefined, createdAt: iso(item.created_at) })),
     clientAccounts: profiles.filter(item => item.role === 'client' && (accesses.some(access => access.client_user_id === item.id) || projectRows.some(project=>project.updated_by===item.id) || audits.some(event=>event.actor_user_id===item.id))).map(item => ({ id: String(item.id), name: String(item.full_name), email: String(item.email) })),
-    clients: clientRows.map(item => ({ id: String(item.id), name: String(item.name), email: String(item.email), phone: String(item.phone) })), services,
+    clients: clientRows.map(item => ({ id: String(item.id), name: String(item.name), email: String(item.email), phone: String(item.phone), deletedAt:item.deleted_at?iso(item.deleted_at):undefined })), services,
     projects: projectRows.map(item => projectRow(item, stageMap.get(String(item.id)) || [], supporting.filter(row => row.project_id === item.id).map(row => String(row.admin_user_id)), priorityRows.find(row => row.project_id === item.id))),
     accesses: accesses.map(item => ({ id: String(item.id), projectId: String(item.project_id), accountId: String(item.client_user_id), grantedAt: iso(item.granted_at) })),
     accessLinks: links.map(item => ({ id: String(item.id), projectId: String(item.project_id), token: '', status: new Date(iso(item.expires_at)).getTime() < Date.now() && item.status === 'active' ? 'expired' : item.status as 'active'|'claimed'|'revoked', createdAt: iso(item.created_at), expiresAt: iso(item.expires_at), claimedById: item.claimed_by ? String(item.claimed_by) : undefined })),
@@ -56,10 +56,10 @@ export async function adminSnapshot(): Promise<{ data: WorkspaceData; actorId: s
 
 export async function clientSnapshot(): Promise<{ data: WorkspaceData; actorId: string; clientAccountId: string }> {
   const actor = await requireWorkspaceClient();
-  const accessRows = await rows<Record<string, unknown>>('select * from public.client_project_access where client_user_id=$1 and revoked_at is null',[actor.id]);
+  const accessRows = await rows<Record<string, unknown>>('select a.* from public.client_project_access a join public.projects j on j.id=a.project_id where a.client_user_id=$1 and a.revoked_at is null and j.deleted_at is null',[actor.id]);
   const ids = accessRows.map(item => String(item.project_id));
   const [projects, steps, tasks, services, pics, clients, updates, notifications, priorityRows, offerRow] = await Promise.all([
-    ids.length ? rows<Record<string, unknown>>('select * from public.projects where id=any($1::uuid[]) and status <> $2',[ids,'archived']) : Promise.resolve([]),
+    ids.length ? rows<Record<string, unknown>>('select * from public.projects where id=any($1::uuid[]) and status <> $2 and deleted_at is null',[ids,'archived']) : Promise.resolve([]),
     ids.length ? rows<Record<string, unknown>>('select * from public.project_steps where project_id=any($1::uuid[]) and client_visible=true order by project_id,position',[ids]) : Promise.resolve([]),
     ids.length ? rows<Record<string, unknown>>('select t.id,t.step_id,t.status from public.project_tasks t join public.project_steps s on s.id=t.step_id where s.project_id=any($1::uuid[]) and s.client_visible=true',[ids]) : Promise.resolve([]),
     rows<Record<string, unknown>>('select slug,name from public.workspace_services'),

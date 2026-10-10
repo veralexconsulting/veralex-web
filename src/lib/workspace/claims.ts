@@ -13,7 +13,7 @@ export async function inspectProjectInvitation(token:string):Promise<InvitationS
   await workspaceRateLimit(ip,'invite_open',200);
   const actor=await currentActor(); if (!actor) return {state:'signin'}; if(actor.role!=='client'||!actor.active||!actor.google)return {state:'unauthorized'};
   await workspaceRateLimit(actor.id,'invite_inspect',100);
-  const link=await one<{status:string;expires_at:Date;project_id:string;title:string;name:string;slug:string}>("select l.status,l.expires_at,l.project_id,p.title,s.name,s.slug from public.project_access_links l join public.projects p on p.id=l.project_id join public.workspace_services s on s.slug=p.service_slug where l.token_hash=$1",[tokenHash(token)]);
+  const link=await one<{status:string;expires_at:Date;project_id:string;title:string;name:string;slug:string}>("select l.status,l.expires_at,l.project_id,p.title,s.name,s.slug from public.project_access_links l join public.projects p on p.id=l.project_id join public.workspace_services s on s.slug=p.service_slug where l.token_hash=$1 and p.deleted_at is null",[tokenHash(token)]);
   if (!link) return {state:'invalid'};
   if (link.status==='revoked') return {state:'revoked'};
   if (link.status==='claimed') { const access=await one<{client_user_id:string}>('select client_user_id from public.client_project_access where project_id=$1 and revoked_at is null',[link.project_id]); return {state:access?.client_user_id===actor.id?'claimed_owned':'claimed_other',projectId:access?.client_user_id===actor.id?link.project_id:undefined}; }
@@ -26,8 +26,8 @@ export async function claimProjectInvitation(token:string):Promise<{state:'claim
   return transaction(async c => {
     const candidate=(await c.query('select project_id from public.project_access_links where token_hash=$1',[tokenHash(token)])).rows[0];
     if(!candidate)return {state:'invalid' as const};
-    const project=(await c.query('select id,status from public.projects where id=$1 for update',[candidate.project_id])).rows[0];
-    if(!project||project.status==='archived')return {state:'revoked' as const};
+    const project=(await c.query('select id,status,deleted_at from public.projects where id=$1 for update',[candidate.project_id])).rows[0];
+    if(!project||project.deleted_at||project.status==='archived')return {state:'revoked' as const};
     const link=(await c.query('select * from public.project_access_links where token_hash=$1 for update',[tokenHash(token)])).rows[0];
     if (!link) return {state:'invalid' as const}; if (link.status==='revoked') return {state:'revoked' as const};
     const owned=(await c.query('select client_user_id from public.client_project_access where project_id=$1 and revoked_at is null for update',[link.project_id])).rows[0];

@@ -8,7 +8,7 @@ import { retainUnclaimedTokens } from './snapshot';
 
 export type DraftProject = Pick<Project,'title'|'serviceId'|'picId'|'startAt'|'followUpAt'|'notes'|'supportingIds'> & {clientId?:string;clientName:string;clientEmail:string;clientPhone:string};
 interface WorkspaceContextValue {
-  data:WorkspaceData;ready:boolean;error:string;actorId:string;clientAccountId:string;toast:string;toastError:boolean;
+  data:WorkspaceData;ready:boolean;error:string;actorId:string;clientAccountId:string;toast:string;toastError:boolean;pendingCount:number;
   refresh:()=>Promise<void>;clearToast:()=>void;
   createProject:(draft:DraftProject)=>Promise<string>;
   updateProject:(id:string,patch:Partial<Project>,message:string,clientVisible?:boolean)=>Promise<void>;
@@ -16,7 +16,10 @@ interface WorkspaceContextValue {
   setTaskStatus:(projectId:string,taskId:string,status:TaskStatus,reason?:string)=>Promise<void>;
   addProjectUpdate:(projectId:string,message:string,clientVisible:boolean)=>Promise<void>;
   updateClient:(id:string,patch:{name:string;email:string;phone:string})=>Promise<void>;
+  deleteClient:(id:string)=>Promise<void>;
   createTeamMember:(name:string,email:string,initialPassword:string)=>Promise<void>;
+  deleteTeamMember:(id:string)=>Promise<void>;
+  deleteProject:(id:string)=>Promise<void>;
   setAdminActive:(id:string,active:boolean)=>Promise<void>;
   updateService:(id:string,changes:Partial<WorkspaceData['services'][number]>)=>Promise<void>;
   publishService:(id:string)=>Promise<void>;
@@ -32,11 +35,15 @@ const empty:WorkspaceData={admins:[],clients:[],clientAccounts:[],accesses:[],se
 const Context=createContext<WorkspaceContextValue|null>(null);
 const message=(cause:unknown)=>cause instanceof Error?cause.message:'Operasi belum dapat diselesaikan.';
 const refreshIntervalMs=20_000;
+const operationKey=(input:Operation)=>{
+  const item=input as Operation & {id?:string;projectId?:string;taskId?:string;email?:string};
+  return [input.type,item.id||item.projectId||item.taskId||item.email?.toLowerCase()||'global'].join(':');
+};
 
 export function WorkspaceProvider({children,role}:{children:React.ReactNode;role:'admin'|'client'}) {
-  const [data,setData]=useState<WorkspaceData>(empty); const [ready,setReady]=useState(false); const [error,setError]=useState('');
+  const [data,setData]=useState<WorkspaceData>(empty); const [ready,setReady]=useState(false); const [error,setError]=useState(''); const [pendingCount,setPendingCount]=useState(0);
   const [actorId,setActorId]=useState(''); const [clientAccountId,setClientAccountId]=useState(''); const [toast,setToast]=useState(''); const [toastError,setToastError]=useState(false);
-  const refreshVersion=useRef(0); const mutationsInFlight=useRef(0); const lastPassiveRefresh=useRef(0);
+  const refreshVersion=useRef(0); const mutationsInFlight=useRef(0); const inFlightKeys=useRef(new Set<string>()); const lastPassiveRefresh=useRef(0);
   const refresh=useCallback(async()=>{
     const version=++refreshVersion.current;
     const snapshot=await getWorkspaceSnapshot(role);
@@ -61,7 +68,11 @@ export function WorkspaceProvider({children,role}:{children:React.ReactNode;role
     return()=>{window.clearInterval(timer);window.removeEventListener('focus',whenVisible);document.removeEventListener('visibilitychange',whenVisible);};
   },[refresh]);
   const run=useCallback(async(input:Operation,success:string,projectId?:string)=>{
+    const key=operationKey(input);
+    if(inFlightKeys.current.has(key))throw new Error('Operasi ini sedang diproses.');
+    inFlightKeys.current.add(key);
     mutationsInFlight.current++;
+    setPendingCount(mutationsInFlight.current);
     try {
       let result:{id?:string;token?:string};
       try {
@@ -84,29 +95,34 @@ export function WorkspaceProvider({children,role}:{children:React.ReactNode;role
       return result;
     } finally {
       mutationsInFlight.current--;
+      inFlightKeys.current.delete(key);
+      setPendingCount(mutationsInFlight.current);
     }
   },[refresh,role]);
   const safe=useCallback(async(input:Operation,success:string,projectId?:string)=>{try{await run(input,success,projectId);}catch{/* Error is shown in the shared toast. */}},[run]);
-  const value=useMemo<WorkspaceContextValue>(()=>({data,ready,error,actorId,clientAccountId,toast,toastError,refresh,clearToast:()=>setToast(''),
+  const value=useMemo<WorkspaceContextValue>(()=>({data,ready,error,actorId,clientAccountId,toast,toastError,pendingCount,refresh,clearToast:()=>setToast(''),
     async createProject(draft){const result=await run({type:'create_project',draft},'Proyek dibuat. Bagikan tautan setelah memverifikasi penerima.');if(!result.id)throw new Error('Proyek belum dibuat.');if(result.token)setData(previous=>({...previous,accessLinks:previous.accessLinks.map(link=>link.projectId===result.id&&link.status==='active'?{...link,token:result.token!}:link)}));return result.id;},
     async updateProject(id,patch){await run({type:'update_project',id,patch},'Proyek diperbarui.');},
     updateWorkflow:(projectId,stages,reason)=>safe({type:'update_workflow',projectId,stages,reason},'Workflow proyek diperbarui.'),
     async setTaskStatus(projectId,taskId,status,reason){await run({type:'set_task_status',projectId,taskId,status,reason},'Status tugas diperbarui.');},
     async addProjectUpdate(projectId,message,clientVisible){await run({type:'add_project_update',projectId,message,clientVisible},'Pembaruan proyek ditambahkan.');},
-    updateClient:(id,patch)=>safe({type:'update_client',id,patch},'Kontak klien diperbarui.'),
+    updateClient:async(id,patch)=>{await run({type:'update_client',id,patch},'Kontak klien diperbarui.');},
+    deleteClient:async id=>{await run({type:'delete_client',id},'Data kontak klien dihapus.');},
     async createTeamMember(name,email,password){await run({type:'create_team',name,email,password},'Akun administrator dibuat. Sampaikan kata sandi awal melalui kanal privat.');},
-    setAdminActive:(id,active)=>safe({type:'set_admin_active',id,active},'Status administrator diperbarui.'),
+    deleteTeamMember:async id=>{await run({type:'delete_team',id},'Anggota tim dinonaktifkan dan dikeluarkan dari daftar. Riwayat serta akun Auth dipertahankan.');},
+    deleteProject:async id=>{await run({type:'delete_project',id},'Proyek dihapus dari tampilan aktif. Riwayatnya dipertahankan.');},
+    setAdminActive:async(id,active)=>{await run({type:'set_admin_active',id,active},'Status administrator diperbarui.');},
     updateService:(id,changes)=>safe({type:'update_service',id,stages:changes.stages||data.services.find(item=>item.id===id)?.draftStages||data.services.find(item=>item.id===id)?.stages||[]},'Draf SOP disimpan.'),
     publishService:id=>safe({type:'publish_service',id},'SOP diterbitkan untuk proyek baru.'),
-    updateOffering:changes=>safe({type:'update_offering',value:{...data.priorityOffering,...changes}},'Penawaran prioritas diperbarui.'),
+    updateOffering:async changes=>{await run({type:'update_offering',value:{...data.priorityOffering,...changes}},'Penawaran prioritas diperbarui.');},
     setPriority:(projectId,status)=>safe({type:'set_priority',projectId,status},'Status prioritas diperbarui.'),
-    createAccessLink:projectId=>safe({type:'create_link',projectId},'Tautan baru diterbitkan.',projectId),
-    revokeAccessLink:projectId=>safe({type:'revoke_link',projectId},'Tautan dicabut.'),
-    revokeAccess:projectId=>safe({type:'revoke_access',projectId},'Akses klien dicabut.'),
-    resetAccess:projectId=>safe({type:'reset_access',projectId},'Akses diatur ulang. Verifikasi penerima sebelum membagikan tautan baru.',projectId),
+    createAccessLink:async projectId=>{await run({type:'create_link',projectId},'Tautan baru diterbitkan.',projectId);},
+    revokeAccessLink:async projectId=>{await run({type:'revoke_link',projectId},'Tautan dicabut.');},
+    revokeAccess:async projectId=>{await run({type:'revoke_access',projectId},'Akses klien dicabut.');},
+    resetAccess:async projectId=>{await run({type:'reset_access',projectId},'Akses diatur ulang. Verifikasi penerima sebelum membagikan tautan baru.',projectId);},
     markRead:id=>safe({type:'mark_read',id},'Notifikasi dibaca.'),
     markAllRead:()=>safe({type:'mark_all_read'},'Semua notifikasi ditandai dibaca.'),
-  }),[data,ready,error,actorId,clientAccountId,toast,toastError,refresh,run,safe]);
+  }),[data,ready,error,actorId,clientAccountId,toast,toastError,pendingCount,refresh,run,safe]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 export function useWorkspace(){const value=useContext(Context);if(!value)throw new Error('WorkspaceProvider belum terpasang');return value;}

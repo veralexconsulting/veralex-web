@@ -1,12 +1,17 @@
 import 'server-only';
 import { workspaceSupabase } from './supabase';
 import { one } from './db';
+import { isTransientAuthError, WorkspaceAuthUnavailableError } from './auth-errors';
 
 export interface Actor { id: string; email: string; name: string; role: 'admin' | 'client'; active: boolean; mustChangePassword: boolean; google: boolean }
 export async function currentActor(): Promise<Actor | null> {
   const auth = await workspaceSupabase();
   const { data: { user }, error } = await auth.auth.getUser();
-  if (error || !user) return null;
+  if (error) {
+    if (isTransientAuthError(error)) throw new WorkspaceAuthUnavailableError();
+    return null;
+  }
+  if (!user) return null;
   const profile = await one<{ role: 'admin' | 'client'; active: boolean; must_change_password: boolean; full_name: string; email: string }>('select role,active,must_change_password,full_name,email from public.profiles where id=$1', [user.id]);
   if (!profile) return null;
   const providers = user.app_metadata?.providers as string[] | undefined;
