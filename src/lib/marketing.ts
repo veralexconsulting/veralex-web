@@ -76,7 +76,8 @@ function visitorToken(): string {
 
 /** First-party copy of the same event for the owner dashboard. Consent-gated
  *  because it is only reachable from MarketingTracking, and delivery never
- *  blocks the click that triggered it. */
+ *  blocks the click that triggered it. fetch runs first so the request is
+ *  visible in devtools; sendBeacon is the fallback for an unloading page. */
 export function reportLeadEvent(event: LeadEvent, service: string, ctaLocation: string): void {
     const { utm_source, utm_medium, utm_campaign } = campaign();
     const body = JSON.stringify({
@@ -88,9 +89,11 @@ export function reportLeadEvent(event: LeadEvent, service: string, ctaLocation: 
         visitor_token: visitorToken(),
         campaign: { utm_source, utm_medium, utm_campaign },
     });
-    const beacon = typeof navigator !== 'undefined' ? navigator.sendBeacon : undefined;
-    if (beacon && beacon('/api/analytics/event', new Blob([body], { type: 'application/json' }))) return;
-    void fetch('/api/analytics/event', { method: 'POST', headers: { 'content-type': 'application/json' }, body, keepalive: true }).catch(() => { /* analytics never blocks the visitor */ });
+    const send = () => {
+        try { navigator.sendBeacon?.('/api/analytics/event', new Blob([body], { type: 'application/json' })); } catch { /* analytics never blocks the visitor */ }
+    };
+    void fetch('/api/analytics/event', { method: 'POST', headers: { 'content-type': 'application/json' }, body, keepalive: true })
+        .catch(() => send());
 }
 
 export function withCampaignMessage(href: string): string {
