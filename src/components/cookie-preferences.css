@@ -1,1 +1,119 @@
-.cookie-panel{position:fixed;z-index:2000;right:20px;bottom:20px;left:auto;width:min(420px,calc(100vw - 32px));max-height:min(76vh,520px);overflow:auto;background:#fff;color:#1e1e1e;border:1px solid #e5ddd7;box-shadow:0 16px 48px #1e1e1e24;border-radius:15px;padding:19px}.cookie-panel strong{color:#4a0e0e;font-size:.96rem}.cookie-panel p{font-size:.8rem;line-height:1.55;margin:7px 0 0;color:#4f4946}.cookie-panel small{display:block;margin-top:7px}.cookie-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.cookie-actions button{min-height:44px;padding:9px 10px;border-radius:8px;border:1px solid #4a0e0e;background:#fff;color:#4a0e0e;cursor:pointer;font-size:12px;line-height:1.3;font-weight:700}.cookie-actions .cookie-allow{background:#4a0e0e;color:#fff}.cookie-actions button:focus-visible{outline:3px solid #c8a15a;outline-offset:2px}.cookie-actions button:last-child:nth-child(3){grid-column:1/-1}@media(max-width:420px){.cookie-panel{right:12px;bottom:12px;width:calc(100vw - 24px);padding:16px}.cookie-actions{grid-template-columns:1fr}.cookie-actions button{width:100%}}
+/* VERALEX consent card: a quiet brand note in the corner, not a startup banner.
+   Fixed position so it never shifts layout, and it arrives late so it does not
+   compete with the hero for attention. */
+.cookie-panel {
+    position: fixed;
+    z-index: 2000;
+    left: max(20px, env(safe-area-inset-left));
+    bottom: max(20px, env(safe-area-inset-bottom));
+    width: min(384px, calc(100vw - 40px));
+    max-height: min(74vh, 520px);
+    overflow: auto;
+    overscroll-behavior: contain;
+    background: linear-gradient(170deg, #FFFFFF 0%, #FBF8F5 100%);
+    color: #1E1E1E;
+    border: 1px solid rgba(74, 14, 14, 0.10);
+    border-top: 2px solid #C8A15A;
+    border-radius: 16px;
+    box-shadow: 0 26px 60px -24px rgba(45, 8, 8, 0.34), 0 2px 10px rgba(45, 8, 8, 0.05);
+    padding: 22px 24px 20px;
+    animation: cookie-arrive 520ms cubic-bezier(0.22, 0.61, 0.36, 1) 700ms both;
+}
+
+.cookie-panel .cookie-brand {
+    display: block;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.26em;
+    color: #C8A15A;
+    margin-bottom: 8px;
+}
+
+.cookie-panel strong {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    line-height: 1.3;
+    color: #4A0E0E;
+}
+
+.cookie-panel p {
+    margin: 9px 0 0;
+    font-size: 0.795rem;
+    line-height: 1.6;
+    color: rgba(30, 30, 30, 0.68);
+}
+
+.cookie-panel small {
+    display: block;
+    margin-top: 9px;
+    font-size: 11px;
+    color: rgba(30, 30, 30, 0.5);
+}
+
+.cookie-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(74, 14, 14, 0.08);
+}
+
+.cookie-actions button {
+    font: inherit;
+    cursor: pointer;
+    min-height: 44px;
+    border-radius: 999px;
+    padding: 11px 20px;
+}
+
+.cookie-actions .cookie-allow {
+    border: 1px solid #4A0E0E;
+    background: #4A0E0E;
+    color: #FFF;
+    font-size: 12.5px;
+    font-weight: 650;
+}
+
+.cookie-actions .cookie-reject {
+    border: 0;
+    background: transparent;
+    color: rgba(30, 30, 30, 0.6);
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    padding-inline: 8px;
+}
+
+.cookie-actions button:hover { transform: translateY(-1px); }
+.cookie-actions .cookie-reject:hover { color: #4A0E0E; }
+
+.cookie-actions button:focus-visible {
+    outline: 2px solid #C8A15A;
+    outline-offset: 2px;
+}
+
+@keyframes cookie-arrive {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 520px) {
+    .cookie-panel {
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        width: auto;
+        padding: 18px 18px 16px;
+        border-radius: 14px;
+    }
+    .cookie-actions { gap: 10px; }
+    .cookie-actions .cookie-allow { flex: 1 1 auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cookie-panel { animation: none; }
+    .cookie-actions button:hover { transform: none; }
+}
