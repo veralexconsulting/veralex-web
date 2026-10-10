@@ -6,15 +6,37 @@ import { isTransientAuthError } from '@/lib/workspace/auth-errors';
 
 const SUPPORTED_LOCALES = ['en', 'zh', 'id'];
 const WORKSPACE_ADMIN = ['/admin/proyek','/admin/klien','/admin/tim','/admin/pengaturan','/admin/notifikasi'];
+const OWNER_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const OWNER_AREA = ['/aksesraffi','/aksesraffi/login','/aksesraffi/ganti-password'];
 
 export async function middleware(req: NextRequest) {
   let res=NextResponse.next({request:req}); const pathname=req.nextUrl.pathname;
+  const configured=Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL&&process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+  if(OWNER_AREA.some(route=>pathname===route)){
+    // Refreshes the owner session here because a Server Component cannot write cookies.
+    // Authorization itself is enforced again on the page, its actions and its API.
+    const expected=process.env.VERALEX_OWNER_USER_ID?.trim();
+    if(!configured||!expected||!OWNER_UUID.test(expected))return NextResponse.redirect(new URL('/aksesraffi/login',req.url));
+    const ownerClient=createWorkspaceServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,{cookies:{getAll:()=>req.cookies.getAll(),setAll:items=>{items.forEach(({name,value})=>req.cookies.set(name,value));res=NextResponse.next({request:req});items.forEach(({name,value,options})=>res.cookies.set(name,value,options));}}});
+    let ownerUser; let ownerError;
+    try{ const result=await ownerClient.auth.getUser(); ownerError=result.error; ownerUser=result.data.user; }catch{ return res; }
+    if(ownerError&&isTransientAuthError(ownerError))return res;
+    if(pathname==='/aksesraffi/login'){
+      if(ownerUser&&ownerUser.id.toLowerCase()===expected.toLowerCase())return NextResponse.redirect(new URL('/aksesraffi',req.url));
+      return res;
+    }
+    if(!ownerUser||ownerUser.id.toLowerCase()!==expected.toLowerCase())return NextResponse.redirect(new URL('/aksesraffi/login',req.url));
+    if(pathname!=='/aksesraffi/ganti-password'){
+      const rotation=await ownerClient.from('profiles').select('must_change_password').eq('id',ownerUser.id).maybeSingle();
+      if(rotation.data?.must_change_password)return NextResponse.redirect(new URL('/aksesraffi/ganti-password',req.url));
+    }
+    return res;
+  }
   const refreshedCookies = new Map<string, {name:string;value:string;options?:Record<string,unknown>}>();
   const workspaceAdmin=pathname==='/admin'||WORKSPACE_ADMIN.some(route=>pathname===route||pathname.startsWith(`${route}/`));
   const portal=pathname==='/portal'||pathname.startsWith('/portal/');
   const adminAuth=pathname==='/admin/login'||pathname==='/admin/aktivasi';
   if(pathname==='/invite'||pathname.startsWith('/invite/')||pathname.startsWith('/workspace/auth/callback')) return res;
-  const configured=Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL&&process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
   if(workspaceAdmin||portal||adminAuth){
     if(!configured){ if(workspaceAdmin)return NextResponse.redirect(new URL('/admin/login',req.url)); if(portal&&pathname!=='/portal/login')return NextResponse.redirect(new URL('/portal/login',req.url));return res; }
     const supabase=createWorkspaceServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,{cookies:{getAll:()=>req.cookies.getAll(),setAll:items=>{items.forEach(({name,value,options})=>{req.cookies.set(name,value);refreshedCookies.set(name,{name,value,options});});res=NextResponse.next({request:req});refreshedCookies.forEach(cookie=>res.cookies.set(cookie.name,cookie.value,cookie.options));}}});

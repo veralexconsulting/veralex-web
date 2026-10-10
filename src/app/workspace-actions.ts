@@ -4,6 +4,7 @@ import { adminSnapshot, clientSnapshot } from '@/lib/workspace/queries';
 import { runOperation, type Operation } from '@/lib/workspace/operations';
 import { inspectProjectInvitation, claimProjectInvitation, finishFirstPasswordChange } from '@/lib/workspace/claims';
 import { currentActor } from '@/lib/workspace/auth';
+import { recordLoginEvent as logVerifiedLogin } from '@/lib/owner/events';
 
 export async function getWorkspaceSnapshot(role:'admin'|'client') { return role==='admin' ? adminSnapshot() : clientSnapshot(); }
 const visibleOperationErrors = new Set([
@@ -48,3 +49,10 @@ export async function inspectInvitation(token:string) { return inspectProjectInv
 export async function claimInvitation(token:string) { return claimProjectInvitation(token); }
 export async function changeInitialPassword(password:string) { return finishFirstPasswordChange(password); }
 export async function getCurrentWorkspaceActor() { return currentActor(); }
+/** Records one verified sign-in. Called only from a completed login, never from
+ *  session restore, so refresh and token rotation are never counted. */
+export async function recordLoginEvent() {
+  const actor = await currentActor();
+  if (!actor) return;
+  try { await logVerifiedLogin(actor.id, actor.role); } catch { /* analytics never blocks a login */ }
+}

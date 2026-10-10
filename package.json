@@ -7,11 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --test scripts/check-marketing.mjs scripts/check-workspace-snapshot.mjs scripts/check-workspace-regressions.mjs && node scripts/check-workspace.mjs && node scripts/check-workspace-security.mjs",
+    "test": "node --test scripts/check-marketing.mjs scripts/check-workspace-snapshot.mjs && node scripts/check-workspace.mjs && node scripts/check-workspace-security.mjs && node --test scripts/check-owner-analytics.mjs",
     "workspace:seed": "node scripts/generate-workspace-seed.mjs",
     "workspace:types": "node scripts/generate-workspace-types.mjs",
     "workspace:bootstrap": "node scripts/bootstrap-workspace-admin.mjs",
-    "workspace:verify-db": "node scripts/verify-workspace-db.mjs"
+    "workspace:verify-db": "node scripts/verify-workspace-db.mjs",
+    "owner:provision": "node scripts/provision-owner.mjs",
+    "owner:verify-access": "node scripts/check-owner-access.mjs"
   },
   "dependencies": {
     "@supabase/auth-helpers-nextjs": "^0.15.0",

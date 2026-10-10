@@ -9,6 +9,7 @@ export type LeadEvent = 'whatsapp_click' | 'phone_click' | 'email_click';
 type CampaignContext = Partial<Record<'utm_source' | 'utm_medium' | 'utm_campaign' | 'utm_term' | 'utm_content' | 'gclid' | 'landing_path', string>>;
 
 const STORAGE_KEY = 'veralex_campaign';
+const VISITOR_KEY = 'veralex_visitor';
 const CAMPAIGN_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid'] as const;
 
 declare global {
@@ -59,6 +60,37 @@ export function trackLeadAction(event: LeadEvent, service: string, ctaLocation: 
         ...(utm_medium ? { utm_medium } : {}),
         ...(utm_campaign ? { utm_campaign } : {}),
     });
+}
+
+/** Random per-tab nonce so the dashboard can count unique clickers without
+ *  storing an IP address or anything resembling a browser fingerprint. */
+function visitorToken(): string {
+    try {
+        const existing = sessionStorage.getItem(VISITOR_KEY);
+        if (existing) return existing;
+        const created = crypto.randomUUID();
+        sessionStorage.setItem(VISITOR_KEY, created);
+        return created;
+    } catch { return ''; }
+}
+
+/** First-party copy of the same event for the owner dashboard. Consent-gated
+ *  because it is only reachable from MarketingTracking, and delivery never
+ *  blocks the click that triggered it. */
+export function reportLeadEvent(event: LeadEvent, service: string, ctaLocation: string): void {
+    const { utm_source, utm_medium, utm_campaign } = campaign();
+    const body = JSON.stringify({
+        event,
+        page_path: window.location.pathname,
+        service,
+        placement: ctaLocation,
+        locale: document.documentElement.lang.slice(0, 2),
+        visitor_token: visitorToken(),
+        campaign: { utm_source, utm_medium, utm_campaign },
+    });
+    const beacon = typeof navigator !== 'undefined' ? navigator.sendBeacon : undefined;
+    if (beacon && beacon('/api/analytics/event', new Blob([body], { type: 'application/json' }))) return;
+    void fetch('/api/analytics/event', { method: 'POST', headers: { 'content-type': 'application/json' }, body, keepalive: true }).catch(() => { /* analytics never blocks the visitor */ });
 }
 
 export function withCampaignMessage(href: string): string {

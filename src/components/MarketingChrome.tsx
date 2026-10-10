@@ -6,7 +6,7 @@ import CookiePreferences from './CookiePreferences';
 
 export default function MarketingChrome() {
   const pathname=usePathname();
-  if (/^\/(admin|portal|invite|workspace)(\/|$)/.test(pathname)) return null;
+  if (/^\/(admin|portal|invite|workspace|aksesraffi)(\/|$)/.test(pathname)) return null;
   const legalPage = /^\/(?:id\/|zh\/)?(?:privacy-policy|terms-and-conditions)$/.test(pathname);
   return <><ScrollProgress/><CookiePreferences/>{!legalPage && <FloatingWhatsApp/>}</>;
 }

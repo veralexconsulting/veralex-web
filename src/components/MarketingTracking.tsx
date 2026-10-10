@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { rememberCampaign, trackLeadAction, withCampaignMessage } from '@/lib/marketing';
+import { rememberCampaign, reportLeadEvent, trackLeadAction, withCampaignMessage } from '@/lib/marketing';
 
 export default function MarketingTracking() {
     useEffect(() => {
@@ -18,11 +18,14 @@ export default function MarketingTracking() {
 
             if (href.startsWith('https://wa.me/')) {
                 trackLeadAction('whatsapp_click', service, placement);
+                reportLeadEvent('whatsapp_click', service, placement);
                 anchor.href = withCampaignMessage(href);
             } else if (href.startsWith('tel:')) {
                 trackLeadAction('phone_click', service, placement);
+                reportLeadEvent('phone_click', service, placement);
             } else if (href.startsWith('mailto:')) {
                 trackLeadAction('email_click', service, placement);
+                reportLeadEvent('email_click', service, placement);
             }
         };
 

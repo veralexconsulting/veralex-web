@@ -25,10 +25,18 @@ const nextConfig: NextConfig = {
       },
       // App areas are client components and cannot export metadata, so the
       // noindex directive is sent as a header instead.
-      ...['/dashboard/:path*', '/admin/:path*', '/auth/:path*', '/portal/:path*', '/invite/:path*'].map((source) => ({
+      ...['/dashboard/:path*', '/admin/:path*', '/auth/:path*', '/portal/:path*', '/invite/:path*', '/aksesraffi/:path*'].map((source) => ({
         source,
         headers: [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }],
       })),
+      {
+        source: '/aksesraffi/:path*',
+        headers: [
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' },
+          { key: 'Cache-Control', value: 'private, no-store, max-age=0' },
+          { key: 'Referrer-Policy', value: 'no-referrer' },
+        ],
+      },
       { source: '/invite/:path*', headers: [{ key: 'Referrer-Policy', value: 'no-referrer' }, { key: 'Cache-Control', value: 'no-store' }] },
       { source: '/invite', headers: [{ key: 'Referrer-Policy', value: 'no-referrer' }, { key: 'Cache-Control', value: 'no-store' }, { key: 'X-Robots-Tag', value: 'noindex, nofollow' }] },
     ];
