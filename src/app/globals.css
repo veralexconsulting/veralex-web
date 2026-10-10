@@ -2570,6 +2570,91 @@ section {
     }
 }
 
+/* Compact client brand strip */
+.client-logo-section {
+    padding: 24px 0 20px;
+    overflow: hidden;
+    border-top: 1px solid rgba(74, 14, 14, .07);
+    border-bottom: 1px solid rgba(74, 14, 14, .07);
+    background: #fff;
+}
+.client-logo-heading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin: 0 auto 17px;
+    padding: 0 18px;
+}
+.client-logo-heading h2 {
+    margin: 0;
+    color: #746b65;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .15em;
+    line-height: 1.4;
+    text-align: center;
+    text-transform: uppercase;
+}
+.client-logo-rule { width: 28px; height: 1px; background: #c8a15a; opacity: .75; }
+.client-logo-marquee {
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+.client-logo-run {
+    display: flex;
+    width: max-content;
+    animation: client-logo-scroll 34s linear infinite;
+}
+.client-logo-marquee:hover .client-logo-run,
+.client-logo-marquee:focus-within .client-logo-run { animation-play-state: paused; }
+.client-logo-group {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 14px;
+    margin: 0;
+    padding: 0 7px;
+    list-style: none;
+}
+.client-logo-card {
+    display: grid;
+    flex: 0 0 148px;
+    width: 148px;
+    height: 66px;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid #eee9e5;
+    border-radius: 9px;
+    background: #fff;
+}
+.client-logo-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 8px 11px;
+    object-fit: contain;
+}
+@keyframes client-logo-scroll { to { transform: translateX(-50%); } }
+@media (max-width: 600px) {
+    .client-logo-section { padding: 20px 0 16px; }
+    .client-logo-heading { margin-bottom: 13px; gap: 10px; }
+    .client-logo-heading h2 { font-size: 9px; letter-spacing: .12em; }
+    .client-logo-rule { width: 18px; }
+    .client-logo-group { gap: 10px; padding: 0 5px; }
+    .client-logo-card { flex-basis: 116px; width: 116px; height: 56px; border-radius: 8px; }
+    .client-logo-card img { padding: 7px 9px; }
+    .client-logo-run { animation-duration: 28s; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .client-logo-run { width: 100%; flex-wrap: wrap; justify-content: center; animation: none; }
+    .client-logo-group[aria-hidden="true"] { display: none; }
+    .client-logo-group:not([aria-hidden="true"]) { flex: 1 1 100%; width: 100%; box-sizing: border-box; flex-wrap: wrap; justify-content: center; }
+    .client-logo-marquee { -webkit-mask-image: none; mask-image: none; }
+}
+
 /* ================================================
    AUTH PAGES
    ================================================ */

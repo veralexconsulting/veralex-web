@@ -5,6 +5,7 @@ import ProjectTrackingSection from '@/components/ProjectTrackingSection';
 import ServicesSection from '@/components/ServicesSection';
 import PricingSection from '@/components/PricingSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
+import ClientLogoMarquee from '@/components/ClientLogoMarquee';
 import WhyLegalSection from '@/components/WhyLegalSection';
 import ContactSection from '@/components/ContactSection';
 import GalleryHighlight from '@/components/GalleryHighlight';
@@ -29,6 +30,7 @@ export default function Home() {
       <ProjectTrackingSection />
       <ServicesSection />
       <PricingSection />
+      <ClientLogoMarquee />
       <TestimonialsSection />
       <WhyLegalSection />
       <ArticleHighlights />

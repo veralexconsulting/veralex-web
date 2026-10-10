@@ -189,6 +189,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         'pricing.premium': 'Premium Investor',
 
         // Testimonials
+        'clients.logos.title': 'Brand klien VERALEX',
         'testimonials.title': 'Testimoni Klien',
         'testimonials.subtitle': 'Apa kata klien tentang layanan VERALEX CONSULTING',
         'testimonials.t1.content': 'Saya baru pertama kali bikin PT, jadi banyak hal yang belum paham soal nama perusahaan, KBLI, sampai NIB. Tim Veralex bantu jelasin step by step dan update dokumen tanpa harus saya follow up terus.',
@@ -603,6 +604,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         'pricing.premium': 'Premium Investor',
 
         // Testimonials
+        'clients.logos.title': 'VERALEX Client Brands',
         'testimonials.title': 'Client Testimonials',
         'testimonials.subtitle': 'What our clients say about VERALEX CONSULTING services',
         'testimonials.t1.content': 'It was my first time setting up a PT, so I had many questions about company names, KBLI, and NIB. Veralex explained each step clearly and kept the document progress updated without constant follow-up.',
@@ -1017,6 +1019,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         'pricing.premium': '尊享投资人套餐 (Premium Investor)',
 
         // Testimonials
+        'clients.logos.title': 'VERALEX 客户品牌',
         'testimonials.title': '客户真实评价',
         'testimonials.subtitle': '倾听全球投资者与企业对 VERALEX CONSULTING 的认可',
         'testimonials.t1.content': '我们第一次在印尼设立公司，对核名、KBLI 行业代码和 NIB 手续一无所知。Veralex 团队耐心地逐步讲解，全程主动更新进度，省去了我们频繁跟进的麻烦。',
