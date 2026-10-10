@@ -48,7 +48,7 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
             <Navbar />
 
             <main style={{ paddingTop: '110px', minHeight: '100vh' }}>
-                <div className={`container svc-page${isTrademark ? ' svc-trademark-page' : ''}`}>
+                <div className="container svc-page">
                     <ServiceBreadcrumb items={serviceBreadcrumbs(service.slug, lang, displayTitle)} />
 
                     <header className="svc-hero">
@@ -56,6 +56,7 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
                         <h1 className="svc-title">{displayTitle}</h1>
                         <p className="svc-lead">{displayDesc}</p>
                         {isTrademark && <p className="svc-trademark-value">{trademarkCopy.value}</p>}
+                        {!isTrademark && introText && <p className="svc-service-value">{introText}</p>}
                     </header>
 
                     <section className="svc-card">
@@ -89,7 +90,7 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
 
                     {introText && (
                         <>
-                            <p className="svc-quote">{introText}</p>
+                            {isTrademark && <p className="svc-quote">{introText}</p>}
 
                             <div className="svc-prose">
                                 {sectionsText.map((section, idx) => (

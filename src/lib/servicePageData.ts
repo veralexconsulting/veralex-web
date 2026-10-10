@@ -46,6 +46,8 @@ export interface ServicePageData {
     ogImage: string;
 }
 
+export type RelatedService = Pick<ServicePageData, 'slug' | 'title' | 'price'>;
+
 const enServicePages: Record<string, ServicePageData> = {
     'pt-pma': ptPmaEn as ServicePageData,
     'itas-investor-1-tahun': itasInvestor1En as ServicePageData,
@@ -129,8 +131,14 @@ export function serviceHreflangs(slug: string): Record<string, string> {
     return languages;
 }
 
-export function getRelatedServices(data: ServicePageData, locale: SupportedLocale = 'en'): ServicePageData[] {
+export function getRelatedServices(data: ServicePageData, locale: SupportedLocale = 'en'): RelatedService[] {
     return data.relatedSlugs
-        .map((slug) => getServicePageData(locale, slug))
-        .filter((page): page is ServicePageData => Boolean(page));
+        .map((slug) => {
+            const localized = getServicePageData(locale, slug);
+            if (localized) return localized;
+            const base = getServiceBySlug(slug);
+            if (!base) return undefined;
+            return { slug, title: locale === 'zh' ? base.titleZh : base.titleEn, price: base.price };
+        })
+        .filter((page): page is RelatedService => Boolean(page));
 }
