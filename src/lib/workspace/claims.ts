@@ -6,12 +6,15 @@ import { tokenHash, validTokenShape } from './token';
 import { workspaceServiceClient } from './supabase';
 import { workspaceRateLimit } from './rate-limit';
 
-export type InvitationStatus = { state:'signin'|'unauthorized'|'valid'|'claimed_owned'|'claimed_other'|'expired'|'revoked'|'invalid'; projectTitle?:string; serviceName?:string; serviceId?:string; projectId?:string };
+export type InvitationStatus = { state:'signin'|'unauthorized'|'valid'|'claimed_owned'|'claimed_other'|'expired'|'revoked'|'invalid'; reason?:'admin'|'inactive'|'google'; projectTitle?:string; serviceName?:string; serviceId?:string; projectId?:string };
 export async function inspectProjectInvitation(token:string):Promise<InvitationStatus> {
   if (!validTokenShape(token)) return {state:'invalid'};
   const requestHeaders=await headers(); const ip=requestHeaders.get('x-vercel-forwarded-for')||requestHeaders.get('x-real-ip')||'unknown';
   await workspaceRateLimit(ip,'invite_open',200);
-  const actor=await currentActor(); if (!actor) return {state:'signin'}; if(actor.role!=='client'||!actor.active||!actor.google)return {state:'unauthorized'};
+  const actor=await currentActor(); if (!actor) return {state:'signin'};
+  if(actor.role==='admin')return {state:'unauthorized',reason:'admin'};
+  if(!actor.active)return {state:'unauthorized',reason:'inactive'};
+  if(!actor.google)return {state:'unauthorized',reason:'google'};
   await workspaceRateLimit(actor.id,'invite_inspect',100);
   const link=await one<{status:string;expires_at:Date;project_id:string;title:string;name:string;slug:string}>("select l.status,l.expires_at,l.project_id,p.title,s.name,s.slug from public.project_access_links l join public.projects p on p.id=l.project_id join public.workspace_services s on s.slug=p.service_slug where l.token_hash=$1 and p.deleted_at is null",[tokenHash(token)]);
   if (!link) return {state:'invalid'};

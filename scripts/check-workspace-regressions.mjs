@@ -3,11 +3,28 @@ import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import { invitationClaimDestination } from '../src/features/workspace/invitation-claim.ts';
 import { isTransientAuthError } from '../src/lib/workspace/auth-errors.ts';
+import { hasGoogleIdentity } from '../src/lib/workspace/identity.ts';
 
 const claims = readFileSync('src/lib/workspace/claims.ts', 'utf8');
 const operations = readFileSync('src/lib/workspace/operations.ts', 'utf8');
 const middleware = readFileSync('src/middleware.ts', 'utf8');
 const migration = readFileSync('supabase/migrations/202610100001_workspace_safe_admin_removals.sql', 'utf8');
+const schema = readFileSync('supabase/migrations/202610090001_workspace_schema.sql', 'utf8');
+
+test('Google-linked returning accounts are recognized even when email is the primary provider', () => {
+  assert.equal(hasGoogleIdentity({ app_metadata: { provider: 'google' } }), true);
+  assert.equal(hasGoogleIdentity({ app_metadata: { provider: 'email', providers: ['email', 'google'] } }), true);
+  assert.equal(hasGoogleIdentity({ app_metadata: { provider: 'email' }, identities: [{ provider: 'google' }] }), true);
+  assert.equal(hasGoogleIdentity({ app_metadata: { provider: 'email', providers: ['email'] }, identities: [] }), false);
+});
+
+test('multi-project access is keyed by immutable client user id without a one-project-per-client constraint', () => {
+  assert.match(schema, /project_one_current_client_idx on public\.client_project_access\(project_id\) where revoked_at is null/);
+  assert.match(schema, /client_project_access_user_idx on public\.client_project_access\(client_user_id, project_id\) where revoked_at is null/);
+  assert.doesNotMatch(schema, /unique[^;]*client_project_access\(client_user_id\)/i);
+  assert.match(claims, /insert into public\.client_project_access\(project_id,client_user_id\) values\(\$1,\$2\)/);
+  assert.match(claims, /actor\.role==='admin'.*reason:'admin'/);
+});
 
 test('confirmed claim routes to its project and falls back to the portal if the id is unavailable', () => {
   const id = 'a806d5c2-1c58-4bc0-9e79-dbe4433d2200';
