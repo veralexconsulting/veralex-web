@@ -8,7 +8,7 @@ import { retainUnclaimedTokens } from './snapshot';
 
 export type DraftProject = Pick<Project,'title'|'serviceId'|'picId'|'startAt'|'followUpAt'|'notes'|'supportingIds'> & {clientId?:string;clientName:string;clientEmail:string;clientPhone:string};
 interface WorkspaceContextValue {
-  data:WorkspaceData;ready:boolean;error:string;actorId:string;clientAccountId:string;toast:string;
+  data:WorkspaceData;ready:boolean;error:string;actorId:string;clientAccountId:string;toast:string;toastError:boolean;
   refresh:()=>Promise<void>;clearToast:()=>void;
   createProject:(draft:DraftProject)=>Promise<string>;
   updateProject:(id:string,patch:Partial<Project>,message:string,clientVisible?:boolean)=>Promise<void>;
@@ -35,7 +35,7 @@ const refreshIntervalMs=20_000;
 
 export function WorkspaceProvider({children,role}:{children:React.ReactNode;role:'admin'|'client'}) {
   const [data,setData]=useState<WorkspaceData>(empty); const [ready,setReady]=useState(false); const [error,setError]=useState('');
-  const [actorId,setActorId]=useState(''); const [clientAccountId,setClientAccountId]=useState(''); const [toast,setToast]=useState('');
+  const [actorId,setActorId]=useState(''); const [clientAccountId,setClientAccountId]=useState(''); const [toast,setToast]=useState(''); const [toastError,setToastError]=useState(false);
   const refreshVersion=useRef(0); const mutationsInFlight=useRef(0); const lastPassiveRefresh=useRef(0);
   const refresh=useCallback(async()=>{
     const version=++refreshVersion.current;
@@ -46,9 +46,9 @@ export function WorkspaceProvider({children,role}:{children:React.ReactNode;role
   },[role]);
   useEffect(()=>{
     let mounted=true;
-    refresh().catch(cause=>{if(mounted){setError(message(cause));setReady(true);}});
+    refresh().catch(cause=>{if(mounted){setError(role==='client'?'Client portal is temporarily unavailable.':message(cause));setReady(true);}});
     return()=>{mounted=false;};
-  },[refresh]);
+  },[refresh,role]);
   useEffect(()=>{
     const whenVisible=()=>{
       if(document.visibilityState!=='visible'||mutationsInFlight.current>0||Date.now()-lastPassiveRefresh.current<1000)return;
@@ -69,25 +69,25 @@ export function WorkspaceProvider({children,role}:{children:React.ReactNode;role
         if (!response.ok) throw new Error(response.error);
         result=response.result;
       } catch(cause) {
-        setToast(message(cause));
+        setToast(role==='client'?'This client portal request could not be completed.':message(cause));setToastError(true);
         throw cause;
       }
       try {
         await refresh();
       } catch(cause) {
-        setError(message(cause));
-        setToast('Perubahan tersimpan, tetapi tampilan belum dapat dimuat ulang. Coba muat ulang.');
+        setError(role==='client'?'Client portal is temporarily unavailable.':message(cause));
+        setToast(role==='client'?'Client portal could not refresh.':'Perubahan tersimpan, tetapi tampilan belum dapat dimuat ulang. Coba muat ulang.');setToastError(true);
         return result;
       }
       if(result.token && projectId) setData(previous=>({...previous,accessLinks:previous.accessLinks.map(link=>link.projectId===projectId&&link.status==='active'?{...link,token:result.token!}:link)}));
-      setToast(success);
+      setToast(success);setToastError(false);
       return result;
     } finally {
       mutationsInFlight.current--;
     }
-  },[refresh]);
+  },[refresh,role]);
   const safe=useCallback(async(input:Operation,success:string,projectId?:string)=>{try{await run(input,success,projectId);}catch{/* Error is shown in the shared toast. */}},[run]);
-  const value=useMemo<WorkspaceContextValue>(()=>({data,ready,error,actorId,clientAccountId,toast,refresh,clearToast:()=>setToast(''),
+  const value=useMemo<WorkspaceContextValue>(()=>({data,ready,error,actorId,clientAccountId,toast,toastError,refresh,clearToast:()=>setToast(''),
     async createProject(draft){const result=await run({type:'create_project',draft},'Proyek dibuat. Bagikan tautan setelah memverifikasi penerima.');if(!result.id)throw new Error('Proyek belum dibuat.');if(result.token)setData(previous=>({...previous,accessLinks:previous.accessLinks.map(link=>link.projectId===result.id&&link.status==='active'?{...link,token:result.token!}:link)}));return result.id;},
     async updateProject(id,patch){await run({type:'update_project',id,patch},'Proyek diperbarui.');},
     updateWorkflow:(projectId,stages,reason)=>safe({type:'update_workflow',projectId,stages,reason},'Workflow proyek diperbarui.'),
@@ -106,7 +106,7 @@ export function WorkspaceProvider({children,role}:{children:React.ReactNode;role
     resetAccess:projectId=>safe({type:'reset_access',projectId},'Akses diatur ulang. Verifikasi penerima sebelum membagikan tautan baru.',projectId),
     markRead:id=>safe({type:'mark_read',id},'Notifikasi dibaca.'),
     markAllRead:()=>safe({type:'mark_all_read'},'Semua notifikasi ditandai dibaca.'),
-  }),[data,ready,error,actorId,clientAccountId,toast,refresh,run,safe]);
+  }),[data,ready,error,actorId,clientAccountId,toast,toastError,refresh,run,safe]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 export function useWorkspace(){const value=useContext(Context);if(!value)throw new Error('WorkspaceProvider belum terpasang');return value;}

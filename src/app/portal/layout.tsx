@@ -1,6 +1,7 @@
-'use client';
-import { WorkspaceProvider } from '@/features/workspace/store';
-import { WorkspaceShell } from '@/features/workspace/ui';
-import { usePathname } from 'next/navigation';
-import '@/features/workspace/workspace.css';
-export default function Layout({ children }: { children: React.ReactNode }) { const pathname=usePathname(); if(pathname==='/portal/login') return children; return <WorkspaceProvider role="client"><WorkspaceShell role="client">{children}</WorkspaceShell></WorkspaceProvider>; }
+import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
+import PortalShellLayout from './PortalShellLayout';
+import type { Lang } from '@/lib/translations';
+
+export const metadata:Metadata={title:'Client Portal | VERALEX CONSULTING',robots:{index:false,follow:false,noarchive:true}};
+export default async function Layout({children}:{children:React.ReactNode}){const value=(await cookies()).get('veralex-portal-lang')?.value;const lang:Lang=value==='id'||value==='zh'?value:'en';return <PortalShellLayout initialLanguage={lang}>{children}</PortalShellLayout>;}
