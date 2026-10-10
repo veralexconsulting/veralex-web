@@ -33,6 +33,8 @@ export default function LanguageToggle({ className = '', compact = false }: { cl
         setOpen(false);
 
         const [, seg, ...rest] = pathname.split('/');
+        const aboutSlug = seg === 'about-us' || (['en', 'id', 'zh'].includes(seg) && rest[0] === 'about-us');
+        if (aboutSlug) { router.push(`${next === 'en' ? '' : `/${next}`}/about-us`); return; }
         const legalSlug = ['privacy-policy', 'terms-and-conditions'].includes(seg) ? seg : (['en','id','zh'].includes(seg) && ['privacy-policy','terms-and-conditions'].includes(rest[0]) ? rest[0] : null);
         if (legalSlug) { router.push(`${next === 'en' ? '' : `/${next}`}/${legalSlug}`); return; }
         const serviceSlug = seg === 'services' ? rest[0] : (['en', 'id', 'zh'].includes(seg) && rest[0] === 'services' ? rest[1] : null);

@@ -29,6 +29,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'weekly',
             priority: 0.7,
         },
+        ...(['', '/id', '/zh'] as const).map((prefix) => ({
+            url: `${baseUrl}${prefix}/about-us`,
+            lastModified: now,
+            changeFrequency: 'monthly' as const,
+            priority: 0.6,
+        })),
         ...(['privacy-policy', 'terms-and-conditions'] as const).flatMap((page) =>
             (['', '/id', '/zh'] as const).map((prefix) => ({
                 url: `${baseUrl}${prefix}/${page}`,

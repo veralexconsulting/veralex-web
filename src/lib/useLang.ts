@@ -14,7 +14,7 @@ function langFromPath(pathname: string): Lang | null {
 export function useLang(): { t: (key: string) => string; lang: Lang; toggleLang: () => void; setLanguage: (newLang: Lang) => void } {
     const pathname = usePathname();
     const urlLang = langFromPath(pathname);
-    const legalDefault = pathname === '/privacy-policy' || pathname === '/terms-and-conditions' ? 'en' : 'id';
+    const legalDefault = pathname === '/privacy-policy' || pathname === '/terms-and-conditions' || pathname === '/about-us' ? 'en' : 'id';
 
     // Prefixed routes own their locale (/en, /zh) so those pages never render
     // Indonesian copy. Unprefixed routes are the original Indonesian site, so
