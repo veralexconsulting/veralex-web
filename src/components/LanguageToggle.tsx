@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useId, useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useLang } from '@/lib/useLang';
 import { Lang } from '@/lib/translations';
@@ -12,7 +12,9 @@ const LANG_NAMES: Record<Lang, string> = { en: 'English', id: 'Bahasa Indonesia'
 export default function LanguageToggle({ className = '', compact = false }: { className?: string; compact?: boolean }) {
     const { lang, setLanguage } = useLang();
     const [open, setOpen] = useState(false);
+    const menuId = useId();
     const ref = useRef<HTMLDivElement>(null);
+    const triggerRef = useRef<HTMLButtonElement>(null);
     const pathname = usePathname();
     const router = useRouter();
 
@@ -21,12 +23,12 @@ export default function LanguageToggle({ className = '', compact = false }: { cl
             if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
         };
         const onEscape = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') setOpen(false);
+            if (e.key === 'Escape' && open) { setOpen(false); triggerRef.current?.focus(); }
         };
         document.addEventListener('pointerdown', onClickOutside);
         document.addEventListener('keydown', onEscape);
         return () => { document.removeEventListener('pointerdown', onClickOutside); document.removeEventListener('keydown', onEscape); };
-    }, []);
+    }, [open]);
 
     const handleSelect = (next: Lang) => {
         setLanguage(next);
@@ -39,7 +41,7 @@ export default function LanguageToggle({ className = '', compact = false }: { cl
         if (legalSlug) { router.push(`${next === 'en' ? '' : `/${next}`}/${legalSlug}`); return; }
         const serviceSlug = seg === 'services' ? rest[0] : (['en', 'id', 'zh'].includes(seg) && rest[0] === 'services' ? rest[1] : null);
         if (serviceSlug) {
-            router.push(hasServicePage(next, serviceSlug) ? (next === 'id' ? `/services/${serviceSlug}` : `/${next}/services/${serviceSlug}`) : '/#services');
+            router.push(hasServicePage(next, serviceSlug) ? (next === 'id' ? `/services/${serviceSlug}` : `/${next}/services/${serviceSlug}`) : `/services/${serviceSlug}`);
             return;
         }
         if (seg === 'en' || seg === 'id' || seg === 'zh') {
@@ -50,12 +52,14 @@ export default function LanguageToggle({ className = '', compact = false }: { cl
     return (
         <div className={`flag-lang-toggle-wrapper${compact ? ' is-compact' : ''}`} ref={ref}>
             <button
+                ref={triggerRef}
                 className={`flag-lang-toggle ${className}`}
                 onClick={() => setOpen((v) => !v)}
                 type="button"
                 aria-label={`Language: ${LANG_NAMES[lang]}`}
                 aria-haspopup="true"
                 aria-expanded={open}
+                aria-controls={menuId}
             >
                 {compact ? <><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-3 3-3 15 0 18M12 3c3 3 3 15 0 18"/></svg><span>{lang.toUpperCase()}</span><span aria-hidden="true" className="flag-lang-caret">⌄</span></> : <><span className={`flag-lang-option${lang === 'en' ? ' active' : ''}`} aria-hidden="true">
                     🇬🇧
@@ -68,7 +72,7 @@ export default function LanguageToggle({ className = '', compact = false }: { cl
                 </span></>}
             </button>
             {open && (
-                <div className="flag-lang-dropdown" role="group" aria-label="Languages">
+                <div id={menuId} className="flag-lang-dropdown" role="group" aria-label="Languages">
                     {(Object.keys(LANG_NAMES) as Lang[]).map((l) => (
                         <button
                             key={l}

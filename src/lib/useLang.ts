@@ -14,12 +14,11 @@ function langFromPath(pathname: string): Lang | null {
 export function useLang(): { t: (key: string) => string; lang: Lang; toggleLang: () => void; setLanguage: (newLang: Lang) => void } {
     const pathname = usePathname();
     const urlLang = langFromPath(pathname);
-    const legalDefault = pathname === '/privacy-policy' || pathname === '/terms-and-conditions' || pathname === '/about-us' ? 'en' : 'id';
+    const defaultLang: Lang = /^\/(admin|portal|invite|workspace|dashboard|auth)(\/|$)/.test(pathname) ? 'id' : 'en';
 
-    // Prefixed routes own their locale (/en, /zh) so those pages never render
-    // Indonesian copy. Unprefixed routes are the original Indonesian site, so
-    // they default to 'id' — an explicit visitor choice still wins there.
-    const [lang, setLang] = useState<Lang>(urlLang ?? legalDefault);
+    // Public pages default to English unless the visitor chose another language.
+    // Workspace and authentication routes keep their existing Indonesian default.
+    const [lang, setLang] = useState<Lang>(urlLang ?? defaultLang);
 
     useEffect(() => {
         const handler = (e: Event) => {
@@ -28,7 +27,7 @@ export function useLang(): { t: (key: string) => string; lang: Lang; toggleLang:
         };
         window.addEventListener('langchange', handler);
 
-        const resolved = urlLang ?? (legalDefault === 'en' ? 'en' : ((localStorage.getItem('veralex-lang') as Lang | null) || 'id'));
+        const resolved = urlLang ?? ((localStorage.getItem('veralex-lang') as Lang | null) || defaultLang);
         const updateTimer = window.setTimeout(() => setLang(resolved), 0);
         document.documentElement.lang = resolved;
 
@@ -36,7 +35,7 @@ export function useLang(): { t: (key: string) => string; lang: Lang; toggleLang:
             window.clearTimeout(updateTimer);
             window.removeEventListener('langchange', handler);
         };
-    }, [urlLang, legalDefault]);
+    }, [urlLang, defaultLang]);
 
     const setLanguage = useCallback((newLang: Lang) => {
         setLang(newLang);

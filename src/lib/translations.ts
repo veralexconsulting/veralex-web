@@ -34,6 +34,9 @@ export const translations: Record<Lang, Record<string, string>> = {
         // Nav
         'nav.home': 'Beranda',
         'nav.services': 'Layanan',
+        'nav.about': 'Tentang Kami',
+        'nav.aboutVeralex': 'Tentang VERALEX',
+        'nav.contactUs': 'Hubungi Kami',
         'nf.title': 'Halaman tidak ditemukan',
         'nf.text': 'Halaman yang Anda cari sudah dipindahkan atau tidak pernah ada. Coba mulai dari beranda atau lihat daftar layanan kami.',
         'nav.pricing': 'Harga',
@@ -445,6 +448,9 @@ export const translations: Record<Lang, Record<string, string>> = {
         // Nav
         'nav.home': 'Home',
         'nav.services': 'Services',
+        'nav.about': 'About Us',
+        'nav.aboutVeralex': 'About VERALEX',
+        'nav.contactUs': 'Contact Us',
         'nf.title': 'Page not found',
         'nf.text': 'The page you are looking for has moved or never existed. Start from the homepage or browse our services.',
         'nav.pricing': 'Pricing',
@@ -856,6 +862,9 @@ export const translations: Record<Lang, Record<string, string>> = {
         // Nav
         'nav.home': '首页',
         'nav.services': '服务项目',
+        'nav.about': '关于我们',
+        'nav.aboutVeralex': '了解 VERALEX',
+        'nav.contactUs': '联系我们',
         'nf.title': '页面未找到',
         'nf.text': '您访问的页面已被移动或不存在。请从首页开始，或浏览我们的服务项目。',
         'nav.pricing': '套餐价格',
