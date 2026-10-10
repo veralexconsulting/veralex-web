@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Lang } from '@/lib/translations';
+import { priorityLabels } from './model';
 
 const messages = {
   en: {
@@ -31,16 +32,25 @@ const messages = {
     inviteChecking:'正在检查邀请…', inviteEyebrow:'项目访问', inviteSignIn:'登录以打开项目邀请。', inviteSignInCopy:'请使用 Google 账号登录。首个符合条件并领取此邀请的账号将获得项目访问权限。', inviteUnauthorized:'此账号无法领取项目。', inviteUnauthorizedCopy:'请使用与此邀请关联的客户 Google 账号。管理员账号不能领取客户项目。', otherAccount:'退出并使用其他账号', inviteValid:'随时了解您的服务进度。', inviteValidCopy:'请仅在通过 VERALEX 团队正式沟通收到邀请后领取访问权限。', claim:'领取项目访问权限', claiming:'正在处理…', inviteStatus:'邀请状态', claimedOwned:'项目已关联', claimedOther:'邀请已被使用', expired:'邀请已过期', revoked:'邀请已撤销', invalid:'邀请不可用', inviteHelp:'如需访问帮助，请通过正式沟通渠道联系 VERALEX 团队。', openProject:'打开项目', contactTeam:'联系 VERALEX', claimOther:'此邀请已由其他 Google 账号领取。', claimExpired:'此邀请已过期。', claimRevoked:'此邀请已撤销。', claimInvalid:'此邀请无效。', claimFailure:'无法领取项目访问权限。', inviteCheckError:'无法检查此邀请。', inviteAuthError:'Google 登录失败。', linkTimeout:'登录耗时较长，请重试。'
   }
 } as const;
+const legalIntro:Record<Lang,string>={en:'For information about using the client portal, please review',id:'Untuk informasi penggunaan portal klien, silakan baca',zh:'有关客户门户的使用说明，请阅读'};
+const notificationTitles:Record<Lang,Record<string,string>>={
+  en:{project_update:'Project update',priority_reviewed:'Priority request status updated',priority_payment:'Priority payment update'},
+  id:{project_update:'Pembaruan proyek',priority_reviewed:'Status permintaan prioritas diperbarui',priority_payment:'Pembaruan pembayaran prioritas'},
+  zh:{project_update:'项目更新',priority_reviewed:'优先处理申请状态已更新',priority_payment:'优先处理付款更新'},
+};
+const priorityStateMessage:Record<Lang,string>={en:'Priority request status: {status}',id:'Status permintaan prioritas: {status}',zh:'优先处理申请状态：{status}'};
+const priorityPaymentMessages:Record<Lang,{confirmed:string;failed:string}>={en:{confirmed:'Priority payment confirmed',failed:'Priority payment failed'},id:{confirmed:'Pembayaran prioritas terkonfirmasi',failed:'Pembayaran prioritas gagal'},zh:{confirmed:'优先处理付款已确认',failed:'优先处理付款失败'}};
 
 type Copy = typeof messages.en;
 type FlatKey = Exclude<keyof Copy, 'status'>;
-type LocaleContext = { lang: Lang; setLanguage:(lang:Lang)=>void; t:(key:FlatKey)=>string; status:(key:string)=>string };
+type LocaleKey=FlatKey|'legalIntro';
+type LocaleContext = { lang: Lang; setLanguage:(lang:Lang)=>void; t:(key:LocaleKey)=>string; status:(key:string)=>string; notificationTitle:(eventType:string|undefined,fallback:string)=>string; notificationMessage:(eventType:string|undefined,message:string)=>string };
 const Context=createContext<LocaleContext|null>(null);
 export function ClientLocaleProvider({children,initialLanguage='en'}:{children:React.ReactNode;initialLanguage?:Lang}) {
   const [lang,setLangState]=useState<Lang>(initialLanguage);
   const setLanguage=(next:Lang)=>{setLangState(next);localStorage.setItem('veralex-portal-lang',next);localStorage.setItem('veralex-lang',next);document.cookie=`veralex-portal-lang=${next}; Path=/; Max-Age=31536000; SameSite=Lax${location.protocol==='https:'?'; Secure':''}`;document.documentElement.lang=next;};
   useEffect(()=>{document.documentElement.lang=lang;},[lang]);
-  const value=useMemo<LocaleContext>(()=>({lang,setLanguage,t:(key)=>messages[lang][key] as string,status:(key)=>messages[lang].status[key as keyof typeof messages.en.status]||messages.en.status[key as keyof typeof messages.en.status]||key}),[lang]);
+  const value=useMemo<LocaleContext>(()=>({lang,setLanguage,t:(key)=>key==='legalIntro'?legalIntro[lang]:messages[lang][key] as string,status:(key)=>messages[lang].status[key as keyof typeof messages.en.status]||messages.en.status[key as keyof typeof messages.en.status]||key,notificationTitle:(eventType,fallback)=>eventType?notificationTitles[lang][eventType]||fallback:fallback,notificationMessage:(eventType,message)=>{if(eventType==='priority_reviewed'){const match=message.match(/^Permintaan prioritas menjadi (.+)\.$/);const state=match&&Object.entries(priorityLabels).find(([,label])=>label===match[1])?.[0];if(state)return priorityStateMessage[lang].replace('{status}',messages[lang].status[state as keyof typeof messages.en.status]||messages.en.status[state as keyof typeof messages.en.status]);}if(eventType==='priority_payment'){if(message==='Pembayaran prioritas terkonfirmasi')return priorityPaymentMessages[lang].confirmed;if(message==='Pembayaran prioritas gagal')return priorityPaymentMessages[lang].failed;}return message;}}),[lang]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 export function useClientLocale(){const value=useContext(Context);if(!value)throw new Error('ClientLocaleProvider is missing');return value;}

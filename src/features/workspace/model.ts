@@ -13,7 +13,7 @@ export interface ClientAccount { id: string; name: string; email: string }
 export interface ClientAccess { id: string; projectId: string; accountId: string; grantedAt: string; revokedAt?: string }
 export interface Activity { id: string; projectId?: string; actorId: string; text: string; at: string; clientVisible: boolean }
 export interface ProjectAccessLink { id: string; projectId: string; token: string; status: LinkStatus; createdAt: string; expiresAt: string; claimedById?: string }
-export interface Notification { id: string; role: Role; projectId?: string; title: string; message: string; target: string; read: boolean; at: string }
+export interface Notification { id: string; role: Role; projectId?: string; eventType?: string; title: string; message: string; target: string; read: boolean; at: string }
 export interface PriorityOffering { enabled: boolean; serviceIds: string[]; stageIds: string[]; title: string; description: string; commitment: string; limitations: string; terms: string; price: number }
 export interface Project {
   id: string; reference: string; title: string; clientId: string; serviceId: string; status: ProjectStatus;

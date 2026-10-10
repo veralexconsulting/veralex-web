@@ -6,19 +6,19 @@ import { tokenHash, validTokenShape } from './token';
 import { workspaceServiceClient } from './supabase';
 import { workspaceRateLimit } from './rate-limit';
 
-export type InvitationStatus = { state:'signin'|'unauthorized'|'valid'|'claimed_owned'|'claimed_other'|'expired'|'revoked'|'invalid'; projectTitle?:string; serviceName?:string; projectId?:string };
+export type InvitationStatus = { state:'signin'|'unauthorized'|'valid'|'claimed_owned'|'claimed_other'|'expired'|'revoked'|'invalid'; projectTitle?:string; serviceName?:string; serviceId?:string; projectId?:string };
 export async function inspectProjectInvitation(token:string):Promise<InvitationStatus> {
   if (!validTokenShape(token)) return {state:'invalid'};
   const requestHeaders=await headers(); const ip=requestHeaders.get('x-vercel-forwarded-for')||requestHeaders.get('x-real-ip')||'unknown';
   await workspaceRateLimit(ip,'invite_open',200);
   const actor=await currentActor(); if (!actor) return {state:'signin'}; if(actor.role!=='client'||!actor.active||!actor.google)return {state:'unauthorized'};
   await workspaceRateLimit(actor.id,'invite_inspect',100);
-  const link=await one<{status:string;expires_at:Date;project_id:string;title:string;name:string}>("select l.status,l.expires_at,l.project_id,p.title,s.name from public.project_access_links l join public.projects p on p.id=l.project_id join public.workspace_services s on s.slug=p.service_slug where l.token_hash=$1",[tokenHash(token)]);
+  const link=await one<{status:string;expires_at:Date;project_id:string;title:string;name:string;slug:string}>("select l.status,l.expires_at,l.project_id,p.title,s.name,s.slug from public.project_access_links l join public.projects p on p.id=l.project_id join public.workspace_services s on s.slug=p.service_slug where l.token_hash=$1",[tokenHash(token)]);
   if (!link) return {state:'invalid'};
   if (link.status==='revoked') return {state:'revoked'};
   if (link.status==='claimed') { const access=await one<{client_user_id:string}>('select client_user_id from public.client_project_access where project_id=$1 and revoked_at is null',[link.project_id]); return {state:access?.client_user_id===actor.id?'claimed_owned':'claimed_other',projectId:access?.client_user_id===actor.id?link.project_id:undefined}; }
   if (new Date(link.expires_at).getTime()<=Date.now()) return {state:'expired'};
-  return {state:'valid',projectTitle:link.title,serviceName:link.name,projectId:link.project_id};
+  return {state:'valid',projectTitle:link.title,serviceName:link.name,serviceId:link.slug,projectId:link.project_id};
 }
 export async function claimProjectInvitation(token:string):Promise<{state:'claimed'|'claimed_owned'|'claimed_other'|'expired'|'revoked'|'invalid';projectId?:string}> {
   const actor=await requireWorkspaceClient(); if (!validTokenShape(token)) return {state:'invalid'};
