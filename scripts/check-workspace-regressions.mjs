@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { invitationClaimDestination } from '../src/features/workspace/invitation-claim.ts';
 import { isTransientAuthError } from '../src/lib/workspace/auth-errors.ts';
 import { hasGoogleIdentity } from '../src/lib/workspace/identity.ts';
+import { workspacePgConnectionString } from '../src/lib/workspace/pg-connection.mjs';
 
 const claims = readFileSync('src/lib/workspace/claims.ts', 'utf8');
 const operations = readFileSync('src/lib/workspace/operations.ts', 'utf8');
@@ -53,6 +54,21 @@ test('admin and client sessions persist in the browser and OAuth callback redire
   assert.match(authCallback, /authCookies\.set\(item\.name,item\)/);
   assert.match(authCallback, /response\.cookies\.set\(cookie\.name,cookie\.value,cookie\.options\)/);
   assert.match(adminLogin, /void recordLoginEvent\(\)\.catch\(\(\) => undefined\)/);
+});
+
+test('Supabase shared pooler URLs use transaction mode without changing direct database URLs', () => {
+  assert.equal(
+    new URL(workspacePgConnectionString('postgresql://role:pass@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres')).port,
+    '6543',
+  );
+  assert.equal(
+    new URL(workspacePgConnectionString('postgresql://role:pass@db.example.com:5432/postgres')).port,
+    '5432',
+  );
+  assert.equal(
+    new URL(workspacePgConnectionString('postgresql://role:pass@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres')).port,
+    '6543',
+  );
 });
 
 test('claim transaction serializes on project and invitation rows and preserves first claimant ownership', () => {
