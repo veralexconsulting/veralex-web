@@ -48,8 +48,9 @@ test('reporting days use the Asia/Jakarta boundary while storage stays UTC', () 
     assert.equal(range.resolveRange('7d', null, null, new Date('2026-10-09T17:00:00Z')).from, '2026-10-04');
     assert.equal(range.resolveRange('90d', null, null, new Date('2026-10-09T17:00:00Z')).from, '2026-07-13');
     assert.equal(range.resolveRange('custom', '2026-02-10', '2026-02-01', new Date()).from, '2026-02-01', 'reversed range is normalised');
-    assert.equal(JSON.stringify(range.resolveRange('custom', 'nope', '2026-02-01', new Date())), JSON.stringify({ from: '2026-10-10', to: '2026-10-10' }), 'invalid input falls back to today');
-    const capped = range.resolveRange('custom', '2000-01-01', '2026-02-01', new Date());
+    const now = new Date('2026-10-09T17:00:00Z');
+    assert.equal(JSON.stringify(range.resolveRange('custom', 'nope', '2026-02-01', now)), JSON.stringify({ from: '2026-10-10', to: '2026-10-10' }), 'invalid input falls back to today');
+    const capped = range.resolveRange('custom', '2000-01-01', '2026-02-01', now);
     assert.equal(capped.from, '2025-01-31', 'custom range is capped at 366 days');
     assert.equal(range.seriesDays({ from: '2026-10-09', to: '2026-10-12' }).length, 4);
 });
