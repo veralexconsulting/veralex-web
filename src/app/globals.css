@@ -2200,9 +2200,20 @@ button {
     font-size: 0.9rem;
     white-space: nowrap;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    /* Hidden until the widget is hovered or focused, so it stops covering the
+       testimonial CTA. The link itself is unchanged. */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(10px);
+    pointer-events: none;
+    transition: opacity .18s ease, transform .18s ease, visibility .18s;
+}
+.floating-whatsapp:hover .floating-wa-text,
+.floating-whatsapp:focus-visible .floating-wa-text,
+.floating-whatsapp:focus-within .floating-wa-text {
     opacity: 1;
+    visibility: visible;
     transform: translateX(0);
-    transition: var(--transition-normal);
 }
 
 .floating-wa-text::after {
@@ -2213,6 +2224,9 @@ button {
     transform: translateY(-50%);
     border: 8px solid transparent;
     border-left-color: white;
+}
+@media (hover: none), (max-width: 767px) {
+    .floating-wa-text { display: none; }
 }
 
 @keyframes float-wa {
@@ -2615,7 +2629,11 @@ section {
     display: flex;
     flex: 0 0 auto;
     align-items: center;
+    justify-content: space-evenly;
     gap: 14px;
+    /* One sequence is never narrower than the viewport. Without this, a monitor
+       wider than the natural logo row makes the -50% loop jump mid-sequence. */
+    min-width: 100vw;
     margin: 0;
     padding: 0 7px;
     list-style: none;
@@ -2652,7 +2670,7 @@ section {
 @media (prefers-reduced-motion: reduce) {
     .client-logo-run { width: 100%; flex-wrap: wrap; justify-content: center; animation: none; will-change: auto; }
     .client-logo-group[aria-hidden="true"] { display: none; }
-    .client-logo-group:not([aria-hidden="true"]) { flex: 1 1 100%; width: 100%; box-sizing: border-box; flex-wrap: wrap; justify-content: center; }
+    .client-logo-group:not([aria-hidden="true"]) { flex: 1 1 100%; width: 100%; min-width: 0; box-sizing: border-box; flex-wrap: wrap; justify-content: center; }
     .client-logo-marquee { -webkit-mask-image: none; mask-image: none; }
 }
 
@@ -5675,9 +5693,11 @@ body.modal-open .floating-whatsapp {
     border: 0;
 }
 
-.testimonials { padding: 64px 0; }
-.testimonials .section-title { margin-bottom: 10px; }
-.testimonials .section-subtitle { max-width: 62ch; margin-inline: auto; }
+.testimonials { padding: 52px 0 56px; }
+.testimonials .section-title { margin-bottom: 8px; }
+/* The global subtitle rule carries margin-bottom: 4rem, which left a dead band
+   between the subtitle and the cards. */
+.testimonials .section-subtitle { max-width: 60ch; margin: 0 auto; }
 
 .testimonials-eyebrow {
     margin: 0 0 12px;
@@ -5689,7 +5709,7 @@ body.modal-open .floating-whatsapp {
     text-align: center;
 }
 
-.reviews-frame { position: relative; margin-top: 34px; }
+.reviews-frame { position: relative; margin-top: 28px; padding-inline: 56px; }
 
 .reviews-track {
     display: flex;
@@ -5788,15 +5808,15 @@ body.modal-open .floating-whatsapp {
     height: 42px;
     display: grid;
     place-items: center;
-    border: 1px solid rgba(30, 30, 30, .12);
+    border: 1px solid rgba(74, 14, 14, .25);
     border-radius: 50%;
     background: #FFFFFF;
     color: #4A0E0E;
     box-shadow: 0 8px 22px -12px rgba(0, 0, 0, .5);
     cursor: pointer;
 }
-.reviews-arrow.is-prev { left: -12px; }
-.reviews-arrow.is-next { right: -12px; }
+.reviews-arrow.is-prev { left: 0; }
+.reviews-arrow.is-next { right: 0; }
 .reviews-arrow:disabled { opacity: .32; cursor: default; }
 .reviews-arrow:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
 
@@ -5807,41 +5827,45 @@ body.modal-open .floating-whatsapp {
     padding: 0;
     border: 0;
     border-radius: 50%;
-    background: rgba(255, 255, 255, .28);
+    background: rgba(74, 14, 14, .22);
     cursor: pointer;
     transition: background-color .2s ease, transform .2s ease;
 }
-.reviews-dots button.is-active { background: var(--color-gold); transform: scale(1.25); }
-.reviews-dots button:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
+.reviews-dots button.is-active { background: #4A0E0E; transform: scale(1.25); }
+.reviews-dots button:focus-visible { outline: 2px solid #C8A15A; outline-offset: 3px; }
 
-.reviews-cta { display: flex; justify-content: center; margin-top: 26px; }
+.reviews-cta { display: flex; justify-content: center; margin-top: 22px; }
 .btn-reviews-cta {
     display: inline-flex;
     align-items: center;
     gap: 10px;
     min-height: 46px;
     padding: 12px 22px;
-    border: 1px solid rgba(200, 161, 90, .55);
+    border: 1px solid #4A0E0E;
     border-radius: 999px;
-    background: transparent;
-    color: #FFF8EE;
+    background: #FFFFFF;
+    color: #4A0E0E;
     font-size: .875rem;
-    font-weight: 600;
+    font-weight: 650;
     text-decoration: none;
-    transition: background-color .2s ease, border-color .2s ease;
+    transition: background-color .18s ease, color .18s ease, border-color .18s ease;
 }
-.btn-reviews-cta:hover { background: rgba(200, 161, 90, .14); border-color: var(--color-gold); }
-.btn-reviews-cta:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
+.btn-reviews-cta:hover,
+.btn-reviews-cta:focus-visible { background: #4A0E0E; border-color: #4A0E0E; color: #FFFFFF; }
+.btn-reviews-cta:focus-visible { outline: 2px solid #C8A15A; outline-offset: 3px; }
+.btn-reviews-cta:active { background: #2D0808; border-color: #2D0808; color: #FFFFFF; }
 
 @media (max-width: 900px) {
     .review-card { flex-basis: calc((100% - 20px) / 2); }
 }
-@media (max-width: 600px) {
-    .testimonials { padding: 48px 0; }
-    .reviews-frame { margin-top: 26px; }
-    /* One full card plus a peek at the next, so swiping is discoverable. */
-    .review-card { flex-basis: 84%; padding: 18px 18px 16px; }
+@media (max-width: 899px) {
+    .reviews-frame { padding-inline: 0; margin-top: 24px; }
     .reviews-arrow { display: none; }
+}
+@media (max-width: 600px) {
+    .testimonials { padding: 42px 0 46px; }
+    /* One full card plus a peek at the next, so swiping is discoverable. */
+    .review-card { flex-basis: 86%; padding: 18px 18px 16px; }
     .reviews-dots { margin-top: 0; }
 }
 @media (prefers-reduced-motion: reduce) {

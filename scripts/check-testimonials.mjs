@@ -53,6 +53,26 @@ test('the profile link is a real Maps destination with no invented place ID', ()
     assert.ok(profile.reviewsUrl.includes('6281219476385') === false, 'address, not an invented id, identifies the place');
 });
 
+test('the Google Reviews CTA keeps a readable contrast against the section', () => {
+    // --bg-dark is #FAFAFA, so light text on this button is invisible.
+    const rule = css.match(/\.btn-reviews-cta \{[^}]*\}/)[0];
+    assert.ok(/background: #FFFFFF/.test(rule), 'white button background');
+    assert.ok(/color: #4A0E0E/.test(rule), 'maroon text');
+    assert.ok(!/color: #FFF8EE/.test(rule) && !/color: #fff;\s*\n\s*\}/.test(rule), 'no near-white text');
+    const hover = css.match(/\.btn-reviews-cta:hover,[^{]*\{[^}]*\}/)[0];
+    assert.ok(/background: #4A0E0E/.test(hover) && /color: #FFFFFF/.test(hover), 'hover inverts to maroon with white text');
+    assert.ok(/\.btn-reviews-cta:focus-visible/.test(css), 'focus indicator present');
+    assert.ok(/\.btn-reviews-cta:active/.test(css), 'active state present');
+});
+
+test('the rating summary sits with the heading, not floating', () => {
+    assert.ok(/\.testimonials-eyebrow \{[\s\S]*?text-align: center/.test(css), 'rating summary is centred in the header');
+    assert.ok(/\.testimonials \.section-subtitle \{[^}]*margin: 0 auto; \}/.test(css), 'the global 4rem subtitle margin no longer leaves a dead band');
+    // Compare against the heading element itself, not the aria-labelledby above it.
+    assert.ok(section.indexOf('testimonials-eyebrow') < section.indexOf('id="testimonials-title"'), 'summary is emitted before the heading');
+    assert.ok(css.indexOf('.btn-reviews-cta') > css.indexOf('.reviews-dots'), 'CTA is the last element of the block');
+});
+
 test('the section renders native cards instead of screenshots', () => {
     assert.ok(!/testimoniclient|Screenshot_/.test(section), 'no screenshot is rendered');
     assert.ok(/review-card/.test(section) && /<blockquote/.test(section), 'cards are native elements');
@@ -76,8 +96,9 @@ test('carousel behaviour is user controlled and keyboard reachable', () => {
 test('responsive card sizing and mobile peek are in the stylesheet', () => {
     assert.ok(/\.review-card \{[^}]*flex: 0 0 calc\(\(100% - 40px\) \/ 3\)/.test(css), 'three cards on desktop');
     assert.ok(/@media \(max-width: 900px\)[\s\S]*?flex-basis: calc\(\(100% - 20px\) \/ 2\)/.test(css), 'two cards on tablet');
-    assert.ok(/@media \(max-width: 600px\)[\s\S]*?flex-basis: 84%/.test(css), 'one card plus a peek on mobile');
-    assert.ok(/\.reviews-arrow \{ display: none; \}/.test(css), 'arrows step aside on touch-sized screens');
+    assert.ok(/@media \(max-width: 600px\)[\s\S]*?flex-basis: 86%/.test(css), 'one card plus a peek on mobile');
+    assert.ok(/@media \(max-width: 899px\)[\s\S]*?\.reviews-arrow \{ display: none; \}/.test(css), 'arrows step aside on touch-sized screens');
+    assert.ok(/\.reviews-frame \{[^}]*padding-inline: 56px/.test(css), 'arrows live in a gutter, never on top of a card');
     assert.ok(/overflow-x: auto/.test(css) && /scroll-snap-type: x mandatory/.test(css), 'native swipe and snap');
     assert.ok(/-webkit-line-clamp: 4/.test(css) && /\.review-text\.is-open p/.test(css), 'clamped excerpt that can be expanded');
     assert.ok(/@media \(prefers-reduced-motion: reduce\) \{[\s\S]*?scroll-behavior: auto/.test(css), 'reduced motion respected');
