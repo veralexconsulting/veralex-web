@@ -5,6 +5,7 @@ import { getWorkspaceSnapshot, mutateWorkspace } from '@/app/workspace-actions';
 import type { Operation } from '@/lib/workspace/operations';
 import type { WorkspaceData, Project, ProjectStatus, TaskStatus, Stage, PriorityStatus } from './model';
 import { retainUnclaimedTokens } from './snapshot';
+import { useOptionalClientLocale } from './client-locale';
 
 export type DraftProject = Pick<Project,'title'|'serviceId'|'picId'|'startAt'|'followUpAt'|'notes'|'supportingIds'> & {clientId?:string;clientName:string;clientEmail:string;clientPhone:string};
 interface WorkspaceContextValue {
@@ -42,6 +43,7 @@ const operationKey=(input:Operation)=>{
 };
 
 export function WorkspaceProvider({children,role}:{children:React.ReactNode;role:'admin'|'client'}) {
+  const locale=useOptionalClientLocale();
   const [data,setData]=useState<WorkspaceData>(empty); const [ready,setReady]=useState(false); const [error,setError]=useState(''); const [pendingCount,setPendingCount]=useState(0);
   const [actorId,setActorId]=useState(''); const [clientAccountId,setClientAccountId]=useState(''); const [toast,setToast]=useState(''); const [toastError,setToastError]=useState(false);
   const refreshVersion=useRef(0); const mutationsInFlight=useRef(0); const inFlightKeys=useRef(new Set<string>()); const lastPassiveRefresh=useRef(0);
@@ -54,9 +56,9 @@ export function WorkspaceProvider({children,role}:{children:React.ReactNode;role
   },[role]);
   useEffect(()=>{
     let mounted=true;
-    refresh().catch(cause=>{if(mounted){setError(role==='client'?'Client portal is temporarily unavailable.':message(cause));setReady(true);}});
+    refresh().catch(cause=>{if(mounted){setError(role==='client'?locale?.t('loadError')||'Your portal is temporarily unavailable':message(cause));setReady(true);}});
     return()=>{mounted=false;};
-  },[refresh,role]);
+  },[refresh,role,locale]);
   useEffect(()=>{
     const whenVisible=()=>{
       if(document.visibilityState!=='visible'||mutationsInFlight.current>0||Date.now()-lastPassiveRefresh.current<1000)return;
@@ -81,14 +83,14 @@ export function WorkspaceProvider({children,role}:{children:React.ReactNode;role
         if (!response.ok) throw new Error(response.error);
         result=response.result;
       } catch(cause) {
-        setToast(role==='client'?'This client portal request could not be completed.':message(cause));setToastError(true);
+        setToast(role==='client'?locale?.t('operationFailed')||'This client portal request could not be completed.':message(cause));setToastError(true);
         throw cause;
       }
       try {
         await refresh();
       } catch(cause) {
-        setError(role==='client'?'Client portal is temporarily unavailable.':message(cause));
-        setToast(role==='client'?'Client portal could not refresh.':'Perubahan tersimpan, tetapi tampilan belum dapat dimuat ulang. Coba muat ulang.');setToastError(true);
+        setError(role==='client'?locale?.t('loadError')||'Your portal is temporarily unavailable':message(cause));
+        setToast(role==='client'?locale?.t('refreshError')||'The portal could not refresh. Please reload.':'Perubahan tersimpan, tetapi tampilan belum dapat dimuat ulang. Coba muat ulang.');setToastError(true);
         return result;
       }
       if(result.token && projectId) setData(previous=>({...previous,accessLinks:previous.accessLinks.map(link=>link.projectId===projectId&&link.status==='active'?{...link,token:result.token!}:link)}));
@@ -99,7 +101,7 @@ export function WorkspaceProvider({children,role}:{children:React.ReactNode;role
       inFlightKeys.current.delete(key);
       setPendingCount(mutationsInFlight.current);
     }
-  },[refresh,role]);
+  },[refresh,role,locale]);
   const safe=useCallback(async(input:Operation,success:string,projectId?:string)=>{try{await run(input,success,projectId);}catch{/* Error is shown in the shared toast. */}},[run]);
   const value=useMemo<WorkspaceContextValue>(()=>({data,ready,error,actorId,clientAccountId,toast,toastError,pendingCount,refresh,clearToast:()=>setToast(''),
     async createProject(draft){const result=await run({type:'create_project',draft},'Proyek dibuat. Bagikan tautan setelah memverifikasi penerima.');if(!result.id)throw new Error('Proyek belum dibuat.');if(result.token)setData(previous=>({...previous,accessLinks:previous.accessLinks.map(link=>link.projectId===result.id&&link.status==='active'?{...link,token:result.token!}:link)}));return result.id;},
