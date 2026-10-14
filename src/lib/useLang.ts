@@ -14,10 +14,14 @@ function langFromPath(pathname: string): Lang | null {
 export function useLang(): { t: (key: string) => string; lang: Lang; toggleLang: () => void; setLanguage: (newLang: Lang) => void } {
     const pathname = usePathname();
     const urlLang = langFromPath(pathname);
-    const defaultLang: Lang = /^\/(admin|portal|invite|workspace|dashboard|auth)(\/|$)/.test(pathname) ? 'id' : 'en';
+    // TEMPORARY_ADS_ID_LOCALE_OVERRIDE: temporarily default only the trademark
+    // landing page to Indonesian for the Google Ads Indonesia campaign. Remove
+    // this route-specific condition when the permanent multilingual strategy
+    // is in place; keep URL locales and manually saved language preferences.
+    const isTrademarkAdsLanding = pathname === '/services/pendaftaran-merek';
+    const defaultLang: Lang = /^\/(admin|portal|invite|workspace|dashboard|auth)(\/|$)/.test(pathname) || isTrademarkAdsLanding ? 'id' : 'en';
 
-    // Public pages default to English unless the visitor chose another language.
-    // Workspace and authentication routes keep their existing Indonesian default.
+    // Public pages otherwise default to English; workspace/auth routes retain ID.
     const [lang, setLang] = useState<Lang>(urlLang ?? defaultLang);
 
     useEffect(() => {
