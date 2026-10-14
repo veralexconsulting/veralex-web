@@ -8,5 +8,8 @@ export default function MarketingChrome() {
   const pathname=usePathname();
   if (/^\/(admin|portal|invite|workspace|aksesraffi)(\/|$)/.test(pathname)) return null;
   const legalPage = /^\/(?:id\/|zh\/)?(?:privacy-policy|terms-and-conditions)$/.test(pathname);
-  return <><ScrollProgress/><CookiePreferences/>{!legalPage && <FloatingWhatsApp/>}</>;
+  // TEMPORARY_HIDE_COOKIE_NOTICE: hide the first-visit cookie prompt for now.
+  // Keep this temporary so it can be restored when the consent UX is revisited;
+  // optional analytics remain consent-gated and the footer can still open settings.
+  return <><ScrollProgress/><CookiePreferences showInitialPrompt={false}/>{!legalPage && <FloatingWhatsApp/>}</>;
 }

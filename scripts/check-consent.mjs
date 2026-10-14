@@ -60,6 +60,11 @@ test('optional tracking stays off until consent exists, in every locale', () => 
     }
 
     const component = readFileSync('src/components/CookiePreferences.tsx', 'utf8');
+    assert.ok(/showInitialPrompt = true/.test(component), 'initial prompt visibility is controlled explicitly');
+    assert.ok(/showInitialPrompt && choice === null/.test(component), 'the prompt can be temporarily hidden without removing settings controls');
+    const chrome = readFileSync('src/components/MarketingChrome.tsx', 'utf8');
+    assert.ok(/TEMPORARY_HIDE_COOKIE_NOTICE/.test(chrome), 'temporary notice suppression is documented');
+    assert.ok(/<CookiePreferences showInitialPrompt=\{false\}\/>/.test(chrome), 'marketing pages suppress only the automatic prompt');
     assert.ok(/choice === 'accepted' &&/.test(component), 'tags mount only after an accepted choice');
     assert.ok(/toggleAttribute\('data-consent-open'/.test(component), 'the card marks itself for the WhatsApp rule');
     assert.ok(!/MarketingTracking/.test(component.replace(/import MarketingTracking[^\n]*\n/, '').replace(/<MarketingTracking \/>/, '')), 'no other mount point for optional tracking');

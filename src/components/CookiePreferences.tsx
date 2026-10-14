@@ -10,13 +10,13 @@ import './cookie-preferences.css';
 // it the owner dashboard stays empty, so it must not depend on a GTM container.
 const gtm = Boolean(process.env.NEXT_PUBLIC_GTM_ID && /^GTM-[A-Z0-9]+$/.test(process.env.NEXT_PUBLIC_GTM_ID));
 
-export default function CookiePreferences() {
+export default function CookiePreferences({ showInitialPrompt = true }: { showInitialPrompt?: boolean }) {
     const { t, lang } = useLang();
     const [choice, setChoice] = useState<ConsentChoice>(null);
     const [ready, setReady] = useState(false);
     const [open, setOpen] = useState(false);
     const policy = lang === 'en' ? '/privacy-policy' : `/${lang}/privacy-policy`;
-    const visible = ready && (open || choice === null);
+    const visible = ready && (open || (showInitialPrompt && choice === null));
 
     useEffect(() => {
         const timer = window.setTimeout(() => { setChoice(readConsent(localStorage)); setReady(true); }, 0);
