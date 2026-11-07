@@ -7,42 +7,211 @@ import { useEffect, useRef, useState } from 'react';
 import { useWorkspace, formatDate, currentStage, completedStages } from './store';
 import { priorityLabels, statusLabels, type Project, type ProjectStatus, type Stage } from './model';
 import { workspaceBrowser } from '@/lib/workspace/browser';
-import { ClientLanguageSelector, ClientPortalFrame, useOptionalClientLocale } from './client-locale';
+import { ClientPortalFrame, useOptionalClientLocale } from './client-locale';
+import { WorkspaceIcon, type WorkspaceIconName } from './icons';
+import type { Lang } from '@/lib/translations';
 import { clientServiceName, clientStageLabel } from './client-workflow-translations';
 import RouteSkeleton from './RouteSkeleton';
 
 export function WorkspaceShell({ role, children }: { role: 'admin' | 'client'; children: React.ReactNode }) {
   const locale = useOptionalClientLocale();
-  const pathname = usePathname(); const router=useRouter(); const { data, actorId, clientAccountId, toast, toastError, clearToast, ready, error, refresh, pendingCount } = useWorkspace();
-  const [menuOpen, setMenuOpen] = useState(false); const [collapsed,setCollapsed]=useState(false);
-  const [signingOut,setSigningOut]=useState(false); const [signOutError,setSignOutError]=useState('');
-  const menuButtonRef=useRef<HTMLButtonElement>(null);
-  function toggleSidebar(){setCollapsed(!collapsed);}
-  useEffect(()=>{if(role!=='client'||!menuOpen)return;const close=(event:KeyboardEvent)=>{if(event.key==='Escape'){setMenuOpen(false);menuButtonRef.current?.focus();}};document.addEventListener('keydown',close);const previous=document.body.style.overflow;document.body.style.overflow='hidden';return()=>{document.removeEventListener('keydown',close);document.body.style.overflow=previous;};},[menuOpen,role]);
-  const admin = data.admins.find(item => item.id === actorId); const client = data.clientAccounts.find(item => item.id === clientAccountId);
-  const nav = role === 'admin' ? [
-    ['/admin', 'Dashboard', '◫'], ['/admin/proyek', 'Proyek', '▤'], ['/admin/klien', 'Klien', '♙'], ['/admin/tim', 'Tim', '♧'], ['/admin/riwayat', 'Riwayat', '◷'], ['/admin/pengaturan', 'Pengaturan', '⚙'],
-  ] : [['/portal', locale?.t('navProjects') || 'My Projects', '▤'], ['/portal/notifikasi', locale?.t('navNotices') || 'Notifications', '♧']];
+  const pathname = usePathname();
+  const router = useRouter();
+  const { data, actorId, clientAccountId, toast, toastError, clearToast, ready, error, refresh, pendingCount } = useWorkspace();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
+  const [signOutError, setSignOutError] = useState('');
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const close = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', close);
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', close);
+      document.body.style.overflow = previous;
+    };
+  }, [menuOpen]);
+
+  const admin = data.admins.find(item => item.id === actorId);
+  const client = data.clientAccounts.find(item => item.id === clientAccountId);
+  const isClient = role === 'client';
+  const homeHref = isClient ? '/portal' : '/admin';
+  const nav: Array<[string, string, WorkspaceIconName]> = isClient
+    ? [
+        ['/portal', locale?.t('navProjects') || 'Proyek Saya', 'projects'],
+        ['/portal/notifikasi', locale?.t('navNotices') || 'Notifikasi', 'notifications'],
+        ['/portal/pengaturan', locale?.t('navSettings') || 'Pengaturan', 'settings'],
+      ]
+    : [
+        ['/admin', 'Dashboard', 'dashboard'],
+        ['/admin/proyek', 'Proyek', 'projects'],
+        ['/admin/klien', 'Klien', 'clients'],
+        ['/admin/tim', 'Tim', 'team'],
+        ['/admin/riwayat', 'Riwayat', 'history'],
+        ['/admin/pengaturan', 'Pengaturan', 'settings'],
+      ];
   const owned = new Set(data.accesses.filter(access => access.accountId === clientAccountId && !access.revokedAt).map(access => access.projectId));
   const notifications = data.notifications.filter(item => item.role === role && !item.read && (role === 'admin' || (item.projectId && owned.has(item.projectId)))).length;
-  async function signOut(){if(signingOut)return;setSigningOut(true);setSignOutError('');try{const {error}=await workspaceBrowser().auth.signOut();if(error)throw error;router.replace(role==='admin'?'/admin/login':'/portal/login');router.refresh();}catch{setSignOutError(role==='client'?locale?.t('operationFailed')||'Keluar belum dapat dilakukan.':'Keluar belum dapat dilakukan. Coba lagi setelah koneksi pulih.');setSigningOut(false);}}
-  if (!ready) return <RouteSkeleton role={role} label={role==='client'?locale?.t('loading'):undefined} />;
-  if (error) return role==='client'?<ClientPortalFrame><div className="workspace ws-auth-simple" style={{minHeight:420}}><div className="ws-auth-card"><h1>{locale?.t('loadError')}</h1><p className="ws-error" role="alert">{locale?.t('loadError')}</p><button className="ws-button ws-button-primary" onClick={()=>refresh().catch(()=>{})}>{locale?.t('retry')}</button></div></div></ClientPortalFrame>:<div className="workspace ws-auth-simple"><div className="ws-auth-card"><h1>Workspace belum dapat dimuat</h1><p className="ws-error" role="alert">{error}</p><button className="ws-button ws-button-primary" onClick={()=>refresh().catch(()=>{})}>Coba lagi</button></div></div>;
-  return <div className={`workspace ws-${role}${collapsed?' ws-shell-collapsed':''}`}>
-    <a className="ws-skip" href="#workspace-content">{role==='client'&&locale?locale.t('skip'):'Lewati navigasi'}</a>
-    <div className="ws-mobile-top"><Link href={role === 'admin' ? '/admin' : '/portal'} className="ws-brand ws-logo-link" aria-label="VERALEX Consulting"><Image src="/logo.webp" alt="VERALEX Consulting" width={1024} height={724} priority />{role==='client'&&<span className="ws-portal-identity">{locale?.t('portal')}</span>}</Link>{role==='client'&&<ClientLanguageSelector/>}<button ref={menuButtonRef} className="ws-icon-button" aria-label={menuOpen ? locale?.t('menuClose')||'Tutup menu' : locale?.t('menuOpen')||'Buka menu'} aria-expanded={menuOpen} aria-controls={role==='client'?'ws-client-navigation':undefined} onClick={() => setMenuOpen(!menuOpen)}>☰</button></div>
-    {menuOpen && <button className="ws-scrim" aria-label={locale?.t('menuClose')||'Tutup menu'} onClick={() => {setMenuOpen(false);menuButtonRef.current?.focus();}} />}
-    <aside className={`ws-sidebar ${menuOpen ? 'is-open' : ''}`}>
-      <div className="ws-sidebar-head"><Link href={role === 'admin' ? '/admin' : '/portal'} className="ws-brand ws-logo-link" aria-label="VERALEX Consulting" onClick={() => setMenuOpen(false)}><Image src="/logo.webp" alt="VERALEX Consulting" width={1024} height={724} priority />{role==='client'&&<span className="ws-portal-identity">{locale?.t('portal')}</span>}</Link><button className="ws-collapse-toggle" type="button" onClick={toggleSidebar} aria-label={role==='client'?collapsed?locale?.t('sidebarExpand'):locale?.t('sidebarCollapse'):collapsed?'Perluas navigasi':'Ciutkan navigasi'} aria-pressed={collapsed}>{collapsed?'›':'‹'}</button></div>
-      {role==='client'&&<div className="ws-client-sidebar-actions"><ClientLanguageSelector/><Link href="/">{locale?.t('website')}</Link><a href="https://wa.me/6281219476385" target="_blank" rel="noreferrer">{locale?.t('help')}</a></div>}
-      <nav id={role==='client'?'ws-client-navigation':undefined} aria-label={role==='client'?locale?.t('portal'):'Navigasi utama'} className="ws-nav">{nav.map(([href, label, icon]) => {const active=pathname===href||(href!=='/admin'&&href!=='/portal'&&pathname.startsWith(href+'/'))||(role==='client'&&href==='/portal'&&pathname.startsWith('/portal/proyek/'));return <Link key={href} href={href} onClick={() => setMenuOpen(false)} aria-current={active?'page':undefined} className={`ws-nav-link ${active?'is-current':''}`} title={collapsed?label:undefined}><span aria-hidden="true">{icon}</span><span className="ws-nav-label">{label}</span></Link>;})}</nav>
-      <div className="ws-sidebar-bottom"><Link href={role === 'admin' ? '/admin/notifikasi' : '/portal/notifikasi'} className="ws-nav-link" onClick={() => setMenuOpen(false)} title={collapsed?(role==='client'?locale?.t('navNotices'):'Notifikasi'):undefined}><span aria-hidden="true">♧</span><span className="ws-nav-label">{role==='client'?locale?.t('navNotices'):'Notifikasi'}</span>{notifications > 0 && <b className="ws-count">{notifications}</b>}</Link>{role==='admin'&&<Link href="/admin/aktivasi" className="ws-nav-link" onClick={()=>setMenuOpen(false)} title={collapsed?'Akun':undefined}><span aria-hidden="true">♙</span><span className="ws-nav-label">Akun</span></Link>}<div className="ws-identity"><span className="ws-avatar">{(role === 'admin' ? admin?.name : client?.name)?.charAt(0) || 'V'}</span><span><strong>{role === 'admin' ? admin?.name : client?.name}</strong><small>{role === 'admin' ? 'Administrator' : locale?.t('client')}</small></span></div>{signOutError&&<p className="ws-error" role="alert">{signOutError}</p>}<button className="ws-subtle-link ws-signout" disabled={signingOut} aria-live="polite" onClick={signOut}><span aria-hidden="true">↪</span><span className="ws-nav-label">{signingOut?(role==='client'?locale?.t('processingShort'):'Keluar…'):role==='client'?locale?.t('signOut'):'Keluar'}</span></button></div>
-    </aside>
-    {role==='client'&&<header className="ws-client-topbar"><span>{locale?.t('portal')}</span><div><ClientLanguageSelector/><Link href="/">{locale?.t('website')}</Link><a href="https://wa.me/6281219476385" target="_blank" rel="noreferrer">{locale?.t('help')}</a></div></header>}
-    <div className="ws-main-wrap">{pendingCount>0&&<div className="ws-operation-progress" role="status" aria-live="polite"><span className="ws-spinner" aria-hidden="true"/>{role==='client'?locale?.t('processing'):'Menyimpan perubahan…'}</div>}<main id="workspace-content" className="ws-main">{children}</main>{role==='client'&&<footer className="ws-client-footer ws-authenticated-footer"><span>© {new Date().getFullYear()} {locale?.t('footer')}</span><span><Link href={locale?.lang==='en'?'/privacy-policy':`/${locale?.lang}/privacy-policy`}>{locale?.t('legalPrivacy')}</Link><Link href={locale?.lang==='en'?'/terms-and-conditions':`/${locale?.lang}/terms-and-conditions`}>{locale?.t('legalTerms')}</Link></span></footer>}</div>
-    {toast && <div className="ws-toast" role={toastError?'alert':'status'}>{role==='client'?locale?.t(toastError?'operationFailed':'operationDone'):toast}<button onClick={clearToast} aria-label={locale?.t('menuClose')||'Tutup pemberitahuan'}>×</button></div>}
-  </div>;
+
+  function isActive(href: string) {
+    if (href === homeHref) return pathname === href || (isClient && pathname.startsWith('/portal/proyek/'));
+    return pathname === href || pathname.startsWith(href + '/');
+  }
+
+  async function signOut() {
+    if (signingOut) return;
+    setSigningOut(true);
+    setSignOutError('');
+    try {
+      const { error } = await workspaceBrowser().auth.signOut();
+      if (error) throw error;
+      router.replace(isClient ? '/portal/login' : '/admin/login');
+      router.refresh();
+    } catch {
+      setSignOutError(isClient ? locale?.t('operationFailed') || 'Keluar belum dapat dilakukan.' : 'Keluar belum dapat dilakukan. Coba lagi setelah koneksi pulih.');
+      setSigningOut(false);
+    }
+  }
+
+  if (!ready) return <RouteSkeleton role={role} label={isClient ? locale?.t('loading') : undefined} />;
+  if (error) {
+    return isClient
+      ? <ClientPortalFrame><div className="workspace ws-auth-simple" style={{ minHeight: 420 }}><div className="ws-auth-card"><h1>{locale?.t('loadError')}</h1><p className="ws-error" role="alert">{locale?.t('loadError')}</p><button className="ws-button ws-button-primary" onClick={() => refresh().catch(() => {})}>{locale?.t('retry')}</button></div></div></ClientPortalFrame>
+      : <div className="workspace ws-auth-simple"><div className="ws-auth-card"><h1>Workspace belum dapat dimuat</h1><p className="ws-error" role="alert">{error}</p><button className="ws-button ws-button-primary" onClick={() => refresh().catch(() => {})}>Coba lagi</button></div></div>;
+  }
+
+  const displayName = (isClient ? client?.name : admin?.name) || '';
+  const displayRole = isClient ? locale?.t('client') : 'Administrator';
+  const menuLabel = menuOpen ? locale?.t('menuClose') || 'Tutup menu' : locale?.t('menuOpen') || 'Buka menu';
+  const closeMenu = () => setMenuOpen(false);
+
+  return (
+    <div className={`workspace ws-${role}${collapsed ? ' ws-shell-collapsed' : ''}`}>
+      <a className="ws-skip" href="#workspace-content">{isClient && locale ? locale.t('skip') : 'Lewati navigasi'}</a>
+
+      {/* Mobile-only bar: the sidebar is a drawer below 950px, so it needs a trigger. */}
+      <div className="ws-mobile-top">
+        <Link href={homeHref} className="ws-brand ws-logo-link" aria-label="VERALEX Consulting">
+          <Image src="/logo.webp" alt="VERALEX Consulting" width={1024} height={724} priority />
+        </Link>
+        <button
+          ref={menuButtonRef}
+          className="ws-icon-button"
+          aria-label={menuLabel}
+          aria-expanded={menuOpen}
+          aria-controls={`ws-${role}-navigation`}
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span className="ws-menu-bars" aria-hidden="true"><i /><i /><i /></span>
+        </button>
+      </div>
+
+      {menuOpen && <button className="ws-scrim" aria-label={locale?.t('menuClose') || 'Tutup menu'} onClick={() => { closeMenu(); menuButtonRef.current?.focus(); }} />}
+
+      <aside className={`ws-sidebar ${menuOpen ? 'is-open' : ''}`}>
+        <div className="ws-sidebar-head">
+          <Link href={homeHref} className="ws-brand ws-logo-link" aria-label="VERALEX Consulting" onClick={closeMenu}>
+            <Image src="/logo.webp" alt="VERALEX Consulting" width={1024} height={724} priority />
+          </Link>
+          <button
+            className="ws-collapse-toggle"
+            type="button"
+            onClick={() => setCollapsed(!collapsed)}
+            aria-label={isClient ? (collapsed ? locale?.t('sidebarExpand') : locale?.t('sidebarCollapse')) : (collapsed ? 'Perluas navigasi' : 'Ciutkan navigasi')}
+            aria-pressed={collapsed}
+          >
+            <WorkspaceIcon name="chevron" className={collapsed ? 'ws-chevron-in' : 'ws-chevron-out'} />
+          </button>
+        </div>
+
+        <nav id={`ws-${role}-navigation`} aria-label={isClient ? locale?.t('portal') : 'Navigasi utama'} className="ws-nav">
+          {nav.map(([href, label, icon]) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={closeMenu}
+              aria-current={isActive(href) ? 'page' : undefined}
+              className={`ws-nav-link ${isActive(href) ? 'is-current' : ''}`}
+              title={collapsed ? label : undefined}
+            >
+              <WorkspaceIcon name={icon} />
+              <span className="ws-nav-label">{label}</span>
+            </Link>
+          ))}
+        </nav>
+
+        <div className="ws-sidebar-bottom">
+          {!isClient && notifications > 0 && (
+            <Link href="/admin/notifikasi" className="ws-nav-link" onClick={closeMenu} title={collapsed ? 'Notifikasi' : undefined}>
+              <WorkspaceIcon name="notifications" />
+              <span className="ws-nav-label">Notifikasi</span>
+              <b className="ws-count">{notifications}</b>
+            </Link>
+          )}
+          {!isClient && (
+            <Link href="/admin/aktivasi" className="ws-nav-link" onClick={closeMenu} title={collapsed ? 'Akun' : undefined}>
+              <WorkspaceIcon name="account" />
+              <span className="ws-nav-label">Akun</span>
+            </Link>
+          )}
+
+          <div className="ws-identity">
+            <span className="ws-avatar">{displayName.charAt(0) || 'V'}</span>
+            <span className="ws-identity-text">
+              <strong>{displayName}</strong>
+              <small>{displayRole}</small>
+            </span>
+          </div>
+
+          {isClient && (
+            <label className="ws-locale-control ws-locale-sidebar">
+              <WorkspaceIcon name="globe" />
+              <span className="ws-sr-only">Language</span>
+              <select aria-label="Language" value={locale?.lang || 'en'} onChange={event => locale?.setLanguage(event.target.value as Lang)}>
+                <option value="en">English</option>
+                <option value="id">Bahasa Indonesia</option>
+                <option value="zh">中文</option>
+              </select>
+            </label>
+          )}
+
+          {signOutError && <p className="ws-error" role="alert">{signOutError}</p>}
+          <button className="ws-nav-link ws-signout" disabled={signingOut} aria-live="polite" onClick={signOut} title={collapsed ? (isClient ? locale?.t('signOut') : 'Keluar') : undefined}>
+            <WorkspaceIcon name="logout" />
+            <span className="ws-nav-label">{signingOut ? (isClient ? locale?.t('processingShort') : 'Keluar…') : isClient ? locale?.t('signOut') : 'Keluar'}</span>
+          </button>
+        </div>
+      </aside>
+
+      <div className="ws-main-wrap">
+        {pendingCount > 0 && (
+          <div className="ws-operation-progress" role="status" aria-live="polite">
+            <span className="ws-spinner" aria-hidden="true" />
+            {isClient ? locale?.t('processing') : 'Menyimpan perubahan…'}
+          </div>
+        )}
+        <main id="workspace-content" className="ws-main">{children}</main>
+      </div>
+
+      {toast && (
+        <div className="ws-toast" role={toastError ? 'alert' : 'status'}>
+          {isClient ? locale?.t(toastError ? 'operationFailed' : 'operationDone') : toast}
+          <button onClick={clearToast} aria-label={locale?.t('menuClose') || 'Tutup pemberitahuan'}>×</button>
+        </div>
+      )}
+    </div>
+  );
 }
+
 export function PageHeader({ eyebrow, title, description, action }: { eyebrow?: string; title: string; description?: string; action?: React.ReactNode }) { return <header className="ws-page-header"><div>{eyebrow && <p className="ws-eyebrow">{eyebrow}</p>}<h1>{title}</h1>{description && <p className="ws-muted">{description}</p>}</div>{action && <div className="ws-header-action">{action}</div>}</header>; }
 export function Badge({ status, role='admin' }: { status: ProjectStatus | string; role?:'admin'|'client' }) { const locale=useOptionalClientLocale(); return <span className={`ws-badge ws-badge-${status}`}>{role==='client'&&locale?locale.status(status):statusLabels[status as ProjectStatus] || priorityLabels[status as keyof typeof priorityLabels] || status}</span>; }
 export function EmptyState({ title, description, action }: { title: string; description?: string; action?: React.ReactNode }) { return <div className="ws-empty"><span className="ws-empty-icon" aria-hidden="true">◌</span><h3>{title}</h3>{description && <p>{description}</p>}{action}</div>; }

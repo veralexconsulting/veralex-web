@@ -13,7 +13,6 @@ export default function RouteSkeleton({ role, label }: { role: 'admin' | 'client
         <span className="ws-skeleton-block ws-skeleton-account" />
       </aside>
       <div className="ws-main-wrap">
-        {role === 'client' && <div className="ws-client-topbar"><span className="ws-skeleton-block ws-skeleton-control" /><span className="ws-skeleton-block ws-skeleton-control" /></div>}
         <main className="ws-main">
           <div className="ws-skeleton-heading"><span className="ws-skeleton-block ws-skeleton-eyebrow" /><span className="ws-skeleton-block ws-skeleton-title" /><span className="ws-skeleton-block ws-skeleton-copy" /></div>
           <div className="ws-skeleton-metrics">{Array.from({ length: 4 }, (_, index) => <span key={index} className="ws-skeleton-block ws-skeleton-card" />)}</div>

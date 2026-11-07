@@ -75,17 +75,6 @@ export default function Navbar() {
         window.addEventListener('scroll', onScroll, { passive: true });
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
-    /* Publish the real header height so app shells (portal/admin) can offset below it. */
-    useEffect(() => {
-        const nav = rootRef.current;
-        if (!nav) return;
-        const publish = () => document.documentElement.style.setProperty('--vnav-height', `${Math.round(nav.getBoundingClientRect().height)}px`);
-        publish();
-        const observer = new ResizeObserver(publish);
-        observer.observe(nav);
-        window.addEventListener('resize', publish);
-        return () => { observer.disconnect(); window.removeEventListener('resize', publish); };
-    }, []);
     useEffect(() => {
         const onHash = () => setHash(window.location.hash);
         onHash();
