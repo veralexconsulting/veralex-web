@@ -1,6 +1,18 @@
 import { createServerClient } from './supabase/server';
 import { redirect } from 'next/navigation';
 
+/*
+ * Legacy auth helpers. These belong to the pre-workspace model, whose tables
+ * (`users`, `services`, `orders`, `order_progress`) exist only in
+ * supabase/lama/schema.sql and NOT in the live database, which is built from
+ * supabase/migrations.
+ *
+ * Admin authorization no longer lives here. Every /admin route is gated by
+ * src/middleware.ts, which validates `profiles.role === 'admin'` and
+ * `profiles.active`, and re-checks it in each server action. See
+ * src/lib/workspace/* for the current model.
+ */
+
 /**
  * Validates a logged-in user on the server.
  * Use this at the top of protected Client / Dashboard Server Components.
@@ -19,37 +31,12 @@ export async function requireUser() {
 }
 
 /**
- * Validates an admin user utilizing the custom `users.role` ENUM
- * from your schema.sql
- */
-export async function requireAdmin() {
-    const supabase = await createServerClient();
-    const user = await requireUser(); // Enforce base login first
-
-    // Fetch the custom `users` profile created in schema.sql
-    const { data: profile } = await supabase
-        .from('users')
-        .select('role')
-        .eq('id', user.id)
-        .single();
-
-    const { data: workspaceProfile } = await supabase
-        .from('profiles')
-        .select('role, active')
-        .eq('id', user.id)
-        .maybeSingle();
-
-    if (!profile || profile.role !== 'admin' || workspaceProfile?.role !== 'admin' || !workspaceProfile.active) {
-        // Standard users trying to access admin get sent back to their dashboard
-        redirect('/dashboard');
-    }
-
-    return { user, profile };
-}
-
-/**
  * Helper to quickly grab the user's role without enforcing redirects.
  * Useful for conditional UI rendering on server components.
+ *
+ * NOTE: reads the legacy `users` table, which does not exist in the live
+ * database — this always resolves to 'client'. Only /dashboard uses it today.
+ * Do not use it for authorization decisions; read `profiles` instead.
  */
 export async function getUserRole() {
     const supabase = await createServerClient();

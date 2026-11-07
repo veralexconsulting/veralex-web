@@ -54,6 +54,7 @@ export function WorkspaceShell({ role, children }: { role: 'admin' | 'client'; c
     : [
         ['/admin', 'Dashboard', 'dashboard'],
         ['/admin/proyek', 'Proyek', 'projects'],
+        ['/admin/orders', 'Pesanan', 'orders'],
         ['/admin/klien', 'Klien', 'clients'],
         ['/admin/tim', 'Tim', 'team'],
         ['/admin/riwayat', 'Riwayat', 'history'],

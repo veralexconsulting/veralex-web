@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 import { isTransientAuthError } from '@/lib/workspace/auth-errors';
 
 const SUPPORTED_LOCALES = ['en', 'zh', 'id'];
-const WORKSPACE_ADMIN = ['/admin/proyek','/admin/klien','/admin/tim','/admin/riwayat','/admin/pengaturan','/admin/notifikasi'];
+const WORKSPACE_ADMIN_PUBLIC = ['/admin/login','/admin/aktivasi'];
 const OWNER_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const OWNER_AREA = ['/aksesraffi','/aksesraffi/login','/aksesraffi/ganti-password'];
 
@@ -37,9 +37,12 @@ export async function middleware(req: NextRequest) {
     refreshedCookies.forEach(cookie=>response.cookies.set(cookie.name,cookie.value,cookie.options));
     return response;
   };
-  const workspaceAdmin=pathname==='/admin'||WORKSPACE_ADMIN.some(route=>pathname===route||pathname.startsWith(`${route}/`));
+  // Protect every /admin route by default. The previous allowlist meant a new
+  // admin page was unprotected until someone remembered to add it — which is
+  // exactly how /admin/orders and /admin/settings ended up open.
+  const workspaceAdmin=pathname.startsWith('/admin')&&!WORKSPACE_ADMIN_PUBLIC.some(route=>pathname===route||pathname.startsWith(`${route}/`));
   const portal=pathname==='/portal'||pathname.startsWith('/portal/');
-  const adminAuth=pathname==='/admin/login'||pathname==='/admin/aktivasi';
+  const adminAuth=WORKSPACE_ADMIN_PUBLIC.some(route=>pathname===route||pathname.startsWith(`${route}/`));
   if(pathname==='/invite'||pathname.startsWith('/invite/')||pathname.startsWith('/workspace/auth/callback')) return res;
   if(workspaceAdmin||portal||adminAuth){
     if(!configured){ if(workspaceAdmin)return NextResponse.redirect(new URL('/admin/login',req.url)); if(portal&&pathname!=='/portal/login')return NextResponse.redirect(new URL('/portal/login',req.url));return res; }
@@ -62,8 +65,8 @@ export async function middleware(req: NextRequest) {
   const unlocalized=pathnameHasLocale?pathname.replace(/^\/(en|zh|id)/,''):pathname;
   const isAuthPage=unlocalized.startsWith('/auth');
   const isDashboard=unlocalized.startsWith('/dashboard');
-  const isLegacyAdmin=unlocalized.startsWith('/admin');
-  if(!configured){if(isDashboard||isLegacyAdmin)return NextResponse.redirect(new URL('/auth/login',req.url));return res;}
+  // /admin is fully handled above, so only /dashboard and /auth reach this block.
+  if(!configured){if(isDashboard)return NextResponse.redirect(new URL('/auth/login',req.url));return res;}
   const supabase=createWorkspaceServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,{cookies:{getAll:()=>req.cookies.getAll(),setAll:items=>{items.forEach(({name,value,options})=>{req.cookies.set(name,value);refreshedCookies.set(name,{name,value,options});});res=NextResponse.next({request:req});refreshedCookies.forEach(cookie=>res.cookies.set(cookie.name,cookie.value,cookie.options));}}});
   let user;
   try {
@@ -77,9 +80,7 @@ export async function middleware(req: NextRequest) {
     if(result.error&&isTransientAuthError(result.error))return res;
     profile=result.data;
   }
-  if((isDashboard||isLegacyAdmin)&&(!user||!profile?.active))return redirectWithCookies('/auth/login');
-  if(isLegacyAdmin&&profile?.role!=='admin')return redirectWithCookies('/auth/login');
-  if(isLegacyAdmin&&profile?.must_change_password)return redirectWithCookies('/admin/aktivasi');
+  if(isDashboard&&(!user||!profile?.active))return redirectWithCookies('/auth/login');
   if(isDashboard&&profile?.role==='admin')return redirectWithCookies('/admin');
   if(isDashboard&&profile?.role!=='client')return redirectWithCookies('/auth/login');
   if(user&&isAuthPage&&profile?.active)return redirectWithCookies(profile.role==='admin'?'/admin':'/dashboard');

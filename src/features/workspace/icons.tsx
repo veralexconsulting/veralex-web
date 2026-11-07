@@ -7,6 +7,7 @@
 export type WorkspaceIconName =
   | 'dashboard'
   | 'projects'
+  | 'orders'
   | 'clients'
   | 'team'
   | 'history'
@@ -29,6 +30,14 @@ const paths: Record<WorkspaceIconName, React.ReactNode> = {
   projects: (
     <>
       <path d="M3 7.5A1.5 1.5 0 0 1 4.5 6h4l2 2h7A1.5 1.5 0 0 1 19 9.5v8A1.5 1.5 0 0 1 17.5 19h-13A1.5 1.5 0 0 1 3 17.5z" />
+    </>
+  ),
+  orders: (
+    <>
+      <path d="M6.5 3.75h11a1.5 1.5 0 0 1 1.5 1.5v13.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 5 18.75V5.25a1.5 1.5 0 0 1 1.5-1.5z" />
+      <path d="M9 3.75h6v2.5H9z" />
+      <path d="M8.75 11h6.5" />
+      <path d="M8.75 15h4" />
     </>
   ),
   clients: (
