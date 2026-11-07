@@ -35,7 +35,7 @@ const MIN_PASSWORD = 8;
 
 export default function ResetPasswordPage() {
     const router = useRouter();
-    const supabase = useMemo(recoveryClient, []);
+    const supabase = useMemo(() => recoveryClient(), []);
     const [status, setStatus] = useState<Status>('checking');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

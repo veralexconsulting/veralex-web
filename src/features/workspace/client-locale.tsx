@@ -1,7 +1,6 @@
 'use client';
 
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import Link from 'next/link';
 import type { Lang } from '@/lib/translations';
 import { priorityLabels } from './model';
 

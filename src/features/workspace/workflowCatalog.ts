@@ -139,16 +139,6 @@ const specs: Record<string, StageSpec[]> = {
     ['Konfirmasi hasil', 'Catat hasil resmi', '?Bahas tindak lanjut bila hasil tertunda'],
     ['Penyerahan hasil', 'Sampaikan hasil di luar portal', 'Tutup proyek'],
   ],
-  visa: [
-    ['Tujuan perjalanan', 'Konfirmasi tujuan kunjungan', 'Tinjau kebutuhan sponsor'],
-    ['Kategori visa', 'Periksa indeks visa resmi yang sesuai', 'Konfirmasi kategori bersama klien'],
-    ['Verifikasi persyaratan', 'Catat penerimaan data melalui kanal eksternal', 'Periksa kelengkapan'],
-    ['Persiapan permohonan', 'Verifikasi data permohonan', 'Konfirmasi kesiapan pengajuan'],
-    ['Pengajuan resmi', 'Ajukan melalui kanal resmi', 'Catat referensi pengajuan'],
-    ['Pemantauan dan tindak lanjut', 'Pantau status resmi', '?Tindak lanjuti permintaan tambahan'],
-    ['Keputusan', 'Catat hasil resmi', '?Bahas langkah berikutnya bila permohonan tidak disetujui'],
-    ['Penyerahan hasil', 'Sampaikan hasil di luar portal', 'Tutup proyek'],
-  ],
   'sertifikasi-halal': [
     ['Identifikasi produk dan skema', 'Konfirmasi kategori produk', 'Tinjau skema sertifikasi yang sesuai'],
     ['Kelayakan skema', 'Periksa jalur reguler atau self-declare', 'Konfirmasi pilihan dengan klien'],
