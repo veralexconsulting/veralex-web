@@ -117,6 +117,16 @@ const specs: Record<string, StageSpec[]> = {
     ['Keputusan dan penerbitan', 'Catat hasil resmi', '?Bahas tindak lanjut bila belum disetujui'],
     ['Penyerahan informasi hasil', 'Sampaikan hasil di luar portal', 'Tutup proyek'],
   ],
+  'visa': [
+    ['Konsultasi tujuan kunjungan', 'Konfirmasi tujuan dan durasi', 'Sepakati jenis visa yang sesuai'],
+    ['Verifikasi paspor dan data pribadi', 'Periksa masa berlaku paspor', 'Konfirmasi data pemohon'],
+    ['Persyaratan dokumen pendukung', 'Catat penerimaan dokumen di luar portal', 'Periksa kelengkapan'],
+    ['Persiapan permohonan', 'Verifikasi formulir dan data', 'Konfirmasi kesiapan pengajuan'],
+    ['Pengajuan resmi', 'Ajukan melalui kanal resmi', 'Catat referensi pengajuan'],
+    ['Pemantauan pemeriksaan', 'Pantau status resmi', '?Tindak lanjuti permintaan tambahan'],
+    ['Keputusan visa', 'Catat hasil resmi', '?Bahas langkah berikutnya bila belum disetujui'],
+    ['Penyerahan hasil', 'Sampaikan hasil di luar portal', 'Tutup proyek'],
+  ],
   'kitas-kerja': [
     ['Konsultasi tenaga kerja asing', 'Konfirmasi kebutuhan posisi', 'Sepakati ruang lingkup layanan'],
     ['Verifikasi sponsor dan posisi', 'Konfirmasi perusahaan sponsor', 'Tinjau jabatan dan lokasi kerja'],
@@ -163,6 +173,19 @@ const specs: Record<string, StageSpec[]> = {
     ['Keputusan/penerbitan', 'Catat hasil resmi', '?Bahas tindak lanjut bila belum disetujui'],
     ['Penyerahan hasil', 'Sampaikan hasil di luar portal', 'Tutup proyek'],
   ],
+  'pirt': [
+    ['Identifikasi produk dan kategori usaha', 'Konfirmasi jenis pangan', 'Tinjau kesesuaian dengan kategori PIRT'],
+    ['Kelayakan jalur PIRT', 'Periksa kriteria pangan industri rumah tangga', 'Konfirmasi jalur izin yang sesuai'],
+    ['Legalitas usaha dan pelaku', 'Periksa status persyaratan usaha di luar portal', '?Catat kebutuhan tindak lanjut'],
+    ['Persyaratan sarana produksi', 'Catat penerimaan data sarana di luar portal', 'Periksa kelengkapan'],
+    ['Label dan informasi produk', 'Tinjau rancangan label', '?Catat koreksi yang diperlukan'],
+    ['Penyuluhan dan sertifikat', 'Konfirmasi jadwal penyuluhan pada instansi', 'Catat status keikutsertaan'],
+    ['Persiapan permohonan', 'Verifikasi data permohonan', 'Konfirmasi kesiapan pengajuan'],
+    ['Pengajuan resmi', 'Ajukan melalui sistem sesuai kategori', 'Catat referensi pengajuan'],
+    ['Evaluasi dan tindak lanjut', 'Pantau evaluasi resmi', '?Tindak lanjuti permintaan tambahan'],
+    ['Penerbitan nomor PIRT', 'Catat hasil resmi', '?Bahas tindak lanjut bila belum disetujui'],
+    ['Penyerahan hasil', 'Sampaikan hasil di luar portal', 'Tutup proyek'],
+  ],
   'sertifikasi-sni': [
     ['Identifikasi produk dan standar', 'Konfirmasi jenis produk', 'Tinjau standar yang relevan'],
     ['Status wajib atau sukarela', 'Periksa penerapan SNI', 'Konfirmasi jalur yang sesuai'],
@@ -198,12 +221,14 @@ const specs: Record<string, StageSpec[]> = {
   ],
 };
 
-const productServices = [
+// Certification offerings that only exist in the workspace catalogue (they are not
+// published as website service pages, so they cannot come from serviceData).
+//
+// Keep this list disjoint from serviceData: the workspace keys projects by service id,
+// and a duplicate id would overwrite the website service of the same slug.
+const workspaceOnlyServices = [
   { slug: 'sertifikasi-halal', title: 'Sertifikasi Halal' },
-  { slug: 'izin-bpom', title: 'Registrasi BPOM' },
   { slug: 'sertifikasi-sni', title: 'Sertifikasi SNI' },
-  { slug: 'sertifikasi-k3l', title: 'Sertifikasi K3L' },
-  { slug: 'sertifikasi-postel', title: 'Sertifikasi Alat Telekomunikasi / Perangkat Digital' },
 ];
 
 function templateKey(slug: string): string {
@@ -212,7 +237,12 @@ function templateKey(slug: string): string {
   return slug;
 }
 
-function makeStages(serviceId: string, items: StageSpec[]): Stage[] {
+function makeStages(serviceId: string, items: StageSpec[] | undefined): Stage[] {
+  // A missing template used to surface as "Cannot read properties of undefined" at
+  // module load, which broke the whole catalogue. Fail loudly and specifically instead.
+  if (!Array.isArray(items) || items.length === 0) {
+    throw new Error(`SOP template is missing for service "${serviceId}".`);
+  }
   return items.map(([title, ...taskNames], stageIndex) => {
     const tasks: Task[] = taskNames.map((raw, taskIndex) => ({
       id: `${serviceId}-s${stageIndex + 1}-t${taskIndex + 1}`,
@@ -237,7 +267,7 @@ function makeStages(serviceId: string, items: StageSpec[]): Stage[] {
 
 const catalog: { id: string; name: string }[] = [
   ...serviceData.map(item => ({ id: item.slug, name: item.title })),
-  ...productServices.map(item => ({ id: item.slug, name: item.title })),
+  ...workspaceOnlyServices.map(item => ({ id: item.slug, name: item.title })),
 ];
 export const initialServices: Service[] = catalog.map(item => ({
   id: item.id, name: item.name, approval: 'starter', version: 1,

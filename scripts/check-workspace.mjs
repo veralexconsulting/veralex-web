@@ -16,7 +16,14 @@ function loadTs(path, dependencies = {}) {
 
 const { serviceData } = loadTs('src/lib/serviceData.ts');
 const { initialServices } = loadTs('src/features/workspace/workflowCatalog.ts', { '@/lib/serviceData': { serviceData } });
-assert.equal(initialServices.length, serviceData.length + 5, 'Every website service and five certification offerings have a template');
+// The catalogue is the website services (except ones already covered by the
+// workspace) plus a handful of certification-only offerings. Assert against the
+// actual composition instead of a hardcoded total, so adding a service cannot
+// silently pass or fail for the wrong reason.
+const workspaceSlugs = new Set(initialServices.map(service => service.id));
+for (const service of serviceData) assert.ok(workspaceSlugs.has(service.slug), `Website service \`${service.slug}\` has a SOP template`);
+for (const extra of ['sertifikasi-halal', 'sertifikasi-sni', 'izin-bpom', 'pirt', 'sertifikasi-k3l', 'sertifikasi-postel']) assert.ok(workspaceSlugs.has(extra), `Certification offering \`${extra}\` has a SOP template`);
+assert.ok(initialServices.length >= serviceData.length, 'Workspace catalogue covers every website service');
 assert.equal(new Set(initialServices.map(service => service.id)).size, initialServices.length, 'Service IDs are unique');
 for (const service of initialServices) {
   assert.ok(service.stages.length >= 8, `${service.name}: workflow has at least eight operational stages`);
