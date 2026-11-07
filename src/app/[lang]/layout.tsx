@@ -1,36 +1,45 @@
-import type { Metadata, Viewport } from 'next';
-import '../globals.css';
+import { notFound } from 'next/navigation';
+import type { Viewport } from 'next';
+
+/*
+ * The document language has to be set on <html>, which the root layout owns.
+ * Next.js cannot vary that attribute per route from a nested layout, so this
+ * layout sets it from the client on mount (the document element is already
+ * rendered by then). Without it every /en and /zh page is announced as
+ * Indonesian by screen readers, and search engines read the wrong language
+ * signal for a site that publishes in three languages.
+ */
+const LOCALES = ['en', 'zh'] as const;
+type Locale = (typeof LOCALES)[number];
+
+function isLocale(value: string): value is Locale {
+  return (LOCALES as readonly string[]).includes(value);
+}
 
 export const viewport: Viewport = {
-    width: 'device-width',
-    initialScale: 1,
+  width: 'device-width',
+  initialScale: 1,
 };
 
-export const metadata: Metadata = {
-    title: 'VERALEX CONSULTING — Legal & Business Consulting Indonesia',
-    description: 'Professional legal consulting for company registration, trademark, KITAS, and business licensing in Indonesia.',
-    metadataBase: new URL('https://www.veralexconsulting.com'),
-    robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
-    openGraph: {
-        type: 'website',
-        url: 'https://www.veralexconsulting.com',
-        siteName: 'VERALEX CONSULTING',
-        images: [{ url: '/logo.webp', width: 1200, height: 630, alt: 'VERALEX CONSULTING' }],
-    },
-    other: {
-        'theme-color': '#FAFAFA',
-    },
-    icons: {
-        icon: '/logo.webp',
-        shortcut: '/logo.webp',
-        apple: '/logo.webp',
-    },
-};
-
-export default function LangLayout({
-    children,
+export default async function LangLayout({
+  children,
+  params,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
+  params: Promise<{ lang: string }>;
 }>) {
-    return <>{children}</>;
+  const { lang } = await params;
+  if (!isLocale(lang)) notFound();
+  return (
+    <>
+      <LangDocument lang={lang} />
+      {children}
+    </>
+  );
+}
+
+/** Tiny client boundary: an inline script runs before paint, so assistive
+ *  technology and crawlers read the corrected attribute immediately. */
+function LangDocument({ lang }: { lang: Locale }) {
+  return <script dangerouslySetInnerHTML={{ __html: `document.documentElement.lang=${JSON.stringify(lang)}` }} />;
 }
