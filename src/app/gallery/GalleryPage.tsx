@@ -2,8 +2,6 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { useLang } from '@/lib/useLang';
 import { whatsappHref } from '@/lib/marketing';
 
@@ -31,8 +29,6 @@ export default function GalleryPage() {
 
     return (
         <>
-            <Navbar />
-
             {/* Gallery Hero */}
             <section className="hero" style={{ minHeight: '50vh', paddingTop: '140px', paddingBottom: '60px' }}>
                 <div className="hero-particles">
@@ -133,8 +129,6 @@ export default function GalleryPage() {
                     </button>
                 </div>
             )}
-
-            <Footer />
         </>
     );
 }

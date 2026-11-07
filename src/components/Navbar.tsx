@@ -16,7 +16,10 @@ const groups = [
     { key: 'ip', slugs: ['pendaftaran-merek', 'perpanjangan-merek', 'pengalihan-merek', 'hak-cipta', 'desain-industri'] },
     { key: 'immigration', slugs: ['itas-investor-1-tahun', 'itas-investor-2-tahun', 'kitas-kerja', 'visa-c2', 'visa-d2-1-tahun', 'visa-d2-2-tahun'] },
 ] as const;
-const products = ['halal', 'bpom', 'sni', 'k3l', 'postel'] as const;
+const products: { key: 'halal' | 'bpom' | 'pirt' | 'sni' | 'k3l' | 'postel'; slug?: string }[] = [
+    { key: 'halal' }, { key: 'bpom', slug: 'izin-bpom' }, { key: 'pirt', slug: 'pirt' },
+    { key: 'sni' }, { key: 'k3l', slug: 'sertifikasi-k3l' }, { key: 'postel', slug: 'sertifikasi-postel' },
+] as const;
 
 export default function Navbar() {
     const { t, lang } = useLang();
@@ -34,6 +37,34 @@ export default function Navbar() {
     const mobileTriggerRef = useRef<HTMLButtonElement>(null);
     const mobilePanelRef = useRef<HTMLDivElement>(null);
     const previousPath = useRef(pathname);
+    /* Hover-intent timers: closing is delayed so small pointer slips don't dismiss the menu. */
+    const servicesTimer = useRef<number | undefined>(undefined);
+    const aboutTimer = useRef<number | undefined>(undefined);
+
+    const openServices = () => {
+        window.clearTimeout(servicesTimer.current);
+        window.clearTimeout(aboutTimer.current);
+        setServicesOpen(true);
+        setAboutOpen(false);
+    };
+    const scheduleCloseServices = () => {
+        window.clearTimeout(servicesTimer.current);
+        servicesTimer.current = window.setTimeout(() => setServicesOpen(false), 260);
+    };
+    const openAbout = () => {
+        window.clearTimeout(aboutTimer.current);
+        window.clearTimeout(servicesTimer.current);
+        setAboutOpen(true);
+        setServicesOpen(false);
+    };
+    const scheduleCloseAbout = () => {
+        window.clearTimeout(aboutTimer.current);
+        aboutTimer.current = window.setTimeout(() => setAboutOpen(false), 260);
+    };
+    useEffect(() => () => {
+        window.clearTimeout(servicesTimer.current);
+        window.clearTimeout(aboutTimer.current);
+    }, []);
 
     useEffect(() => {
         const onScroll = () => {
@@ -43,6 +74,17 @@ export default function Navbar() {
         onScroll();
         window.addEventListener('scroll', onScroll, { passive: true });
         return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+    /* Publish the real header height so app shells (portal/admin) can offset below it. */
+    useEffect(() => {
+        const nav = rootRef.current;
+        if (!nav) return;
+        const publish = () => document.documentElement.style.setProperty('--vnav-height', `${Math.round(nav.getBoundingClientRect().height)}px`);
+        publish();
+        const observer = new ResizeObserver(publish);
+        observer.observe(nav);
+        window.addEventListener('resize', publish);
+        return () => { observer.disconnect(); window.removeEventListener('resize', publish); };
     }, []);
     useEffect(() => {
         const onHash = () => setHash(window.location.hash);
@@ -136,7 +178,7 @@ export default function Navbar() {
             {group.slugs.map(slug => <Link key={slug} href={serviceHref(slug)} onClick={close}>{serviceName(slug)}<span aria-hidden="true">↗</span></Link>)}
         </div>)}
         <div className="vnav-group"><h3>{t('nav.group.products')}</h3>
-            {products.map(key => <Link key={key} href={homeHref(`#service-${key}`)} onClick={close}>{t(`services.product.${key}.title`)}<span aria-hidden="true">↗</span></Link>)}
+            {products.map(({ key, slug }) => <Link key={key} href={slug ? serviceHref(slug) : homeHref(`#service-${key}`)} onClick={close}>{t(`services.product.${key}.title`)}<span aria-hidden="true">↗</span></Link>)}
         </div>
     </>;
     const aboutLinks = <>
@@ -152,15 +194,15 @@ export default function Navbar() {
                 </Link>
                 <div className="vnav-desktop">
                     <Link href={homeHref('#hero')} className={homeActive ? 'is-active' : undefined} aria-current={homeActive ? 'page' : undefined} onClick={close}>{t('nav.home')}</Link>
-                    <div className="vnav-services" onPointerEnter={event => { if (event.pointerType === 'mouse') { setServicesOpen(true); setAboutOpen(false); } }} onPointerLeave={event => { if (event.pointerType === 'mouse') setServicesOpen(false); }} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setServicesOpen(false); }}>
-                        <button ref={servicesTriggerRef} type="button" className={serviceActive ? 'is-active' : undefined} aria-current={serviceActive ? 'page' : undefined} aria-expanded={servicesOpen} aria-controls="vnav-mega" aria-haspopup="true" onClick={() => { setServicesOpen(true); setAboutOpen(false); }}>{t('nav.services')} <span aria-hidden="true" className={`vnav-chevron${servicesOpen ? ' open' : ''}`}>⌄</span></button>
+                    <div className="vnav-services" onPointerEnter={event => { if (event.pointerType === 'mouse') openServices(); }} onPointerLeave={event => { if (event.pointerType === 'mouse') scheduleCloseServices(); }} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setServicesOpen(false); }}>
+                        <button ref={servicesTriggerRef} type="button" className={serviceActive ? 'is-active' : undefined} aria-current={serviceActive ? 'page' : undefined} aria-expanded={servicesOpen} aria-controls="vnav-mega" aria-haspopup="true" onClick={openServices}>{t('nav.services')} <span aria-hidden="true" className={`vnav-chevron${servicesOpen ? ' open' : ''}`}>⌄</span></button>
                         {servicesOpen && <div id="vnav-mega" className="vnav-mega" aria-label={t('nav.services')}>
                             <div className="vnav-mega-head"><div><span>{t('nav.explore')}</span><strong>{t('nav.megaTitle')}</strong></div><Link href={homeHref('#services')} onClick={close}>{t('nav.allServices')} <span aria-hidden="true">→</span></Link></div>
                             <div className="vnav-mega-grid">{menuGroups}</div>
                         </div>}
                     </div>
-                    <div className="vnav-about" onPointerEnter={event => { if (event.pointerType === 'mouse') { setAboutOpen(true); setServicesOpen(false); } }} onPointerLeave={event => { if (event.pointerType === 'mouse') setAboutOpen(false); }} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setAboutOpen(false); }}>
-                        <button ref={aboutTriggerRef} type="button" className={aboutActive ? 'is-active' : undefined} aria-current={aboutActive ? 'page' : undefined} aria-expanded={aboutOpen} aria-controls="vnav-about-menu" aria-haspopup="true" onClick={() => { setAboutOpen(true); setServicesOpen(false); }}>{t('nav.about')} <span aria-hidden="true" className={`vnav-chevron${aboutOpen ? ' open' : ''}`}>⌄</span></button>
+                    <div className="vnav-about" onPointerEnter={event => { if (event.pointerType === 'mouse') openAbout(); }} onPointerLeave={event => { if (event.pointerType === 'mouse') scheduleCloseAbout(); }} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setAboutOpen(false); }}>
+                        <button ref={aboutTriggerRef} type="button" className={aboutActive ? 'is-active' : undefined} aria-current={aboutActive ? 'page' : undefined} aria-expanded={aboutOpen} aria-controls="vnav-about-menu" aria-haspopup="true" onClick={openAbout}>{t('nav.about')} <span aria-hidden="true" className={`vnav-chevron${aboutOpen ? ' open' : ''}`}>⌄</span></button>
                         {aboutOpen && <div id="vnav-about-menu" className="vnav-about-menu">{aboutLinks}</div>}
                     </div>
                     <Link href="/gallery" className={galleryActive ? 'is-active' : undefined} aria-current={galleryActive ? 'page' : undefined} onClick={close}>{t('nav.gallery')}</Link>

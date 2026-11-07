@@ -10,6 +10,11 @@ export interface ServiceItem {
     descriptionEn: string;
     descriptionZh: string;
     price: string;
+    /** Public price semantics and exclusions, maintained with the authoritative catalog entry. */
+    priceLabel?: 'fixed' | 'from';
+    priceUnit?: { id: string; en: string; zh: string };
+    priceNote?: { id: string; en: string; zh: string };
+    promotionNote?: { id: string; en: string; zh: string };
     originalPrice?: string;
     discountBadge?: string;
     discountBadgeEn?: string;
@@ -280,6 +285,81 @@ export const serviceData: ServiceItem[] = [
         features: ['KITAS kerja 1 tahun', 'Termasuk DPKK ($1200 USD)', 'Termasuk RPTKA', 'Pendampingan imigrasi'],
         featuresEn: ['1-year work KITAS', 'Includes DPKK ($1200 USD)', 'Includes RPTKA', 'Immigration assistance'],
         featuresZh: ['1年期工作 KITAS', '已含 DPKK 基金 ($1200美元)', '已含 RPTKA 劳工配额', '移民局及劳工部全程协调'],
+    },
+    {
+        slug: 'sertifikasi-postel',
+        category: 'Perizinan & Sertifikasi Produk', categoryEn: 'Product Licensing & Certification', categoryZh: '产品许可与认证',
+        title: 'Sertifikasi POSTEL', titleEn: 'POSTEL Certification', titleZh: 'POSTEL 认证',
+        description: 'Pendampingan pengurusan sertifikasi POSTEL untuk perangkat telekomunikasi.',
+        descriptionEn: 'Assistance with POSTEL certification for telecommunications equipment.',
+        descriptionZh: '为电信设备提供 POSTEL 认证办理协助。',
+        price: 'Rp12.000.000', priceLabel: 'fixed',
+        priceNote: {
+            id: 'Biaya jasa Rp12.000.000, belum termasuk biaya uji laboratorium dan PNBP POSTEL.',
+            en: 'Professional service fee: Rp12,000,000. Laboratory testing charges and POSTEL non-tax state revenue (PNBP) are excluded.',
+            zh: '专业服务费为 Rp12,000,000，不含实验室检测费用及 POSTEL 非税国家收入（PNBP）。',
+        },
+        features: ['Pendampingan pengurusan sertifikasi POSTEL'],
+        featuresEn: ['Assistance with POSTEL certification processing'],
+        featuresZh: ['POSTEL 认证办理协助'],
+    },
+    {
+        slug: 'izin-bpom',
+        category: 'Perizinan & Sertifikasi Produk', categoryEn: 'Product Licensing & Certification', categoryZh: '产品许可与认证',
+        title: 'Registrasi BPOM', titleEn: 'BPOM Product Registration', titleZh: 'BPOM 产品注册',
+        description: 'Pendampingan pengurusan registrasi BPOM. Cakupan dan persyaratan dibahas sesuai produk.',
+        descriptionEn: 'Assistance with BPOM registration. Scope and requirements are discussed based on the product.',
+        descriptionZh: '提供 BPOM 注册办理协助；具体服务范围与要求根据产品情况沟通确认。',
+        price: 'Rp5.000.000', priceLabel: 'from',
+        priceUnit: { id: 'per produk', en: 'per product', zh: '每个产品' },
+        priceNote: {
+            id: 'Biaya jasa mulai Rp5.000.000 per produk, belum termasuk biaya uji laboratorium dan PNBP BPOM.',
+            en: 'Professional service fee starts at Rp5,000,000 per product, excluding laboratory testing charges and BPOM PNBP.',
+            zh: '专业服务费每个产品起价 Rp5,000,000，不含实验室检测费用及 BPOM PNBP。',
+        },
+        features: ['Biaya jasa dihitung per produk', 'Persyaratan dan cakupan dikonfirmasi sesuai produk'],
+        featuresEn: ['Service fee is calculated per product', 'Requirements and scope are confirmed based on the product'],
+        featuresZh: ['服务费按产品计算', '根据产品确认要求与服务范围'],
+    },
+    {
+        slug: 'pirt',
+        category: 'Perizinan & Sertifikasi Produk', categoryEn: 'Product Licensing & Certification', categoryZh: '产品许可与认证',
+        title: 'PIRT (Pangan Industri Rumah Tangga)', titleEn: 'PIRT (Home Industry Food)', titleZh: 'PIRT（家庭食品工业许可）',
+        description: 'Pendampingan pengurusan PIRT. Ketersediaan layanan bergantung pada kesesuaian produk dan kategori usaha.',
+        descriptionEn: 'Assistance with PIRT processing. Service availability depends on product and business-category eligibility.',
+        descriptionZh: '提供 PIRT 办理协助；是否适用取决于产品及业务类别要求。',
+        price: 'Rp1.500.000', priceLabel: 'fixed',
+        priceUnit: { id: 'per produk', en: 'per product', zh: '每个产品' },
+        promotionNote: {
+            id: 'Bonus pengurusan NIB hingga 3 KBLI. Ketentuan penerima bonus sedang dikonfirmasi.',
+            en: 'Bonus: NIB processing for up to 3 KBLI business classifications. Bonus eligibility terms are being confirmed.',
+            zh: '赠送 NIB 办理（最多 3 个 KBLI 业务分类）。赠送资格条件正在确认中。',
+        },
+        priceNote: {
+            id: 'Biaya jasa PIRT per produk. Kesesuaian produk dan kategori usaha perlu dikonfirmasi sebelum pemesanan.',
+            en: 'PIRT professional service fee per product. Product and business-category eligibility must be confirmed before ordering.',
+            zh: 'PIRT 专业服务费按产品计算。下单前需确认产品及业务类别是否适用。',
+        },
+        features: ['Biaya jasa dihitung per produk', 'Kesesuaian produk dan kategori usaha dikonfirmasi terlebih dahulu'],
+        featuresEn: ['Service fee is calculated per product', 'Product and business-category eligibility is confirmed first'],
+        featuresZh: ['服务费按产品计算', '需先确认产品及业务类别是否适用'],
+    },
+    {
+        slug: 'sertifikasi-k3l',
+        category: 'Perizinan & Sertifikasi Produk', categoryEn: 'Product Licensing & Certification', categoryZh: '产品许可与认证',
+        title: 'Sertifikasi K3L', titleEn: 'K3L Certification', titleZh: 'K3L 认证',
+        description: 'Pendampingan pengurusan sertifikasi K3L untuk produk yang memerlukan pemenuhan ketentuan terkait.',
+        descriptionEn: 'Assistance with K3L certification for products that require the relevant compliance process.',
+        descriptionZh: '为需办理相关合规手续的产品提供 K3L 认证协助。',
+        price: 'Rp7.000.000', priceLabel: 'fixed',
+        priceNote: {
+            id: 'Biaya jasa Rp7.000.000. Biaya uji laboratorium tidak termasuk.',
+            en: 'Professional service fee: Rp7,000,000. Laboratory testing charges are excluded.',
+            zh: '专业服务费为 Rp7,000,000，不含实验室检测费用。',
+        },
+        features: ['Pendampingan pengurusan sertifikasi K3L'],
+        featuresEn: ['Assistance with K3L certification processing'],
+        featuresZh: ['K3L 认证办理协助'],
     },
 ];
 

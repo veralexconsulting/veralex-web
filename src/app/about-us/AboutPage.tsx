@@ -3,8 +3,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { useLang } from '@/lib/useLang';
 import type { Lang } from '@/lib/translations';
 import styles from './about.module.css';
@@ -31,7 +29,6 @@ export default function AboutPage() {
   const activate = (id: string) => setActive(id);
 
   return <>
-    <Navbar />
     <main className={styles.page}>
       <header className={styles.hero}>
         <div className={styles.wrap}>
@@ -85,6 +82,5 @@ export default function AboutPage() {
       </section>
       <section className={styles.contact}><div className={styles.wrap}><p className={styles.eyebrow}>VERALEX CONSULTING</p><h2>{t('about.contact')}</h2><p>{t('about.contactText')}</p><Link href="/#contact">{t('about.contactCta')} ↗</Link></div></section>
     </main>
-    <Footer />
   </>;
 }

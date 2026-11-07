@@ -1028,6 +1028,12 @@ button {
     box-shadow: var(--shadow-gold);
 }
 
+@media (max-width: 480px) {
+    #services-products .product-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
 .product-icon {
     width: 40px;
     height: 40px;
@@ -4755,6 +4761,11 @@ section {
     background-clip: text;
     -webkit-text-fill-color: transparent;
     white-space: nowrap;
+}
+
+.svc-price--unit {
+    white-space: normal;
+    overflow-wrap: anywhere;
 }
 
 .svc-price-note {

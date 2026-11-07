@@ -9,6 +9,8 @@ import {
     type SupportedLocale,
 } from '@/lib/servicePageData';
 import ServicePageTemplate from '@/components/ServicePageTemplate';
+import ServiceDetailContent from '@/components/ServiceDetailContent';
+import { serviceData, getServiceBySlug } from '@/lib/serviceData';
 import { serviceBreadcrumbs, serviceBreadcrumbJsonLd } from '@/lib/serviceBreadcrumbs';
 
 interface Props {
@@ -20,7 +22,7 @@ export async function generateStaticParams() {
     const params: { lang: string; slug: string }[] = [];
 
     locales.forEach((locale) => {
-        const slugs = getAllServicePageSlugs(locale);
+        const slugs = [...new Set([...getAllServicePageSlugs(locale), ...serviceData.map((service) => service.slug)])];
         slugs.forEach((slug) => {
             params.push({ lang: locale, slug });
         });
@@ -42,7 +44,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     const service = getServicePageData(lang, slug);
-    if (!service) return {};
+    if (!service) {
+        const catalogService = getServiceBySlug(slug);
+        if (!catalogService) return {};
+        const title = lang === 'zh' ? catalogService.titleZh : catalogService.titleEn;
+        const description = lang === 'zh' ? catalogService.descriptionZh : catalogService.descriptionEn;
+        const priceCopy = catalogService.priceNote?.[lang] || description;
+        const metaTitle = `${title} | VERALEX CONSULTING`;
+        return {
+            title: metaTitle,
+            description: `${description} ${priceCopy}`,
+            alternates: { canonical: `/${lang}/services/${slug}`, languages: serviceHreflangs(slug) },
+            openGraph: { title: metaTitle, description: `${description} ${priceCopy}`, url: `/${lang}/services/${slug}`, images: [{ url: '/logo.webp', alt: title }], locale: lang === 'zh' ? 'zh_CN' : 'en_US', type: 'website' },
+        };
+    }
 
     return {
         title: service.metaTitle,
@@ -74,7 +89,32 @@ export default async function ServicePage({ params }: Props) {
     if (lang === 'id') redirect(`/services/${slug}`);
 
     const service = getServicePageData(lang, slug);
-    if (!service) notFound();
+    if (!service) {
+        const catalogService = getServiceBySlug(slug);
+        if (!catalogService) notFound();
+        const title = lang === 'zh' ? catalogService.titleZh : catalogService.titleEn;
+        const description = lang === 'zh' ? catalogService.descriptionZh : catalogService.descriptionEn;
+        const priceNote = catalogService.priceNote?.[lang] || description;
+        const jsonLd = {
+            '@context': 'https://schema.org', '@type': 'Service', name: title,
+            description: `${description} ${priceNote}`,
+            provider: { '@type': 'LegalService', name: 'VERALEX CONSULTING', url: 'https://www.veralexconsulting.com', telephone: '+6281219476385' },
+            areaServed: { '@type': 'Country', name: 'Indonesia' },
+            category: lang === 'zh' ? catalogService.categoryZh : catalogService.categoryEn,
+            offers: {
+                '@type': 'Offer', price: catalogService.price.replace(/[^\d]/g, ''), priceCurrency: 'IDR',
+                description: priceNote,
+                ...(catalogService.priceUnit ? { eligibleQuantity: { '@type': 'QuantitativeValue', value: 1, unitText: catalogService.priceUnit[lang] } } : {}),
+                url: `https://www.veralexconsulting.com/${lang}/services/${slug}`,
+            },
+            url: `https://www.veralexconsulting.com/${lang}/services/${slug}`,
+        };
+        return <>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceBreadcrumbJsonLd(serviceBreadcrumbs(slug, lang))) }} />
+            <ServiceDetailContent service={catalogService} relatedServices={serviceData.filter((item) => item.slug !== slug).slice(0, 4)} />
+        </>;
+    }
 
     const relatedServices = getRelatedServices(service, lang);
 

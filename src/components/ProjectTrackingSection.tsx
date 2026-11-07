@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLang } from '@/lib/useLang';
 import { whatsappHref } from '@/lib/marketing';
 import './ProjectTracking.css';
@@ -11,7 +12,6 @@ export default function ProjectTrackingSection() {
     return <section id="project-tracking" className="tracking-feature" aria-labelledby="tracking-title">
         <div className="container tracking-layout">
             <div className="tracking-copy">
-                <span className="tracking-eyebrow"><span aria-hidden="true"/> {t('tracking.eyebrow')}</span>
                 <h2 id="tracking-title">{t('tracking.title')}</h2>
                 <p className="tracking-description">{t('tracking.description')}</p>
                 <div className="tracking-benefits">
@@ -27,10 +27,20 @@ export default function ProjectTrackingSection() {
             </div>
             <div className="tracking-visual" aria-label={t('tracking.preview.label')}>
                 <div className="tracking-preview">
-                    <div className="tracking-preview-top"><span className="tracking-preview-mark" aria-hidden="true">V</span><span>VERALEX <small>/ PROJECT TRACKING</small></span><span className="tracking-preview-dots" aria-hidden="true">•••</span></div>
+                    <div className="tracking-preview-top">
+                        <Image src="/logo.webp" alt="VERALEX CONSULTING" width={1024} height={724} className="tracking-preview-logo" />
+                        <span className="tracking-preview-divider" aria-hidden="true" />
+                        <span className="tracking-preview-top-label">{t('tracking.preview.label')}</span>
+                        <span className="tracking-preview-dots" aria-hidden="true">•••</span>
+                    </div>
                     <div className="tracking-preview-content">
-                        <span className="tracking-preview-overline">{t('tracking.preview.label')}</span>
-                        <div className="tracking-preview-heading"><div><small>VERALEX / TRACKING</small><h3>{t('services.ip.trademark.title')}</h3></div><span className="tracking-preview-status"><span aria-hidden="true"/> {t('tracking.preview.status')}</span></div>
+                        <div className="tracking-preview-heading">
+                            <div>
+                                <span className="tracking-preview-overline">VERALEX / TRACKING</span>
+                                <h3>{t('services.ip.trademark.title')}</h3>
+                            </div>
+                            <span className="tracking-preview-status"><span aria-hidden="true"/> {t('tracking.preview.status')}</span>
+                        </div>
                         <div className="tracking-current"><span>{t('tracking.preview.current')}</span><strong>{t('tracking.preview.stage')}</strong><div className="tracking-progress"><span/></div><small>02 / 04</small></div>
                         <ol className="tracking-preview-steps">{steps.map(number => <li key={number} className={number < 3 ? 'done' : number === 3 ? 'current' : ''}>
                             <span className="tracking-step-icon" aria-hidden="true">{number < 3 ? '✓' : number.toString().padStart(2, '0')}</span>
@@ -38,7 +48,6 @@ export default function ProjectTrackingSection() {
                         </li>)}</ol>
                     </div>
                 </div>
-                <span className="tracking-visual-caption">{t('tracking.preview.label')}</span>
             </div>
         </div>
     </section>;

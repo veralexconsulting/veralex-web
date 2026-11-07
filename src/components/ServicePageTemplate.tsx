@@ -3,8 +3,6 @@ import { hasServicePage, type RelatedService, type ServicePageData } from '@/lib
 import FaqAccordion from '@/components/FaqAccordion';
 import OrderModal from '@/components/OrderModal';
 import WhatsAppCta from '@/components/WhatsAppCta';
-import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
 import ServiceBreadcrumb from '@/components/ServiceBreadcrumb';
 import { serviceBreadcrumbs } from '@/lib/serviceBreadcrumbs';
 import type { Lang } from '@/lib/translations';
@@ -74,8 +72,6 @@ export default function ServicePageTemplate({ service, relatedServices, lang }: 
 
     return (
         <>
-            <Navbar />
-
             <main style={{ paddingTop: '110px', minHeight: '100vh' }}>
                 <div className="container svc-page">
                     <ServiceBreadcrumb items={serviceBreadcrumbs(service.slug, activeLang as Lang, service.title)} />
@@ -195,7 +191,6 @@ export default function ServicePageTemplate({ service, relatedServices, lang }: 
             </main>
 
             <WhatsAppCta />
-            <Footer />
         </>
     );
 }

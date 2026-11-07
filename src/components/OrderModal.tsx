@@ -9,15 +9,17 @@ interface Props {
     serviceTitle: string;
     servicePrice: string;
     label?: string;
+    priceNote?: string;
 }
 
-export default function OrderModal({ serviceTitle, servicePrice, label }: Props) {
+export default function OrderModal({ serviceTitle, servicePrice, label, priceNote }: Props) {
     const { t } = useLang();
     const message = [
         t('order.msgIntro'),
         '',
         `📋 *${t('order.msgService')}:* ${serviceTitle}`,
         `💰 *${t('order.msgPrice')}:* ${servicePrice}`,
+        ...(priceNote ? [`ℹ️ ${priceNote}`] : []),
         '',
         t('order.msgOutro'),
     ].join('\n');

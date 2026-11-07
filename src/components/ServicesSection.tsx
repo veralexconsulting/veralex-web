@@ -81,7 +81,7 @@ const Price = ({
 );
 
 export default function ServicesSection() {
-    const { t } = useLang();
+    const { t, lang } = useLang();
     const priceFrom = t('price.startFrom');
 
     return (
@@ -246,22 +246,49 @@ export default function ServicesSection() {
                 </div>
 
                 {/* Legalitas Produk */}
-                <div className="services-category fade-in">
-                    <h3 className="category-title">{t('services.product.title')}</h3>
-                    <div className="product-grid">
+                <div className="services-category fade-in" id="services-products" style={{ marginTop: '80px' }}>
+                    <h3 className="category-title-luxury">{t('services.product.title')}</h3>
+                    <div className="services-list-luxury">
                         {[
-                            { key: 'halal', icon: ICONS.sun },
-                            { key: 'sni', icon: ICONS.check },
-                            { key: 'bpom', icon: ICONS.flask },
-                            { key: 'k3l', icon: ICONS.bolt },
-                            { key: 'postel', icon: ICONS.wifi },
-                        ].map((item) => (
-                            <div key={item.key} id={`service-${item.key}`} className="product-card">
-                                <div className="product-icon"><SvgIcon d={item.icon} /></div>
-                                <h4 className="product-title">{t(`services.product.${item.key}.title`)}</h4>
-                                <p className="product-desc">{t(`services.product.${item.key}.desc`)}</p>
-                            </div>
-                        ))}
+                            { key: 'halal', slug: undefined },
+                            { key: 'sni', slug: undefined },
+                            { key: 'bpom', slug: 'izin-bpom' },
+                            { key: 'pirt', slug: 'pirt' },
+                            { key: 'k3l', slug: 'sertifikasi-k3l' },
+                            { key: 'postel', slug: 'sertifikasi-postel' },
+                        ].map((item) => {
+                            const itemService = item.slug ? getServiceBySlug(item.slug) : undefined;
+                            const localizedNote = itemService?.priceNote?.[lang] || itemService?.priceNote?.en;
+                            const desc = t(`services.product.${item.key}.desc`);
+                            const content = (
+                                <>
+                                    <div className="service-row-left">
+                                        <h4 className="service-row-title">{t(`services.product.${item.key}.title`)}</h4>
+                                        <p className="service-row-desc">{desc}</p>
+                                        {localizedNote && <p className="service-row-desc" style={{ marginTop: '0.35rem', opacity: 0.8 }}>{localizedNote}</p>}
+                                        {itemService?.promotionNote && <p className="service-row-desc" style={{ marginTop: '0.3rem', opacity: 0.8 }}>{itemService.promotionNote[lang]}</p>}
+                                    </div>
+                                    <div className="service-row-right">
+                                        {itemService ? (
+                                            <span className="service-row-price">
+                                                <span className="price-start-from">
+                                                    {itemService.priceLabel === 'from' ? `${priceFrom} ` : `${t('price.serviceFee')}: `}
+                                                </span>
+                                                {itemService.price}{itemService.priceUnit ? ` / ${itemService.priceUnit[lang]}` : ''}
+                                            </span>
+                                        ) : (
+                                            <span className="service-row-price" style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+                                                {t('price.consult')}
+                                            </span>
+                                        )}
+                                        <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
+                                    </div>
+                                </>
+                            );
+                            return item.slug
+                                ? <Link key={item.key} id={`service-${item.key}`} href={`/services/${item.slug}`} className="service-row-luxury">{content}</Link>
+                                : <div key={item.key} id={`service-${item.key}`} className="service-row-luxury" style={{ cursor: 'default' }}>{content}</div>;
+                        })}
                     </div>
                 </div>
             </div>

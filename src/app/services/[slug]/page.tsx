@@ -33,21 +33,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         'kitas-kerja': 'jasa KITAS kerja, biaya KITAS, urus KITAS tenaga kerja asing, RPTKA DPKK',
         'sertifikasi-halal': 'jasa sertifikasi halal MUI, biaya halal certification, daftar halal',
         'izin-bpom': 'jasa izin BPOM, biaya izin edar BPOM, daftar BPOM makanan',
+        'pirt': 'jasa pengurusan PIRT, biaya jasa PIRT per produk',
+        'sertifikasi-k3l': 'jasa sertifikasi K3L, biaya jasa K3L',
+        'sertifikasi-postel': 'jasa sertifikasi POSTEL, biaya jasa POSTEL',
         'sertifikasi-sni': 'jasa sertifikasi SNI, biaya SNI Indonesia',
     };
     const extraKeywords = serviceKeywordMap[slug] || `${service.title}, ${service.category}, jasa legalitas, konsultan hukum`;
 
+    const priceCopy = service.priceNote ? service.priceNote.id : `Biaya jasa ${service.price}.`;
+    const priceTitle = service.priceLabel === 'from' ? `Mulai ${service.price}` : service.price;
     return {
-        title: `Jasa ${service.title} | Proses Cepat & Terpercaya - VERALEX CONSULTING`,
-        description: `Jasa ${service.title} profesional oleh VERALEX CONSULTING. ${service.description} Harga mulai ${service.price}. Proses cepat, transparan, konsultasi GRATIS via WhatsApp!`,
+        title: `Jasa ${service.title} | VERALEX CONSULTING`,
+        description: `${service.description} ${priceCopy}`,
         keywords: `jasa ${service.title.toLowerCase()}, ${extraKeywords}, veralex consulting, konsultan legalitas Bekasi, ${service.slug.replace(/-/g, ' ')}`,
         alternates: {
             canonical: `/services/${slug}`,
             languages: serviceHreflangs(slug),
         },
         openGraph: {
-            title: `Jasa ${service.title} | VERALEX CONSULTING - Mulai ${service.price}`,
-            description: `${service.description} Harga mulai ${service.price}. Konsultasi GRATIS!`,
+            title: `Jasa ${service.title} | VERALEX CONSULTING - ${priceTitle}`,
+            description: `${service.description} ${priceCopy}`,
             images: [{ url: '/logo.webp', alt: `Jasa ${service.title} - VERALEX CONSULTING` }],
             locale: 'id_ID',
         },
@@ -60,7 +65,7 @@ export default async function ServiceDetailPage({ params }: Props) {
     if (!service) notFound();
 
     const relatedServices = serviceData
-        .filter((s) => s.slug !== slug)
+        .filter((s) => s.slug !== slug && s.category === service.category)
         .slice(0, 4);
 
     return (
@@ -95,6 +100,8 @@ export default async function ServiceDetailPage({ params }: Props) {
                             "@type": "Offer",
                             "price": service.price.replace(/[^\d]/g, ''),
                             "priceCurrency": "IDR",
+                            ...(service.priceNote ? { "description": service.priceNote.id } : {}),
+                            ...(service.priceUnit ? { "eligibleQuantity": { "@type": "QuantitativeValue", "value": 1, "unitText": service.priceUnit.id } } : {}),
                             "url": `https://www.veralexconsulting.com/services/${slug}`,
                         },
                         "url": `https://www.veralexconsulting.com/services/${slug}`,

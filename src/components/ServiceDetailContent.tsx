@@ -4,8 +4,6 @@ import { useLang } from '@/lib/useLang';
 import { ServiceItem } from '@/lib/serviceData';
 import { detailedServiceContent, defaultFaqs, defaultFaqsEn, defaultFaqsZh } from '@/lib/serviceContent';
 import Link from 'next/link';
-import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
 import ServiceBreadcrumb from '@/components/ServiceBreadcrumb';
 import { serviceBreadcrumbs } from '@/lib/serviceBreadcrumbs';
 import OrderModal from '@/components/OrderModal';
@@ -30,6 +28,10 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
     const displayDesc = isZh ? (service.descriptionZh || service.descriptionEn) : (isEn ? service.descriptionEn : service.description);
     const displayCategory = isZh ? (service.categoryZh || service.categoryEn) : (isEn ? service.categoryEn : service.category);
     const displayFeatures = isZh ? (service.featuresZh || service.featuresEn) : (isEn ? service.featuresEn : service.features);
+    const priceNote = service.priceNote?.[lang] || service.priceNote?.en;
+    const promotionNote = service.promotionNote?.[lang] || service.promotionNote?.en;
+    const priceUnit = service.priceUnit?.[lang] || service.priceUnit?.en;
+    const priceLabel = service.priceLabel === 'from' ? `${t('price.serviceFee')} — ${t('price.startFrom')}` : t('price.serviceFee');
     const displayBadge = isZh ? (service.discountBadgeZh || service.discountBadge) : (isEn ? service.discountBadgeEn || service.discountBadge : service.discountBadge);
     const isTrademark = service.slug === 'pendaftaran-merek';
     const trademarkCopy = trademarkLandingCopy[lang];
@@ -45,8 +47,6 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
 
     return (
         <>
-            <Navbar />
-
             <main style={{ paddingTop: '110px', minHeight: '100vh' }}>
                 <div className="container svc-page">
                     <ServiceBreadcrumb items={serviceBreadcrumbs(service.slug, lang, displayTitle)} />
@@ -60,15 +60,17 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
                     </header>
 
                     <section className="svc-card">
-                        <p className="svc-card-label">{t('detail.priceStart')}</p>
+                        <p className="svc-card-label">{service.priceNote ? priceLabel : t('detail.priceStart')}</p>
                         {service.originalPrice && (
                             <div className="svc-price-row">
                                 <span className="svc-price-old">{service.originalPrice}</span>
                                 {displayBadge && <span className="svc-price-badge">{displayBadge}</span>}
                             </div>
                         )}
-                        <p className="svc-price">{service.price}</p>
+                        <p className={`svc-price${priceUnit ? ' svc-price--unit' : ''}`}>{service.price}{priceUnit ? ` / ${priceUnit}` : ''}</p>
                         {isTrademark && <p className="svc-price-note">{trademarkCopy.priceNote}</p>}
+                        {priceNote && <p className="svc-price-note">{priceNote}</p>}
+                        {promotionNote && <p className="svc-price-note">{promotionNote}</p>}
 
                         <h2 className="svc-h3">{t('detail.whatYouGet')}</h2>
                         <ul className="svc-list">
@@ -83,7 +85,7 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
                         </ul>
 
                         <div className="svc-cta">
-                            <OrderModal serviceTitle={displayTitle} servicePrice={service.price} label={isTrademark ? trademarkCopy.cta : undefined} />
+                            <OrderModal serviceTitle={displayTitle} servicePrice={`${service.price}${priceUnit ? ` / ${priceUnit}` : ''}`} label={isTrademark ? trademarkCopy.cta : undefined} priceNote={[priceNote, promotionNote].filter(Boolean).join(' ')} />
                         </div>
                         <p className="svc-cta-note">{t('detail.consultFree')}</p>
                     </section>
@@ -119,7 +121,8 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
                                 {relatedServices.map((s) => (
                                     <Link key={s.slug} href={`/services/${s.slug}`} className="service-card" style={{ padding: '1.25rem', textDecoration: 'none' }}>
                                         <h4 className="service-title" style={{ fontSize: '0.95rem' }}>{isZh ? (s.titleZh || s.titleEn) : (isEn ? s.titleEn : s.title)}</h4>
-                                        <p className="service-price" style={{ fontSize: '0.9rem' }}><strong>{t('price.startFrom')} {s.price}</strong></p>
+                                        <p className="service-price" style={{ fontSize: '0.9rem' }}><strong>{s.priceLabel === 'from' ? `${t('price.startFrom')} ` : s.priceNote ? `${t('price.serviceFee')}: ` : ''}{s.price}{s.priceUnit ? ` / ${s.priceUnit[lang]}` : ''}</strong></p>
+                                        {s.priceNote && <p className="product-desc" style={{ marginTop: '0.4rem' }}>{s.priceNote[lang] || s.priceNote.en}</p>}
                                     </Link>
                                 ))}
                             </div>
@@ -131,7 +134,6 @@ export default function ServiceDetailContent({ service, relatedServices }: Props
             <TrustBadges />
 
             <WhatsAppCta />
-            <Footer />
         </>
     );
 }

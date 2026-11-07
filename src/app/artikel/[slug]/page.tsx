@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { ArticleCard } from '@/components/ArticleHighlights';
 import { articles, getArticle } from '@/lib/articles';
 import { whatsappHref } from '@/lib/marketing';
@@ -59,7 +57,6 @@ export default async function ArticlePage({ params }: Props) {
 
     return (
         <>
-            <Navbar />
             <main className={styles.articlePage} lang="id">
                 <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
                 <div className="container">
@@ -110,7 +107,6 @@ export default async function ArticlePage({ params }: Props) {
                     </section>
                 </div>
             </main>
-            <Footer />
         </>
     );
 }

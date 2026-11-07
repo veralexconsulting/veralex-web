@@ -11,6 +11,7 @@ const categoryAnchors: Record<string, string> = {
     'Kekayaan Intelektual': '/#services-ip',
     'Legalitas Perusahaan': '/#services-company',
     'Visa & ITAS': '/#services-itas',
+    'Perizinan & Sertifikasi Produk': '/#services-products',
 };
 
 export function serviceBreadcrumbs(slug: string, lang: Lang, currentTitle?: string): ServiceBreadcrumbItem[] {

@@ -1,6 +1,4 @@
 import type { Metadata } from 'next';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import { ArticleCard } from '@/components/ArticleHighlights';
 import { articles } from '@/lib/articles';
 import styles from './articles.module.css';
@@ -20,7 +18,6 @@ export const metadata: Metadata = {
 export default function ArticlesPage() {
     return (
         <>
-            <Navbar />
             <main className={styles.page} lang="id">
                 <div className="container">
                     <header className={styles.listHero}>
@@ -33,7 +30,6 @@ export default function ArticlesPage() {
                     </div>
                 </div>
             </main>
-            <Footer />
         </>
     );
 }

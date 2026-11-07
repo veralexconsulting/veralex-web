@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import ProjectTrackingSection from '@/components/ProjectTrackingSection';
 import ServicesSection from '@/components/ServicesSection';
@@ -10,7 +9,6 @@ import WhyLegalSection from '@/components/WhyLegalSection';
 import ContactSection from '@/components/ContactSection';
 import GalleryHighlight from '@/components/GalleryHighlight';
 import ArticleHighlights from '@/components/ArticleHighlights';
-import Footer from '@/components/Footer';
 import ScrollAnimator from '@/components/ScrollAnimator';
 
 export const metadata: Metadata = {
@@ -25,7 +23,6 @@ export default function Home() {
   return (
     <>
       <ScrollAnimator />
-      <Navbar />
       <HeroSection />
       <ProjectTrackingSection />
       <ServicesSection />
@@ -36,7 +33,6 @@ export default function Home() {
       <ArticleHighlights />
       <ContactSection />
       <GalleryHighlight />
-      <Footer />
     </>
   );
 }

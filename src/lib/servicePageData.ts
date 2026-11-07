@@ -110,6 +110,7 @@ export function getAllServicePageSlugs(locale: SupportedLocale): string[] {
 }
 
 export function hasServicePage(locale: SupportedLocale, slug: string): boolean {
+    if (getServiceBySlug(slug)) return true;
     if (locale === 'zh') {
         return Boolean(zhServicePages[slug]);
     }

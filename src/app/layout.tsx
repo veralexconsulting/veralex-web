@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import MarketingChrome from "@/components/MarketingChrome";
+import SiteChrome from "@/components/SiteChrome";
 import "./globals.css";
 
 const inter = Inter({
@@ -163,7 +164,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} ${playfair.variable} ${jakarta.variable}`}>
         <MarketingChrome />
-        {children}
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

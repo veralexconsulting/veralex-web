@@ -1,6 +1,4 @@
 import Link from 'next/link';
-import Navbar from './Navbar';
-import Footer from './Footer';
 import type { Lang } from '@/lib/translations';
 import { legalDocuments, legalHref, type LegalKind } from '@/lib/legal/routes';
 import './legal.css';
@@ -13,11 +11,11 @@ const ui = {
 
 export default function LegalDocumentPage({kind,lang}:{kind:LegalKind;lang:Lang}) {
   const doc=legalDocuments[kind][lang]; const copy=ui[lang]; const other:LegalKind=kind==='privacy-policy'?'terms-and-conditions':'privacy-policy';
-  return <><Navbar/><main id="top" className="legal-page" lang={lang==='zh'?'zh-CN':lang}>
+  return <main id="top" className="legal-page" lang={lang==='zh'?'zh-CN':lang}>
     <header className="legal-hero"><div className="container"><p className="legal-eyebrow">{copy.eyebrow}</p><h1>{doc.title}</h1><p className="legal-intro">{doc.intro}</p><div className="legal-meta"><span>{copy.updated}</span></div></div></header>
     <div className="container legal-grid"><nav className="legal-toc" aria-label={copy.contents}><div className="legal-toc-desktop"><strong>{copy.contents}</strong><ol>{doc.sections.map((section,i)=><li key={section.id}><a href={`#${section.id}`}>{i+1}. {section.title}</a></li>)}</ol></div><details className="legal-toc-mobile"><summary>{copy.contents}</summary><ol>{doc.sections.map((section,i)=><li key={section.id}><a href={`#${section.id}`}>{i+1}. {section.title}</a></li>)}</ol></details></nav>
       <article className="legal-content">{doc.sections.map((section,i)=><section key={section.id} id={section.id} aria-labelledby={`${section.id}-heading`}><h2 id={`${section.id}-heading`}><span>{String(i+1).padStart(2,'0')}</span>{section.title}</h2>{section.paragraphs.map((paragraph,j)=><p key={j}>{paragraph}</p>)}{section.id==='privacy'&&kind==='terms-and-conditions'&&<p><Link href={legalHref('privacy-policy',lang)}>{copy.privacy} →</Link></p>}{section.id==='contact'&&<p><a href="mailto:admin@veralexconsulting.com">{copy.contact}: admin@veralexconsulting.com</a></p>}</section>)}
         <div className="legal-end"><p>{copy.other}</p><Link href={legalHref(other,lang)}>{other==='privacy-policy'?copy.privacy:copy.terms} →</Link><a href="#top" className="legal-back">↑ {copy.back}</a></div>
       </article></div>
-  </main><Footer/></>;
+  </main>;
 }
