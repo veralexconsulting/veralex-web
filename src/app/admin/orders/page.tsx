@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { PageHeader } from '@/features/workspace/ui';
 
 /*
- * The legacy `orders` model (supabase/lama/schema.sql) is retired: the live
+ * The legacy `orders` model (supabase/legacy/schema.sql) is retired: the live
  * database is built from supabase/migrations, which has no `orders`,
  * `order_progress` or `payments` table. Orders are now projects, and every
  * action of the old detail page exists in /admin/proyek/[id].

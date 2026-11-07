@@ -21,7 +21,7 @@
 
 Created: `src/features/workspace/model.ts`, `workflowCatalog.ts`, `store.tsx`, `ui.tsx`, `admin-projects.tsx`, `project-detail.tsx`, `project-workflow.tsx`, `admin-management.tsx`, `client-pages.tsx`, `LegacyAdminLayout.tsx`, and `workspace.css`; route pages under `src/app/admin/{login,aktivasi,proyek,klien,tim,pengaturan,notifikasi}`, `src/app/invite/[token]`, and `src/app/portal`; `scripts/check-workspace.mjs`; and this inventory.
 
-Modified: `src/app/admin/layout.tsx`, `page.tsx`, `actions.ts`; legacy admin order detail page/component; `src/app/dashboard/actions.ts` and legacy client order detail page/component; `src/middleware.ts`; `next.config.ts`; and `scripts/check-marketing.mjs`. Existing `supabase/*.sql` moves to `supabase/lama/` and `prd_new_fitur.md` were present before this frontend work and were not changed here.
+Modified: `src/app/admin/layout.tsx`, `page.tsx`, `actions.ts`; legacy admin order detail page/component; `src/app/dashboard/actions.ts` and legacy client order detail page/component; `src/middleware.ts`; `next.config.ts`; and `scripts/check-marketing.mjs`. Existing `supabase/*.sql` moves to `supabase/legacy/` and `prd_new_fitur.md` were present before this frontend work and were not changed here.
 
 Reusable UI: `WorkspaceShell`, `PageHeader`, `Badge`, `ProjectCard`, `ProjectTable`, `Timeline`, `ProgressSummary`, `EmptyState`, `ConfirmDialog`, `NoticeList`, and `ProjectWorkflowEditor`.
 

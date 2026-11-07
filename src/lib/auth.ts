@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 /*
  * Legacy auth helpers. These belong to the pre-workspace model, whose tables
  * (`users`, `services`, `orders`, `order_progress`) exist only in
- * supabase/lama/schema.sql and NOT in the live database, which is built from
+ * supabase/legacy/schema.sql and NOT in the live database, which is built from
  * supabase/migrations.
  *
  * Admin authorization no longer lives here. Every /admin route is gated by
