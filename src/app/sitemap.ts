@@ -29,14 +29,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'weekly',
             priority: 0.7,
         },
-        ...(['', '/id', '/zh'] as const).map((prefix) => ({
+        // Only /about-us and /zh/about-us are listed. [lang]/about-us has no
+        // generateStaticParams, so /en/about-us was a dead URL in the previous
+        // sitemap, and its metadata points at the canonical /about-us anyway.
+        // A sitemap full of dead or duplicate URLs is a quality signal against
+        // the whole site, so each real, self-canonical page is listed once.
+        ...(['', '/zh'] as const).map((prefix) => ({
             url: `${baseUrl}${prefix}/about-us`,
             lastModified: now,
             changeFrequency: 'monthly' as const,
             priority: 0.6,
         })),
         ...(['privacy-policy', 'terms-and-conditions'] as const).flatMap((page) =>
-            (['', '/id', '/zh'] as const).map((prefix) => ({
+            (['', '/zh'] as const).map((prefix) => ({
                 url: `${baseUrl}${prefix}/${page}`,
                 lastModified: now,
                 changeFrequency: 'yearly' as const,

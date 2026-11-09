@@ -38,8 +38,19 @@ export default async function LangLayout({
   );
 }
 
-/** Tiny client boundary: an inline script runs before paint, so assistive
- *  technology and crawlers read the corrected attribute immediately. */
+/** Small client boundary that corrects the document language.
+ *
+ *  The <html lang> attribute is owned by the root layout, which is shared by
+ *  every route and therefore has to declare one static value ('id'). Server
+ *  components cannot change it from a nested layout, so the correction has to
+ *  happen on the client before paint.
+ *
+ *  This is a genuine limitation, not a fix: a crawler that reads the static
+ *  HTML sees lang="id" on the English and Chinese pages too. What limits the
+ *  damage is that <html lang> is not the signal Google weighs most here — the
+ *  hreflang alternates and the self-referencing canonical on each locale URL
+ *  are explicit and machine-readable, and those live in the metadata export
+ *  where they belong. */
 function LangDocument({ lang }: { lang: Locale }) {
   return <script dangerouslySetInnerHTML={{ __html: `document.documentElement.lang=${JSON.stringify(lang)}` }} />;
 }
