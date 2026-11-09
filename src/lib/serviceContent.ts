@@ -73,7 +73,28 @@ export const detailedServiceContent: Record<string, DetailedContent> = {
                 content: 'Tahapan resmi pendaftaran merek di Indonesia:\n1. Pengecekan ketersediaan nama/logo di database DJKI\n2. Penentuan kelas barang/jasa yang sesuai\n3. Pengajuan permohonan secara online\n4. Masa pengumuman (2 bulan) — publik bisa mengajukan sanggahan\n5. Pemeriksaan substantif oleh pemeriksa DJKI\n6. Penerbitan sertifikat merek (total estimasi: 12–18 bulan dari tanggal penerimaan)',
                 contentEn: 'Official trademark registration stages in Indonesia:\n1. Availability check of name/logo in DJKI database\n2. Determination of appropriate goods/services class\n3. Online application submission\n4. Publication period (2 months) — public can file oppositions\n5. Substantive examination by DJKI examiner\n6. Trademark certificate issuance (total estimate: 12–18 months from receipt date)',
                 contentZh: '印尼官方商标注册正规步骤：\n1. 在 DJKI 数据库进行名称/Logo可用性查重\n2. 确定匹配的商品/服务尼斯分类\n3. 线上递交官方注册申请\n4. 2个月法定官方公告期（公众可依法提出异议）\n5. DJKI 审查员进行实质审查\n6. 签发官方商标证书（自受理之日起预计全流程 12–18 个月）'
-            }
+            },
+            {
+                title: 'Kelas Merek: Kenapa Salah Kelas Bikin Rugi?',
+                titleEn: 'Trademark Classes: Why the Wrong Class Costs You',
+                titleZh: '商标类别：为什么选错类别会造成损失？',
+                content: 'Perlindungan merek diberikan per kelas barang atau jasa, bukan untuk semua bidang sekaligus. Mendaftarkan merek pada kelas yang tidak sesuai membuat perlindungan tidak menjangkau produk yang benar-benar Anda jual, sehingga merek lain masih dapat mendaftarkan nama serupa pada kelas yang sebenarnya Anda butuhkan. Penentuan kelas mengikuti klasifikasi internasional yang dipakai DJKI, dan banyak usaha perlu mendaftar pada lebih dari satu kelas karena menjual produk sekaligus jasa.',
+                contentEn: 'Trademark protection is granted per class of goods or services, not across every field at once. Registering in the wrong class leaves protection that does not reach what you actually sell, so another party can still register a similar mark in the class you truly need. Class selection follows the international classification used by DJKI, and many businesses need more than one class because they sell products alongside services.',
+            },
+            {
+                title: 'Risiko Mendaftar Merek Tanpa Pengecekan',
+                titleEn: 'The Risk of Filing Without a Search',
+                titleZh: '未经检索直接提交商标的风险',
+                content: 'Indonesia menganut asas first to file, sehingga pihak yang mengajukan lebih dahulu berhak atas merek tersebut. Mendaftar tanpa pengecekan membuat Anda menanggung biaya pengajuan untuk merek yang kemungkinan ditolak karena mirip dengan merek terdaftar. Biaya pengajuan yang hangus bukan satu-satunya kerugian: waktu tunggu dan kesempatan memasarkan produk dengan nama tersebut ikut hilang. Pengecekan visual, fonetik, dan konseptual sebelum pengajuan adalah langkah termurah dalam seluruh proses ini.',
+                contentEn: 'Indonesia applies the first-to-file principle, so the party who files first holds the right to the mark. Filing without a search means paying application fees for a mark that may be rejected as similar to an existing registration. The forfeited fee is not the only loss: waiting time and the opportunity to market a product under that name go too. A visual, phonetic and conceptual search before filing is the cheapest step in the whole process.',
+            },
+            {
+                title: 'Merek Ditolak: Apa yang Bisa Dilakukan?',
+                titleEn: 'A Rejected Trademark: What Can Be Done',
+                titleZh: '商标被驳回后可以做什么？',
+                content: 'Permohonan merek dapat ditolak pada tahap pemeriksaan substantif, misalnya karena dianggap memiliki persamaan pada pokoknya dengan merek terdaftar atau karena mengandung unsur yang dilarang. Terhadap penolakan tersebut tersedia upaya keberatan dalam tenggat yang ditetapkan, dan tenggat ini relatif singkat. Karena itu notifikasi resmi perlu dipantau, bukan diasumsikan akan tiba dengan sendirinya. Pemantauan status permohonan termasuk dalam layanan kami.',
+                contentEn: 'An application can be refused at the substantive examination stage, for example where it is considered substantially similar to a registered mark or contains a prohibited element. An objection can be filed within a set deadline, and that deadline is relatively short. Official notifications therefore need to be monitored rather than assumed to arrive on their own. Application status monitoring is included in our service.',
+            },
         ],
         faqs: [
             { question: 'Berapa lama masa berlaku perlindungan merek?', answer: 'Merek terdaftar dilindungi selama 10 tahun sejak tanggal penerimaan permohonan dan dapat diperpanjang setiap 10 tahun.' },
@@ -333,7 +354,21 @@ export const detailedServiceContent: Record<string, DetailedContent> = {
                 content: 'Bidang usaha yang dapat dijalankan PT PMA ditentukan oleh Daftar Positif Investasi (DPI). Beberapa sektor terbuka 100% untuk kepemilikan asing, beberapa memiliki batasan maksimal kepemilikan asing, dan beberapa sektor tertutup sama sekali. Konsultan VERALEX akan membantu identifikasi KBLI yang tepat untuk investasi Anda.',
                 contentEn: 'Business sectors available for PT PMA are determined by the Positive Investment List (DPI). Some sectors are 100% open to foreign ownership, some have maximum foreign ownership limits, and some sectors are completely closed. VERALEX consultants will help identify the right KBLI for your investment.',
                 contentZh: '外资可经营行业由印尼《正面投资清单》(DPI) 决定。部分行业允许 100% 外资独资，部分行业有持股上限限制，极少数行业不对外资开放。VERALEX 顾问将指导您选定正确的 KBLI 代码。'
-            }
+            },
+            {
+                title: 'Perbedaan PT PMA dan PT PMDN',
+                titleEn: 'How PT PMA Differs from PT PMDN',
+                titleZh: 'PT PMA 与 PT PMDN 的区别',
+                content: 'Perbedaan utamanya adalah komposisi kepemilikan. PT PMDN didirikan oleh pemegang saham dalam negeri, sedangkan PT PMA memungkinkan kepemilikan asing dan karenanya terikat pada ketentuan penanaman modal asing, termasuk batasan kepemilikan pada sektor usaha tertentu. Konsekuensinya, sebelum mendirikan PT PMA perlu dipastikan lebih dahulu bahwa bidang usaha yang Anda jalankan memang terbuka bagi penanaman modal asing sesuai klasifikasi baku lapangan usaha yang berlaku. Kekeliruan pada tahap ini berbiaya mahal karena perubahannya menuntut penyesuaian dokumen perusahaan.',
+                contentEn: 'The main difference is ownership composition. A PT PMDN is established by domestic shareholders, whereas a PT PMA allows foreign ownership and is therefore bound by foreign investment rules, including ownership limits in certain business sectors. As a result, before establishing a PT PMA you must first confirm that your business field is open to foreign investment under the applicable business classification. Mistakes at this stage are costly because changing them requires adjusting the company documents.',
+            },
+            {
+                title: 'Kewajiban LKPM setelah PT PMA Berdiri',
+                titleEn: 'LKPM Obligations After a PT PMA Is Established',
+                titleZh: 'PT PMA 成立后的 LKPM 报告义务',
+                content: 'PT PMA tidak berhenti pada terbitnya izin. Pemegang izin terikat pada kewajiban pelaporan kegiatan penanaman modal secara berkala melalui sistem yang dikelola kementerian investasi. Laporan yang tidak disampaikan berulang dapat berdampak pada status perizinan perusahaan. Karena itu asistensi pembuatan akun pelaporan kami sertakan dalam paket, agar kewajiban ini tidak terlewat sejak awal.',
+                contentEn: 'A PT PMA does not end with the issuance of its licence. The licence holder is bound by periodic investment activity reporting through the system operated by the investment ministry. Repeatedly missed reports can affect the company licensing status. That is why assistance in setting up the reporting account is included in the package, so the obligation is not overlooked from the start.',
+            },
         ],
         faqs: [
             { question: 'Apakah direktur PT PMA harus tinggal di Indonesia?', answer: 'Tidak wajib. Namun jika direktur asing bekerja langsung di Indonesia, wajib memiliki KITAS Kerja resmi.' },
@@ -454,7 +489,21 @@ export const detailedServiceContent: Record<string, DetailedContent> = {
                 content: 'Dokumen utama yang diperlukan:\n• Paspor asli dengan masa berlaku minimal 18 bulan\n• Akta pendirian perusahaan di Indonesia yang pemohon memiliki saham di dalamnya\n• Surat rekomendasi dari perusahaan\n• Foto terbaru\n• Dokumen identitas lainnya sesuai ketentuan imigrasi',
                 contentEn: 'Main documents required:\n• Original passport with minimum 18 months validity\n• Company deed of establishment in Indonesia where the applicant holds shares\n• Company recommendation letter\n• Recent photographs\n• Other identity documents as per immigration requirements',
                 contentZh: '主要材料清单：\n• 有效期不少于 18 个月的护照原件\n• 申请人持股的印尼公司设立公证书\n• 公司出具的推荐信\n• 近期证件照\n• 移民局要求的其他身份证明文件'
-            }
+            },
+            {
+                title: 'ITAS Investor 1 Tahun vs KITAS Kerja: Mana yang Tepat?',
+                titleEn: '1-Year Investor ITAS vs Work KITAS: Which Is Right?',
+                titleZh: '1 年期投资者 ITAS 与工作 KITAS 如何选择？',
+                content: 'Keduanya memberi hak tinggal, tetapi untuk tujuan yang berbeda. ITAS Investor diberikan kepada pemegang saham yang mengawasi investasinya dan tidak menerima gaji dari perusahaan. KITAS Kerja diberikan kepada tenaga kerja asing yang menempati jabatan dan menerima penghasilan dari perusahaan, dengan konsekuensi tambahan berupa RPTKA dan DPKK. Menggunakan jalur yang salah menimbulkan risiko administratif di kemudian hari, sehingga penentuan jalur sebaiknya dilakukan sebelum pengajuan, bukan setelah izin terbit.',
+                contentEn: 'Both grant residence, but for different purposes. An Investor ITAS is issued to shareholders overseeing their investment who do not draw a salary from the company. A Work KITAS is issued to foreign personnel holding a position and earning income from the company, with the added consequences of RPTKA and DPKK. Using the wrong route creates administrative risk later, so the route should be settled before filing, not after issuance.',
+            },
+            {
+                title: 'Masa Berlaku dan Perpanjangan ITAS Investor',
+                titleEn: 'Validity and Renewal of an Investor ITAS',
+                titleZh: '投资者 ITAS 的有效期与续签',
+                content: 'ITAS Investor 1 tahun berlaku untuk satu tahun dan dapat diperpanjang selama pemegangnya masih tercatat sebagai pemegang saham aktif pada perusahaan yang terdaftar resmi. Karena perpanjangan bergantung pada status kepemilikan saham, perubahan komposisi saham perlu diperhitungkan terhadap jadwal perpanjangan. Bila rencana tinggal Anda lebih dari satu tahun, durasi 2 tahun umumnya lebih hemat dari sisi jumlah pengurusan.',
+                contentEn: 'A 1-year Investor ITAS is valid for one year and can be renewed as long as the holder remains a recorded active shareholder in a legally registered company. Because renewal depends on share ownership, changes to the share composition should be weighed against the renewal schedule. If you plan to stay longer than a year, a 2-year term usually saves on the number of filings.',
+            },
         ],
         faqs: [
             { question: 'Apa perbedaan ITAS Investor dengan KITAS Kerja?', answer: 'ITAS Investor untuk pemegang saham yang tidak bekerja aktif di perusahaan. KITAS Kerja untuk tenaga kerja asing yang bekerja aktif dan digaji oleh perusahaan Indonesia.' },
@@ -485,7 +534,28 @@ export const detailedServiceContent: Record<string, DetailedContent> = {
                 content: `Biaya ITAS Investor 2 Tahun di VERALEX CONSULTING adalah ${itas2Price}. Meskipun biaya awal lebih tinggi dari ITAS 1 tahun (${itas1Price}), dalam jangka panjang ITAS 2 tahun lebih ekonomis karena menghemat biaya pengurusan ulang dan lebih sedikit bolak-balik ke kantor imigrasi.`,
                 contentEn: '2-Year Investor ITAS fees at VERALEX CONSULTING are IDR 18,000,000. Although the upfront cost is higher than the 1-year ITAS (IDR 16 million), in the long run 2-year ITAS is more economical as it saves renewal processing costs and requires fewer visits to the immigration office.',
                 contentZh: 'VERALEX CONSULTING 的 2 年期投资者 ITAS 服务费为 Rp 18.000.000。虽然前期费用高于 1 年期（Rp 16.000.000），但长期来看 2 年期更划算——省去每年续签的手续费和往返移民局的时间。'
-            }
+            },
+            {
+                title: 'Syarat dan Dokumen ITAS Investor 2 Tahun',
+                titleEn: 'Requirements and Documents for a 2-Year Investor ITAS',
+                titleZh: '2 年期投资者 ITAS 的申请要求与材料',
+                content: 'Dokumen yang umumnya diperlukan:\n1. Paspor dengan masa berlaku yang memadai\n2. Akta perusahaan dan SK Kemenkumham tempat Anda tercatat sebagai pemegang saham\n3. NIB dan izin usaha yang masih berlaku\n4. Bukti kepemilikan saham\n5. Surat keterangan dari perusahaan sebagai sponsor\n6. Pas foto sesuai ketentuan imigrasi\n\nPerbedaan dengan ITAS 1 tahun bukan pada dokumen, melainkan pada durasi izin dan biaya resmi imigrasi. Karena dokumen yang sama dipakai, memilih durasi 2 tahun tidak menambah beban berkas.',
+                contentEn: 'Documents generally required:\n1. Passport with sufficient remaining validity\n2. Company deed and Ministry of Law approval recording you as a shareholder\n3. Valid NIB and business licence\n4. Evidence of share ownership\n5. Sponsorship letter from the company\n6. Photographs per immigration requirements\n\nThe difference from a 1-year ITAS is not the documents but the permit duration and official immigration fees. Because the same documents apply, choosing 2 years adds no paperwork burden.',
+            },
+            {
+                title: 'ITAS Investor Tidak Sama dengan KITAS Kerja',
+                titleEn: 'Investor ITAS Is Not a Work KITAS',
+                titleZh: '投资者 ITAS 与工作 KITAS 并不相同',
+                content: 'Perbedaan ini sering disalahpahami. Pemegang ITAS Investor berkedudukan sebagai pemegang saham yang mengawasi investasinya, bukan sebagai pekerja di perusahaan. Konsekuensinya, pemegang ITAS Investor tidak dapat menerima gaji rutin dari perusahaan maupun menjalankan fungsi operasional sehari-hari. Bila ada kebutuhan untuk benar-benar bekerja, jalur yang tepat adalah KITAS Kerja, yang memiliki persyaratan berbeda termasuk RPTKA dan DPKK.',
+                contentEn: 'This distinction is often misunderstood. An Investor ITAS holder is a shareholder overseeing an investment, not an employee of the company. Consequently the holder may not draw a regular salary from the company or perform day-to-day operational functions. If there is a genuine need to work, the correct route is a Work KITAS, which carries different requirements including RPTKA and DPKK.',
+            },
+            {
+                title: 'Kapan Sebaiknya Memilih Durasi 2 Tahun?',
+                titleEn: 'When Should You Choose the Two-Year Term?',
+                titleZh: '什么时候应当选择 2 年期？',
+                content: 'Durasi 2 tahun masuk akal bila Anda berencana menetap dalam jangka menengah, rutin mengawasi operasional investasi, atau ingin mengurangi frekuensi pengurusan dokumen. Sebaliknya, bila rencana tinggal masih pendek atau kepemilikan saham belum final, durasi 1 tahun memberi ruang penyesuaian tanpa biaya awal yang besar. Perpanjangan tetap dimungkinkan pada kedua pilihan selama status kepemilikan saham masih aktif.',
+                contentEn: 'A 2-year term makes sense if you plan to stay over the medium term, regularly oversee investment operations, or want to reduce how often documents must be processed. Conversely, if the planned stay is short or share ownership is not yet final, a 1-year term leaves room to adjust without a large upfront cost. Renewal remains available on either option as long as share ownership is still active.',
+            },
         ],
         faqs: [
             { question: 'Apakah ITAS 2 tahun bisa diperpanjang lagi?', answer: 'Ya. ITAS dapat diperpanjang selama yang bersangkutan masih memiliki saham aktif di perusahaan Indonesia yang terdaftar resmi.' },
