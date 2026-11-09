@@ -24,6 +24,7 @@ import TrustBadges from '@/components/TrustBadges';
 import WhatsAppCta from '@/components/WhatsAppCta';
 import { trademarkLandingCopy } from '@/lib/trademarkLanding';
 import { ServiceOrderCta } from '@/features/service-detail/ServiceOrderCta';
+import { articlesForService } from '@/lib/articles';
 
 const CHECK_ICON = 'M5 13l4 4L19 7';
 
@@ -57,6 +58,14 @@ export default function ServiceDetailContent({ service, relatedServices, lang }:
     const displayBadge = isZh ? service.discountBadgeZh || service.discountBadge : isEn ? service.discountBadgeEn || service.discountBadge : service.discountBadge;
     const isTrademark = service.slug === 'pendaftaran-merek';
     const trademarkCopy = trademarkLandingCopy[lang];
+
+    /*
+     * Articles that discuss this service. Rendered so a visitor who arrived on
+     * a service page from a search has a next step that is not the order
+     * button, and so the crawl path runs both ways between the two content
+     * types. Capped at three so the block stays a recommendation, not a list.
+     */
+    const relatedArticles = articlesForService(service.slug).slice(0, 3);
 
     const detailContent = detailedServiceContent[service.slug];
     const introText = detailContent
@@ -153,6 +162,20 @@ export default function ServiceDetailContent({ service, relatedServices, lang }:
                         <h2 className="svc-h2 svc-h2--center">{t('detail.faq')}</h2>
                         <FaqAccordion faqs={faqsList} />
                     </section>
+
+                    {relatedArticles.length > 0 && (
+                        <section className="svc-section">
+                            <h2 className="svc-h3">{t('detail.readAlso') || 'Baca juga'}</h2>
+                            <ul className="svc-article-links">
+                                {relatedArticles.map((a) => (
+                                    <li key={a.slug}>
+                                        <Link href={`/artikel/${a.slug}`}>{a.title}</Link>
+                                        <small>{a.description}</small>
+                                    </li>
+                                ))}
+                            </ul>
+                        </section>
+                    )}
 
                     {relatedServices.length > 0 && (
                         <section className="svc-section">

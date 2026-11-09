@@ -14,6 +14,17 @@ export interface Article {
     }[];
     sources: { label: string; url: string }[];
     service: { label: string; href: string; message: string };
+    /*
+     * Service pages this article should pass authority to.
+     *
+     * Every article previously offered a single in-body link, and two of them
+     * pointed at the homepage anchor /#services instead of a service page —
+     * an anchor is not a crawlable destination for a keyword, so those
+     * articles handed Google nothing. These lists are what turn an article
+     * that ranks for an informational query into traffic for the pages that
+     * sell. Must reference slugs that exist in serviceData.
+     */
+    relatedServices?: { slug: string; note: string }[];
 }
 
 export const articles: Article[] = [
@@ -64,7 +75,11 @@ export const articles: Article[] = [
             { label: 'DPMPTSP Bantul — Jadwal, alur OSS, dan KBLI 2025', url: 'https://dpmptsp.bantulkab.go.id/web/berita/detail/1145-penyampaian-lkpm-triwulan-iii-tahun-2026-dibuka-1-15-oktober' },
             { label: 'DPMPTSP Kulon Progo — Pengingat untuk non-UMK', url: 'https://dpmptsp.kulonprogokab.go.id/publikasi/detail/dpmptsp-kulon-progo-imbau-pelaku-usaha-non-umk-sampaikan-lkpm-triwulan-iii' },
         ],
-        service: { label: 'Lihat layanan Veralex', href: '/#services', message: 'Halo Kak Vheilljei, saya ingin bertanya tentang pelaporan LKPM Triwulan III 2026 melalui OSS.' },
+        service: { label: 'Lihat layanan PT PMA', href: '/services/pt-pma', message: 'Halo Kak Vheilljei, saya ingin bertanya tentang pelaporan LKPM Triwulan III 2026 melalui OSS.' },
+        relatedServices: [
+            { slug: 'pt-pma', note: 'Pendirian PT PMA sekaligus asistensi akun pelaporan LKPM ke BKPM.' },
+            { slug: 'pt-pmdn', note: 'Pendirian PT PMDN lengkap dengan NIB dan akses OSS RBA.' },
+        ],
     },
     {
         slug: 'wajib-halal-18-oktober-2026',
@@ -111,7 +126,17 @@ export const articles: Article[] = [
             { label: 'BPJPH — Penegasan jadwal 18 Oktober 2026 pada September', url: 'https://bpjph.halal.go.id/read/wajib-halal-oktober-2026-dilaksanakan-tepat-waktu-sesuai-amanat-undang-undang' },
             { label: 'BPJPH — Tahapan dan kelompok produk wajib halal', url: 'https://bpjph.halal.go.id/read/raker-dengan-dpr-kepala-bpjph-pastikan-implementasi-wajib-halal-oktober-2026-sesuai-tahapan' },
         ],
-        service: { label: 'Lihat layanan Veralex', href: '/#services', message: 'Halo Kak Vheilljei, saya ingin mengecek kewajiban sertifikasi halal produk saya menjelang 18 Oktober 2026.' },
+        /*
+         * There is no sertifikasi-halal page in serviceData, so this article
+         * links to the product-licensing pages that do exist and that a
+         * halal-obligation reader actually needs next.
+         */
+        service: { label: 'Lihat layanan izin edar produk', href: '/services/izin-bpom', message: 'Halo Kak Vheilljei, saya ingin mengecek kewajiban sertifikasi halal produk saya menjelang 18 Oktober 2026.' },
+        relatedServices: [
+            { slug: 'izin-bpom', note: 'Registrasi BPOM untuk pangan olahan, kosmetik, dan suplemen.' },
+            { slug: 'pirt', note: 'Izin edar PIRT untuk produk pangan skala rumah tangga.' },
+            { slug: 'sertifikasi-k3l', note: 'Sertifikasi K3L bagi produk yang memerlukan pemenuhan ketentuan terkait.' },
+        ],
     },
     {
         slug: 'perubahan-kbli-september-2026',
@@ -158,6 +183,10 @@ export const articles: Article[] = [
             { label: 'BPS — Penjelasan keberlakuan izin lama', url: 'https://www.bps.go.id/id/news/2026/04/30/908/pemerintah-memastikan-kbli-2025-tidak-memerlukan-perizinan-baru.html' },
         ],
         service: { label: 'Lihat layanan pendirian PT', href: '/services/pt-pmdn', message: 'Halo Kak Vheilljei, saya ingin memeriksa dampak Peraturan BPS 6/2026 terhadap kode KBLI usaha saya.' },
+        relatedServices: [
+            { slug: 'pt-pmdn', note: 'Pendirian PT PMDN dengan NIB yang sudah memakai KBLI terbaru.' },
+            { slug: 'pt-pma', note: 'Pendirian PT PMA bagi investor asing, termasuk penyesuaian KBLI.' },
+        ],
     },
     {
         slug: 'nib-oss-pp-28-2025',
@@ -210,6 +239,10 @@ export const articles: Article[] = [
             { label: 'OSS — Panduan perizinan berusaha', url: 'https://oss.go.id/id/panduan' },
         ],
         service: { label: 'Diskusikan status izin usaha', href: '/services/pt-pmdn', message: 'Halo Kak Vheilljei, saya ingin mengecek status NIB dan perizinan usaha berdasarkan PP 28/2025.' },
+        relatedServices: [
+            { slug: 'pt-pmdn', note: 'Pendirian PT PMDN lengkap dengan NIB dan Sertifikat Standar.' },
+            { slug: 'pt-perorangan', note: 'PT Perorangan untuk usaha mikro dan kecil tanpa akta notaris.' },
+        ],
     },
     {
         slug: 'kbli-2025-izin-lama',
@@ -264,6 +297,10 @@ export const articles: Article[] = [
             { label: 'OSS — Pencarian konversi KBLI 2020 ke 2025', url: 'https://oss.go.id/id/kbli/konversi' },
         ],
         service: { label: 'Konsultasikan KBLI usaha', href: '/services/pt-pmdn', message: 'Halo Kak Vheilljei, saya ingin memeriksa KBLI 2025 dan kesesuaian izin usaha saya.' },
+        relatedServices: [
+            { slug: 'pt-pmdn', note: 'Pendirian PT PMDN dengan izin usaha sesuai KBLI 2025.' },
+            { slug: 'pendirian-cv', note: 'Pendirian CV untuk usaha yang tidak memerlukan bentuk PT.' },
+        ],
     },
     {
         slug: 'pendaftaran-merek-umk-2026',
@@ -316,8 +353,27 @@ export const articles: Article[] = [
             { label: 'DJKI — Penjelasan syarat merek UMK 2026', url: 'https://www.dgip.go.id/artikel/detail-artikel-berita/djki-permudah-syarat-merek-umk-melalui-permenkum-nomor-5-tahun-2026?kategori=liputan-humas' },
         ],
         service: { label: 'Konsultasikan pendaftaran merek', href: '/services/pendaftaran-merek', message: 'Halo Kak Vheilljei, saya ingin konsultasi pendaftaran merek dan persyaratan UMK tahun 2026.' },
+        relatedServices: [
+            { slug: 'pendaftaran-merek', note: 'Pendaftaran merek ke DJKI, termasuk penentuan kelas barang atau jasa.' },
+            { slug: 'hak-cipta', note: 'Pencatatan hak cipta untuk karya digital, desain, dan konten.' },
+        ],
     },
 ];
+
+/*
+ * Reverse index: service slug -> articles that discuss it.
+ *
+ * Built from relatedServices so the two directions of linking can never
+ * disagree. Service pages use this to offer supporting reading, which keeps
+ * the crawl path circular instead of leaving service pages as dead ends that
+ * only link to sibling services.
+ */
+export function articlesForService(serviceSlug: string): Article[] {
+    return articles.filter((article) =>
+        article.relatedServices?.some((linked) => linked.slug === serviceSlug) ||
+        article.service.href === `/services/${serviceSlug}`,
+    );
+}
 
 export function getArticle(slug: string): Article | undefined {
     return articles.find((article) => article.slug === slug);

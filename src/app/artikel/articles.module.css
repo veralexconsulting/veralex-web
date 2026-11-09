@@ -326,6 +326,95 @@
     margin-top: 100px;
 }
 
+/*
+ * Article -> service links.
+ *
+ * A plain inline paragraph of links gets skipped, so each one states what the
+ * service actually covers. This is the connection that lets an article ranking
+ * for an informational query pass its authority to a page that sells.
+ */
+.serviceLinks {
+    margin-top: 100px;
+}
+
+.serviceLinks h2 {
+    font-family: var(--font-heading);
+    font-size: clamp(1.15rem, 2vw, 1.4rem);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+    margin: 0 0 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #E4DFD9;
+}
+
+.serviceLinks ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: #E4DFD9;
+    border: 1px solid #E4DFD9;
+}
+
+.serviceLinks li {
+    background: #FFFFFF;
+    min-width: 0;
+}
+
+.serviceLinks a {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    height: 100%;
+    padding: 18px 20px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: background 0.2s ease;
+}
+
+.serviceLinks a:hover,
+.serviceLinks a:focus-visible {
+    background: #EFEDE9;
+}
+
+.serviceLinks a span {
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.35;
+    color: var(--color-gold);
+    letter-spacing: -0.01em;
+}
+
+.serviceLinks a small {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+@media (max-width: 900px) {
+    .serviceLinks ul {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    .serviceLinks,
+    .related {
+        margin-top: 56px;
+    }
+
+    .serviceLinks ul {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .serviceLinks a {
+        padding: 16px 18px;
+    }
+}
+
 .related .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }

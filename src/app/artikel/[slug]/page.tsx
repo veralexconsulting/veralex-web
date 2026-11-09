@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArticleCard } from '@/components/ArticleHighlights';
 import { articles, getArticle } from '@/lib/articles';
+import { getServiceBySlug } from '@/lib/serviceData';
 import { whatsappHref } from '@/lib/marketing';
 import styles from '../articles.module.css';
 
@@ -115,8 +116,27 @@ export default async function ArticlePage({ params }: Props) {
                         </div>
                     </section>
 
-                    <section className={styles.related} aria-labelledby="related-heading">
-                        <div className={styles.sectionHead}><h2 id="related-heading">Baca juga</h2><Link href="/artikel" className={styles.allLink}>Lihat semua <span aria-hidden="true">↗</span></Link></div>
+                    {article.relatedServices && article.relatedServices.length > 0 && (
+                        <section className={styles.serviceLinks} aria-labelledby="service-links-heading">
+                            <h2 id="service-links-heading">Layanan yang berkaitan</h2>
+                            <ul>
+                                {article.relatedServices.map(({ slug, note }) => {
+                                    const target = getServiceBySlug(slug);
+                                    if (!target) return null;
+                                    return (
+                                        <li key={slug}>
+                                            <Link href={`/services/${slug}`}>
+                                                <span>{target.title}</span>
+                                                <small>{note}</small>
+                                            </Link>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </section>
+                    )}
+
+                    <section className={styles.related} aria-labelledby="related-heading">                        <div className={styles.sectionHead}><h2 id="related-heading">Baca juga</h2><Link href="/artikel" className={styles.allLink}>Lihat semua <span aria-hidden="true">↗</span></Link></div>
                         <div className={styles.grid}>{related.map((item, index) => <ArticleCard key={item.slug} article={item} index={index} />)}</div>
                     </section>
                 </div>
