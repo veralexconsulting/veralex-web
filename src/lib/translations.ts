@@ -88,6 +88,9 @@ export const translations: Record<Lang, Record<string, string>> = {
         // Hero
         'hero.badge': 'RESMI, CEPAT & 100% LEGAL',
         'hero.title': 'Legalitas Bisnis Beres, Tanpa Ribet.',
+        'hero.title.1': 'Legalitas Bisnis Beres, Tanpa Ribet.',
+        'hero.title.2': 'PT, Merek, dan Izin Usaha, Selesai Tuntas.',
+        'hero.title.3': 'Investor Asing Masuk, Legalitas Kami Urus.',
         'hero.subtitle': 'Urus PT, Merek DJKI, hingga KITAS investor & kerja. Kami urus tuntas sampai izin operasional terbit.',
         'hero.promo': 'Konsultasi GRATIS + Diskon untuk Klien Baru',
         'hero.cta': 'Konsultasi Sekarang via WA',
@@ -536,6 +539,9 @@ export const translations: Record<Lang, Record<string, string>> = {
         // Hero
         'hero.badge': 'FAST, OFFICIAL & 100% COMPLIANT',
         'hero.title': 'Business Legality Done Right, Zero Hassle.',
+        'hero.title.1': 'Business Legality Done Right, Zero Hassle.',
+        'hero.title.2': 'Company, Trademark, and License, Handled End to End.',
+        'hero.title.3': 'Foreign Investment Ready, Legally Covered.',
         'hero.subtitle': 'From PT PMA and DJKI trademarks to ITAS/KITAS. Handled end-to-end until your business is ready to launch.',
         'hero.promo': 'FREE Consultation + Discount for New Clients',
         'hero.cta': 'Consult with Us on WhatsApp',
@@ -984,6 +990,9 @@ export const translations: Record<Lang, Record<string, string>> = {
         // Hero
         'hero.badge': '官方直办 · 100% 法律合规',
         'hero.title': '印尼企业合规落地，全流程省心高效。',
+        'hero.title.1': '印尼企业合规落地，全流程省心高效。',
+        'hero.title.2': '公司、商标与经营许可，一次办妥。',
+        'hero.title.3': '外资进入印尼，合规事务由我们处理。',
         'hero.subtitle': '外资公司设立 (PT PMA)、商标注册及投资者工作签证，我们负责直至官方批文发放。',
         'hero.promo': '免费法律咨询 + 新客户专属优惠',
         'hero.cta': '通过 WhatsApp 立即咨询',

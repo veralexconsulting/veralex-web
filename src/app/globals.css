@@ -778,6 +778,37 @@ button {
     line-height: 1.12;
     margin-bottom: 1.25rem;
     letter-spacing: -0.03em;
+    /*
+     * Two lines over three different headlines would otherwise push the
+     * subtitle and CTAs up and down as the copy rotates. Reserving the box
+     * keeps everything below the h1 perfectly still.
+     */
+    display: flex;
+    align-items: flex-start;
+    min-height: calc(2 * 1.12em);
+}
+
+.hero-title-slide {
+    display: block;
+    /* Sits in the reserved box, top aligned, so no reflow between slides. */
+    width: 100%;
+    transform: translateY(0);
+}
+
+.hero-title-slide.is-rotating {
+    animation: heroTitleIn 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes heroTitleIn {
+    from {
+        opacity: 0;
+        transform: translateY(0.42em);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .hero-title-accent {
@@ -2495,6 +2526,8 @@ section {
     .client-logo-run { animation-duration: 30s; will-change: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
+    /* The hero headline stays on its first line instead of cycling. */
+    .hero-title-slide.is-rotating { animation: none; }
     .client-logo-run { width: 100%; flex-wrap: wrap; justify-content: center; animation: none; will-change: auto; }
     .client-logo-group[aria-hidden="true"] { display: none; }
     .client-logo-group:not([aria-hidden="true"]) { flex: 1 1 100%; width: 100%; min-width: 0; box-sizing: border-box; flex-wrap: wrap; justify-content: center; }

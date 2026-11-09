@@ -1,12 +1,42 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useLang } from '@/lib/useLang';
 import { whatsappHref } from '@/lib/marketing';
 import { businessFacts } from '@/lib/businessFacts';
 
+const ROTATE_MS = 5200;
+
+/* A headline is split into its given claim and its promise on the second line. */
+const splitHeadline = (title: string) => {
+    const delimiter = title.includes('，') ? '，' : title.includes(',') ? ',' : null;
+    if (!delimiter) return { first: title, second: '' };
+    const idx = title.indexOf(delimiter);
+    return { first: title.slice(0, idx), second: title.slice(idx + 1).trim() };
+};
+
+const prefersReducedMotion = () =>
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 export default function HeroSection() {
     const { t } = useLang();
+    const rotation = [1, 2, 3];
+
+    const [active, setActive] = useState(0);
+    // Read synchronously so the first paint already knows whether to rotate;
+    // a setState-in-effect would flash the headline in for no reason.
+    const [rotating] = useState(() => !prefersReducedMotion());
+
+    useEffect(() => {
+        if (!rotating) return;
+        const timer = window.setInterval(() => {
+            setActive((current) => (current + 1) % rotation.length);
+        }, ROTATE_MS);
+        return () => window.clearInterval(timer);
+    }, [rotating, rotation.length]);
+
+    const title = t(`hero.title.${active + 1}`);
 
     return (
         <section className="hero" id="hero">
@@ -15,25 +45,29 @@ export default function HeroSection() {
             <div className="hero-inner">
                 {/* Left: Text Content */}
                 <div className="hero-content">
-                    <h1 className="hero-title">
-                        {(() => {
-                            const title = t('hero.title');
-                            const delimiter = title.includes('，') ? '，' : (title.includes(',') ? ',' : null);
-                            if (delimiter) {
-                                const idx = title.indexOf(delimiter);
-                                const firstPart = title.slice(0, idx);
-                                const secondPart = title.slice(idx + 1).trim();
+                    {/*
+                     * One h1, three lines of copy. Nothing is hidden from search
+                     * engines or screen readers — only the visible line changes.
+                     */}
+                    <h1 className="hero-title" aria-label={title}>
+                        <span className={`hero-title-slide${rotating ? ' is-rotating' : ''}`} key={active} aria-hidden="true">
+                            {(() => {
+                                const { first, second } = splitHeadline(title);
                                 return (
                                     <>
-                                        {firstPart}{delimiter}
-                                        <br />
-                                        <span className="hero-title-accent">{secondPart}</span>
+                                        {first}
+                                        {second && (
+                                            <>
+                                                <br />
+                                                <span className="hero-title-accent">{second}</span>
+                                            </>
+                                        )}
                                     </>
                                 );
-                            }
-                            return title;
-                        })()}
+                            })()}
+                        </span>
                     </h1>
+
                     <p className="hero-subtitle">
                         {t('hero.subtitle')}
                     </p>
