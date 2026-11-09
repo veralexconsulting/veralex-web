@@ -1835,7 +1835,10 @@ button {
 /* ===== Client Gallery Carousel ===== */
 .client-gallery {
     padding: var(--section-padding);
-    background: linear-gradient(180deg, var(--bg-dark) 0%, var(--color-primary-darker) 50%, var(--bg-dark) 100%);
+    /* Was a maroon-to-dark wash: on a light page it read as a blurred smear
+       behind the photos rather than a band of its own. */
+    background: var(--bg-dark);
+    border-top: var(--border-gold);
     overflow: hidden;
 }
 
@@ -1844,8 +1847,13 @@ button {
     width: 100%;
     overflow: hidden;
     margin: 2rem 0;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    /*
+     * No mask-image here. Fading the strip to transparent over a maroon band
+     * turned the edges into a blur that bled into the photos. The strip now
+     * runs edge to edge with a hairline frame instead.
+     */
+    padding: 1px 0;
+    border-block: var(--border-gold);
 }
 
 .gallery-track {
@@ -1875,20 +1883,32 @@ button {
     height: 220px;
     border-radius: var(--radius-lg);
     overflow: hidden;
+    background: var(--bg-card);
     border: var(--border-gold);
-    transition: var(--transition-normal);
+    transition: border-color var(--transition-normal);
 }
 
+/*
+ * Hover used to scale(1.05) each slide inside a moving track. Combined with
+ * the edge mask that is what made the row look like it was compressing.
+ * The border is enough of a cue.
+ */
 .gallery-slide:hover {
-    transform: scale(1.05);
     border-color: var(--color-gold);
-    box-shadow: var(--shadow-gold);
 }
 
 .gallery-slide img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* Motion is honoured here too: the track stops instead of drifting forever. */
+@media (prefers-reduced-motion: reduce) {
+    .gallery-track {
+        animation: none;
+    }
 }
 
 .gallery-cta-wrapper {
