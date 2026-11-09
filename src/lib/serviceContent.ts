@@ -625,6 +625,278 @@ export const detailedServiceContent: Record<string, DetailedContent> = {
             { question: '企业雇佣无 KITAS 外籍人员会面临什么处罚？', answer: '将面临严厉处罚，包括巨额罚款、外籍人员被遣返出境，以及企业营业执照被吊销。' },
         ]
     },
+
+    // =========================================================
+    // PERIZINAN & SERTIFIKASI PRODUK
+    // =========================================================
+
+    'izin-bpom': {
+        intro: 'Setiap produk pangan olahan, kosmetik, obat tradisional, dan suplemen yang beredar di Indonesia wajib memiliki izin edar dari BPOM sebelum boleh diperdagangkan. Pendaftaran dilakukan melalui sistem e-Registration BPOM, dan kelengkapan dokumen menentukan berapa lama prosesnya berjalan. VERALEX CONSULTING mendampingi penyusunan berkas, pengecekan kesesuaian label, sampai nomor izin edar terbit.',
+        introEn: 'Every processed food, cosmetic, traditional medicine and supplement sold in Indonesia must hold a BPOM distribution licence before it can be traded. Registration is filed through the BPOM e-Registration system, and the completeness of the dossier determines how long it takes. VERALEX CONSULTING assists with compiling the file, checking label compliance, and following the application through to issuance.',
+        sections: [
+            {
+                title: 'Produk Apa Saja yang Wajib Registrasi BPOM?',
+                titleEn: 'Which Products Require BPOM Registration?',
+                content: 'Kewajiban izin edar BPOM berlaku untuk pangan olahan dalam kemasan, kosmetik, obat tradisional, suplemen kesehatan, dan produk biologi. Yang umumnya dikecualikan adalah pangan segar, pangan olahan yang dijual langsung untuk dikonsumsi pada hari yang sama, serta produk yang masuk ranah PIRT untuk usaha rumah tangga. Batas antara kategori PIRT dan pangan olahan BPOM ditentukan oleh jenis produk dan skala usaha, sehingga kesesuaian kategori perlu dipastikan sebelum pengajuan.',
+                contentEn: 'BPOM licensing applies to packaged processed food, cosmetics, traditional medicines, health supplements and biological products. Generally excluded are fresh food, processed food sold directly for same-day consumption, and products that fall under PIRT for home-scale businesses. The boundary between PIRT and BPOM processed food depends on the product type and business scale, so the category must be confirmed before filing.',
+            },
+            {
+                title: 'Dokumen yang Harus Disiapkan',
+                titleEn: 'Documents You Need to Prepare',
+                content: 'Berkas registrasi disusun dari beberapa kelompok dokumen:\n1. Identitas pelaku usaha — NIB dan akta perusahaan\n2. Data produk — nama produk, komposisi, dan bentuk sediaan\n3. Hasil uji laboratorium untuk parameter yang dipersyaratkan\n4. Rancangan label dan kemasan\n5. Sertifikat pendukung sesuai jenis produk, misalnya sertifikat halal untuk produk tertentu\n\nJenis uji dan sertifikat yang diminta berbeda antar kategori produk. Rincian untuk produk Anda dikonfirmasi pada tahap konsultasi awal.',
+                contentEn: 'The dossier is assembled from several groups of documents:\n1. Business identity — NIB and company deed\n2. Product data — name, composition and dosage form\n3. Laboratory test results for the required parameters\n4. Label and packaging design\n5. Supporting certificates per product type, such as halal certification where applicable\n\nThe tests and certificates required differ between product categories. The specifics for your product are confirmed during the initial consultation.',
+            },
+            {
+                title: 'Kenapa Registrasi BPOM Sering Tertunda?',
+                titleEn: 'Why BPOM Registration Often Stalls',
+                content: 'Sebagian besar keterlambatan bukan berasal dari BPOM, melainkan dari berkas yang tidak lengkap atau label yang tidak sesuai ketentuan. Kesalahan yang paling sering ditemui: komposisi pada label tidak sama dengan yang diajukan, klaim manfaat yang tidak boleh dicantumkan, serta hasil uji yang sudah kedaluwarsa. Karena setiap pengembalian berkas mengulang antrean, memperbaiki dokumen sebelum pengajuan jauh lebih murah daripada memperbaikinya di tengah proses.',
+                contentEn: 'Most delays do not originate at BPOM but from incomplete dossiers or non-compliant labels. The most common errors: label composition differing from what was filed, prohibited efficacy claims, and expired test results. Because every returned dossier re-enters the queue, fixing documents before filing is far cheaper than fixing them mid-process.',
+            },
+        ],
+        faqs: [
+            { question: 'Berapa biaya jasa registrasi BPOM di VERALEX?', answer: 'Biaya jasa mulai Rp5.000.000 per produk. Nilai tersebut belum termasuk biaya uji laboratorium dan PNBP BPOM, yang besarnya bergantung pada jenis produk dan parameter uji.' },
+            { question: 'Berapa lama proses registrasi BPOM?', answer: 'Tidak ada angka tunggal, karena durasi ditentukan oleh kelengkapan berkas, jenis produk, dan antrean penilaian. Estimasi untuk produk Anda diberikan setelah dokumen awal diperiksa.' },
+            { question: 'Apakah registrasi BPOM harus diperpanjang?', answer: 'Izin edar BPOM memiliki masa berlaku dan wajib diperpanjang sebelum habis. Perpanjangan diajukan melalui sistem yang sama.' },
+            { question: 'Apakah label harus sudah final sebelum mendaftar?', answer: 'Rancangan label harus sudah sesuai ketentuan saat berkas diajukan. Karena itu pengecekan label kami lakukan sebelum pengajuan, bukan setelah ada koreksi dari penilai.' },
+            { question: 'Apakah produk impor bisa didaftarkan?', answer: 'Bisa, dengan persyaratan tambahan seperti dokumen dari negara asal dan penunjukan agen resmi di Indonesia. Kesiapan dokumen tersebut dikonfirmasi pada konsultasi awal.' },
+        ],
+        faqsEn: [
+            { question: 'How much does BPOM registration cost at VERALEX?', answer: 'The service fee starts at Rp5,000,000 per product. This excludes laboratory testing charges and BPOM non-tax state revenue, which vary by product type and test parameters.' },
+            { question: 'How long does BPOM registration take?', answer: 'There is no single figure, as the duration depends on dossier completeness, product type and assessment queue. An estimate for your product is provided after the initial documents are reviewed.' },
+            { question: 'Does BPOM registration have to be renewed?', answer: 'The BPOM licence has a validity period and must be renewed before it expires. Renewal is filed through the same system.' },
+            { question: 'Must the label be final before registering?', answer: 'The label design must already comply when the dossier is filed. That is why label checks happen before submission, not after the assessor returns corrections.' },
+            { question: 'Can imported products be registered?', answer: 'Yes, with additional requirements such as documents from the country of origin and appointment of an official Indonesian agent. Readiness of those documents is confirmed during the initial consultation.' },
+        ],
+    },
+
+    'pirt': {
+        intro: 'PIRT (Pangan Industri Rumah Tangga) adalah izin edar yang ditujukan untuk usaha mikro dan kecil yang memproduksi pangan olahan dalam skala rumah tangga. Izin ini diterbitkan oleh pemerintah daerah, bukan BPOM, sehingga jalur dan persyaratannya berbeda. PIRT menjadi pintu masuk paling terjangkau bagi produk rumahan agar dapat dijual resmi, termasuk lewat marketplace dan ritel.',
+        introEn: 'PIRT (Home Industry Food) is a distribution licence intended for micro and small businesses producing processed food at home scale. It is issued by the regional government rather than BPOM, so the route and requirements differ. PIRT is the most affordable entry point for home-made products to be sold legally, including through marketplaces and retail.',
+        sections: [
+            {
+                title: 'Apa Perbedaan PIRT dan Izin Edar BPOM?',
+                titleEn: 'What Is the Difference Between PIRT and BPOM?',
+                content: 'Perbedaannya terletak pada skala dan kategori produk. PIRT ditujukan untuk usaha rumah tangga dengan produk pangan olahan tertentu, sementara BPOM menangani pangan olahan dengan tingkat risiko lebih tinggi serta kosmetik, obat tradisional, dan suplemen. Produk yang telah memiliki PIRT tidak memerlukan izin BPOM. Sebaliknya, produk yang tidak termasuk kategori PIRT wajib melalui BPOM. Menentukan kategori yang tepat sejak awal menghindari biaya pengajuan yang salah jalur.',
+                contentEn: 'The difference lies in scale and product category. PIRT covers home-scale businesses producing certain processed foods, while BPOM handles higher-risk processed food plus cosmetics, traditional medicines and supplements. A product with PIRT does not need a BPOM licence. Conversely, products outside the PIRT category must go through BPOM. Determining the correct category up front avoids paying for the wrong route.',
+            },
+            {
+                title: 'Syarat Mengurus PIRT',
+                titleEn: 'Requirements for PIRT',
+                content: 'Kelompok persyaratan yang umumnya diminta:\n1. Pelaku usaha mikro atau kecil dengan produk pangan olahan\n2. NIB sebagai identitas usaha\n3. Pelatihan keamanan pangan bagi pemilik usaha\n4. Rancangan label yang memuat informasi wajib\n5. Pemeriksaan sarana produksi oleh petugas\n\nPersyaratan teknis dapat berbeda antar daerah karena kewenangannya berada pada pemerintah kabupaten/kota. Kesesuaian produk dan kategori usaha dikonfirmasi sebelum pemesanan.',
+                contentEn: 'The groups of requirements generally requested:\n1. A micro or small business producing processed food\n2. NIB as business identity\n3. Food safety training for the business owner\n4. A label design containing the mandatory information\n5. Inspection of the production premises by an officer\n\nTechnical requirements can differ between regions because authority sits with the district or city government. Product and business-category eligibility is confirmed before ordering.',
+            },
+            {
+                title: 'Label PIRT: Apa yang Wajib Dicantumkan?',
+                titleEn: 'PIRT Labelling: What Must Be Included?',
+                content: 'Label produk PIRT memuat nama produk, komposisi, berat bersih, nama dan alamat produsen, nomor PIRT, kode produksi, serta tanggal kedaluwarsa. Nomor PIRT harus tercantum dalam format yang ditetapkan dan tidak boleh dipindahkan ke produk lain. Kesalahan label adalah penyebab paling umum izin tertahan, karena label dicetak sebelum izin terbit.',
+                contentEn: 'A PIRT product label carries the product name, composition, net weight, producer name and address, the PIRT number, production code, and expiry date. The PIRT number must appear in the prescribed format and may not be transferred to another product. Label errors are the most common reason a licence is held up, as labels are printed before the licence is issued.',
+            },
+        ],
+        faqs: [
+            { question: 'Berapa biaya jasa pengurusan PIRT?', answer: 'Biaya jasa Rp1.500.000 per produk. Kesesuaian produk dan kategori usaha perlu dikonfirmasi terlebih dahulu, karena tidak semua produk pangan dapat menggunakan jalur PIRT.' },
+            { question: 'Apakah PIRT berlaku di seluruh Indonesia?', answer: 'PIRT diterbitkan oleh pemerintah daerah dan berlaku untuk peredaran produk sesuai ketentuan yang berlaku. Untuk penjualan lintas daerah dengan skala besar, kesesuaian jalur izin perlu ditinjau ulang.' },
+            { question: 'Apakah perlu punya NIB dulu sebelum mengurus PIRT?', answer: 'NIB merupakan identitas usaha yang umumnya disyaratkan. Jika belum ada, pengurusan NIB dapat dilakukan lebih dahulu.' },
+            { question: 'Apakah produk saya lebih tepat lewat BPOM?', answer: 'Tergantung jenis produk dan skala usaha. Produk dengan risiko lebih tinggi atau di luar kategori pangan rumah tangga wajib melalui BPOM. Penentuan kategori dilakukan pada konsultasi awal.' },
+            { question: 'Berapa lama masa berlaku PIRT?', answer: 'Izin PIRT memiliki masa berlaku dan wajib didaftarkan ulang sebelum habis. Tanggal berlaku tercantum pada dokumen izin yang diterbitkan.' },
+        ],
+        faqsEn: [
+            { question: 'How much does PIRT processing cost?', answer: 'The service fee is Rp1,500,000 per product. Product and business-category eligibility must be confirmed first, as not every food product can use the PIRT route.' },
+            { question: 'Is PIRT valid across Indonesia?', answer: 'PIRT is issued by the regional government and applies to product distribution under the prevailing rules. For large-scale cross-region sales, the appropriate licensing route should be reviewed again.' },
+            { question: 'Do I need an NIB before applying for PIRT?', answer: 'The NIB is a business identity generally required. If you do not have one yet, NIB processing can be done first.' },
+            { question: 'Should my product go through BPOM instead?', answer: 'It depends on the product type and business scale. Higher-risk products, or those outside the home-scale food category, must go through BPOM. The category is determined during the initial consultation.' },
+            { question: 'How long is PIRT valid?', answer: 'The PIRT licence has a validity period and must be re-registered before it expires. The validity date is stated on the issued licence.' },
+        ],
+    },
+
+    'sertifikasi-postel': {
+        intro: 'Sertifikasi POSTEL adalah sertifikasi perangkat telekomunikasi yang wajib dipenuhi sebelum perangkat dapat diperdagangkan atau digunakan di jaringan telekomunikasi Indonesia. Sertifikasi diterbitkan setelah perangkat lulus pengujian di laboratorium yang terakreditasi. VERALEX CONSULTING mendampingi penyiapan dokumen, koordinasi pengujian, sampai sertifikat terbit.',
+        introEn: 'POSTEL certification is the telecommunications equipment certification that must be obtained before a device may be traded or connected to Indonesian networks. It is issued after the device passes testing at an accredited laboratory. VERALEX CONSULTING assists with document preparation, testing coordination, and follow-through to issuance.',
+        sections: [
+            {
+                title: 'Perangkat Apa yang Wajib Sertifikasi POSTEL?',
+                titleEn: 'Which Devices Require POSTEL Certification?',
+                content: 'Kewajiban ini berlaku bagi perangkat yang terhubung ke jaringan telekomunikasi atau menggunakan spektrum frekuensi radio. Contohnya telepon seluler, perangkat Bluetooth dan Wi-Fi, perangkat radio komunikasi, serta perangkat jaringan. Perangkat yang tidak memiliki sertifikasi berisiko ditolak masuk, ditarik dari peredaran, atau tidak dapat mengakses jaringan secara sah.',
+                contentEn: 'The obligation applies to devices connected to telecommunications networks or using radio frequency spectrum. Examples include mobile phones, Bluetooth and Wi-Fi devices, radio communication equipment, and networking devices. Uncertified devices risk being refused entry, withdrawn from the market, or barred from lawful network access.',
+            },
+            {
+                title: 'Tahapan Sertifikasi Perangkat Telekomunikasi',
+                titleEn: 'Stages of Telecommunications Equipment Certification',
+                content: 'Alur yang umum dilalui:\n1. Pemeriksaan kesesuaian perangkat dan dokumen teknis\n2. Pengujian di laboratorium terakreditasi\n3. Penyusunan berkas hasil uji\n4. Pengajuan permohonan sertifikasi\n5. Penerbitan sertifikat\n\nPerangkat dengan modul radio umumnya memerlukan pengujian tambahan dibanding perangkat kabel. Cakupan uji ditentukan oleh jenis dan spesifikasi perangkat.',
+                contentEn: 'The usual sequence:\n1. Verification of device conformity and technical documents\n2. Testing at an accredited laboratory\n3. Compilation of the test result dossier\n4. Filing of the certification application\n5. Certificate issuance\n\nDevices with radio modules generally require more testing than wired devices. The test scope is determined by device type and specification.',
+            },
+        ],
+        faqs: [
+            { question: 'Berapa biaya jasa sertifikasi POSTEL?', answer: 'Biaya jasa Rp12.000.000, belum termasuk biaya uji laboratorium dan PNBP POSTEL. Biaya uji bergantung pada jenis dan jumlah perangkat yang diuji.' },
+            { question: 'Berapa lama sertifikasi POSTEL berlaku?', answer: 'Sertifikat memiliki masa berlaku dan perlu diperbarui sebelum habis. Perubahan spesifikasi perangkat umumnya memerlukan sertifikasi ulang.' },
+            { question: 'Apakah satu sertifikat berlaku untuk beberapa model?', answer: 'Sertifikasi melekat pada perangkat dengan spesifikasi yang diuji. Model dengan perbedaan teknis umumnya memerlukan pengujian tersendiri. Cakupan untuk lini produk Anda dikonfirmasi pada konsultasi awal.' },
+            { question: 'Apakah perangkat impor wajib sertifikasi POSTEL?', answer: 'Ya. Perangkat yang diperdagangkan atau digunakan di Indonesia wajib memenuhi ketentuan sertifikasi, termasuk perangkat impor.' },
+            { question: 'Apa risikonya menjual perangkat tanpa sertifikat?', answer: 'Perangkat dapat ditolak masuk, ditarik dari peredaran, dan tidak dapat mengakses jaringan secara sah. Risiko ini umumnya lebih besar daripada biaya sertifikasi itu sendiri.' },
+        ],
+        faqsEn: [
+            { question: 'How much does POSTEL certification cost?', answer: 'The service fee is Rp12,000,000, excluding laboratory testing charges and POSTEL non-tax state revenue. Testing costs depend on the type and number of devices tested.' },
+            { question: 'How long is POSTEL certification valid?', answer: 'The certificate has a validity period and must be renewed before expiry. Changes to device specifications generally require re-certification.' },
+            { question: 'Does one certificate cover several models?', answer: 'Certification attaches to the device with the tested specification. Models with technical differences generally require their own testing. Coverage for your product line is confirmed during the initial consultation.' },
+            { question: 'Do imported devices require POSTEL certification?', answer: 'Yes. Devices traded or used in Indonesia must meet certification requirements, including imported devices.' },
+            { question: 'What is the risk of selling uncertified devices?', answer: 'Devices may be refused entry, withdrawn from the market, and barred from lawful network access. That risk usually outweighs the cost of certification itself.' },
+        ],
+    },
+
+    'sertifikasi-k3l': {
+        intro: 'Sertifikasi K3L berkaitan dengan pemenuhan ketentuan keselamatan dan kesehatan kerja serta lingkungan pada produk atau proses tertentu. Karena cakupannya bergantung pada jenis produk dan peruntukannya, langkah pertama selalu memastikan apakah produk Anda memang termasuk yang memerlukan sertifikasi ini, sebelum biaya pengujian dikeluarkan.',
+        introEn: 'K3L certification concerns compliance with occupational safety and health, and environmental requirements, for certain products or processes. Because its scope depends on product type and intended use, the first step is always establishing whether your product actually requires this certification before testing costs are incurred.',
+        sections: [
+            {
+                title: 'Kapan Sertifikasi K3L Diperlukan?',
+                titleEn: 'When Is K3L Certification Required?',
+                content: 'Kewajiban sertifikasi K3L melekat pada produk dan proses yang memiliki potensi risiko terhadap keselamatan kerja atau lingkungan. Produk yang masuk kategori ini umumnya adalah peralatan yang digunakan di lingkungan kerja, bahan yang berdampak pada lingkungan, serta perangkat yang harus memenuhi standar keselamatan tertentu sebelum digunakan. Menentukan apakah suatu produk termasuk kategori tersebut memerlukan penelusuran peruntukan produk, bukan sekadar jenis barangnya.',
+                contentEn: 'The K3L certification obligation attaches to products and processes with potential risk to work safety or the environment. Such products are generally equipment used in work environments, materials with environmental impact, and devices that must meet specific safety standards before use. Determining whether a product falls into this category requires tracing its intended use, not merely its type of goods.',
+            },
+            {
+                title: 'Hubungan Sertifikasi K3L dengan Pengujian Laboratorium',
+                titleEn: 'How K3L Certification Relates to Laboratory Testing',
+                content: 'Sertifikasi umumnya didahului pengujian pada laboratorium untuk memastikan produk memenuhi parameter yang dipersyaratkan. Biaya pengujian tidak termasuk dalam biaya jasa, karena besarnya bergantung pada jumlah dan jenis parameter yang diuji. Sertifikat diterbitkan setelah hasil uji dinyatakan memenuhi ketentuan.',
+                contentEn: 'Certification is generally preceded by laboratory testing to confirm the product meets the required parameters. Testing costs are not included in the service fee, as they depend on the number and type of parameters tested. The certificate is issued once test results are declared compliant.',
+            },
+        ],
+        faqs: [
+            { question: 'Berapa biaya jasa sertifikasi K3L?', answer: 'Biaya jasa Rp7.000.000. Biaya uji laboratorium tidak termasuk dan besarnya bergantung pada parameter yang diuji.' },
+            { question: 'Apakah semua produk wajib sertifikasi K3L?', answer: 'Tidak. Kewajiban ini hanya berlaku bagi produk dan proses yang termasuk dalam cakupan ketentuan. Kesesuaian produk Anda diperiksa pada konsultasi awal sebelum pemesanan.' },
+            { question: 'Berapa lama proses sertifikasi K3L?', answer: 'Durasi bergantung pada kelengkapan dokumen dan lama pengujian. Estimasi diberikan setelah cakupan uji ditentukan.' },
+            { question: 'Apakah sertifikat perlu diperbarui?', answer: 'Sertifikat memiliki masa berlaku. Perubahan spesifikasi produk umumnya memerlukan pengujian dan sertifikasi ulang.' },
+        ],
+        faqsEn: [
+            { question: 'How much does K3L certification cost?', answer: 'The service fee is Rp7,000,000. Laboratory testing costs are excluded and depend on the parameters tested.' },
+            { question: 'Do all products require K3L certification?', answer: 'No. The obligation applies only to products and processes within the scope of the regulation. Your product eligibility is checked during the initial consultation before ordering.' },
+            { question: 'How long does K3L certification take?', answer: 'The duration depends on document completeness and testing time. An estimate is provided once the test scope is determined.' },
+            { question: 'Does the certificate need renewal?', answer: 'The certificate has a validity period. Changes to product specifications generally require re-testing and re-certification.' },
+        ],
+    },
+
+    // =========================================================
+    // PERIZINAN SISTEM ELEKTRONIK
+    // =========================================================
+
+    'pse-lokal': {
+        intro: 'Pendaftaran PSE (Penyelenggara Sistem Elektronik) adalah kewajiban bagi setiap penyelenggara sistem elektronik yang beroperasi di Indonesia, termasuk badan usaha dalam negeri yang mengoperasikan situs, aplikasi, atau platform digital. Pendaftaran dilakukan melalui sistem OSS di bawah Kementerian Komunikasi dan Digital. VERALEX CONSULTING membantu penyusunan dokumen dan pengajuan sampai tanda terdaftar diterbitkan.',
+        introEn: 'PSE (Electronic System Operator) registration is mandatory for every electronic system operator operating in Indonesia, including domestic entities running a website, application or digital platform. Registration is filed through the OSS system under the Ministry of Communication and Digital Affairs. VERALEX CONSULTING assists with document preparation and filing through to registration confirmation.',
+        sections: [
+            {
+                title: 'Siapa yang Wajib Mendaftar sebagai PSE?',
+                titleEn: 'Who Must Register as a PSE?',
+                content: 'Kewajiban pendaftaran berlaku bagi penyelenggara sistem elektronik yang menyediakan layanan atau mengoperasikan platform di Indonesia, baik berbentuk badan usaha maupun bentuk usaha lain yang ditetapkan. Cakupannya mencakup layanan yang menyediakan, mengirimkan, atau memungkinkan pertukaran informasi elektronik. Situs profil perusahaan yang tidak menjalankan layanan transaksi atau interaksi pengguna umumnya berada di luar cakupan, sehingga penentuan status terlebih dahulu mencegah pendaftaran yang tidak diperlukan.',
+                contentEn: 'The registration obligation applies to electronic system operators providing services or running platforms in Indonesia, whether as a corporate entity or another prescribed form. Scope covers services that provide, transmit, or enable the exchange of electronic information. A company profile website that performs no transaction or user interaction generally falls outside scope, so establishing the status first prevents unnecessary registration.',
+            },
+            {
+                title: 'Dokumen dan Data yang Dibutuhkan',
+                titleEn: 'Required Documents and Data',
+                content: 'Berkas pendaftaran PSE umumnya memuat:\n1. Identitas badan usaha — NIB dan akta pendirian\n2. Nama sistem elektronik dan alamat domain atau aplikasi\n3. Deskripsi layanan yang diselenggarakan\n4. Data penanggung jawab dan kontak resmi\n5. Pernyataan kesediaan memenuhi ketentuan\n\nKetidaksesuaian antara data yang didaftarkan dan layanan yang benar-benar berjalan adalah penyebab paling sering berkas dikembalikan. Karena itu deskripsi layanan kami susun berdasarkan produk yang Anda jalankan, bukan berdasarkan template.',
+                contentEn: 'A PSE registration file generally contains:\n1. Business identity — NIB and deed of establishment\n2. Electronic system name and domain or application address\n3. Description of the services operated\n4. Data of the responsible person and official contact\n5. Statement of willingness to comply with the requirements\n\nMismatch between registered data and the service actually running is the most common reason a file is returned. The service description is therefore built from the product you operate, not from a template.',
+            },
+            {
+                title: 'Kewajiban setelah PSE Terdaftar',
+                titleEn: 'Obligations After PSE Registration',
+                content: 'Pendaftaran bukan akhir dari kewajiban. Penyelenggara PSE umumnya juga terikat pada kewajiban penyediaan informasi, penanganan konten, perlindungan data pribadi, dan pelaporan apabila terjadi perubahan data pendaftaran. Perubahan nama sistem, domain, atau layanan wajib diperbarui. Kewajiban teknis dan pelaporan berkala berada di luar cakupan layanan pendaftaran ini dan perlu direncanakan secara terpisah.',
+                contentEn: 'Registration is not the end of the obligations. A PSE operator is generally also bound by duties on information provision, content handling, personal data protection, and reporting when registered data changes. Changes to the system name, domain or service must be updated. Technical and periodic reporting duties sit outside the scope of this registration service and need separate planning.',
+            },
+        ],
+        faqs: [
+            { question: 'Berapa biaya jasa pendaftaran PSE lokal?', answer: 'Biaya jasa Rp6.000.000 untuk penyelenggara dalam negeri. Kewajiban tambahan seperti pelaporan berkala dan pemenuhan teknis berada di luar cakupan tersebut.' },
+            { question: 'Apakah situs profil perusahaan wajib daftar PSE?', answer: 'Situs yang hanya menampilkan profil dan tidak menjalankan layanan transaksi atau interaksi pengguna umumnya tidak termasuk cakupan. Status sistem elektronik Anda dipastikan pada konsultasi awal.' },
+            { question: 'Apakah pendaftaran PSE berlaku selamanya?', answer: 'Tanda terdaftar tetap berlaku selama data yang dilaporkan sesuai dengan kondisi layanan. Perubahan nama, domain, atau cakupan layanan wajib diperbarui.' },
+            { question: 'Apakah PSE berhubungan dengan perlindungan data pribadi?', answer: 'Keduanya kerangka yang berbeda namun saling terkait. Pendaftaran PSE tidak otomatis memenuhi kewajiban perlindungan data pribadi; keduanya perlu ditangani sendiri-sendiri.' },
+            { question: 'Bagaimana jika layanan saya berubah setelah terdaftar?', answer: 'Perubahan wajib dilaporkan dan data pendaftaran diperbarui. Membiarkan data lama berisiko menimbulkan ketidaksesuaian saat ada pemeriksaan.' },
+        ],
+        faqsEn: [
+            { question: 'How much does local PSE registration cost?', answer: 'The service fee is Rp6,000,000 for domestic operators. Additional obligations such as periodic reporting and technical compliance sit outside that scope.' },
+            { question: 'Must a company profile website register as a PSE?', answer: 'A site that only presents a profile without transaction or user-interaction services generally falls outside scope. The status of your electronic system is confirmed during the initial consultation.' },
+            { question: 'Is PSE registration valid permanently?', answer: 'The registration remains valid as long as the reported data matches the running service. Changes to name, domain or service scope must be updated.' },
+            { question: 'Is PSE related to personal data protection?', answer: 'They are separate frameworks that interlock. PSE registration does not by itself satisfy personal data protection obligations; each must be handled on its own.' },
+            { question: 'What if my service changes after registration?', answer: 'Changes must be reported and the registration data updated. Leaving old data in place risks a mismatch during any review.' },
+        ],
+    },
+
+    'pse-asing': {
+        intro: 'Penyelenggara sistem elektronik asing yang melayani pengguna di Indonesia juga wajib mendaftar sebagai PSE, meskipun badan usahanya berada di luar negeri. Selain pendaftaran, penyelenggara asing umumnya perlu menunjuk perwakilan dan menyiapkan dokumen kepatuhan. VERALEX CONSULTING mendampingi penyiapan berkas dan pengajuan melalui jalur yang berlaku.',
+        introEn: 'Foreign electronic system operators serving users in Indonesia are also required to register as a PSE, even where the company is established abroad. Beyond registration, foreign operators generally need to appoint a representative and prepare compliance documents. VERALEX CONSULTING assists with file preparation and filing through the applicable route.',
+        sections: [
+            {
+                title: 'Kapan Penyelenggara Asing Wajib Mendaftar PSE?',
+                titleEn: 'When Must a Foreign Operator Register as a PSE?',
+                content: 'Kewajiban muncul ketika layanan sistem elektronik dioperasikan dari luar Indonesia namun menjangkau pengguna di Indonesia, baik melalui situs, aplikasi, maupun layanan digital lainnya. Yang menjadi penentu adalah adanya layanan yang ditujukan atau diakses oleh pengguna di Indonesia, bukan lokasi server. Penentuan status ini penting karena menentukan apakah pendaftaran melalui jalur lokal atau jalur asing yang berlaku.',
+                contentEn: 'The obligation arises when an electronic system is operated from outside Indonesia but reaches users in Indonesia, whether through a website, application or other digital service. The determining factor is that a service is directed at or accessed by users in Indonesia, not the location of the server. Establishing this status matters because it decides whether the local or foreign route applies.',
+            },
+            {
+                title: 'Perbedaan Pendaftaran PSE Lokal dan Asing',
+                titleEn: 'How Foreign PSE Registration Differs from Local',
+                content: 'Perbedaan utamanya terletak pada dokumen kepatuhan dan kehadiran di Indonesia. Penyelenggara asing umumnya perlu menunjuk perwakilan, menyiapkan dokumen yang menunjukkan komitmen memenuhi ketentuan, serta menyesuaikan struktur pelaporan. Biaya jasa untuk jalur asing lebih tinggi karena cakupan berkas dan koordinasinya lebih luas dibanding penyelenggara dalam negeri.',
+                contentEn: 'The main differences lie in compliance documents and presence in Indonesia. A foreign operator generally needs to appoint a representative, prepare documents demonstrating commitment to the requirements, and adapt its reporting structure. The service fee for the foreign route is higher because the dossier and coordination are broader than for a domestic operator.',
+            },
+            {
+                title: 'Risiko Tidak Mendaftar bagi Penyelenggara Asing',
+                titleEn: 'Risks of Not Registering as a Foreign Operator',
+                content: 'Layanan yang menjangkau pengguna Indonesia tanpa terdaftar berisiko menghadapi pemblokiran akses. Bagi bisnis digital, pemblokiran berarti kehilangan pasar secara langsung, bukan sekadar sanksi administratif. Karena itu pendaftaran sebaiknya dipandang sebagai syarat beroperasi, bukan beban kepatuhan tambahan.',
+                contentEn: 'A service reaching Indonesian users without registration risks access blocking. For a digital business, blocking means losing the market outright, not merely an administrative sanction. Registration is therefore best treated as a condition of operating, not an additional compliance burden.',
+            },
+        ],
+        faqs: [
+            { question: 'Berapa biaya jasa pendaftaran PSE asing?', answer: 'Biaya jasa Rp10.000.000 untuk penyelenggara asing. Kewajiban pelaporan berkala dan pemenuhan teknis berada di luar cakupan tersebut.' },
+            { question: 'Apakah perlu badan usaha di Indonesia?', answer: 'Penyelenggara asing menggunakan jalur pendaftaran yang berlaku untuk penyelenggara luar negeri, termasuk kewajiban menunjuk perwakilan. Struktur yang paling sesuai untuk bisnis Anda dibahas pada konsultasi awal.' },
+            { question: 'Apakah server harus dipindahkan ke Indonesia?', answer: 'Kewajiban pendaftaran tidak dengan sendirinya mewajibkan relokasi server. Namun ada ketentuan teknis dan pengelolaan data yang perlu dipenuhi; hal ini dipetakan terpisah dari pendaftaran.' },
+            { question: 'Apa akibatnya jika layanan tidak terdaftar?', answer: 'Layanan berisiko diblokir untuk pengguna di Indonesia. Dampaknya langsung terhadap akses pasar.' },
+            { question: 'Apakah pendaftaran PSE asing bisa dilakukan dari luar negeri?', answer: 'Pengajuan dapat dikoordinasikan dari luar negeri sepanjang dokumen dan penunjukan perwakilan sudah lengkap. Kesiapan dokumen menentukan kelancaran proses.' },
+        ],
+        faqsEn: [
+            { question: 'How much does foreign PSE registration cost?', answer: 'The service fee is Rp10,000,000 for foreign operators. Periodic reporting and technical compliance obligations sit outside that scope.' },
+            { question: 'Is an Indonesian company required?', answer: 'A foreign operator uses the registration route applicable to overseas operators, including the duty to appoint a representative. The most suitable structure for your business is discussed during the initial consultation.' },
+            { question: 'Must servers be moved to Indonesia?', answer: 'Registration itself does not require relocating servers. There are, however, technical and data-management requirements to satisfy; these are mapped separately from registration.' },
+            { question: 'What happens if the service is not registered?', answer: 'The service risks being blocked for users in Indonesia. The impact is direct loss of market access.' },
+            { question: 'Can foreign PSE registration be handled from abroad?', answer: 'Filing can be coordinated from abroad as long as the documents and representative appointment are complete. Document readiness determines how smoothly it proceeds.' },
+        ],
+    },
+
+    // =========================================================
+    // VISA & ITAS
+    // =========================================================
+
+    'itas-family': {
+        intro: 'ITAS Family adalah izin tinggal terbatas yang memungkinkan investor asing membawa serta anggota keluarganya dalam satu pengurusan. Tersedia pilihan durasi 1 tahun dan 2 tahun. VERALEX CONSULTING mendampingi penyiapan dokumen keluarga, pengajuan, sampai izin tinggal terbit, termasuk konsultasi mengenai jumlah anggota keluarga yang dapat digabungkan.',
+        introEn: 'Family ITAS is a limited stay permit allowing a foreign investor to bring accompanying family members in a single processing. A choice of 1-year and 2-year durations is available. VERALEX CONSULTING assists with family document preparation, filing, and follow-through to issuance, including advice on how many family members can be combined.',
+        sections: [
+            {
+                title: 'Siapa Saja yang Dapat Digabungkan dalam ITAS Family?',
+                titleEn: 'Who Can Be Included in a Family ITAS?',
+                content: 'ITAS Family ditujukan bagi anggota keluarga yang mengikuti pemegang izin tinggal utama, umumnya pasangan dan anak. Penentuan siapa yang dapat digabungkan bergantung pada status pemegang izin utama dan ketentuan yang berlaku pada saat pengajuan. Karena jumlah anggota keluarga yang dapat digabungkan perlu dikonfirmasi, susunan keluarga Anda dipetakan terlebih dahulu sebelum dokumen disiapkan.',
+                contentEn: 'A Family ITAS is intended for family members accompanying the holder of the principal stay permit, generally a spouse and children. Who can be included depends on the principal holder status and the rules in force at filing time. Because the number of combinable family members must be confirmed, your family composition is mapped before documents are prepared.',
+            },
+            {
+                title: 'Durasi 1 Tahun atau 2 Tahun?',
+                titleEn: 'One Year or Two?',
+                content: 'Pilihan durasi memengaruhi biaya dan frekuensi perpanjangan. Durasi 2 tahun mengurangi jumlah pengurusan ulang, tetapi membutuhkan biaya awal yang lebih besar. Untuk keluarga yang berencana tinggal lebih lama, durasi 2 tahun umumnya lebih hemat dari sisi waktu dan total biaya administrasi. Pilihan ini dibahas bersama berdasarkan rencana tinggal Anda.',
+                contentEn: 'The duration choice affects both cost and renewal frequency. A 2-year term reduces repeat processing but requires a larger upfront fee. For families planning a longer stay, the 2-year term is generally more efficient in time and total administrative cost. The choice is discussed against your intended length of stay.',
+            },
+            {
+                title: 'Dokumen Keluarga yang Perlu Disiapkan',
+                titleEn: 'Family Documents to Prepare',
+                content: 'Selain dokumen pemegang izin utama, pengajuan keluarga umumnya memerlukan:\n1. Paspor masing-masing anggota keluarga\n2. Dokumen yang membuktikan hubungan keluarga\n3. Dokumen pendukung dari pemegang izin tinggal utama\n4. Data sponsor atau penjamin sesuai ketentuan\n\nDokumen hubungan keluarga sering menjadi titik tertunda karena perbedaan format antar negara. Karena itu pemeriksaan kelengkapan dilakukan sebelum pengajuan, bukan setelah ada koreksi.',
+                contentEn: 'In addition to the principal holder documents, a family filing generally requires:\n1. Passport for each family member\n2. Documents proving the family relationship\n3. Supporting documents from the principal stay permit holder\n4. Sponsor or guarantor data as required\n\nFamily relationship documents are a frequent sticking point owing to format differences between countries. Completeness is therefore checked before filing, not after corrections are requested.',
+            },
+        ],
+        faqs: [
+            { question: 'Berapa biaya ITAS Family?', answer: 'Biaya jasa Rp18.000.000 untuk durasi 1 tahun dan Rp20.000.000 untuk durasi 2 tahun. Jumlah anggota keluarga yang dapat digabungkan dikonfirmasi sebelum pemesanan.' },
+            { question: 'Apakah ITAS Family bisa dipakai untuk bekerja?', answer: 'ITAS investor ditujukan bagi pemegang saham atau investor, bukan untuk bekerja secara aktif. Bila anggota keluarga bermaksud bekerja, diperlukan izin tersendiri.' },
+            { question: 'Berapa lama proses ITAS Family?', answer: 'Durasi bergantung pada kelengkapan dokumen dan proses di kantor imigrasi. Estimasi diberikan setelah dokumen awal diperiksa.' },
+            { question: 'Apakah anak yang lahir di Indonesia bisa digabungkan?', answer: 'Bisa diajukan sepanjang memenuhi ketentuan yang berlaku. Dokumen kelahiran dan hubungan keluarga perlu disiapkan.' },
+            { question: 'Apakah ITAS Family perlu diperpanjang?', answer: 'Ya, izin tinggal terbatas memiliki masa berlaku dan wajib diperpanjang sebelum habis. Perpanjangan diajukan melalui proses yang sama.' },
+        ],
+        faqsEn: [
+            { question: 'How much does a Family ITAS cost?', answer: 'The service fee is Rp18,000,000 for a 1-year term and Rp20,000,000 for 2 years. The number of combinable family members is confirmed before ordering.' },
+            { question: 'Can a Family ITAS be used to work?', answer: 'The investor ITAS is intended for shareholders or investors, not for active employment. If a family member intends to work, a separate permit is required.' },
+            { question: 'How long does a Family ITAS take?', answer: 'Duration depends on document completeness and immigration office processing. An estimate is provided after the initial documents are reviewed.' },
+            { question: 'Can a child born in Indonesia be included?', answer: 'Yes, provided the applicable requirements are met. Birth and family relationship documents must be prepared.' },
+            { question: 'Does a Family ITAS need renewal?', answer: 'Yes, a limited stay permit has a validity period and must be renewed before expiry. Renewal is filed through the same process.' },
+        ],
+    },
+
 };
 
 export const defaultFaqs: FAQItem[] = [
