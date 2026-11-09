@@ -12,24 +12,24 @@ export default function PricingSection() {
     const packages = [
         {
             name: t('pricing.starter'),
-            price: 'Rp9.900.000',
-            originalPrice: 'Rp12.500.000',
+            price: 'Rp13.000.000',
+            originalPrice: 'Rp16.000.000',
             features: [t('services.company.pt.title'), t('services.ip.trademark.title'), t('services.bonus'), t('pricing.feature.nib'), t('pricing.feature.consult')],
             featured: false,
         },
         {
             name: t('pricing.investor'),
-            price: 'Rp26.000.000',
-            originalPrice: 'Rp33.000.000',
+            price: 'Rp36.000.000',
+            originalPrice: 'Rp41.000.000',
             badge: true,
-            features: [t('services.company.pma.title'), '1x ' + t('services.itas.investor1.title'), t('services.ip.trademark.title'), t('services.bonus'), t('pricing.feature.nib'), t('pricing.feature.consult')],
+            features: [t('services.company.pma.title'), '1x ' + t('services.itas.investor2.title'), t('services.ip.trademark.title'), t('services.bonus'), t('pricing.feature.nib'), t('pricing.feature.consult')],
             featured: true,
         },
         {
             name: t('pricing.premium'),
-            price: 'Rp42.500.000',
-            originalPrice: 'Rp55.000.000',
-            features: [t('services.company.pma.title'), '2x ' + t('services.itas.investor1.title'), t('services.ip.trademark.title'), t('services.bonus'), t('pricing.feature.nib'), t('pricing.feature.priority')],
+            price: 'Rp49.000.000',
+            originalPrice: 'Rp59.000.000',
+            features: [t('services.company.pma.title'), '2x ' + t('services.itas.investor2.title'), t('services.ip.trademark.title'), t('services.bonus'), t('pricing.feature.nib'), t('pricing.feature.consult'), t('pricing.feature.priority')],
             featured: false,
         },
     ];
@@ -75,7 +75,9 @@ export default function PricingSection() {
                                     {t('pricing.save')} {(() => {
                                         const orig = parseInt(pkg.originalPrice.replace(/\D/g, ''));
                                         const curr = parseInt(pkg.price.replace(/\D/g, ''));
-                                        return `Rp${((orig - curr) / 1000000).toFixed(1)}jt`;
+                                        // Drop the trailing ".0" so a whole-million saving reads "Rp3jt", not "Rp3.0jt".
+                                        const juta = ((orig - curr) / 1000000).toFixed(1).replace(/\.0$/, '');
+                                        return `Rp${juta}jt`;
                                     })()}
                                 </span>
                             )}

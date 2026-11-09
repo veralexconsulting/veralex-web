@@ -14,11 +14,12 @@ import './PublicNavigation.css';
 const groups = [
     { key: 'business', slugs: ['pt-pmdn', 'pt-pma', 'pendirian-cv', 'pt-perorangan'] },
     { key: 'ip', slugs: ['pendaftaran-merek', 'perpanjangan-merek', 'pengalihan-merek', 'hak-cipta', 'desain-industri'] },
-    { key: 'immigration', slugs: ['itas-investor-1-tahun', 'itas-investor-2-tahun', 'kitas-kerja', 'visa-c2', 'visa-d2-1-tahun', 'visa-d2-2-tahun'] },
+    { key: 'immigration', slugs: ['itas-investor-1-tahun', 'itas-investor-2-tahun', 'itas-family', 'kitas-kerja', 'visa-c2', 'visa-d2-1-tahun', 'visa-d2-2-tahun'] },
 ] as const;
-const products: { key: 'halal' | 'bpom' | 'pirt' | 'sni' | 'k3l' | 'postel'; slug?: string }[] = [
+const products: { key: 'halal' | 'bpom' | 'pirt' | 'sni' | 'k3l' | 'postel' | 'pse-lokal' | 'pse-asing'; slug?: string }[] = [
     { key: 'halal' }, { key: 'bpom', slug: 'izin-bpom' }, { key: 'pirt', slug: 'pirt' },
     { key: 'sni' }, { key: 'k3l', slug: 'sertifikasi-k3l' }, { key: 'postel', slug: 'sertifikasi-postel' },
+    { key: 'pse-lokal', slug: 'pse-lokal' }, { key: 'pse-asing', slug: 'pse-asing' },
 ] as const;
 
 export default function Navbar() {

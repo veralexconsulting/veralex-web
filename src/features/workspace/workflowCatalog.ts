@@ -197,6 +197,18 @@ const specs: Record<string, StageSpec[]> = {
     ['Konfirmasi hasil', 'Catat hasil resmi', '?Bahas hasil yang belum sesuai'],
     ['Penyerahan hasil', 'Sampaikan hasil di luar portal', 'Tutup proyek'],
   ],
+  'pse': [
+    ['Konsultasi ruang lingkup sistem elektronik', 'Konfirmasi jenis layanan digital', 'Tentukan jalur PSE yang berlaku'],
+    ['Identifikasi status penyelenggara', 'Tentukan penyelenggara lokal atau asing', 'Tinjau kewajiban yang mengikuti'],
+    ['Persyaratan pemohon', 'Catat penerimaan data di luar portal', 'Periksa kelengkapan dokumen'],
+    ['Penyusunan dokumen kepatuhan', 'Siapkan kebijakan dan syarat layanan', 'Verifikasi kesesuaian isi'],
+    ['Verifikasi data badan usaha', 'Cocokkan data dengan dokumen resmi', '?Minta perbaikan melalui kanal eksternal'],
+    ['Pendaftaran melalui OSS', 'Ajukan melalui kanal resmi', 'Catat nomor pendaftaran'],
+    ['Pemantauan verifikasi', 'Pantau status resmi', '?Tindak lanjuti permintaan tambahan'],
+    ['Keputusan pendaftaran', 'Catat hasil resmi', '?Bahas langkah berikutnya bila belum disetujui'],
+    ['Penyerahan bukti pendaftaran', 'Sampaikan hasil di luar portal', 'Jelaskan kewajiban pelaporan berkala'],
+    ['Penutupan proyek', 'Konfirmasi hasil diterima klien', 'Tutup proyek'],
+  ],
   'sertifikasi-postel': [
     ['Identifikasi perangkat', 'Konfirmasi jenis perangkat', 'Tinjau kewajiban sertifikasi'],
     ['Klasifikasi perangkat', 'Tinjau fitur komunikasi', 'Konfirmasi jalur sertifikasi'],
@@ -222,8 +234,10 @@ const workspaceOnlyServices = [
 ];
 
 function templateKey(slug: string): string {
-  if (slug.startsWith('itas-investor-')) return 'itas-investor';
+  // itas-family follows the same immigration track as the investor ITAS.
+  if (slug.startsWith('itas-')) return 'itas-investor';
   if (slug.startsWith('visa-')) return 'visa';
+  if (slug.startsWith('pse-')) return 'pse';
   return slug;
 }
 

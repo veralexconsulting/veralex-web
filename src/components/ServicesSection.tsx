@@ -99,18 +99,20 @@ export default function ServicesSection() {
                             <div className="service-row-left">
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
                                     <h4 className="service-row-title" style={{ margin: 0 }}>{t('services.ip.trademark.title')}</h4>
-                                    <span style={{
-                                        background: '#4A0E0E',
-                                        color: '#ffffff',
-                                        fontSize: '0.68rem',
-                                        fontWeight: 700,
-                                        padding: '2px 8px',
-                                        borderRadius: '12px',
-                                        letterSpacing: '0.5px',
-                                        textTransform: 'uppercase',
-                                    }}>
-                                        {trademark.discountBadge}
-                                    </span>
+                                    {trademark.discountBadge && (
+                                        <span style={{
+                                            background: '#4A0E0E',
+                                            color: '#ffffff',
+                                            fontSize: '0.68rem',
+                                            fontWeight: 700,
+                                            padding: '2px 8px',
+                                            borderRadius: '12px',
+                                            letterSpacing: '0.5px',
+                                            textTransform: 'uppercase',
+                                        }}>
+                                            {trademark.discountBadge}
+                                        </span>
+                                    )}
                                 </div>
                                 <p className="service-row-desc">{t('services.ip.trademark.desc')}</p>
                             </div>
@@ -226,6 +228,7 @@ export default function ServicesSection() {
                         {[
                             { title: t('services.itas.investor1.title'), desc: t('services.itas.investor1.desc'), slug: 'itas-investor-1-tahun' },
                             { title: t('services.itas.investor2.title'), desc: t('services.itas.investor2.desc'), slug: 'itas-investor-2-tahun' },
+                            { title: t('services.itas.family.title'), desc: t('services.itas.family.desc'), slug: 'itas-family' },
                             { title: t('services.itas.visac2.title'), desc: t('services.itas.visac2.desc'), slug: 'visa-c2' },
                             { title: t('services.itas.visad2.1.title'), desc: t('services.itas.visad2.1.desc'), slug: 'visa-d2-1-tahun' },
                             { title: t('services.itas.visad2.2.title'), desc: t('services.itas.visad2.2.desc'), slug: 'visa-d2-2-tahun' },
@@ -288,6 +291,36 @@ export default function ServicesSection() {
                             return item.slug
                                 ? <Link key={item.key} id={`service-${item.key}`} href={`/services/${item.slug}`} className="service-row-luxury">{content}</Link>
                                 : <div key={item.key} id={`service-${item.key}`} className="service-row-luxury" style={{ cursor: 'default' }}>{content}</div>;
+                        })}
+                    </div>
+                </div>
+
+                {/* Perizinan Sistem Elektronik (PSE) */}
+                <div className="services-category fade-in" id="services-pse" style={{ marginTop: '80px' }}>
+                    <h3 className="category-title-luxury">{t('services.pse.title')}</h3>
+                    <div className="services-list-luxury">
+                        {[
+                            { key: 'lokal', slug: 'pse-lokal' },
+                            { key: 'asing', slug: 'pse-asing' },
+                        ].map((item) => {
+                            const itemService = getServiceBySlug(item.slug);
+                            const localizedNote = itemService?.priceNote?.[lang] || itemService?.priceNote?.en;
+                            return (
+                                <Link key={item.key} id={`service-pse-${item.key}`} href={`/services/${item.slug}`} className="service-row-luxury">
+                                    <div className="service-row-left">
+                                        <h4 className="service-row-title">{t(`services.pse.${item.key}.title`)}</h4>
+                                        <p className="service-row-desc">{t(`services.pse.${item.key}.desc`)}</p>
+                                        {localizedNote && <p className="service-row-desc" style={{ marginTop: '0.35rem', opacity: 0.8 }}>{localizedNote}</p>}
+                                    </div>
+                                    <div className="service-row-right">
+                                        <span className="service-row-price">
+                                            <span className="price-start-from">{t('price.serviceFee')}: </span>
+                                            {itemService?.price}
+                                        </span>
+                                        <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
+                                    </div>
+                                </Link>
+                            );
                         })}
                     </div>
                 </div>

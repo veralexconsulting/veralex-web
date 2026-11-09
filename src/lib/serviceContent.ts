@@ -1,6 +1,6 @@
 import { getServiceBySlug } from '@/lib/serviceData';
 
-const trademarkPromo = getServiceBySlug('pendaftaran-merek')!;
+const trademarkService = getServiceBySlug('pendaftaran-merek')!;
 
 export interface FAQItem {
     question: string;
@@ -39,9 +39,9 @@ export const detailedServiceContent: Record<string, DetailedContent> = {
                 title: 'Berapa Biaya Pendaftaran Merek DJKI Terbaru?',
                 titleEn: 'How Much is the DJKI Trademark Registration Fee?',
                 titleZh: '印尼 DJKI 最新商标注册申请费用是多少？',
-                content: `Biaya jasa pendaftaran merek di VERALEX CONSULTING sedang promo ${trademarkPromo.price} per kelas barang/jasa (harga normal ${trademarkPromo.originalPrice}). Layanan mencakup pengecekan database merek DJKI, konsultasi kelas, pengajuan permohonan online, serta pemantauan proses. Rincian biaya resmi dan cakupan akhir dikonfirmasi sebelum pemesanan.`,
-                contentEn: `Trademark registration service at VERALEX CONSULTING is currently ${trademarkPromo.price} per class (regular price ${trademarkPromo.originalPrice}). The service includes a DJKI database search, class consultation, online filing and application monitoring. Applicable official fees and final scope are confirmed before ordering.`,
-                contentZh: `VERALEX CONSULTING 商标注册服务现价每类别 ${trademarkPromo.price}（原价 ${trademarkPromo.originalPrice}）。服务包含 DJKI 数据库查重、分类咨询、线上提交及申请进度跟进。官方费用和最终服务范围将在下单前确认。`
+                content: `Biaya jasa pendaftaran merek di VERALEX CONSULTING adalah ${trademarkService.price} per kelas barang/jasa. Layanan mencakup pengecekan database merek DJKI, konsultasi kelas, pengajuan permohonan online, serta pemantauan proses. Rincian biaya resmi dan cakupan akhir dikonfirmasi sebelum pemesanan.`,
+                contentEn: `Trademark registration service at VERALEX CONSULTING is ${trademarkService.price} per class of goods or services. The service includes a DJKI database search, class consultation, online filing and application monitoring. Applicable official fees and final scope are confirmed before ordering.`,
+                contentZh: `VERALEX CONSULTING 商标注册服务费为每类别 ${trademarkService.price}。服务包含 DJKI 数据库查重、分类咨询、线上提交及申请进度跟进。官方费用和最终服务范围将在下单前确认。`
             },
             {
                 title: 'Mengapa Pengecekan Sebelum Daftar Merek Itu Wajib?',
