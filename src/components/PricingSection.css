@@ -1,0 +1,439 @@
+/*
+ * Paket bundling section.
+ *
+ * Rebuilt on the same tokens as the rest of the landing page (--section-padding,
+ * --font-heading, --border-gold, --color-gold) instead of the old
+ * glass/scale-1.02/gradient-text treatment, so the three cards read as pricing
+ * documentation rather than a promo banner.
+ */
+
+.pricing {
+    padding: var(--section-padding);
+    background: var(--bg-dark);
+    border-top: var(--border-gold);
+    scroll-margin-top: 90px;
+}
+
+/* ── Section head ── */
+.pricing-head {
+    max-width: 720px;
+    margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+    text-align: center;
+}
+
+.pricing-eyebrow {
+    margin: 0 0 1rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+}
+
+/* Shared .section-title/.section-subtitle, tightened for this layout. */
+.pricing-head .section-title {
+    margin-bottom: 1rem;
+    font-size: clamp(2rem, 3.4vw, 2.9rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+}
+
+.pricing-head .section-subtitle {
+    margin: 0 auto;
+    max-width: 52ch;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
+/* ── Grid ── */
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 1.8vw, 1.5rem);
+    align-items: stretch;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+/* ── Card ── */
+.pricing-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: clamp(1.5rem, 2.4vw, 2.25rem);
+    background: var(--bg-card);
+    border: 1px solid rgba(26, 26, 26, 0.1);
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--transition-normal), box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+
+.pricing-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(74, 14, 14, 0.28);
+    box-shadow: var(--shadow-md);
+}
+
+/* Featured is marked by weight and rule, not by scale. */
+.pricing-card.featured {
+    border-color: rgba(74, 14, 14, 0.35);
+    box-shadow: var(--shadow-md);
+}
+
+.pricing-card.featured::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto;
+    height: 3px;
+    background: var(--color-gold-gradient);
+}
+
+/* ── Badge ── */
+.pricing-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    align-self: flex-start;
+    margin-bottom: 1rem;
+    padding: 0.32rem 0.7rem;
+    background: rgba(74, 14, 14, 0.06);
+    border: 1px solid rgba(74, 14, 14, 0.2);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+}
+
+.pricing-badge svg {
+    flex-shrink: 0;
+}
+
+/* ── Card head ── */
+.pricing-card-head {
+    margin-bottom: 1.4rem;
+}
+
+/* Reserve the badge row height on non-featured cards so all three
+   price blocks sit on the same baseline. Only needed while the cards
+   actually sit side by side. */
+.pricing-card:not(.featured) .pricing-card-head::before {
+    content: '';
+    display: block;
+    height: calc(0.68rem * 1.2 + 0.64rem + 1rem + 2px);
+}
+
+.pricing-name {
+    margin: 0 0 0.4rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.2rem, 1.5vw, 1.4rem);
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--text-primary);
+}
+
+.pricing-summary {
+    margin: 0;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: var(--text-muted);
+}
+
+/* ── Price ── */
+.pricing-figure {
+    padding-bottom: 1.4rem;
+}
+
+.pricing-original {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin: 0 0 0.35rem;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.pricing-original-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(26, 26, 26, 0.42);
+}
+
+.pricing-original s {
+    text-decoration-color: rgba(26, 26, 26, 0.3);
+    text-decoration-thickness: 1px;
+}
+
+.pricing-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+    margin: 0;
+    font-family: var(--font-heading);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--color-gold);
+    font-variant-numeric: tabular-nums;
+}
+
+.pricing-price-currency {
+    align-self: flex-start;
+    margin-top: 0.5em;
+    margin-right: 0.35em;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--text-secondary);
+}
+
+.pricing-price-head {
+    font-size: clamp(2.4rem, 3.4vw, 3rem);
+    letter-spacing: -0.03em;
+}
+
+.pricing-price-tail {
+    font-size: clamp(1rem, 1.4vw, 1.25rem);
+    letter-spacing: 0;
+    color: rgba(26, 26, 26, 0.45);
+    /* The tail is decorative spacing; keep it tight to the leading digits. */
+    margin-left: 0.04em;
+}
+
+.pricing-save {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.3rem;
+    margin: 0.85rem 0 0;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.79rem;
+    font-weight: 600;
+    color: var(--color-gold);
+}
+
+.pricing-save svg {
+    flex-shrink: 0;
+    margin-right: 0.15rem;
+}
+
+.pricing-save-sep {
+    color: rgba(26, 26, 26, 0.28);
+    font-weight: 400;
+}
+
+/* ── Divider ── */
+.pricing-divider {
+    height: 1px;
+    background: rgba(26, 26, 26, 0.09);
+    margin-bottom: 1.35rem;
+}
+
+/* ── Features ── */
+.pricing-features {
+    flex: 1;
+    margin: 0 0 1.6rem;
+    padding: 0;
+    list-style: none;
+}
+
+.pricing-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    margin-bottom: 0.72rem;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+
+.pricing-feature:last-child {
+    margin-bottom: 0;
+}
+
+.pricing-feature-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 0.05rem;
+    border-radius: 50%;
+    background: rgba(74, 14, 14, 0.07);
+    color: var(--color-gold);
+}
+
+/* ── Card foot ── */
+.pricing-card-foot {
+    margin-top: auto;
+}
+
+.pricing-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 46px;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid rgba(74, 14, 14, 0.32);
+    background: transparent;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--color-gold);
+    text-decoration: none;
+    transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.pricing-cta:hover,
+.pricing-cta:focus-visible {
+    background: rgba(74, 14, 14, 0.06);
+    border-color: rgba(74, 14, 14, 0.5);
+}
+
+.pricing-cta.is-primary {
+    background: var(--color-gold);
+    border-color: var(--color-gold);
+    color: #ffffff;
+}
+
+.pricing-cta.is-primary:hover,
+.pricing-cta.is-primary:focus-visible {
+    background: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+}
+
+.pricing-cta:focus-visible,
+.pricing-custom-cta:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+}
+
+.pricing-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    margin: 0.7rem 0 0;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.74rem;
+    color: var(--text-muted);
+}
+
+.pricing-note svg {
+    flex-shrink: 0;
+    color: rgba(26, 26, 26, 0.35);
+}
+
+/* ── Custom offer bar ── */
+.pricing-custom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.25rem 2rem;
+    padding: clamp(1.25rem, 2.2vw, 1.75rem) clamp(1.25rem, 2.4vw, 2.25rem);
+    background: var(--bg-card);
+    border: 1px solid rgba(26, 26, 26, 0.1);
+}
+
+.pricing-custom-text {
+    min-width: 0;
+}
+
+.pricing-custom-title {
+    margin: 0 0 0.25rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text-primary);
+}
+
+.pricing-custom-desc {
+    margin: 0;
+    max-width: 58ch;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.86rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+.pricing-custom-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-shrink: 0;
+    padding: 0.7rem 1.2rem;
+    border: 1px solid rgba(74, 14, 14, 0.32);
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--color-gold);
+    text-decoration: none;
+    transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.pricing-custom-cta:hover {
+    background: rgba(74, 14, 14, 0.06);
+    border-color: rgba(74, 14, 14, 0.5);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .pricing-card:not(.featured) .pricing-card-head::before {
+        display: none;
+    }
+
+    .pricing-grid {
+        grid-template-columns: minmax(0, 1fr);
+        max-width: 520px;
+        margin-inline: auto;
+        gap: 1.25rem;
+    }
+
+    .pricing-card {
+        padding: 1.6rem 1.4rem;
+    }
+}
+
+@media (max-width: 640px) {
+
+    /* Stacked cards do not need the badge gutter. */
+    /* Cards stack, so each block needs its own edge. */
+    .pricing-card:not(.featured) .pricing-card-head {
+        padding-bottom: 1.2rem;
+        border-bottom: 1px solid rgba(26, 26, 26, 0.09);
+    }
+
+    .pricing-custom {
+        align-items: flex-start;
+    }
+
+    .pricing-custom-cta {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pricing-card,
+    .pricing-cta,
+    .pricing-custom-cta {
+        transition: none;
+    }
+
+    .pricing-card:hover {
+        transform: none;
+    }
+}

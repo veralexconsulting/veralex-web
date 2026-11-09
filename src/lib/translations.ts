@@ -198,13 +198,20 @@ export const translations: Record<Lang, Record<string, string>> = {
         'pricing.save': 'Hemat',
         'pricing.cta': 'Ambil Paket Ini',
         'pricing.noHiddenFees': 'Tanpa biaya tersembunyi',
+        'pricing.eyebrow': 'Hemat dengan Bundling',
         'pricing.custom.question': 'Butuh paket custom sesuai kebutuhan Anda?',
+        'pricing.custom.desc': 'Kami susun paket sesuai struktur bisnis, jumlah investor, dan dokumen yang sudah Anda miliki.',
         'pricing.custom.cta': 'Minta Penawaran Khusus',
+        'pricing.regularPrice': 'Harga normal',
+        'pricing.vsSeparate': 'vs. terpisah',
 
         // Pricing Packages
         'pricing.starter': 'Starter Business',
+        'pricing.starter.summary': 'Untuk badan usaha baru yang berdiri di Indonesia.',
         'pricing.investor': 'Investor Package',
+        'pricing.investor.summary': 'Untuk investor asing yang mendirikan PT PMA.',
         'pricing.premium': 'Premium Investor',
+        'pricing.premium.summary': 'Untuk dua investor asing dalam satu perusahaan.',
 
         // Testimonials
         'clients.logos.title': 'Brand klien VERALEX',
@@ -309,6 +316,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         'benefit.11': 'Free Konsultasi Hukum Bisnis',
 
         // Pricing Features
+        'pricing.feature.website': 'Website Company Profile',
         'pricing.feature.nib': 'NIB + Izin Usaha',
         'pricing.feature.consult': 'Konsultasi Hukum Bisnis',
         'pricing.feature.priority': 'Priority Handling',
@@ -638,13 +646,20 @@ export const translations: Record<Lang, Record<string, string>> = {
         'pricing.save': 'Save',
         'pricing.cta': 'Get This Package',
         'pricing.noHiddenFees': 'No hidden fees',
+        'pricing.eyebrow': 'Bundle & Save',
         'pricing.custom.question': 'Need a custom package for your needs?',
+        'pricing.custom.desc': 'We assemble a package around your business structure, number of investors, and the documents you already hold.',
         'pricing.custom.cta': 'Request Custom Quote',
+        'pricing.regularPrice': 'Regular price',
+        'pricing.vsSeparate': 'vs. separate',
 
         // Pricing Packages
         'pricing.starter': 'Starter Business',
+        'pricing.starter.summary': 'For a new company established in Indonesia.',
         'pricing.investor': 'Investor Package',
+        'pricing.investor.summary': 'For a foreign investor establishing a PT PMA.',
         'pricing.premium': 'Premium Investor',
+        'pricing.premium.summary': 'For two foreign investors in one company.',
 
         // Testimonials
         'clients.logos.title': 'VERALEX Client Brands',
@@ -749,6 +764,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         'benefit.11': 'Free Business Legal Consultation',
 
         // Pricing Features
+        'pricing.feature.website': 'Company Profile Website',
         'pricing.feature.nib': 'NIB + Business License',
         'pricing.feature.consult': 'Business Legal Consultation',
         'pricing.feature.priority': 'Priority Handling',
@@ -1078,13 +1094,20 @@ export const translations: Record<Lang, Record<string, string>> = {
         'pricing.save': '直降',
         'pricing.cta': '选择此套餐',
         'pricing.noHiddenFees': '无任何隐藏费用',
+        'pricing.eyebrow': '打包更省',
         'pricing.custom.question': '需要根据您的具体业务量身定制方案？',
+        'pricing.custom.desc': '我们会根据您的企业架构、投资人人数以及已有文件，为您组合合适的套餐。',
         'pricing.custom.cta': '获取专属定制报价',
+        'pricing.regularPrice': '原价',
+        'pricing.vsSeparate': '对比单项办理',
 
         // Pricing Packages
         'pricing.starter': '初创企业套餐 (Starter Business)',
+        'pricing.starter.summary': '适合在印度尼西亚新设立的公司。',
         'pricing.investor': '投资人合规套餐 (Investor Package)',
+        'pricing.investor.summary': '适合设立 PT PMA 的外国投资人。',
         'pricing.premium': '尊享投资人套餐 (Premium Investor)',
+        'pricing.premium.summary': '适合同一家公司的两位外国投资人。',
 
         // Testimonials
         'clients.logos.title': 'VERALEX 客户品牌',
@@ -1189,6 +1212,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         'benefit.11': '赠送免费商业法律顾问咨询',
 
         // Pricing Features
+        'pricing.feature.website': '企业官网搭建',
         'pricing.feature.nib': 'NIB 商业登记号 + 经营许可',
         'pricing.feature.consult': '商业法律与合规咨询',
         'pricing.feature.priority': '专属顾问优先加急处理',

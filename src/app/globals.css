@@ -255,7 +255,6 @@ button {
 /* Premium Tactile UX: snappy scale down on click/tap */
 .btn:active,
 .service-card:active,
-.pricing-card:active,
 .order-card:active,
 .stat-card:active {
     transform: scale(0.98);
@@ -1029,101 +1028,6 @@ button {
 }
 
 /* ===== Pricing Section ===== */
-.pricing {
-    padding: var(--section-padding);
-    background: var(--bg-dark);
-}
-
-.pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
-    margin-bottom: 4rem;
-}
-
-.pricing-card {
-    background: var(--bg-glass);
-    backdrop-filter: blur(10px);
-    border: var(--border-gold);
-    border-radius: var(--radius-xl);
-    padding: 2.5rem;
-    transition: var(--transition-normal);
-    position: relative;
-    overflow: hidden;
-    box-shadow: var(--shadow-sm);
-}
-
-.pricing-card.featured {
-    border-color: var(--color-gold);
-    transform: scale(1.02);
-}
-
-.pricing-card.featured::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--color-gold-gradient);
-}
-
-.pricing-card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-gold);
-}
-
-.pricing-card.featured:hover {
-    transform: translateY(-8px) scale(1.02);
-}
-
-.pricing-badge {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: var(--color-gold-gradient);
-    color: #ffffff;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.pricing-name {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-}
-
-.pricing-price {
-    font-family: var(--font-heading);
-    font-size: 2.5rem;
-    background: var(--color-gold-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 1.5rem;
-}
-
-.pricing-features {
-    margin-bottom: 2rem;
-}
-
-.pricing-feature {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
-    color: var(--text-secondary);
-}
-
-.pricing-cta {
-    width: 100%;
-    text-align: center;
-}
-
 /* Bundle Section */
 .bundle-section {
     margin-top: 4rem;
@@ -1623,23 +1527,6 @@ button {
 
     .service-price {
         font-size: 0.9rem;
-    }
-
-    .pricing-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .pricing-card {
-        padding: 2rem 1.5rem;
-    }
-
-    .pricing-card.featured {
-        transform: none;
-    }
-
-    .pricing-card.featured:hover {
-        transform: translateY(-8px);
     }
 
     .product-grid {
@@ -2229,15 +2116,6 @@ section {
     }
 }
 
-.pricing-card.featured .pricing-name {
-    background: linear-gradient(90deg, var(--color-gold), var(--color-gold-light), var(--color-gold));
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: shimmer 3s linear infinite;
-}
-
 @media (max-width: 480px) {
     :root {
         --section-padding: 50px 0;
@@ -2385,23 +2263,6 @@ section {
     .service-icon svg {
         width: 28px;
         height: 28px;
-    }
-
-    /* Pricing */
-    .pricing-card {
-        padding: 1.5rem 1rem;
-    }
-
-    .pricing-name {
-        font-size: 1.2rem;
-    }
-
-    .pricing-price {
-        font-size: 1.8rem;
-    }
-
-    .pricing-feature {
-        font-size: 0.85rem;
     }
 
     /* Benefits */
@@ -5501,7 +5362,7 @@ body.modal-open .floating-whatsapp {
     .floating-whatsapp { width: 52px; height: 52px; right: calc(14px + env(safe-area-inset-right)); bottom: calc(16px + env(safe-area-inset-bottom)); animation: none; }
     .floating-whatsapp svg { width: 27px; height: 27px; }
     .floating-wa-text { display: none; }
-    .pricing-grid, .bundle-grid, .testimonials-grid { grid-template-columns: minmax(0, 1fr); }
+    .bundle-grid, .testimonials-grid { grid-template-columns: minmax(0, 1fr); }
     .footer-content > *, .footer-contact-item > div, .service-row-left, .service-row-right, .svc-card, .pricing-card { min-width: 0; }
     .footer-contact-item span { overflow-wrap: anywhere; }
 }
