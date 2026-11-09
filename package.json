@@ -14,7 +14,8 @@
     "workspace:bootstrap": "node scripts/bootstrap-workspace-admin.mjs",
     "workspace:verify-db": "node scripts/verify-workspace-db.mjs",
     "owner:provision": "node scripts/provision-owner.mjs",
-    "owner:verify-access": "node scripts/check-owner-access.mjs"
+    "owner:verify-access": "node scripts/check-owner-access.mjs",
+    "og": "node --experimental-strip-types scripts/build-og-images.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.7",

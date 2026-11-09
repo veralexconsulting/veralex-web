@@ -53,8 +53,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         openGraph: {
             title: `Jasa ${service.title} | VERALEX CONSULTING - ${priceTitle}`,
             description: `${service.description} ${priceCopy}`,
-            images: [{ url: '/logo.webp', alt: `Jasa ${service.title} - VERALEX CONSULTING` }],
+            url: `/services/${slug}`,
+            type: 'website',
+            // Generated per slug by scripts/build-og-images.mjs. Falls back to the
+            // site card if a new service is added before the script is re-run.
+            images: [
+                {
+                    url: `/og/${slug}.png`,
+                    width: 1200,
+                    height: 630,
+                    alt: `Jasa ${service.title} — VERALEX CONSULTING`,
+                },
+            ],
             locale: 'id_ID',
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: `Jasa ${service.title} | VERALEX CONSULTING`,
+            description: `${service.description} ${priceCopy}`,
+            images: [`/og/${slug}.png`],
         },
     };
 }

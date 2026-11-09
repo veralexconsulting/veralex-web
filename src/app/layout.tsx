@@ -29,7 +29,10 @@ export const metadata: Metadata = {
     title: "Jasa Pendirian PT, Daftar Merek & KITAS | VERALEX CONSULTING",
     description:
       "Jasa pendirian PT, CV, PT PMA, pendaftaran merek, KITAS kerja, ITAS investor, sertifikasi halal & BPOM. Konsultasi GRATIS, proses cepat & transparan. Hubungi WhatsApp sekarang!",
-    images: [{ url: "/logo.webp", width: 1200, height: 630, alt: "VERALEX CONSULTING - Jasa Legalitas Perusahaan" }],
+    // 1200x630 is the ratio every social platform crops to. Declaring the
+    // square-ish logo here (it is actually 1024x724) is what made shared links
+    // letterbox and distort, so this points at a generated card instead.
+    images: [{ url: "/og/default.png", width: 1200, height: 630, alt: "VERALEX CONSULTING — Jasa Pendirian PT, Daftar Merek & KITAS" }],
     locale: "id_ID",
     alternateLocale: "en_US",
     siteName: "VERALEX CONSULTING",
@@ -39,10 +42,11 @@ export const metadata: Metadata = {
     title: "Jasa Pendirian PT, Daftar Merek & KITAS | VERALEX CONSULTING",
     description:
       "Jasa pendirian PT, pendaftaran merek dagang, KITAS, and legalitas bisnis. Konsultasi GRATIS via WhatsApp!",
-    images: ["/logo.webp"],
+    images: ["/og/default.png"],
   },
   other: {
-    "theme-color": "#FAFAFA",
+    // Matches --bg-dark so the mobile address bar blends with the page.
+    "theme-color": "#F6F5F3",
     "geo.region": "ID-JB",
     "geo.placename": "Bekasi, Jawa Barat",
     "geo.position": "-6.2484;106.9860",
@@ -147,6 +151,56 @@ export default function RootLayout({
               name: "VERALEX CONSULTING",
               url: "https://www.veralexconsulting.com",
               inLanguage: ["id", "en", "zh"],
+            }),
+          }}
+        />
+        {/*
+          * Organization sits alongside LegalService, not instead of it.
+          *
+          * LegalService describes what the business does; Organization is the
+          * entity Google uses to tie the site, the Google Business Profile and
+          * the social profiles together as one thing. contactPoint in
+          * particular is what lets a result show a contact channel, and
+          * without it Google had to infer the phone number from page text.
+          */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "@id": "https://www.veralexconsulting.com/#organization",
+              name: "PT. Veralex Consulting Indonesia",
+              alternateName: "VERALEX CONSULTING",
+              url: "https://www.veralexconsulting.com",
+              logo: {
+                "@type": "ImageObject",
+                url: "https://www.veralexconsulting.com/logo.webp",
+                width: 1024,
+                height: 724,
+              },
+              description:
+                "Konsultan hukum dan legalitas bisnis untuk pendirian PT, CV, PT PMA, pendaftaran merek dagang DJKI, hak cipta, KITAS, ITAS investor, sertifikasi halal, izin BPOM, PIRT, dan PSE.",
+              email: contactEmail,
+              telephone: "+6281219476385",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "Jl. Utama Raya No.348, RT.003/RW.026, Kayuringin Jaya, Kec. Bekasi Sel.",
+                addressLocality: "Bekasi",
+                addressRegion: "Jawa Barat",
+                postalCode: "17144",
+                addressCountry: "ID",
+              },
+              contactPoint: [
+                {
+                  "@type": "ContactPoint",
+                  telephone: "+6281219476385",
+                  contactType: "customer service",
+                  areaServed: "ID",
+                  availableLanguage: ["id", "en", "zh"],
+                },
+              ],
+              sameAs: socialAccounts.map((account) => account.href),
             }),
           }}
         />

@@ -30,6 +30,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             type: 'article',
             publishedTime: article.publishedAt,
             authors: ['VERALEX CONSULTING'],
+            images: [
+                {
+                    url: `/og/artikel-${slug}.png`,
+                    width: 1200,
+                    height: 630,
+                    alt: article.title,
+                },
+            ],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: article.title,
+            description: article.description,
+            images: [`/og/artikel-${slug}.png`],
         },
     };
 }
