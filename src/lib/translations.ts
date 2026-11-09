@@ -87,11 +87,16 @@ export const translations: Record<Lang, Record<string, string>> = {
 
         // Hero
         'hero.badge': 'RESMI, CEPAT & 100% LEGAL',
-        'hero.title': 'Legalitas Bisnis Beres, Tanpa Ribet.',
-        'hero.title.1': 'Legalitas Bisnis Beres, Tanpa Ribet.',
-        'hero.title.2': 'PT, Merek, dan Izin Usaha, Selesai Tuntas.',
-        'hero.title.3': 'Investor Asing Masuk, Legalitas Kami Urus.',
-        'hero.subtitle': 'Urus PT, Merek DJKI, hingga KITAS investor & kerja. Kami urus tuntas sampai izin operasional terbit.',
+        // The rotating headlines double as the homepage's keyword surface. The
+        // audience searches "jasa pendirian PT", "jasa daftar merek", "jasa
+        // KITAS" — so those exact phrases lead the first two lines rather than
+        // a stylistic claim. "Legalitas Bisnis Beres" is memorable but nobody
+        // types it into Google.
+        'hero.title': 'Jasa Pendirian PT, Daftar Merek & KITAS.',
+        'hero.title.1': 'Jasa Pendirian PT, Daftar Merek & KITAS.',
+        'hero.title.2': 'Jasa Daftar Merek DJKI, Sampai Sertifikat Terbit.',
+        'hero.title.3': 'Jasa PT PMA & KITAS Investor untuk Investor Asing.',
+        'hero.subtitle': 'Jasa pendirian PT PMDN & PT PMA, pendaftaran merek DJKI, KITAS kerja dan ITAS investor, serta izin BPOM, PIRT, dan PSE. Kami urus tuntas sampai izin terbit.',
         'hero.promo': 'Konsultasi GRATIS + Diskon untuk Klien Baru',
         'hero.cta': 'Konsultasi Sekarang via WA',
         'hero.cta.mobile': 'Konsultasi via WhatsApp',

@@ -842,9 +842,20 @@ button {
 }
 
 .hero-title-slide {
+    /* All three headlines are in the HTML so a crawler can read them; CSS is
+       what makes only the active one visible. The active slide keeps normal
+       block flow so the reserved min-height on .hero-title still holds the
+       space and nothing below the h1 moves as the copy rotates. */
     display: block;
-    /* Sits in the reserved box, top aligned, so no reflow between slides. */
     width: 100%;
+}
+
+.hero-title-slide--hidden {
+    /* Kept in the markup for crawlers, removed from layout for everyone else. */
+    display: none;
+}
+
+.hero-title-slide.is-active {
     transform: translateY(0);
 }
 

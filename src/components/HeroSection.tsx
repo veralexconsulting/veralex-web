@@ -36,8 +36,20 @@ export default function HeroSection() {
         return () => window.clearInterval(timer);
     }, [rotating, rotation.length]);
 
-    const title = t(`hero.title.${active + 1}`);
-
+    /*
+     * Two fixes in this one element.
+     *
+     * 1. `key={active}` on the wrapping span meant React swapped the node
+     *    rather than updating it, so the second and third headlines only ever
+     *    existed in the browser. The static HTML contained headline one and
+     *    nothing else, which is why "Jasa Daftar Merek" and "Jasa PT PMA" had
+     *    zero occurrences in the served page — the phrases the site most wants
+     *    to rank for were invisible to a crawler. The slides now all ship in
+     *    the HTML and CSS hides the inactive ones.
+     * 2. aria-hidden on the visible slide hid the h1 text from assistive
+     *    technology; the h1's aria-label repeated it, but the two could drift.
+     *    The heading now has real, readable text.
+     */
     return (
         <section className="hero" id="hero">
             <div className="hero-overlay" />
@@ -45,27 +57,25 @@ export default function HeroSection() {
             <div className="hero-inner">
                 {/* Left: Text Content */}
                 <div className="hero-content">
-                    {/*
-                     * One h1, three lines of copy. Nothing is hidden from search
-                     * engines or screen readers — only the visible line changes.
-                     */}
-                    <h1 className="hero-title" aria-label={title}>
-                        <span className={`hero-title-slide${rotating ? ' is-rotating' : ''}`} key={active} aria-hidden="true">
-                            {(() => {
-                                const { first, second } = splitHeadline(title);
-                                return (
-                                    <>
-                                        {first}
-                                        {second && (
-                                            <>
-                                                <br />
-                                                <span className="hero-title-accent">{second}</span>
-                                            </>
-                                        )}
-                                    </>
-                                );
-                            })()}
-                        </span>
+                    <h1 className="hero-title">
+                        {rotation.map((i) => {
+                            const { first, second } = splitHeadline(t(`hero.title.${i}`));
+                            return (
+                                <span
+                                    key={i}
+                                    className={`hero-title-slide${active + 1 === i ? ' is-active' : ' hero-title-slide--hidden'}${rotating ? ' is-rotating' : ''}`}
+                                    aria-hidden={active + 1 === i ? undefined : true}
+                                >
+                                    {first}
+                                    {second && (
+                                        <>
+                                            <br />
+                                            <span className="hero-title-accent">{second}</span>
+                                        </>
+                                    )}
+                                </span>
+                            );
+                        })}
                     </h1>
 
                     <p className="hero-subtitle">
