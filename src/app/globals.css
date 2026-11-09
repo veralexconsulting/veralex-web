@@ -1336,141 +1336,6 @@ button {
     font-size: 1rem;
 }
 
-/* ===== Footer ===== */
-.footer {
-    background: var(--bg-card);
-    padding: 60px 20px 30px;
-    border-top: var(--border-gold);
-    position: relative;
-    z-index: 10;
-    box-shadow: 0 -2px 20px rgba(0, 0, 0, 0.05);
-}
-
-.footer-content {
-    display: grid;
-    grid-template-columns: 1.4fr 1.1fr 1fr 1.3fr;
-    gap: 2.5rem;
-    margin-bottom: 2rem;
-}
-
-.footer-logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 1rem;
-}
-
-.footer-logo img {
-    height: 50px;
-    border-radius: var(--radius-sm);
-}
-
-.footer-logo-text {
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    color: var(--color-gold);
-}
-
-.footer-desc {
-    color: var(--text-muted);
-    line-height: 1.8;
-    max-width: 400px;
-}
-
-/* ── Footer social accounts ── */
-.footer-social {
-    margin-top: 1.5rem;
-    padding-top: 1.25rem;
-    border-top: var(--border-gold);
-}
-
-.footer-social h4 {
-    margin: 0 0 0.7rem;
-    font-family: var(--font-jakarta), var(--font-body);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--color-gold);
-}
-
-.footer-social-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.footer-social-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    padding: 0.4rem 0.65rem;
-    border: 1px solid rgba(74, 14, 14, 0.16);
-    font-family: var(--font-jakarta), var(--font-body);
-    font-size: 0.72rem;
-    font-weight: 500;
-    line-height: 1.2;
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
-}
-
-.footer-social-link svg {
-    flex-shrink: 0;
-    color: var(--color-gold);
-}
-
-.footer-social-link:hover,
-.footer-social-link:focus-visible {
-    color: var(--color-gold);
-    border-color: rgba(74, 14, 14, 0.42);
-    background: rgba(74, 14, 14, 0.04);
-}
-
-.footer-social-link:focus-visible {
-    outline: 2px solid var(--color-gold);
-    outline-offset: 2px;
-}
-
-.footer-links h4 {
-    font-family: var(--font-heading);
-    color: var(--color-gold);
-    margin-bottom: 1rem;
-}
-
-.footer-link {
-    display: block;
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
-    transition: var(--transition-fast);
-}
-
-.footer-link:hover {
-    color: var(--color-gold);
-}
-
-.footer-contact-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: var(--text-muted);
-    margin-bottom: 0.75rem;
-}
-
-.footer-contact-item svg {
-    stroke: var(--color-gold);
-}
-
-.footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: var(--border-gold);
-    color: var(--text-muted);
-}
-
 /* ===== Animations ===== */
 .fade-in {
     opacity: 0;
@@ -1522,10 +1387,6 @@ button {
     .why-legal-content {
         grid-template-columns: 1fr;
         gap: 2rem;
-    }
-
-    .footer-content {
-        grid-template-columns: 1fr 1fr;
     }
 
     .services-grid {
@@ -1635,23 +1496,6 @@ button {
 
     .testimonials-grid {
         grid-template-columns: 1fr;
-    }
-
-    .footer-content {
-        grid-template-columns: 1fr;
-        text-align: left;
-    }
-
-    .footer-logo {
-        justify-content: flex-start;
-    }
-
-    .footer-desc {
-        margin: 0 0 1.25rem;
-    }
-
-    .footer-contact-item {
-        justify-content: flex-start;
     }
 
     .hero {
@@ -2556,7 +2400,8 @@ section {
 .client-logo-run {
     display: flex;
     width: max-content;
-    animation: client-logo-scroll 38s linear infinite;
+    /* 10 logos instead of 7: slower so the row stays readable. */
+    animation: client-logo-scroll 52s linear infinite;
     will-change: transform;
 }
 .client-logo-marquee:hover .client-logo-run,
@@ -2576,21 +2421,31 @@ section {
 }
 .client-logo-card {
     display: grid;
-    flex: 0 0 148px;
-    width: 148px;
-    height: 66px;
+    /*
+     * 176x84 rather than 148x66. Client marks range from a 2.8:1 wordmark to a
+     * 1:1 emblem; in a 66px box the tall ones shrank to an unreadable speck.
+     */
+    flex: 0 0 176px;
+    width: 176px;
+    height: 84px;
     place-items: center;
     overflow: hidden;
     border: 1px solid #eee9e5;
     border-radius: 9px;
     background: #fff;
 }
+/*
+ * object-fit: contain, never cover — these marks have very different aspect
+ * ratios (2.8:1 for the Nexus lockup, ~1:1 for the emblem logos), so any
+ * cropping would cut a wordmark in half.
+ */
 .client-logo-card img {
     display: block;
     width: 100%;
     height: 100%;
-    padding: 8px 11px;
+    padding: 10px 14px;
     object-fit: contain;
+    object-position: center;
 }
 @keyframes client-logo-scroll { to { transform: translateX(-50%); } }
 @media (max-width: 600px) {
@@ -2599,9 +2454,9 @@ section {
     .client-logo-heading h2 { font-size: 9px; letter-spacing: .12em; }
     .client-logo-rule { width: 18px; }
     .client-logo-group { gap: 10px; padding: 0 5px; }
-    .client-logo-card { flex-basis: 116px; width: 116px; height: 56px; border-radius: 8px; }
-    .client-logo-card img { padding: 7px 9px; }
-    .client-logo-run { animation-duration: 30s; will-change: auto; }
+    .client-logo-card { flex-basis: 132px; width: 132px; height: 66px; border-radius: 8px; }
+    .client-logo-card img { padding: 8px 10px; }
+    .client-logo-run { animation-duration: 34s; will-change: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
     /* The hero headline stays on its first line instead of cycling. */
@@ -5210,8 +5065,6 @@ span {
         padding: 12px 22px;
     }
 
-    .footer-link,
-    .footer-contact-item,
     .navbar-link,
     .mobile-nav-link,
     .svc-links a {
@@ -5474,8 +5327,7 @@ body.modal-open .floating-whatsapp {
     .floating-whatsapp svg { width: 27px; height: 27px; }
     .floating-wa-text { display: none; }
     .bundle-grid, .testimonials-grid { grid-template-columns: minmax(0, 1fr); }
-    .footer-content > *, .footer-contact-item > div, .service-row-left, .service-row-right, .svc-card, .pricing-card { min-width: 0; }
-    .footer-contact-item span { overflow-wrap: anywhere; }
+    .service-row-left, .service-row-right, .svc-card, .pricing-card { min-width: 0; }
 }
 
 @media (max-width: 430px) {

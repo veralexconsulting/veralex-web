@@ -1,0 +1,361 @@
+/*
+ * Footer.
+ *
+ * Rebuilt from a single 4-column grid — which forced the 1024x724 logo into a
+ * 44px square and squashed it — into four stacked bands:
+ *
+ *   1. masthead  brand statement on the left, social accounts on the right
+ *   2. columns   services / navigation / legal / contact
+ *   3. coverage  quiet single line about where we operate
+ *   4. base      disclaimer, copyright, language switch on their own ground
+ *
+ * Every band is a separate grid, so one tall block can never stretch or
+ * squeeze its neighbours.
+ */
+
+.footer {
+    position: relative;
+    z-index: 10;
+    background: var(--bg-card);
+    border-top: var(--border-gold);
+}
+
+/* ── Band 1: masthead ── */
+.footer-masthead {
+    display: grid;
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
+    padding: clamp(2.75rem, 5vw, 3.75rem) 0 clamp(2rem, 3.5vw, 2.75rem);
+    border-bottom: var(--border-gold);
+}
+
+.footer-brand {
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    min-width: 0;
+}
+
+/*
+ * The logo already contains the wordmark and "est. 2019", so it is shown at
+ * its native 1024x724 ratio with no width/height pair fighting it. 132px tall
+ * keeps the wordmark inside it legible on a light background.
+ */
+.footer-logo-img {
+    flex-shrink: 0;
+    width: auto;
+    height: clamp(96px, 10vw, 132px);
+    object-fit: contain;
+}
+
+.footer-brand-text {
+    min-width: 0;
+    padding-top: 0.15rem;
+}
+
+.footer-legal-name {
+    margin: 0 0 0.7rem;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+}
+
+.footer-desc {
+    max-width: 46ch;
+    margin: 0;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+}
+
+/* ── Social ── */
+.footer-social-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.footer-social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid rgba(26, 26, 26, 0.12);
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.74rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.footer-social-link svg {
+    flex-shrink: 0;
+    color: var(--color-gold);
+}
+
+.footer-social-link:hover,
+.footer-social-link:focus-visible {
+    color: var(--color-gold);
+    border-color: rgba(74, 14, 14, 0.4);
+    background: rgba(74, 14, 14, 0.04);
+}
+
+/* ── Band 2: columns ── */
+.footer-columns {
+    display: grid;
+    /* Link columns are narrow on purpose; only contact needs the extra room. */
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 0.75fr) minmax(0, 1fr) minmax(0, 1.45fr);
+    gap: clamp(1.75rem, 3vw, 2.75rem);
+    padding: clamp(2rem, 3.5vw, 2.75rem) 0;
+}
+
+.footer-col {
+    min-width: 0;
+}
+
+.footer-col-title {
+    margin: 0 0 1rem;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+}
+
+.footer-col ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/*
+ * Links are inline-block with a small vertical rhythm rather than block
+ * elements with margins: the tap area stays on the text and the 44px rule on
+ * small screens can grow the target without the gaps collapsing.
+ */
+.footer-link {
+    display: inline-block;
+    padding: 0.2rem 0;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.86rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    text-decoration: none;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+}
+
+.footer-col li + li {
+    margin-top: 0.05rem;
+}
+
+.footer-link:hover,
+.footer-link:focus-visible {
+    color: var(--color-gold);
+}
+
+.footer-link-all {
+    margin-top: 0.35rem;
+    font-weight: 600;
+    color: var(--color-gold);
+}
+
+.legal-cookie-trigger {
+    text-align: left;
+}
+
+/* ── Contact ── */
+.footer-contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+}
+
+.footer-contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.footer-contact-item svg {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    color: var(--color-gold);
+}
+
+.footer-contact-item > span {
+    min-width: 0;
+}
+
+.footer-contact-item strong {
+    display: block;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--text-primary);
+    overflow-wrap: anywhere;
+}
+
+.footer-contact-item small {
+    display: block;
+    margin-top: 0.1rem;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.74rem;
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+.footer-contact-item:hover strong {
+    color: var(--color-gold);
+}
+
+/* The address is the longest string in the footer; let it wrap, not overflow. */
+.footer-address {
+    font-size: 0.84rem;
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+.footer-maps {
+    color: var(--color-gold);
+    font-weight: 600;
+}
+
+/* ── Band 3: coverage ── */
+.footer-coverage {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    margin-top: -0.5rem;
+    padding: 0 0 clamp(1.75rem, 3vw, 2.5rem);
+}
+
+.footer-coverage .footer-col-title {
+    margin: 0;
+}
+
+.footer-coverage p {
+    flex: 1 1 24ch;
+    max-width: 78ch;
+    margin: 0;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+}
+
+/* ── Band 4: base strip ── */
+.footer-base {
+    background: #F5F3F1;
+    border-top: var(--border-gold);
+    padding: clamp(1.25rem, 2.5vw, 1.75rem) 0;
+}
+
+.footer-disclaimer {
+    max-width: 82ch;
+    margin: 0 0 1rem;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.74rem;
+    line-height: 1.65;
+    color: var(--text-muted);
+}
+
+.footer-base-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.85rem 1.5rem;
+}
+
+.footer-copyright {
+    margin: 0;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+    .footer-masthead {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.75rem;
+    }
+
+    .footer-columns {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 2rem clamp(1.5rem, 4vw, 3rem);
+    }
+}
+
+@media (max-width: 640px) {
+    .footer-brand {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .footer-logo-img {
+        height: 84px;
+    }
+
+    /*
+     * Stacking all four columns made the mobile footer ~1500px tall. Three
+     * short link columns fit side by side at this width if the gaps shrink,
+     * and contact keeps the full row because its strings are long.
+     */
+    .footer-columns {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1.75rem 1.25rem;
+    }
+
+    .footer-col:nth-child(3) {
+        grid-column: 1;
+    }
+
+    .footer-col-contact {
+        grid-column: 1 / -1;
+        padding-top: 0.25rem;
+    }
+
+    .footer-coverage {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .footer-base-row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    /* Comfortable tap targets once the columns are stacked. */
+    .footer-link {
+        padding: 0.4rem 0;
+        font-size: 0.9rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .footer-link,
+    .footer-social-link,
+    .footer-contact-item {
+        transition: none;
+    }
+}
