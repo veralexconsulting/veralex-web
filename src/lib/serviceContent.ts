@@ -2,6 +2,21 @@ import { getServiceBySlug } from '@/lib/serviceData';
 
 const trademarkService = getServiceBySlug('pendaftaran-merek')!;
 
+/*
+ * Prices in the long-form copy are interpolated from serviceData, never typed
+ * by hand. The hand-typed versions had already drifted: the ITAS 1-year text
+ * said Rp16.000.000 while the catalogue and the price card said 18, the 2-year
+ * said 18 while the card said 20, and PT PMDN said 7 against 10. A visitor saw
+ * two different numbers for the same service on one page, which damages trust
+ * and reads to a crawler as inconsistent pricing.
+ *
+ * Anything that quotes a figure must reference one of these.
+ */
+const priceOf = (slug: string) => getServiceBySlug(slug)!.price;
+const ptPmdnPrice = priceOf('pt-pmdn');
+const itas1Price = priceOf('itas-investor-1-tahun');
+const itas2Price = priceOf('itas-investor-2-tahun');
+
 export interface FAQItem {
     question: string;
     answer: string;
@@ -249,7 +264,7 @@ export const detailedServiceContent: Record<string, DetailedContent> = {
                 title: 'Berapa Biaya Pendirian PT PMDN Terbaru?',
                 titleEn: 'How Much is the Latest PT PMDN Establishment Cost?',
                 titleZh: '印尼 PT PMDN 设立最新费用是多少？',
-                content: 'Di VERALEX CONSULTING, paket pendirian PT PMDN lengkap tersedia dengan biaya Rp 7.000.000 tanpa biaya tersembunyi. Sudah termasuk: Akta Pendirian dari Notaris, SK/SKT Kemenkumham, NPWP Perusahaan, Akun OSS RBA, NIB, Sertifikat Standar/SIUP, stempel perusahaan, dan BONUS Website Company Profile gratis.',
+                content: `Di VERALEX CONSULTING, paket pendirian PT PMDN lengkap tersedia dengan biaya ${ptPmdnPrice} tanpa biaya tersembunyi. Sudah termasuk: Akta Pendirian dari Notaris, SK/SKT Kemenkumham, NPWP Perusahaan, Akun OSS RBA, NIB, Sertifikat Standar/SIUP, stempel perusahaan, dan BONUS Website Company Profile gratis.`,
                 contentEn: 'At VERALEX CONSULTING, a complete PT PMDN establishment package is available for IDR 7,000,000 with no hidden fees. Included: Notarial Deed of Establishment, Ministry of Law Approval (SK), Company Tax ID (NPWP), OSS RBA Account, Business ID (NIB), Business License (SIUP), company stamp, and FREE Company Profile Website.',
                 contentZh: 'VERALEX CONSULTING 提供全包价 PT PMDN 设立套餐，费用为 Rp 7.000.000，绝无隐形开支。包含：公证处设立契约、司法部 SK 批文、企业税号 NPWP、OSS RBA 系统账号、商业登记号 NIB、标准经营许可，以及赠送企业官网设计制作。'
             },
@@ -428,7 +443,7 @@ export const detailedServiceContent: Record<string, DetailedContent> = {
                 title: 'Berapa Biaya Pengurusan ITAS Investor 1 Tahun?',
                 titleEn: 'How Much Does 1-Year Investor ITAS Processing Cost?',
                 titleZh: '1 年期投资者 ITAS 办理费用是多少？',
-                content: 'Biaya paket pengurusan ITAS Investor 1 Tahun di VERALEX CONSULTING adalah Rp 16.000.000. Termasuk: persiapan dokumen persyaratan imigrasi, surat rekomendasi perusahaan, pengajuan permohonan ITAS ke kantor imigrasi, pendampingan selama proses verifikasi, dan monitoring status permohonan hingga e-ITAS diterbitkan.',
+                content: `Biaya paket pengurusan ITAS Investor 1 Tahun di VERALEX CONSULTING adalah ${itas1Price}. Termasuk: persiapan dokumen persyaratan imigrasi, surat rekomendasi perusahaan, pengajuan permohonan ITAS ke kantor imigrasi, pendampingan selama proses verifikasi, dan monitoring status permohonan hingga e-ITAS diterbitkan.`,
                 contentEn: '1-Year Investor ITAS processing package at VERALEX CONSULTING is IDR 16,000,000. Includes: immigration document preparation, company recommendation letter, ITAS application submission to the immigration office, assistance during verification process, and status monitoring until e-ITAS is issued.',
                 contentZh: 'VERALEX CONSULTING 的 1 年期投资者 ITAS 全包服务费为 Rp 16.000.000。包含：移民局材料准备、公司推荐信起草、ITAS 申请递交至移民局、审批过程全程陪同、以及状态跟踪直至电子 e-ITAS 签发。'
             },
@@ -467,7 +482,7 @@ export const detailedServiceContent: Record<string, DetailedContent> = {
                 title: 'Berapa Biaya dan Keuntungan ITAS Investor 2 Tahun vs 1 Tahun?',
                 titleEn: 'What is the Cost and Benefit of 2-Year vs 1-Year Investor ITAS?',
                 titleZh: '2 年期 vs 1 年期投资者 ITAS 费用与优势对比？',
-                content: 'Biaya ITAS Investor 2 Tahun di VERALEX CONSULTING adalah Rp 18.000.000. Meskipun biaya awal lebih tinggi dari ITAS 1 tahun (Rp 16 juta), dalam jangka panjang ITAS 2 tahun lebih ekonomis karena menghemat biaya pengurusan ulang dan lebih sedikit bolak-balik ke kantor imigrasi.',
+                content: `Biaya ITAS Investor 2 Tahun di VERALEX CONSULTING adalah ${itas2Price}. Meskipun biaya awal lebih tinggi dari ITAS 1 tahun (${itas1Price}), dalam jangka panjang ITAS 2 tahun lebih ekonomis karena menghemat biaya pengurusan ulang dan lebih sedikit bolak-balik ke kantor imigrasi.`,
                 contentEn: '2-Year Investor ITAS fees at VERALEX CONSULTING are IDR 18,000,000. Although the upfront cost is higher than the 1-year ITAS (IDR 16 million), in the long run 2-year ITAS is more economical as it saves renewal processing costs and requires fewer visits to the immigration office.',
                 contentZh: 'VERALEX CONSULTING 的 2 年期投资者 ITAS 服务费为 Rp 18.000.000。虽然前期费用高于 1 年期（Rp 16.000.000），但长期来看 2 年期更划算——省去每年续签的手续费和往返移民局的时间。'
             }
