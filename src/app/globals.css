@@ -653,34 +653,33 @@ button {
     position: relative;
     padding: 128px 20px 84px;
     overflow: hidden;
-    background: linear-gradient(140deg, #2D0808 0%, #1A0A0A 55%, #120505 100%);
+    background: #FFFFFF;
     isolation: isolate;
 }
 
-/* Soft maroon glow behind the team, so the group does not float on flat black. */
+/* Barely-there warm wash so the white does not read as a flat empty box. */
 .hero::before {
     content: '';
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(ellipse 55% 70% at 74% 55%, rgba(107, 21, 21, 0.65) 0%, rgba(74, 14, 14, 0.25) 45%, transparent 72%),
-        radial-gradient(circle at 12% 18%, rgba(212, 175, 55, 0.1) 0%, transparent 45%);
+        radial-gradient(ellipse 60% 75% at 78% 50%, rgba(74, 14, 14, 0.055) 0%, transparent 70%),
+        radial-gradient(circle at 8% 12%, rgba(74, 14, 14, 0.035) 0%, transparent 45%);
     pointer-events: none;
     z-index: 0;
 }
 
-/* Hairline gold rule closing the section. */
+/* Hairline maroon rule closing the section. */
 .hero-overlay {
     position: absolute;
     inset: 0;
     z-index: 1;
     pointer-events: none;
     background: linear-gradient(180deg,
-            rgba(255, 255, 255, 0.04) 0%,
-            transparent 18%,
-            transparent 82%,
-            rgba(0, 0, 0, 0.4) 100%);
-    box-shadow: inset 0 -1px 0 rgba(212, 175, 55, 0.22);
+            transparent 0%,
+            transparent 88%,
+            rgba(74, 14, 14, 0.03) 100%);
+    box-shadow: inset 0 -1px 0 rgba(74, 14, 14, 0.12);
 }
 
 /* ── Inner wrapper: copy left, team right ── */
@@ -704,15 +703,44 @@ button {
     align-items: flex-end;
     justify-content: center;
     min-width: 0;
+    /* The ellipse below reads as the group's contact shadow on the floor. */
+    padding-bottom: 26px;
 }
 
+/*
+ * Two stacked shadows: a broad ambient one to lift the group off the white,
+ * and a tighter one at the feet to anchor it. `drop-shadow` follows the alpha
+ * channel, so nothing is drawn around the transparent margin.
+ */
 .hero-team-img {
+    position: relative;
+    z-index: 1;
     display: block;
     width: 100%;
     height: auto;
-    max-width: 480px;
-    /* Grounds the group on the maroon instead of pasting it on. */
-    filter: drop-shadow(0 26px 46px rgba(0, 0, 0, 0.55));
+    max-width: 520px;
+    filter:
+        drop-shadow(0 34px 44px rgba(45, 8, 8, 0.24))
+        drop-shadow(0 6px 12px rgba(45, 8, 8, 0.16));
+}
+
+/* Contact shadow at the baseline, so the group is standing rather than pasted. */
+.hero-team::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 78%;
+    height: 30px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center,
+            rgba(45, 8, 8, 0.26) 0%,
+            rgba(45, 8, 8, 0.12) 45%,
+            transparent 72%);
+    filter: blur(7px);
+    pointer-events: none;
+    z-index: 0;
 }
 
 /* ── Left: content ── */
@@ -724,16 +752,16 @@ button {
     max-width: 620px;
 }
 
-/* Copy sits on a dark photograph, so the palette flips to light-on-dark. */
+/* Copy sits on white, so the palette is the site's dark-on-light default. */
 .hero-badge {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     padding: 6px 14px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(244, 212, 124, 0.45);
+    background: rgba(74, 14, 14, 0.04);
+    border: 1px solid rgba(74, 14, 14, 0.18);
     border-radius: 20px;
-    color: #F4D47C;
+    color: #4A0E0E;
     font-family: var(--font-jakarta), var(--font-body);
     font-size: 0.74rem;
     font-weight: 700;
@@ -741,22 +769,20 @@ button {
     text-transform: uppercase;
     margin-bottom: 1.35rem;
     line-height: 1.4;
-    backdrop-filter: blur(6px);
 }
 
 .hero-title {
     font-family: var(--font-jakarta), var(--font-heading);
     font-size: clamp(2.4rem, 4vw, 4rem);
-    color: #FFFFFF;
+    color: #4A0E0E;
     font-weight: 800;
     line-height: 1.12;
     margin-bottom: 1.25rem;
     letter-spacing: -0.03em;
-    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
 }
 
 .hero-title-accent {
-    background: linear-gradient(135deg, #F4D47C 0%, #D4AF37 55%, #E8C766 100%);
+    background: linear-gradient(135deg, #6B1515 0%, #4A0E0E 55%, #2D0808 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -767,7 +793,7 @@ button {
 .hero-subtitle {
     font-family: var(--font-jakarta), var(--font-body);
     font-size: clamp(1rem, 1.35vw, 1.15rem);
-    color: rgba(250, 248, 245, 0.86);
+    color: rgba(26, 26, 26, 0.76);
     max-width: 520px;
     margin: 0 0 1.8rem;
     line-height: 1.65;
@@ -784,25 +810,7 @@ button {
 }
 
 .hero-cta .btn-editorial-solid {
-    background: linear-gradient(135deg, #B8960C 0%, #D4AF37 55%, #F4D47C 100%);
-    color: #2D0808;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-}
-
-.hero-cta .btn-editorial-solid:hover {
-    color: #2D0808;
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
-}
-
-/* Secondary action on a dark photo: light rule and light label. */
-.hero-cta .btn-editorial {
-    color: rgba(250, 248, 245, 0.92);
-    border-bottom-color: rgba(244, 212, 124, 0.75);
-}
-
-.hero-cta .btn-editorial:hover {
-    color: #F4D47C;
-    border-color: transparent;
+    box-shadow: 0 6px 18px rgba(74, 14, 14, 0.18);
 }
 
 /* Stats strip */
@@ -811,7 +819,7 @@ button {
     align-items: center;
     gap: 0;
     padding-top: 1.6rem;
-    border-top: 1px solid rgba(244, 212, 124, 0.28);
+    border-top: 1px solid rgba(74, 14, 14, 0.14);
     width: 100%;
 }
 
@@ -825,7 +833,7 @@ button {
 .hero-stat-number {
     font-family: var(--font-heading);
     font-size: clamp(1.4rem, 2.2vw, 2rem);
-    color: #F4D47C;
+    color: #4A0E0E;
     font-weight: 400;
     line-height: 1;
     letter-spacing: -0.5px;
@@ -833,7 +841,7 @@ button {
 
 .hero-stat-label {
     font-size: 0.72rem;
-    color: rgba(250, 248, 245, 0.74);
+    color: rgba(26, 26, 26, 0.58);
     letter-spacing: 0.5px;
     font-weight: 300;
     text-transform: uppercase;
@@ -842,7 +850,7 @@ button {
 .hero-stat-divider {
     width: 1px;
     height: 40px;
-    background: rgba(244, 212, 124, 0.25);
+    background: rgba(74, 14, 14, 0.16);
     margin: 0 1rem;
     flex-shrink: 0;
 }
@@ -5483,7 +5491,9 @@ body.modal-open .floating-whatsapp {
     .hero-cta-full { display: none; }
     .hero-cta-mobile { display: inline; }
     .hero-team { order: 6; width: min(100%, 320px); max-width: 100%; margin: 0 auto; }
-    .hero-team-img { max-width: 100%; filter: drop-shadow(0 18px 32px rgba(0, 0, 0, 0.5)); }
+    .hero-team { padding-bottom: 18px; }
+    .hero-team::after { bottom: 4px; height: 22px; width: 82%; filter: blur(6px); }
+    .hero-team-img { max-width: 100%; filter: drop-shadow(0 20px 26px rgba(45, 8, 8, 0.2)) drop-shadow(0 4px 8px rgba(45, 8, 8, 0.14)); }
     .hero-stats { order: 5; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; width: 100%; max-width: 540px; margin: 10px auto 0; padding-top: 18px; text-align: center; }
     .hero-stat { min-width: 0; align-items: center; }
     .hero-stat-divider { display: none; }
