@@ -1,7 +1,7 @@
 .page,
 .articlePage {
     padding: 150px 0 120px;
-    background: #fafafa;
+    background: #F6F5F3;
 }
 
 .eyebrow {
@@ -40,7 +40,7 @@
 
 .highlights {
     padding: 105px 0 125px;
-    background: #f3f0ed;
+    background: #F1EFEB;
 }
 
 .sectionHead {
@@ -89,12 +89,12 @@
     min-height: 365px;
     padding: 28px;
     background: white;
-    border: 1px solid rgba(74, 14, 14, 0.14);
+    border: 1px solid #E4DFD9;
     box-shadow: 0 8px 24px rgba(42, 20, 20, 0.025);
 }
 
 .card:hover {
-    border-color: rgba(74, 14, 14, 0.48);
+    border-color: rgba(74, 14, 14, 0.4);
     transform: translateY(-3px);
     box-shadow: 0 12px 32px rgba(42, 20, 20, 0.08);
 }
@@ -155,7 +155,7 @@
 
 .articleHero {
     padding-bottom: 46px;
-    border-bottom: 1px solid rgba(74, 14, 14, 0.18);
+    border-bottom: 1px solid #E4DFD9;
 }
 
 .meta {
@@ -190,7 +190,7 @@
     padding: 28px 32px;
     margin-bottom: 50px;
     border-left: 3px solid var(--color-primary);
-    background: #f3f0ed;
+    background: #F1EFEB;
 }
 
 .takeaways h2,
@@ -218,7 +218,7 @@
 .articleSection p,
 .sources p {
     margin-bottom: 18px;
-    color: #373333;
+    color: #181614;
     font-size: 1.02rem;
     line-height: 1.85;
 }
@@ -227,7 +227,7 @@
 .takeaways ul {
     list-style: disc;
     padding-left: 1.4rem;
-    color: #373333;
+    color: #181614;
 }
 
 .articleSection li,
@@ -245,7 +245,7 @@
 .sources {
     margin-top: 65px;
     padding-top: 25px;
-    border-top: 1px solid rgba(74, 14, 14, 0.2);
+    border-top: 1px solid #E4DFD9;
 }
 
 .sources ol {

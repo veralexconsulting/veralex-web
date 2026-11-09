@@ -300,7 +300,7 @@ body:has(.workspace) > .floating-whatsapp, body:has(.workspace) .scroll-progress
 .ws-auth-card > small { display:block; }
 .ws-auth-aside { background:#4a0e0e; color:#f9ece5; display:flex; flex-direction:column; justify-content:flex-end; padding:8vw 7vw; }
 .ws-auth-aside span { color:#c8a15a; font-size:12px; letter-spacing:.15em; margin-bottom:25px; }
-.ws-auth-aside h2 { color:#fff; font:400 clamp(31px,3vw,52px)/1.16 Georgia,serif; margin-bottom:20px; }
+.ws-auth-aside h2 { color:#fff; font:600 clamp(31px,3vw,52px)/1.16 var(--font-inter),'Inter',system-ui,sans-serif; margin-bottom:20px; }
 .ws-auth-aside p { color:#e4cfc7; max-width:390px; }
 .ws-invite-page { display:grid; place-items:center; padding:22px; }
 .ws-invite-card { width:min(100%,530px); background:#fff; border:1px solid var(--ws-line); border-radius:15px; padding:clamp(23px,5vw,43px); box-shadow:0 18px 60px rgba(67,42,35,.08); }
@@ -314,7 +314,7 @@ body:has(.workspace) > .floating-whatsapp, body:has(.workspace) .scroll-progress
 .ws-portal-hero { display:grid; grid-template-columns:1.25fr 1fr; background:#fff; border:1px solid var(--ws-line); border-radius:13px; overflow:hidden; margin-bottom:20px; }
 .ws-portal-hero > div { padding:27px; }
 .ws-portal-hero > div:first-child { background:#4a0e0e; color:#fff; }
-.ws-portal-hero h2 { color:#fff; font:400 30px/1.2 Georgia,serif; margin:12px 0; }
+.ws-portal-hero h2 { color:#fff; font:600 30px/1.2 var(--font-inter),'Inter',system-ui,sans-serif; margin:12px 0; }
 .ws-portal-hero > div:first-child p { color:#ead8d2; }
 .ws-portal-hero > div:last-child { display:grid; align-content:center; gap:10px; }
 .ws-portal-hero > div:last-child span { color:var(--ws-muted); font-size:12px; }
@@ -415,7 +415,7 @@ body:has(.workspace) > .floating-whatsapp, body:has(.workspace) .scroll-progress
 .ws-login-page { flex:1; width:min(1240px,100%); margin:0 auto; padding:64px 36px 72px; display:grid; grid-template-columns:minmax(0,1.06fr) minmax(380px,.94fr); align-items:center; gap:clamp(45px,8vw,120px); }
 .ws-login-intro { max-width:590px; padding:16px 0; }
 .ws-login-intro > .ws-eyebrow { color:#8e6d37; letter-spacing:.16em; font-weight:750; font-size:11px; }
-.ws-login-intro h1 { max-width:580px; margin:18px 0; font:400 clamp(38px,5vw,62px)/1.07 Georgia,'Times New Roman',serif; letter-spacing:-.035em; color:#1e1e1e; }
+.ws-login-intro h1 { max-width:580px; margin:18px 0; font:600 clamp(38px,5vw,62px)/1.07 var(--font-inter),'Inter',system-ui,sans-serif; letter-spacing:-.035em; color:#1e1e1e; }
 .ws-login-copy { color:#68615e; font-size:16px; line-height:1.75; max-width:530px; }
 .ws-login-benefits { display:grid; gap:22px; margin:36px 0 28px; padding:0; list-style:none; }
 .ws-login-benefits li { display:flex; align-items:flex-start; gap:14px; }

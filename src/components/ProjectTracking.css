@@ -179,7 +179,7 @@
 .tracking-preview-divider {
     width: 1px;
     height: 15px;
-    background: rgba(74, 14, 14, 0.16);
+    background: #E4DFD9;
 }
 
 .tracking-preview-top-label {
@@ -191,7 +191,7 @@
 
 .tracking-preview-dots {
     margin-left: auto;
-    color: rgba(74, 14, 14, 0.3);
+    color: #B5AEA6;
     font-size: 0.8rem;
     letter-spacing: 0.14em;
 }
@@ -233,7 +233,7 @@
     gap: 0.35rem;
     flex: 0 0 auto;
     padding: 0.3rem 0.6rem;
-    background: rgba(74, 14, 14, 0.06);
+    background: rgba(24, 22, 20, 0.05);
     border: var(--border-gold);
     font-family: var(--font-jakarta), var(--font-body);
     font-size: 0.68rem;
@@ -326,7 +326,7 @@
     top: 0;
     bottom: 0;
     width: 1px;
-    background: rgba(74, 14, 14, 0.16);
+    background: #E4DFD9;
     z-index: -1;
 }
 
@@ -370,7 +370,7 @@
     border-width: 2px;
     background: var(--bg-card);
     color: var(--color-gold);
-    box-shadow: 0 0 0 4px rgba(74, 14, 14, 0.06);
+    box-shadow: 0 0 0 4px rgba(24, 22, 20, 0.06);
 }
 
 .tracking-preview-steps strong {

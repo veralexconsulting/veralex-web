@@ -104,7 +104,7 @@
 .vnav-mega-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; padding-bottom: 18px; margin-bottom: 18px; border-bottom: 1px solid #e9e1db; }
 .vnav-mega-head div { display: flex; flex-direction: column; gap: 4px; }
 .vnav-mega-head div span { color: #816844; font-size: .69rem; font-weight: 750; letter-spacing: .15em; text-transform: uppercase; }
-.vnav-mega-head strong { color: #281f1f; font: 600 clamp(1.15rem,2vw,1.55rem) var(--font-playfair), Georgia, serif; }
+.vnav-mega-head strong { color: #281f1f; font: 600 clamp(1.15rem,2vw,1.55rem) var(--font-inter), 'Inter', system-ui, sans-serif; }
 .vnav-mega-head > a { color: #4a0e0e; font-size: .86rem; font-weight: 750; white-space: nowrap; }
 .vnav-mega-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: clamp(18px,3vw,42px); }
 .vnav-group { min-width: 0; }
