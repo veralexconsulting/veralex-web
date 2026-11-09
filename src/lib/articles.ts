@@ -358,6 +358,304 @@ export const articles: Article[] = [
             { slug: 'hak-cipta', note: 'Pencatatan hak cipta untuk karya digital, desain, dan konten.' },
         ],
     },
+    {
+        slug: 'biaya-daftar-merek-2026',
+        category: 'Merek Dagang',
+        title: 'Biaya Daftar Merek 2026: Rincian Resmi Negara dan Jasa Pendampingan',
+        description: 'Rincian biaya pendaftaran merek ke DJKI: mana yang masuk penerimaan negara dan mana yang jasa pendampingan. Plus biaya apa saja yang sering terlewat dari hitungan awal.',
+        publishedAt: '2026-11-10',
+        readingMinutes: 6,
+        lead: 'Pertanyaan pertama hampir setiap pemilik usaha sebelum mendaftar merek adalah berapa biayanya. Jawaban yang jujur harus memisahkan dua hal yang sering dicampur dalam satu angka: biaya yang dibayarkan ke negara, dan biaya jasa pendampingan. Tanpa pemisahan itu, calon pemohon sulit menilai apa yang sebenarnya dibeli.',
+        takeaways: [
+            'Biaya pendaftaran merek terdiri dari biaya resmi negara dan biaya jasa pendampingan, yang dibayar ke pihak berbeda.',
+            'Biaya resmi dikenakan per kelas barang atau jasa, sehingga mendaftar dua kelas berarti dua kali biaya.',
+            'Angka resmi mengikuti ketentuan penerimaan negara bukan pajak yang berlaku, bukan angka yang beredar di internet.',
+        ],
+        sections: [
+            {
+                heading: 'Dua komponen biaya yang sering dicampur',
+                paragraphs: [
+                    'Biaya pendaftaran merek bukan satu angka tunggal. Ada biaya yang disetorkan sebagai penerimaan negara bukan pajak untuk permohonan pendaftaran, dan ada biaya jasa apabila Anda menggunakan jasa pendampingan. Keduanya dibayarkan ke pihak yang berbeda dan keduanya perlu diketahui sejak awal.',
+                    'Kesalahan yang paling sering terjadi adalah membandingkan biaya jasa satu penyedia dengan biaya total penyedia lain yang sudah termasuk biaya negara. Perbandingan seperti itu selalu menyesatkan. Saat meminta penawaran, mintalah rincian: berapa yang masuk ke negara, berapa untuk jasa, dan apa saja yang dicakup jasa tersebut.',
+                ],
+                bullets: [
+                    'Biaya resmi negara: disetorkan untuk permohonan pendaftaran merek.',
+                    'Biaya jasa pendampingan: pengecekan merek, konsultasi kelas, penyusunan berkas, pengajuan, pemantauan status.',
+                    'Biaya di luar keduanya: perbaikan dokumen, keberatan, atau pengajuan ulang setelah penolakan.',
+                ],
+            },
+            {
+                heading: 'Kenapa biaya dihitung per kelas',
+                paragraphs: [
+                    'Perlindungan merek diberikan per kelas barang atau jasa mengikuti klasifikasi internasional yang dipakai DJKI. Satu permohonan mencakup satu kelas. Bila usaha Anda menjual produk sekaligus memberikan jasa, sering kali diperlukan lebih dari satu kelas.',
+                    'Konsekuensinya, biaya harus dihitung dari jumlah kelas yang benar-benar dibutuhkan, bukan dari jumlah merek. Mendaftarkan satu merek pada dua kelas memerlukan biaya lebih besar daripada satu kelas, tetapi mendaftarkan pada kelas yang salah membuat perlindungan tidak menjangkau produk yang Anda jual. Menentukan kelas termasuk bagian dari pekerjaan yang seharusnya dilakukan sebelum membayar apa pun.',
+                ],
+            },
+            {
+                heading: 'Biaya yang sering tidak dihitung sejak awal',
+                paragraphs: [
+                    'Anggaran biasanya hanya menyiapkan biaya pengajuan. Padahal ada beberapa kemungkinan pengeluaran lanjutan yang sebaiknya sudah diperhitungkan.',
+                ],
+                bullets: [
+                    'Pengajuan pada kelas tambahan jika ternyata lebih dari satu kelas dibutuhkan.',
+                    'Tanggapan terhadap keberatan atau penolakan, yang memerlukan penyusunan argumen tertulis.',
+                    'Pengajuan ulang apabila permohonan tidak dapat dilanjutkan.',
+                    'Perpanjangan pada saat masa berlaku berakhir beberapa tahun kemudian.',
+                ],
+            },
+            {
+                heading: 'Cara menilai penawaran jasa daftar merek',
+                paragraphs: [
+                    'Penawaran yang layak menyebutkan secara terbuka apa yang dikerjakan. Tiga pertanyaan yang membantu: apakah pengecekan merek di database DJKI termasuk, apakah penentuan kelas dilakukan atas dasar barang atau jasa yang Anda jual, dan apakah status permohonan dipantau sampai ada keputusan.',
+                    'Poin ketiga sering terlewat. Permohonan merek melewati beberapa tahap dengan tenggat yang berbeda, dan notifikasi resmi tidak selalu datang pada waktu yang diharapkan. Jasa yang berhenti setelah berkas diserahkan meninggalkan Anda menanggung risiko melewatkan tenggat.',
+                ],
+            },
+        ],
+        sources: [
+            { label: 'DJKI Kemenkumham — informasi pendaftaran merek', url: 'https://www.dgip.go.id/' },
+            { label: 'DJKI — Permenkum 5/2026 tentang pendaftaran merek', url: 'https://www.dgip.go.id/unduhan/regulasi' },
+        ],
+        service: { label: 'Lihat layanan pendaftaran merek', href: '/services/pendaftaran-merek', message: 'Halo Kak Vheilljei, saya ingin mengetahui rincian biaya daftar merek untuk usaha saya.' },
+        relatedServices: [
+            { slug: 'pendaftaran-merek', note: 'Pendaftaran merek ke DJKI, termasuk pengecekan nama dan penentuan kelas.' },
+            { slug: 'perpanjangan-merek', note: 'Perpanjangan merek sebelum masa perlindungan berakhir.' },
+            { slug: 'hak-cipta', note: 'Pencatatan hak cipta untuk logo, karya desain, dan konten.' },
+        ],
+    },
+    {
+        slug: 'cara-daftar-merek-sendiri-vs-jasa',
+        category: 'Merek Dagang',
+        title: 'Daftar Merek Sendiri atau Pakai Jasa: Apa Bedanya dan Mana yang Cocok?',
+        description: 'Perbandingan jujur antara mengurus merek sendiri lewat DJKI dan memakai jasa pendampingan, termasuk risiko yang sering baru terasa setelah permohonan diajukan.',
+        publishedAt: '2026-11-10',
+        readingMinutes: 5,
+        lead: 'Mendaftarkan merek sendiri memang dimungkinkan. DJKI menyediakan jalur permohonan yang terbuka bagi siapa saja, dan biayanya lebih murah karena tidak ada jasa yang dibayar. Pertanyaannya bukan mana yang lebih murah, melainkan pada titik mana pekerjaan itu berubah dari sekadar mengisi formulir menjadi pekerjaan yang menuntut penilaian.',
+        takeaways: [
+            'Pendaftaran sendiri sah dan lebih murah, tetapi menempatkan seluruh penilaian pada pemohon.',
+            'Titik tersulit bukan pengisian formulir, melainkan penentuan kelas dan penilaian kemiripan merek.',
+            'Kesalahan pada tahap awal umumnya baru terasa di tahap pemeriksaan, saat biaya sudah dikeluarkan.',
+        ],
+        sections: [
+            {
+                heading: 'Yang sebenarnya dikerjakan saat mendaftar merek',
+                paragraphs: [
+                    'Banyak yang membayangkan pendaftaran merek sebagai mengisi data lalu menunggu. Pekerjaan yang menentukan hasil justru terjadi sebelum pengajuan: memastikan merek belum terdaftar, menilai apakah merek mirip dengan merek yang sudah ada, dan menentukan kelas barang atau jasa yang tepat.',
+                    'Ketiganya bukan pekerjaan administratif. Penilaian kemiripan merek mempertimbangkan kesamaan visual, bunyi, dan makna. Penentuan kelas mempertimbangkan apa yang benar-benar dijual, bukan sekadar jenis barangnya. Di sinilah hasil sebuah permohonan paling ditentukan.',
+                ],
+            },
+            {
+                heading: 'Kapan mengurus sendiri masuk akal',
+                paragraphs: [
+                    'Mengurus sendiri masuk akal bila Anda sudah memahami klasifikasi barang dan jasa, sudah memeriksa merek pada database resmi, dan produk atau jasa Anda jelas berada pada satu kelas. Untuk usaha dengan satu lini produk yang sederhana, jalur ini dapat menghemat biaya tanpa menambah risiko berarti.',
+                ],
+                bullets: [
+                    'Usaha dengan satu lini produk yang jelas.',
+                    'Merek berupa kata sederhana tanpa banyak variasi visual.',
+                    'Pemohon sudah memahami tata cara pengajuan dan tenggat tiap tahap.',
+                ],
+            },
+            {
+                heading: 'Kapan jasa pendampingan lebih hemat',
+                paragraphs: [
+                    'Jasa pendampingan menjadi lebih hemat ketika risiko penolakan meningkat. Risiko itu naik bila merek Anda mirip dengan merek yang banyak dipakai, bila usaha berjalan pada beberapa kelas sekaligus, atau bila merek akan dijual lintas negara.',
+                    'Alasannya sederhana: biaya pengajuan yang hangus karena penolakan biasanya lebih besar daripada selisih biaya antara mendaftar sendiri dan memakai jasa. Yang hilang bukan hanya uang, tetapi juga waktu tunggu dan kesempatan memakai nama tersebut secara aman selama proses berjalan.',
+                ],
+            },
+            {
+                heading: 'Pertanyaan yang perlu ditanyakan ke penyedia jasa',
+                paragraphs: [
+                    'Sebelum memilih, tanyakan apakah pengecekan ke database DJKI termasuk, apakah rekomendasi kelas disertai alasan, dan apakah permohonan dipantau sampai ada keputusan. Penyedia yang menjawab ketiganya dengan jelas umumnya mengerjakan bagian pekerjaan yang paling menentukan.',
+                ],
+            },
+        ],
+        sources: [
+            { label: 'DJKI Kemenkumham — layanan pendaftaran merek', url: 'https://www.dgip.go.id/' },
+        ],
+        service: { label: 'Lihat layanan pendaftaran merek', href: '/services/pendaftaran-merek', message: 'Halo Kak Vheilljei, saya ingin dibantu menilai apakah merek saya perlu pendampingan saat mendaftar.' },
+        relatedServices: [
+            { slug: 'pendaftaran-merek', note: 'Pendaftaran merek dengan pengecekan dan penentuan kelas.' },
+            { slug: 'hak-cipta', note: 'Perlindungan karya cipta untuk logo dan materi desain.' },
+            { slug: 'desain-industri', note: 'Pendaftaran desain industri untuk bentuk dan tampilan produk.' },
+        ],
+    },
+    {
+        slug: 'syarat-pendirian-pt-2026',
+        category: 'Pendirian Badan Usaha',
+        title: 'Syarat Pendirian PT 2026: Dari Akta Notaris sampai NIB',
+        description: 'Urutan syarat pendirian PT dan dokumen yang menyertainya, dari akta pendirian dan SK Kemenkumham hingga NPWP badan hukum dan NIB di OSS.',
+        publishedAt: '2026-11-10',
+        readingMinutes: 6,
+        lead: 'Mendirikan PT adalah urutan, bukan daftar centang yang bisa dikerjakan dalam urutan bebas. Akta pendirian menjadi dasar SK Kemenkumham, SK menjadi dasar NPWP badan hukum, dan semuanya menjadi dasar NIB. Memahami urutan ini membuat prosesnya jauh lebih singkat daripada mengerjakan semuanya sekaligus lalu memperbaiki yang keliru.',
+        takeaways: [
+            'Dokumen pendirian PT dibuat berurutan: akta, pengesahan badan hukum, NPWP, lalu NIB.',
+            'PT PMDN dan PT PMA memiliki persyaratan kepemilikan yang berbeda, sehingga jalurnya dipisahkan sejak awal.',
+            'NIB bukan dokumen terakhir yang selalu dibutuhkan; sebagian bidang usaha masih memerlukan sertifikat standar atau izin.',
+        ],
+        sections: [
+            {
+                heading: 'Urutan dokumen pendirian PT',
+                paragraphs: [
+                    'Alur yang umum dilalui saat mendirikan PT adalah sebagai berikut. Setiap tahap membutuhkan hasil tahap sebelumnya, sehingga mencoba melompati salah satunya justru memperpanjang proses.',
+                ],
+                bullets: [
+                    'Pemesanan nama perusahaan, lalu penyusunan akta pendirian oleh notaris.',
+                    'Pengesahan badan hukum dari Kementerian Hukum melalui sistem AHU.',
+                    'Penerbitan NPWP badan hukum.',
+                    'Pendaftaran di OSS RBA untuk memperoleh NIB.',
+                    'Pemenuhan sertifikat standar atau izin sesuai bidang usaha, bila dipersyaratkan.',
+                ],
+            },
+            {
+                heading: 'PT PMDN atau PT PMA',
+                paragraphs: [
+                    'Sebelum menyiapkan dokumen apa pun, tentukan lebih dahulu apakah perusahaan akan dimiliki sepenuhnya oleh pihak dalam negeri atau melibatkan kepemilikan asing. PT PMA terikat pada ketentuan penanaman modal asing, termasuk batasan kepemilikan pada bidang usaha tertentu.',
+                    'Kesalahan pada titik ini mahal karena memperbaikinya berarti mengubah akta dan dokumen turunannya. Bagi pemilik usaha asing, memastikan bidang usahanya terbuka untuk penanaman modal asing sebaiknya dilakukan sebelum notaris menyusun akta.',
+                ],
+            },
+            {
+                heading: 'Modal dan struktur kepemilikan',
+                paragraphs: [
+                    'Ketentuan modal minimum berbeda antara PT PMDN dan PT PMA. Untuk PT PMA, ketentuan penanaman modal mengatur nilai investasi minimum yang berlaku bagi sebagian besar bidang usaha. Untuk PT PMDN, besaran modal disepakati para pemegang saham dan dituangkan dalam akta.',
+                    'Yang perlu disiapkan sebelum ke notaris adalah komposisi pemegang saham beserta persentasenya, nilai modal yang akan ditempatkan, dan susunan pengurus. Perubahan atas hal-hal ini setelah akta dibuat menuntut akta perubahan, sehingga menyepakatinya lebih dahulu lebih hemat.',
+                ],
+            },
+            {
+                heading: 'Setelah NIB terbit',
+                paragraphs: [
+                    'NIB menandai perusahaan tercatat sebagai pelaku usaha, tetapi tidak selalu menjadi dokumen terakhir. Sebagian bidang usaha memerlukan sertifikat standar, izin, atau sertifikasi tambahan sebelum kegiatan dapat dijalankan secara penuh. Sertifikat standar bersifat pernyataan mandiri dan tetap tunduk pada kemungkinan pemeriksaan.',
+                    'Perlu juga diingat bahwa setelah beroperasi, ada kewajiban pelaporan yang berjalan. Bagi perusahaan dengan status penanaman modal tertentu, kewajiban pelaporan kegiatan secara berkala menjadi bagian dari kepatuhan yang tidak bisa diabaikan tanpa konsekuensi.',
+                ],
+            },
+        ],
+        sources: [
+            { label: 'Kementerian Hukum — layanan AHU', url: 'https://ahu.go.id/' },
+            { label: 'OSS RBA — perizinan berusaha terintegrasi', url: 'https://oss.go.id/' },
+        ],
+        service: { label: 'Lihat layanan pendirian PT PMDN', href: '/services/pt-pmdn', message: 'Halo Kak Vheilljei, saya ingin mengetahui syarat dan urutan pendirian PT.' },
+        relatedServices: [
+            { slug: 'pt-pmdn', note: 'Pendirian PT PMDN lengkap sampai NIB dan sertifikat standar.' },
+            { slug: 'pt-pma', note: 'Pendirian PT PMA untuk kepemilikan asing, termasuk asistensi LKPM.' },
+            { slug: 'pt-perorangan', note: 'PT Perorangan untuk usaha mikro dan kecil tanpa akta notaris.' },
+        ],
+    },
+    {
+        slug: 'perbedaan-pt-pmdn-pt-pma',
+        category: 'Pendirian Badan Usaha',
+        title: 'Bedanya PT PMDN dan PT PMA: Kepemilikan, Modal, dan Kewajiban Setelahnya',
+        description: 'Perbandingan PT PMDN dan PT PMA dari sisi kepemilikan, ketentuan modal, batasan bidang usaha, sampai kewajiban pelaporan yang menyertai masing-masing.',
+        publishedAt: '2026-11-10',
+        readingMinutes: 5,
+        lead: 'Banyak investor menanyakan perbedaan PT PMDN dan PT PMA seolah keduanya pilihan yang setara. Keduanya memang sama-sama perseroan terbatas, tetapi berada di bawah kerangka aturan yang berbeda. Perbedaan itu menentukan siapa yang boleh memiliki, berapa modal yang harus ditempatkan, dan apa yang wajib dilaporkan setelah perusahaan berjalan.',
+        takeaways: [
+            'PT PMDN dimiliki oleh pemegang saham dalam negeri; PT PMA memungkinkan kepemilikan asing.',
+            'PT PMA terikat pada ketentuan penanaman modal asing, termasuk batasan pada bidang usaha tertentu.',
+            'PT PMA membawa kewajiban pelaporan penanaman modal yang berjalan setelah izin terbit.',
+        ],
+        sections: [
+            {
+                heading: 'Perbedaan paling menentukan: komposisi kepemilikan',
+                paragraphs: [
+                    'PT PMDN didirikan oleh pemegang saham dalam negeri. PT PMA memungkinkan pemegang saham asing memiliki saham, dan karena itu tunduk pada ketentuan penanaman modal asing. Perbedaan ini bukan sekadar administratif: ia menentukan apakah suatu bidang usaha boleh dijalankan dalam bentuk PT PMA, dan sejauh mana kepemilikan asing diperbolehkan.',
+                    'Bagi investor asing, langkah pertama bukan menyiapkan akta, melainkan memastikan bidang usaha yang akan dijalankan memang terbuka untuk penanaman modal asing dengan persentase kepemilikan yang sesuai. Bidang usaha diklasifikasikan dalam daftar yang berlaku, dan klasifikasi ini dapat berubah dari waktu ke waktu.',
+                ],
+            },
+            {
+                heading: 'Ketentuan modal',
+                paragraphs: [
+                    'Ketentuan modal minimum berbeda. PT PMA terikat pada nilai investasi minimum yang ditetapkan dalam ketentuan penanaman modal, berlaku bagi sebagian besar bidang usaha dan dihitung di luar tanah dan bangunan. PT PMDN tidak terikat pada ketentuan penanaman modal asing tersebut, sehingga besaran modalnya disepakati dalam akta.',
+                    'Angka yang berlaku perlu diperiksa terhadap ketentuan terkini sebelum menyusun akta, karena nilai tersebut dapat berubah dan kesalahan pada tahap ini berujung pada perubahan akta.',
+                ],
+            },
+            {
+                heading: 'Kewajiban setelah perusahaan berjalan',
+                paragraphs: [
+                    'Perbedaan yang paling sering baru disadari setelah perusahaan berdiri adalah kewajiban pelaporan. PT PMA wajib menyampaikan laporan kegiatan penanaman modal secara berkala melalui sistem yang dikelola kementerian investasi. Laporan yang tidak disampaikan berulang dapat berdampak pada status perizinan perusahaan.',
+                    'Karena itu, saat mendirikan PT PMA, asistensi penyiapan akun pelaporan sebaiknya dianggap bagian dari pekerjaan pendirian, bukan urusan terpisah yang ditangani kemudian. Kebiasaan baik ini mencegah masalah yang muncul jauh setelah izin terbit.',
+                ],
+            },
+            {
+                heading: 'Ringkasan perbandingan',
+                paragraphs: [
+                    'Secara ringkas: pemilik dalam negeri tidak memerlukan jalur penanaman modal asing dan dapat mendirikan PT PMDN. Pemilik asing memerlukan PT PMA, harus memastikan bidang usahanya terbuka, memperhitungkan ketentuan modal minimum, dan menyiapkan diri untuk kewajiban pelaporan berkala.',
+                ],
+                bullets: [
+                    'Kepemilikan: PT PMDN dalam negeri, PT PMA termasuk asing.',
+                    'Bidang usaha: PT PMA terikat daftar bidang usaha yang terbuka untuk penanaman modal asing.',
+                    'Modal: PT PMA mengikuti ketentuan investasi minimum, PT PMDN disepakati dalam akta.',
+                    'Pelaporan: PT PMA memiliki kewajiban laporan kegiatan penanaman modal berkala.',
+                ],
+            },
+        ],
+        sources: [
+            { label: 'BKPM — ketentuan penanaman modal', url: 'https://www.bkpm.go.id/' },
+            { label: 'OSS RBA — perizinan berusaha terintegrasi', url: 'https://oss.go.id/' },
+        ],
+        service: { label: 'Lihat layanan pendirian PT PMA', href: '/services/pt-pma', message: 'Halo Kak Vheilljei, saya ingin menentukan apakah usaha saya sebaiknya PT PMDN atau PT PMA.' },
+        relatedServices: [
+            { slug: 'pt-pma', note: 'Pendirian PT PMA termasuk asistensi akun pelaporan LKPM.' },
+            { slug: 'pt-pmdn', note: 'Pendirian PT PMDN lengkap sampai NIB dan sertifikat standar.' },
+            { slug: 'itas-investor-1-tahun', note: 'ITAS investor bagi pemegang saham asing yang mengawasi investasinya.' },
+        ],
+    },
+    {
+        slug: 'berapa-lama-urus-nib',
+        category: 'Perizinan Usaha',
+        title: 'Berapa Lama Urus NIB? Faktor yang Menentukan Cepat atau Lambatnya',
+        description: 'NIB sering disebut bisa terbit dalam hitungan hari, tetapi kenyataannya sangat bergantung pada kesiapan data. Ini faktor yang mempercepat dan memperlambatnya.',
+        publishedAt: '2026-11-10',
+        readingMinutes: 5,
+        lead: 'NIB menjadi dokumen pertama yang dicari setiap pelaku usaha yang baru berdiri. Pertanyaan yang paling sering muncul adalah berapa lama prosesnya. Jawaban yang berguna bukan satu angka, melainkan pemahaman tentang apa yang membuatnya cepat dan apa yang membuatnya berulang kali tertahan.',
+        takeaways: [
+            'Waktu penerbitan NIB sangat ditentukan oleh kelengkapan data badan usaha dan kesesuaian KBLI.',
+            'Kesalahan KBLI adalah penyebab paling umum NIB harus diperbaiki setelah terbit.',
+            'NIB bukan izin tunggal; sebagian bidang usaha masih memerlukan sertifikat standar atau izin.',
+        ],
+        sections: [
+            {
+                heading: 'Apa yang membuat NIB cepat terbit',
+                paragraphs: [
+                    'NIB diterbitkan melalui sistem OSS berdasarkan data yang diisi oleh pelaku usaha. Karena penerbitannya mengandalkan data yang dimasukkan, kecepatan proses lebih ditentukan oleh kesiapan data daripada oleh antrean. Beberapa hal yang membuat proses berjalan lancar:',
+                ],
+                bullets: [
+                    'Akta dan pengesahan badan hukum sudah sesuai dan tidak ada perbedaan data.',
+                    'NPWP badan hukum sudah terbit dan datanya sesuai dengan akta.',
+                    'Kode KBLI sudah dipilih berdasarkan kegiatan yang benar-benar dijalankan.',
+                    'Alamat usaha sesuai dengan keadaan sebenarnya dan dapat diverifikasi.',
+                ],
+            },
+            {
+                heading: 'Kesalahan KBLI dan akibatnya',
+                paragraphs: [
+                    'Kode KBLI menentukan izin apa yang menyertai NIB Anda. Memilih kode yang tidak sesuai membuat perusahaan tercatat menjalankan kegiatan yang berbeda dari kenyataan. Akibatnya bisa berlapis: perizinan yang menyertai tidak sesuai, pelaporan menjadi keliru, dan pada saat pemeriksaan terdapat ketidaksesuaian antara dokumen dan kegiatan.',
+                    'Karena klasifikasi baku lapangan usaha diperbarui dari waktu ke waktu, perusahaan yang sudah berjalan pun perlu memeriksa apakah kode yang dipakai masih sesuai. Perubahan klasifikasi tidak selalu berarti izin harus diurus ulang, tetapi kesesuaiannya perlu dipastikan.',
+                ],
+            },
+            {
+                heading: 'Yang perlu disiapkan sebelum masuk OSS',
+                paragraphs: [
+                    'Menyiapkan data sebelum membuka sistem jauh lebih efisien daripada mengisi sambil mencari. Data yang perlu tersedia mencakup identitas badan usaha, susunan pengurus, alamat usaha, nilai investasi dan jumlah tenaga kerja untuk bidang usaha tertentu, serta daftar kegiatan yang akan dijalankan beserta kode klasifikasinya.',
+                ],
+            },
+            {
+                heading: 'Setelah NIB terbit',
+                paragraphs: [
+                    'NIB menandai perusahaan terdaftar, tetapi belum tentu cukup untuk menjalankan seluruh kegiatan. Sebagian bidang usaha memerlukan sertifikat standar atau izin yang menyertainya. Sertifikat standar bersifat pernyataan mandiri bahwa pelaku usaha memenuhi persyaratan, dan tetap dapat diperiksa kemudian.',
+                    'Perlu diingat juga bahwa setelah beroperasi muncul kewajiban yang berjalan, seperti pelaporan berkala bagi perusahaan dengan status penanaman modal tertentu. Menganggap NIB sebagai titik akhir adalah kekeliruan yang paling sering terjadi.',
+                ],
+            },
+        ],
+        sources: [
+            { label: 'OSS RBA — perizinan berusaha terintegrasi', url: 'https://oss.go.id/' },
+            { label: 'BKPM — informasi perizinan dan pelaporan', url: 'https://www.bkpm.go.id/' },
+        ],
+        service: { label: 'Lihat layanan pendirian PT PMDN', href: '/services/pt-pmdn', message: 'Halo Kak Vheilljei, saya ingin mengurus NIB dan memastikan KBLI yang tepat untuk usaha saya.' },
+        relatedServices: [
+            { slug: 'pt-pmdn', note: 'Pendirian PT PMDN lengkap dengan NIB dan akses OSS RBA.' },
+            { slug: 'pt-perorangan', note: 'PT Perorangan dengan NIB untuk usaha mikro dan kecil.' },
+            { slug: 'pse-lokal', note: 'Pendaftaran PSE bagi usaha yang mengoperasikan sistem elektronik.' },
+        ],
+    },
+
 ];
 
 /*
