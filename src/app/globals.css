@@ -648,41 +648,42 @@ button {
 .hero {
     min-height: auto;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     position: relative;
-    padding: 118px 20px 56px;
+    padding: 128px 20px 84px;
     overflow: hidden;
-    background: var(--bg-dark);
+    background: linear-gradient(140deg, #2D0808 0%, #1A0A0A 55%, #120505 100%);
+    isolation: isolate;
 }
 
+/* Soft maroon glow behind the team, so the group does not float on flat black. */
 .hero::before {
     content: '';
     position: absolute;
-    background-color: var(--bg-dark);
-}
-
-.hero-bg-image {
-    position: absolute;
     inset: 0;
+    background:
+        radial-gradient(ellipse 55% 70% at 74% 55%, rgba(107, 21, 21, 0.65) 0%, rgba(74, 14, 14, 0.25) 45%, transparent 72%),
+        radial-gradient(circle at 12% 18%, rgba(212, 175, 55, 0.1) 0%, transparent 45%);
+    pointer-events: none;
     z-index: 0;
-    opacity: 0.12;
 }
 
-.hero-bg-image img {
-    filter: saturate(0.85) contrast(0.95);
-}
-
+/* Hairline gold rule closing the section. */
 .hero-overlay {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background:
-        linear-gradient(180deg, rgba(250, 250, 250, 0.55) 0%, rgba(250, 250, 250, 0.8) 70%, var(--bg-dark) 100%),
-        linear-gradient(90deg, rgba(250, 250, 250, 0.6) 0%, rgba(250, 250, 250, 0.15) 55%, rgba(250, 250, 250, 0.4) 100%);
+    pointer-events: none;
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.04) 0%,
+            transparent 18%,
+            transparent 82%,
+            rgba(0, 0, 0, 0.4) 100%);
+    box-shadow: inset 0 -1px 0 rgba(212, 175, 55, 0.22);
 }
 
-/* ── Two-column inner wrapper ── */
+/* ── Inner wrapper: copy left, team right ── */
 .hero-inner {
     position: relative;
     z-index: 2;
@@ -690,10 +691,28 @@ button {
     max-width: 1200px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
     align-items: center;
-    gap: 4rem;
+    gap: clamp(2rem, 4vw, 3.5rem);
     padding: 0 20px;
+}
+
+/* ── Right: the team ── */
+.hero-team {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    min-width: 0;
+}
+
+.hero-team-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 480px;
+    /* Grounds the group on the maroon instead of pasting it on. */
+    filter: drop-shadow(0 26px 46px rgba(0, 0, 0, 0.55));
 }
 
 /* ── Left: content ── */
@@ -702,17 +721,19 @@ button {
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
+    max-width: 620px;
 }
 
+/* Copy sits on a dark photograph, so the palette flips to light-on-dark. */
 .hero-badge {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     padding: 6px 14px;
-    background: rgba(74, 14, 14, 0.05);
-    border: 1px solid rgba(74, 14, 14, 0.18);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(244, 212, 124, 0.45);
     border-radius: 20px;
-    color: var(--color-gold);
+    color: #F4D47C;
     font-family: var(--font-jakarta), var(--font-body);
     font-size: 0.74rem;
     font-weight: 700;
@@ -720,20 +741,22 @@ button {
     text-transform: uppercase;
     margin-bottom: 1.35rem;
     line-height: 1.4;
+    backdrop-filter: blur(6px);
 }
 
 .hero-title {
     font-family: var(--font-jakarta), var(--font-heading);
     font-size: clamp(2.4rem, 4vw, 4rem);
-    color: var(--color-primary);
+    color: #FFFFFF;
     font-weight: 800;
     line-height: 1.12;
     margin-bottom: 1.25rem;
     letter-spacing: -0.03em;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
 }
 
 .hero-title-accent {
-    background: var(--color-gold-gradient);
+    background: linear-gradient(135deg, #F4D47C 0%, #D4AF37 55%, #E8C766 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -744,7 +767,7 @@ button {
 .hero-subtitle {
     font-family: var(--font-jakarta), var(--font-body);
     font-size: clamp(1rem, 1.35vw, 1.15rem);
-    color: var(--text-secondary);
+    color: rgba(250, 248, 245, 0.86);
     max-width: 520px;
     margin: 0 0 1.8rem;
     line-height: 1.65;
@@ -761,7 +784,25 @@ button {
 }
 
 .hero-cta .btn-editorial-solid {
-    box-shadow: none;
+    background: linear-gradient(135deg, #B8960C 0%, #D4AF37 55%, #F4D47C 100%);
+    color: #2D0808;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.hero-cta .btn-editorial-solid:hover {
+    color: #2D0808;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+}
+
+/* Secondary action on a dark photo: light rule and light label. */
+.hero-cta .btn-editorial {
+    color: rgba(250, 248, 245, 0.92);
+    border-bottom-color: rgba(244, 212, 124, 0.75);
+}
+
+.hero-cta .btn-editorial:hover {
+    color: #F4D47C;
+    border-color: transparent;
 }
 
 /* Stats strip */
@@ -770,7 +811,7 @@ button {
     align-items: center;
     gap: 0;
     padding-top: 1.6rem;
-    border-top: 1px solid rgba(74, 14, 14, 0.15);
+    border-top: 1px solid rgba(244, 212, 124, 0.28);
     width: 100%;
 }
 
@@ -784,7 +825,7 @@ button {
 .hero-stat-number {
     font-family: var(--font-heading);
     font-size: clamp(1.4rem, 2.2vw, 2rem);
-    color: var(--color-gold);
+    color: #F4D47C;
     font-weight: 400;
     line-height: 1;
     letter-spacing: -0.5px;
@@ -792,7 +833,7 @@ button {
 
 .hero-stat-label {
     font-size: 0.72rem;
-    color: var(--text-secondary);
+    color: rgba(250, 248, 245, 0.74);
     letter-spacing: 0.5px;
     font-weight: 300;
     text-transform: uppercase;
@@ -801,94 +842,9 @@ button {
 .hero-stat-divider {
     width: 1px;
     height: 40px;
-    background: rgba(74, 14, 14, 0.2);
+    background: rgba(244, 212, 124, 0.25);
     margin: 0 1rem;
     flex-shrink: 0;
-}
-
-/* ── Right: visual ── */
-.hero-visual {
-    position: relative;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    width: 100%;
-}
-
-.hero-visual-backdrop {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    max-width: 480px;
-    background: radial-gradient(circle at 50% 60%, rgba(212, 175, 55, 0.2) 0%, rgba(74, 14, 14, 0.08) 45%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-    filter: blur(24px);
-}
-
-.hero-visual-frame {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    max-width: 460px;
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    overflow: visible;
-    z-index: 1;
-    -webkit-mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
-    filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.12)) drop-shadow(0 4px 10px rgba(74, 14, 14, 0.1));
-}
-
-/* Floating badge on visual */
-.hero-visual-badge {
-    position: absolute;
-    bottom: 0.75rem;
-    left: -0.5rem;
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(74, 14, 14, 0.25);
-    border-radius: var(--radius-xl);
-    padding: 0.65rem 1.25rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.75rem;
-    letter-spacing: 1px;
-    color: var(--color-gold);
-    text-transform: uppercase;
-    font-weight: 600;
-    white-space: nowrap;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    z-index: 2;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
-    50% { transform: translateY(-100px) scale(1.5); opacity: 0.6; }
-}
-
-@keyframes pulse-glow {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-    50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
-}
-
-@keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
 }
 
 /* ===== Luxury Services Section ===== */
@@ -1742,16 +1698,12 @@ button {
         justify-content: center;
     }
 
-    .hero-visual {
-        max-width: 420px;
-        margin: 0 auto;
-        width: 100%;
+    .hero-team {
+        order: -1;
     }
 
-    .hero-visual-badge {
-        bottom: 0.5rem;
-        left: 50%;
-        transform: translateX(-50%);
+    .hero-team-img {
+        max-width: 380px;
     }
 
     .hero-badge {
@@ -2380,8 +2332,8 @@ section {
         text-align: center;
     }
 
-    .hero-visual {
-        max-width: 300px;
+    .hero-team-img {
+        max-width: 280px;
     }
 
     .section-title {
@@ -5530,9 +5482,8 @@ body.modal-open .floating-whatsapp {
     .hero-cta .btn-editorial { min-height: 44px; padding: 11px 8px; font-size: .8rem; letter-spacing: .06em; }
     .hero-cta-full { display: none; }
     .hero-cta-mobile { display: inline; }
-    .hero-visual { order: 4; width: min(100%, 280px); max-width: 100%; margin: 0 auto; }
-    .hero-visual-frame { width: 100%; max-width: 100%; }
-    .hero-visual-badge { max-width: calc(100% - 12px); padding: 7px 11px; font-size: .6rem; letter-spacing: .03em; white-space: normal; text-align: center; justify-content: center; }
+    .hero-team { order: 6; width: min(100%, 320px); max-width: 100%; margin: 0 auto; }
+    .hero-team-img { max-width: 100%; filter: drop-shadow(0 18px 32px rgba(0, 0, 0, 0.5)); }
     .hero-stats { order: 5; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; width: 100%; max-width: 540px; margin: 10px auto 0; padding-top: 18px; text-align: center; }
     .hero-stat { min-width: 0; align-items: center; }
     .hero-stat-divider { display: none; }
@@ -5551,12 +5502,12 @@ body.modal-open .floating-whatsapp {
     .hero-cta { flex-direction: column; align-items: center; }
     .hero-cta .btn-editorial-solid { width: min(100%, 282px); }
     .hero-cta .btn-editorial { width: auto; }
-    .hero-visual { width: min(100%, 250px); }
+    .hero-team { width: min(100%, 260px); }
 }
 
 @media (max-width: 340px) {
     .hero { padding-inline: 12px; }
-    .hero-visual { width: min(100%, 225px); }
+    .hero-team { width: min(100%, 230px); }
     .hero-stat-label { font-size: .66rem; }
 }
 

@@ -10,16 +10,6 @@ export default function HeroSection() {
 
     return (
         <section className="hero" id="hero">
-            <div className="hero-bg-image">
-                <Image
-                    src="/bg-indo-premium.webp"
-                    alt="VERALEX Consulting background"
-                    fill
-                    priority
-                    quality={90}
-                    style={{ objectFit: 'cover', objectPosition: 'center' }}
-                />
-            </div>
             <div className="hero-overlay" />
 
             <div className="hero-inner">
@@ -87,25 +77,18 @@ export default function HeroSection() {
                     </div>
                 </div>
 
-                {/* Right: Visual */}
-                <div className="hero-visual">
-                    <div className="hero-visual-backdrop" />
-                    <div className="hero-visual-frame">
-                        <Image
-                            src="/talent-hero-legal-visual.webp"
-                            alt="Tim Konsultan Hukum VERALEX CONSULTING"
-                            fill
-                            priority
-                            quality={95}
-                            sizes="(max-width: 768px) 340px, (max-width: 1200px) 460px, 500px"
-                            style={{ objectFit: 'contain', objectPosition: 'bottom center' }}
-                        />
-                    </div>
-                    {/* Floating badge */}
-                    <div className="hero-visual-badge">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
-                        <span>{t('hero.visual_badge')}</span>
-                    </div>
+                {/* Right: the team, cut out so it sits directly on the maroon */}
+                <div className="hero-team">
+                    <Image
+                        src="/team-veralex.webp"
+                        alt={t('hero.teamAlt')}
+                        width={1200}
+                        height={1380}
+                        priority
+                        quality={90}
+                        sizes="(max-width: 1024px) 90vw, 480px"
+                        className="hero-team-img"
+                    />
                 </div>
             </div>
         </section>

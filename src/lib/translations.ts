@@ -93,9 +93,9 @@ export const translations: Record<Lang, Record<string, string>> = {
         'hero.cta': 'Konsultasi Sekarang via WA',
         'hero.cta.mobile': 'Konsultasi via WhatsApp',
         'hero.viewServices': 'Lihat Layanan Kami',
+        'hero.teamAlt': 'Tim konsultan hukum VERALEX CONSULTING',
         'hero.response': 'Respon cepat dalam hitungan menit',
         'hero.privacy': 'Privasi klien terjamin',
-        'hero.visual_badge': 'Izin Resmi & Terverifikasi',
 
         // Trust Badges
         'trust.clients': 'Klien Terlayani',
@@ -524,9 +524,9 @@ export const translations: Record<Lang, Record<string, string>> = {
         'hero.cta': 'Consult with Us on WhatsApp',
         'hero.cta.mobile': 'Consult via WhatsApp',
         'hero.viewServices': 'View Our Services',
+        'hero.teamAlt': 'The VERALEX CONSULTING legal consulting team',
         'hero.response': 'Fast response in minutes',
         'hero.privacy': 'Client privacy guaranteed',
-        'hero.visual_badge': 'Official & Verified Licensing',
 
         // Trust Badges
         'trust.clients': 'Happy Clients',
@@ -955,9 +955,9 @@ export const translations: Record<Lang, Record<string, string>> = {
         'hero.cta': '通过 WhatsApp 立即咨询',
         'hero.cta.mobile': 'WhatsApp 咨询',
         'hero.viewServices': '探索我们的服务',
+        'hero.teamAlt': 'VERALEX CONSULTING 法律顾问团队',
         'hero.response': '几分钟内快速响应',
         'hero.privacy': '严格保障客户隐私与商业机密',
-        'hero.visual_badge': '官方合规资质认证',
 
         // Trust Badges
         'trust.clients': '服务企业与客户',
