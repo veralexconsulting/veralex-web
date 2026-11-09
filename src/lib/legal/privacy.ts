@@ -27,7 +27,7 @@ export const privacyDocuments: Record<Lang, LegalDocument> = {
       { id: 'incidents', title: 'Suspected security incidents', paragraphs: ['If you suspect unauthorized account or project access, an exposed link, or a data incident, contact VERALEX promptly using the channels below. VERALEX must assess incidents and provide any notifications required by applicable law. Please include enough information to help identify the affected account or project without sending identity documents through the portal.'] },
       { id: 'eligibility', title: 'Children and service eligibility', paragraphs: ['The services described are directed primarily to business clients and people acting for them. If information concerning a child is relevant to a particular service, its handling must be assessed against the applicable rules and the specific circumstances. This policy does not impose an unverified minimum age for all website visitors.'] },
       { id: 'changes', title: 'Changes to this policy', paragraphs: ['VERALEX may revise this policy as its services, technology, or legal requirements change. Material changes should be communicated through appropriate channels. The last-updated date shown above will change when this policy is revised.'] },
-      { id: 'contact', title: 'Contact', paragraphs: ['Contact VERALEX at admin@veralexconsulting.com or WhatsApp +62 812 1947 6385. For a data request or suspected access problem, provide only the information needed to identify the issue; do not send identity documents through the tracking portal.'] },
+      { id: 'contact', title: 'Contact', paragraphs: ['Contact VERALEX at veralexconsulting@gmail.com or WhatsApp +62 812 1947 6385. For a data request or suspected access problem, provide only the information needed to identify the issue; do not send identity documents through the tracking portal.'] },
     ],
   },
   id: {
@@ -53,7 +53,7 @@ export const privacyDocuments: Record<Lang, LegalDocument> = {
       { id: 'incidents', title: 'Dugaan insiden keamanan', paragraphs: ['Jika Anda menduga ada akses akun atau proyek tanpa izin, tautan tersebar, atau insiden data, segera hubungi VERALEX melalui kanal di bawah. VERALEX wajib menilai insiden dan memberikan pemberitahuan yang diwajibkan hukum yang berlaku. Sampaikan informasi secukupnya agar akun atau proyek terkait dapat dikenali, tanpa mengirim dokumen identitas melalui portal.'] },
       { id: 'eligibility', title: 'Anak dan kelayakan layanan', paragraphs: ['Layanan yang dijelaskan terutama ditujukan bagi klien usaha dan orang yang bertindak untuk mereka. Jika data anak relevan untuk layanan tertentu, pengelolaannya harus dinilai menurut aturan yang berlaku dan keadaan khususnya. Kebijakan ini tidak menetapkan batas usia minimum yang belum diverifikasi bagi seluruh pengunjung situs.'] },
       { id: 'changes', title: 'Perubahan kebijakan', paragraphs: ['VERALEX dapat memperbarui kebijakan ini jika layanan, teknologi, atau persyaratan hukum berubah. Perubahan penting sepatutnya diberitahukan melalui kanal yang sesuai. Tanggal pembaruan di atas akan disesuaikan saat kebijakan ini direvisi.'] },
-      { id: 'contact', title: 'Kontak', paragraphs: ['Hubungi VERALEX melalui admin@veralexconsulting.com atau WhatsApp +62 812 1947 6385. Untuk permintaan data atau masalah akses, berikan hanya informasi yang diperlukan untuk menjelaskan masalah; jangan mengirim dokumen identitas melalui portal pelacakan.'] },
+      { id: 'contact', title: 'Kontak', paragraphs: ['Hubungi VERALEX melalui veralexconsulting@gmail.com atau WhatsApp +62 812 1947 6385. Untuk permintaan data atau masalah akses, berikan hanya informasi yang diperlukan untuk menjelaskan masalah; jangan mengirim dokumen identitas melalui portal pelacakan.'] },
     ],
   },
   zh: {
@@ -79,7 +79,7 @@ export const privacyDocuments: Record<Lang, LegalDocument> = {
       { id: 'incidents', title: '疑似安全事件', paragraphs: ['如您怀疑账户或项目遭未经授权访问、链接泄露或发生数据事件，请立即通过下方渠道联系 VERALEX。VERALEX 须评估事件并依法提供必要通知。请提供足以识别相关账户或项目的信息，且不要通过门户发送身份证件。'] },
       { id: 'eligibility', title: '未成年人及服务适用对象', paragraphs: ['所述服务主要面向企业客户及代表企业行事的人员。若某项服务涉及未成年人资料，应依照适用规则及具体情况评估其处理。本政策不对所有网站访问者设定未经核实的最低年龄限制。'] },
       { id: 'changes', title: '政策变更', paragraphs: ['随着服务、技术或法律要求变化，VERALEX 可能修订本政策。重大变更应通过适当渠道通知。本政策修订时，上方的更新日期也会相应调整。'] },
-      { id: 'contact', title: '联系方式', paragraphs: ['您可通过 admin@veralexconsulting.com 或 WhatsApp +62 812 1947 6385 联系 VERALEX。提出数据请求或报告访问问题时，请仅提供说明问题所需的信息；不要通过进度门户发送身份证件。'] },
+      { id: 'contact', title: '联系方式', paragraphs: ['您可通过 veralexconsulting@gmail.com 或 WhatsApp +62 812 1947 6385 联系 VERALEX。提出数据请求或报告访问问题时，请仅提供说明问题所需的信息；不要通过进度门户发送身份证件。'] },
     ],
   },
 };

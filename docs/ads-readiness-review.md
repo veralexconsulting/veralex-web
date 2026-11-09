@@ -38,7 +38,7 @@ The Rp9.900.000 on the homepage is **Starter Business**, a PT PMDN plus trademar
 3. **Legal review:** Check all regulatory thresholds and time estimates in `src/lib/serviceContent.ts` and `src/data/services/{en,zh}` before using them in ad copy. In particular: PT PMA Rp10 billion investment/paid-up capital, director domicile and Work KITAS; PT PMDN founder/capital/virtual office requirements and 3–5 day timing; PT Perorangan UMKM threshold, minimum age and conversion process; Investor ITAS permitted work, renewals, family eligibility and 2–4 week timing; KITAS DPKK USD 1,200/RPTKA inclusion; Visa C2/D2 category and validity; DJKI trademark publication and 12–18 month timing, protection and fees. Claims are preserved pending counsel review, except the clear PT Perorangan deed contradiction.
 4. **Official relationship:** Verify any claim about notary partnership or government affiliation before restoring such language. Footer copy now describes assistance through official processes without implying endorsement.
 5. **Tracking account:** Supply a GTM container ID and configure GA4 plus Google Ads conversion tags from one container. Configure `whatsapp_click` and `phone_click` as distinct lead actions; count a WhatsApp click as a lead *intent*, not a completed sale. A successful marketing form does not currently exist, so `form_submit` must remain unconfigured until a real success state is added.
-6. **Contact and identity:** Verify phone +62 812 1947 6385, email admin@veralexconsulting.com, address, opening hours, and testimonials with business records.
+6. **Contact and identity:** Verify phone +62 812 1947 6385, email veralexconsulting@gmail.com, address, opening hours, and testimonials with business records.
 
 ## Tag setup and event contract
 

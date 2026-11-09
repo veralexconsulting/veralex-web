@@ -26,7 +26,7 @@ const en: LegalDocument = {
     {id:'privacy',title:'Privacy',paragraphs:['Personal data handling is explained in the Privacy Policy. Review it for information on Google sign-in, confidential project links, external communication channels, service providers, and your applicable rights.']},
     {id:'changes',title:'Changes to these terms',paragraphs:['VERALEX may update these terms as its services or applicable law change. Material changes should be communicated through appropriate channels. Continued website use alone is not assumed to establish valid consent where a separate agreement or consent is legally necessary.']},
     {id:'law',title:'Applicable law and disputes',paragraphs:['Indonesian law applies to these website terms, subject to mandatory rules and the circumstances of a particular engagement. Parties should first contact each other to discuss a concern. Any agreed dispute process in a separate service contract remains relevant. These website terms do not establish an exclusive court or mandatory arbitration forum.']},
-    {id:'contact',title:'Contact',paragraphs:['Contact VERALEX at admin@veralexconsulting.com or WhatsApp +62 812 1947 6385. Service-specific questions, including cancellation or refunds, can be discussed through these channels. Do not send identity documents through the project tracking portal.']},
+    {id:'contact',title:'Contact',paragraphs:['Contact VERALEX at veralexconsulting@gmail.com or WhatsApp +62 812 1947 6385. Service-specific questions, including cancellation or refunds, can be discussed through these channels. Do not send identity documents through the project tracking portal.']},
   ],
 };
 
@@ -52,7 +52,7 @@ const id: LegalDocument = {
     {id:'privacy',title:'Privasi',paragraphs:['Pengelolaan data pribadi dijelaskan dalam Kebijakan Privasi. Bacalah untuk mengetahui informasi mengenai login Google, tautan proyek rahasia, kanal komunikasi eksternal, penyedia layanan, dan hak Anda yang berlaku.']},
     {id:'changes',title:'Perubahan ketentuan',paragraphs:['VERALEX dapat memperbarui ketentuan ini seiring perubahan layanan atau hukum. Perubahan penting sebaiknya disampaikan melalui kanal yang sesuai. Penggunaan situs yang berlanjut saja tidak dianggap otomatis sebagai persetujuan yang sah jika secara hukum diperlukan perjanjian atau persetujuan tersendiri.']},
     {id:'law',title:'Hukum yang berlaku dan sengketa',paragraphs:['Hukum Indonesia berlaku untuk ketentuan situs ini, dengan memperhatikan aturan wajib dan keadaan tiap hubungan layanan. Para pihak sebaiknya terlebih dahulu saling menghubungi untuk membahas persoalan. Mekanisme sengketa yang disepakati dalam kontrak layanan tersendiri tetap relevan. Ketentuan situs ini tidak menetapkan pengadilan eksklusif atau arbitrase wajib.']},
-    {id:'contact',title:'Kontak',paragraphs:['Hubungi VERALEX melalui admin@veralexconsulting.com atau WhatsApp +62 812 1947 6385. Pertanyaan mengenai layanan tertentu, termasuk pembatalan atau pengembalian dana, dapat dibahas melalui kanal tersebut. Jangan mengirim dokumen identitas melalui portal pelacakan proyek.']},
+    {id:'contact',title:'Kontak',paragraphs:['Hubungi VERALEX melalui veralexconsulting@gmail.com atau WhatsApp +62 812 1947 6385. Pertanyaan mengenai layanan tertentu, termasuk pembatalan atau pengembalian dana, dapat dibahas melalui kanal tersebut. Jangan mengirim dokumen identitas melalui portal pelacakan proyek.']},
   ]
 };
 
@@ -78,7 +78,7 @@ const zh: LegalDocument = {
     {id:'privacy',title:'隐私',paragraphs:['个人数据处理另见《隐私政策》，其中说明 Google 登录、保密项目链接、外部沟通渠道、服务提供商以及适用的个人权利。']},
     {id:'changes',title:'条款变更',paragraphs:['VERALEX 可因服务或适用法律变化更新本条款。重大变更应通过适当渠道通知。若法律要求单独协议或同意，不能仅凭继续使用网站推定已取得有效同意。']},
     {id:'law',title:'适用法律与争议',paragraphs:['本网站条款适用印度尼西亚法律，同时须考虑强制性规则及具体服务关系。发生问题时，双方宜先相互联系沟通。单独服务合同中约定的争议解决机制仍有相关性。本网站条款不设定专属法院或强制仲裁。']},
-    {id:'contact',title:'联系方式',paragraphs:['您可通过 admin@veralexconsulting.com 或 WhatsApp +62 812 1947 6385 联系 VERALEX。有关具体服务、取消或退款的问题也可通过这些渠道咨询。请勿通过项目进度门户发送身份证件。']},
+    {id:'contact',title:'联系方式',paragraphs:['您可通过 veralexconsulting@gmail.com 或 WhatsApp +62 812 1947 6385 联系 VERALEX。有关具体服务、取消或退款的问题也可通过这些渠道咨询。请勿通过项目进度门户发送身份证件。']},
   ]
 };
 

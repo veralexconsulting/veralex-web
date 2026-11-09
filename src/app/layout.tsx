@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
 import MarketingChrome from "@/components/MarketingChrome";
 import SiteChrome from "@/components/SiteChrome";
+import { contactEmail, socialAccounts } from "@/lib/social";
 import "./globals.css";
 
 const inter = Inter({
@@ -95,7 +96,7 @@ export default function RootLayout({
               description: "Konsultan hukum profesional untuk pendirian PT, CV, PT PMA, pendaftaran merek, hak cipta, ITAS, KITAS, dan legalitas bisnis di Indonesia.",
               url: "https://www.veralexconsulting.com",
               telephone: "+6281219476385",
-              email: "admin@veralexconsulting.com",
+              email: contactEmail,
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "Jl. Utama Raya No.348, RT.003/RW.026, Kayuringin Jaya, Kec. Bekasi Sel.",
@@ -129,7 +130,8 @@ export default function RootLayout({
               ],
               sameAs: [
                 "https://wa.me/6281219476385",
-                "https://www.veralexconsulting.com"
+                "https://www.veralexconsulting.com",
+                ...socialAccounts.map((account) => account.href)
               ],
               hasOfferCatalog: {
                 "@type": "OfferCatalog",

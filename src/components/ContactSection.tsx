@@ -137,7 +137,7 @@ export default function ContactSection() {
                     {/* Left Column: Contact Channels */}
                     <div className="contact-info-side">
                         {/* Email Card */}
-                        <a href="mailto:admin@veralexconsulting.com" className="corporate-contact-item">
+                        <a href="mailto:veralexconsulting@gmail.com" className="corporate-contact-item">
                             <div className="contact-item-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                                     <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -145,7 +145,7 @@ export default function ContactSection() {
                             </div>
                             <div className="contact-item-content">
                                 <h5>Email</h5>
-                                <p>admin@veralexconsulting.com</p>
+                                <p>veralexconsulting@gmail.com</p>
                                 <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>{t('contact.email_sub')}</p>
                             </div>
                         </a>
