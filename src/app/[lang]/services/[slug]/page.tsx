@@ -112,7 +112,7 @@ export default async function ServicePage({ params }: Props) {
         return <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceBreadcrumbJsonLd(serviceBreadcrumbs(slug, lang))) }} />
-            <ServiceDetailContent service={catalogService} relatedServices={serviceData.filter((item) => item.slug !== slug).slice(0, 4)} />
+            <ServiceDetailContent service={catalogService} relatedServices={serviceData.filter((item) => item.slug !== slug).slice(0, 4)} lang={lang} />
         </>;
     }
 

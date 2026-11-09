@@ -4,6 +4,7 @@ import { serviceHreflangs } from '@/lib/servicePageData';
 import type { Metadata } from 'next';
 import ServiceDetailContent from '@/components/ServiceDetailContent';
 import { serviceBreadcrumbs, serviceBreadcrumbJsonLd } from '@/lib/serviceBreadcrumbs';
+import { detailedServiceContent, defaultFaqs, type FAQItem } from '@/lib/serviceContent';
 
 interface Props {
     params: Promise<{ slug: string }>;
@@ -85,6 +86,24 @@ export default async function ServiceDetailPage({ params }: Props) {
         .filter((s) => s.slug !== slug && s.category === service.category)
         .slice(0, 4);
 
+    /*
+     * FAQPage markup. Until now the FAQ text rendered but carried no structured
+     * data, so none of it was eligible for a rich result. The questions come
+     * from the same object the page renders, so the markup can never drift from
+     * what a visitor reads — which is exactly what Google penalises.
+     */
+    const detail = detailedServiceContent[slug];
+    const faqSource: FAQItem[] = detail?.faqs?.length ? detail.faqs : defaultFaqs;
+    const faqJsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqSource.map((item) => ({
+            '@type': 'Question',
+            name: item.question,
+            acceptedAnswer: { '@type': 'Answer', text: item.answer },
+        })),
+    };
+
     return (
         <>
             <script
@@ -96,15 +115,24 @@ export default async function ServiceDetailPage({ params }: Props) {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(faqJsonLd),
+                }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
                     __html: JSON.stringify({
                         "@context": "https://schema.org",
                         "@type": "Service",
+                        "@id": `https://www.veralexconsulting.com/services/${slug}#service`,
                         "name": service.title,
                         "alternateName": service.titleEn,
                         "description": service.description,
+                        "serviceType": service.category,
                         "provider": {
                             "@type": "LegalService",
-                            "name": "VERALEX CONSULTING",
+                            "@id": "https://www.veralexconsulting.com/#organization",
+                            "name": "PT. Veralex Consulting Indonesia",
                             "url": "https://www.veralexconsulting.com",
                             "telephone": "+6281219476385",
                         },
@@ -120,12 +148,13 @@ export default async function ServiceDetailPage({ params }: Props) {
                             ...(service.priceNote ? { "description": service.priceNote.id } : {}),
                             ...(service.priceUnit ? { "eligibleQuantity": { "@type": "QuantitativeValue", "value": 1, "unitText": service.priceUnit.id } } : {}),
                             "url": `https://www.veralexconsulting.com/services/${slug}`,
+                            "availability": "https://schema.org/InStock",
                         },
                         "url": `https://www.veralexconsulting.com/services/${slug}`,
                     })
                 }}
             />
-            <ServiceDetailContent service={service} relatedServices={relatedServices} />
+            <ServiceDetailContent service={service} relatedServices={relatedServices} lang="id" />
         </>
     );
 }
