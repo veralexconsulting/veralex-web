@@ -185,19 +185,9 @@ export const translations: Record<Lang, Record<string, string>> = {
         'services.pse.asing.title': 'Pendaftaran PSE Asing',
         'services.pse.asing.desc': 'Pendaftaran PSE untuk penyelenggara asing yang melayani pengguna di Indonesia.',
 
-        // Promo Banner
-        'promo.tag': 'PENAWARAN SPESIAL',
-        'promo.title': 'Dirikan PT + Daftarkan Merek Sekaligus?',
-        'promo.subtitle': 'Dengan paket Starter Business hanya Rp13.000.000, Anda mendapatkan:',
-        'promo.save': 'Hemat Rp3.000.000 dibanding beli satuan',
-        'promo.cta': 'Ambil Paket Ini Sekarang',
-        'promo.allPackages': 'Lihat Semua Paket',
-        'promo.b1': 'Pendirian PT PMDN lengkap',
-        'promo.b2': 'Pendaftaran Merek (1 kelas)',
-        'promo.b3': 'Website Company Profile GRATIS',
-        'promo.b4': 'NIB + Izin Usaha',
-        'promo.b5': 'NPWP Perusahaan',
-        'promo.b6': 'Konsultasi Hukum Bisnis',
+        // Promo Banner keys removed: the component was unused and its copy
+        // duplicated the package price as a literal. Prices live in
+        // src/data/pricing.ts now.
 
         // Pricing
         'pricing.title': 'Paket Bundling',
@@ -348,7 +338,6 @@ export const translations: Record<Lang, Record<string, string>> = {
         'detail.documents': 'Dokumen & Persyaratan',
         'wa.message.general': 'Halo Kak Vheilljei, saya ingin konsultasi tentang layanan legalitas.',
         'wa.message.hero': 'Halo Kak Vheilljei, saya ingin konsultasi gratis tentang layanan legalitas.',
-        'wa.message.promo': 'Halo Kak Vheilljei, saya tertarik dengan Paket Starter Business Rp13.000.000.',
         'wa.message.urgency': 'Halo Kak Vheilljei, saya ingin tahu promo bulan ini.',
         'wa.message.legal': 'Halo Kak Vheilljei, saya ingin konsultasi legalitas bisnis.',
         'wa.message.services': 'Halo Kak Vheilljei, saya tertarik dengan layanan legalitas.',
@@ -639,19 +628,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         'services.pse.asing.title': 'PSE Registration (Foreign)',
         'services.pse.asing.desc': 'PSE registration for foreign operators serving users in Indonesia.',
 
-        // Promo Banner
-        'promo.tag': 'SPECIAL OFFER',
-        'promo.title': 'Establish PT + Register Trademark?',
-        'promo.subtitle': 'With Starter Business package for only Rp13.000.000, you get:',
-        'promo.save': 'Save Rp3.000.000 compared to buying separately',
-        'promo.cta': 'Get This Package Now',
-        'promo.allPackages': 'View All Packages',
-        'promo.b1': 'Complete PT PMDN Establishment',
-        'promo.b2': 'Trademark Registration (1 class)',
-        'promo.b3': 'FREE Company Profile Website',
-        'promo.b4': 'NIB + Business License',
-        'promo.b5': 'Company Tax ID (NPWP)',
-        'promo.b6': 'Business Legal Consultation',
+        // Promo Banner keys removed (component deleted, price lives in data/pricing).
 
         // Pricing
         'pricing.title': 'Bundle Packages',
@@ -802,7 +779,6 @@ export const translations: Record<Lang, Record<string, string>> = {
         'detail.documents': 'Documents & Requirements',
         'wa.message.general': 'Hello Kak Vheilljei, I would like to ask about your legal services.',
         'wa.message.hero': 'Hello Kak Vheilljei, I would like a free consultation about your legal services.',
-        'wa.message.promo': 'Hello Kak Vheilljei, I am interested in the Starter Business package at Rp13,000,000.',
         'wa.message.urgency': 'Hello Kak Vheilljei, I would like to know about this month’s promotion.',
         'wa.message.legal': 'Hello Kak Vheilljei, I would like to discuss business legal services.',
         'wa.message.services': 'Hello Kak Vheilljei, I am interested in your legal services.',
@@ -1093,19 +1069,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         'services.pse.asing.title': 'PSE 电子系统登记（外国）',
         'services.pse.asing.desc': '为面向印尼用户的外国运营者办理 PSE 登记。',
 
-        // Promo Banner
-        'promo.tag': '特别优惠套餐',
-        'promo.title': '同时办理公司设立与商标注册？',
-        'promo.subtitle': '选择 Starter Business 初创套餐，仅需 Rp13.000.000，即可尊享：',
-        'promo.save': '相比单独办理，省去 Rp3.000.000 费用',
-        'promo.cta': '立即申购此套餐',
-        'promo.allPackages': '查看所有套餐',
-        'promo.b1': '全套 PT PMDN 公司设立服务',
-        'promo.b2': '1个类别的商标注册申请',
-        'promo.b3': '免费赠送企业官网设计与上线',
-        'promo.b4': 'NIB 商业登记号 + 经营许可',
-        'promo.b5': '企业专属税务登记证 (NPWP)',
-        'promo.b6': '一对一商业法律咨询服务',
+        // Promo Banner keys removed (component deleted, price lives in data/pricing).
 
         // Pricing
         'pricing.title': '精选打包套餐',
@@ -1256,7 +1220,6 @@ export const translations: Record<Lang, Record<string, string>> = {
         'detail.documents': '文件与要求',
         'wa.message.general': 'Kak Vheilljei 您好，我想咨询法律服务。',
         'wa.message.hero': 'Kak Vheilljei 您好，我想免费咨询法律服务。',
-        'wa.message.promo': 'Kak Vheilljei 您好，我对 Rp13.000.000 的 Starter Business 套餐感兴趣。',
         'wa.message.urgency': 'Kak Vheilljei 您好，我想了解本月优惠。',
         'wa.message.legal': 'Kak Vheilljei 您好，我想咨询企业法律服务。',
         'wa.message.services': 'Kak Vheilljei 您好，我对贵公司的法律服务感兴趣。',

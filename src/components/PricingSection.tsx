@@ -2,6 +2,7 @@
 
 import { useLang } from '@/lib/useLang';
 import { whatsappHref } from '@/lib/marketing';
+import { packages as pricePackages, formatRupiah } from '@/data/pricing';
 import './PricingSection.css';
 
 const CHECK = 'M4.5 12.5l4.5 4.5L19.5 6.5';
@@ -25,7 +26,8 @@ const Icon = ({ d, size = 16, strokeWidth = 2 }: { d: string; size?: number; str
     </svg>
 );
 
-/* "Rp13.000.000" -> "13" unit, "000.000" remainder. Keeps the headline digit-group calm. */
+/* Splits a formatted price into its leading millions and the ".000.000"
+ * remainder, so the headline digit-group stays calm. */
 const splitPrice = (price: string) => {
     const digits = price.replace(/\D/g, '');
     if (digits.length < 7) return { head: price, tail: '' };
@@ -38,12 +40,22 @@ const splitPrice = (price: string) => {
 export default function PricingSection() {
     const { t } = useLang();
 
+    /*
+     * Prices come from src/data/pricing.ts, never typed here. The package copy
+     * (names, summaries, feature labels) is translation keys and stays local;
+     * only the money is centralised so the homepage, promo banner and WhatsApp
+     * message can never disagree. `verified: false` packages are pending the
+     * business confirming inclusions and the strike-through price — see the
+     * module header and docs/AUDIT.md. They still render the carried-over
+     * figures, which is exactly what the site shows today.
+     */
+    const priceById = Object.fromEntries(pricePackages.map((p) => [p.id, p]));
     const packages = [
         {
             key: 'starter',
             name: t('pricing.starter'),
-            price: 'Rp13.000.000',
-            originalPrice: 'Rp16.000.000',
+            price: formatRupiah(priceById.starter.price),
+            originalPrice: priceById.starter.promo?.originalPrice ? formatRupiah(priceById.starter.promo.originalPrice) : undefined,
             summary: t('pricing.starter.summary'),
             features: [
                 t('services.company.pt.title'),
@@ -57,8 +69,8 @@ export default function PricingSection() {
         {
             key: 'investor',
             name: t('pricing.investor'),
-            price: 'Rp36.000.000',
-            originalPrice: 'Rp41.000.000',
+            price: formatRupiah(priceById.investor.price),
+            originalPrice: priceById.investor.promo?.originalPrice ? formatRupiah(priceById.investor.promo.originalPrice) : undefined,
             summary: t('pricing.investor.summary'),
             badge: t('pricing.bestValue'),
             features: [
@@ -74,8 +86,8 @@ export default function PricingSection() {
         {
             key: 'premium',
             name: t('pricing.premium'),
-            price: 'Rp49.000.000',
-            originalPrice: 'Rp59.000.000',
+            price: formatRupiah(priceById.premium.price),
+            originalPrice: priceById.premium.promo?.originalPrice ? formatRupiah(priceById.premium.promo.originalPrice) : undefined,
             summary: t('pricing.premium.summary'),
             features: [
                 t('services.company.pma.title'),
@@ -101,9 +113,9 @@ export default function PricingSection() {
 
                 <div className="pricing-grid">
                     {packages.map((pkg) => {
-                        const orig = parseInt(pkg.originalPrice.replace(/\D/g, ''), 10);
+                        const orig = pkg.originalPrice ? parseInt(pkg.originalPrice.replace(/\D/g, ''), 10) : 0;
                         const curr = parseInt(pkg.price.replace(/\D/g, ''), 10);
-                        const juta = ((orig - curr) / 1000000).toFixed(1).replace(/\.0$/, '');
+                        const juta = orig ? ((orig - curr) / 1000000).toFixed(1).replace(/\.0$/, '') : '';
                         const { head, tail } = splitPrice(pkg.price);
 
                         return (
@@ -124,21 +136,25 @@ export default function PricingSection() {
                                 </div>
 
                                 <div className="pricing-figure">
-                                    <p className="pricing-original">
-                                        <span className="pricing-original-label">{t('pricing.regularPrice')}</span>
-                                        <s>{pkg.originalPrice}</s>
-                                    </p>
+                                    {pkg.originalPrice && (
+                                        <p className="pricing-original">
+                                            <span className="pricing-original-label">{t('pricing.regularPrice')}</span>
+                                            <s>{pkg.originalPrice}</s>
+                                        </p>
+                                    )}
                                     <p className="pricing-price">
                                         <span className="pricing-price-currency">Rp</span>
                                         <span className="pricing-price-head">{head}</span>
                                         <span className="pricing-price-tail">{tail}</span>
                                     </p>
-                                    <p className="pricing-save">
-                                        <Icon d={CHECK} size={13} strokeWidth={2.4} />
-                                        {t('pricing.save')} Rp{juta}jt
-                                        <span className="pricing-save-sep" aria-hidden="true">·</span>
-                                        {t('pricing.vsSeparate')}
-                                    </p>
+                                    {orig > 0 && (
+                                        <p className="pricing-save">
+                                            <Icon d={CHECK} size={13} strokeWidth={2.4} />
+                                            {t('pricing.save')} Rp{juta}jt
+                                            <span className="pricing-save-sep" aria-hidden="true">·</span>
+                                            {t('pricing.vsSeparate')}
+                                        </p>
+                                    )}
                                 </div>
 
                                 <div className="pricing-divider" aria-hidden="true" />
