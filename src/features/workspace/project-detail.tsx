@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useWorkspace, currentStage, nextTask, formatDate, formatDateTime } from './store';
 import { statusLabels, priorityLabels, type Project, type ProjectStatus, type ProjectAccessLink } from './model';
 import { Badge, ConfirmDialog, EmptyState, PageHeader, ProgressSummary, Timeline } from './ui';
@@ -75,10 +75,17 @@ function ProjectSettings({ project, onArchive, onDelete }: { project: Project; o
   const [title, setTitle] = useState(project.title); const [status, setStatus] = useState<ProjectStatus>(project.status);
   const [pic, setPic] = useState(project.picId); const [followUp, setFollowUp] = useState(project.followUpAt);
   const [notes, setNotes] = useState(project.notes); const [supporting, setSupporting] = useState(project.supportingIds); const [error, setError] = useState(''); const [dirty,setDirty]=useState(false); const [saving,setSaving]=useState(false);
-  useEffect(()=>{
-    if(dirty)return;
-    setTitle(project.title);setStatus(project.status);setPic(project.picId);setFollowUp(project.followUpAt);setNotes(project.notes);setSupporting(project.supportingIds);
-  },[project,dirty]);
+  // React's documented "adjust state when a prop changes" pattern: react-during-
+  // render instead of an effect, so an incoming server update resets the form only
+  // while the admin has no unsaved edits. Calling setState in an effect here is
+  // what react-hooks/set-state-in-effect forbids.
+  const [syncedFrom, setSyncedFrom] = useState(project);
+  if (project !== syncedFrom) {
+    setSyncedFrom(project);
+    if (!dirty) {
+      setTitle(project.title);setStatus(project.status);setPic(project.picId);setFollowUp(project.followUpAt);setNotes(project.notes);setSupporting(project.supportingIds);
+    }
+  }
   async function save(event: React.FormEvent) {
     event.preventDefault(); setError(''); if (!title.trim()) return setError('Judul proyek wajib diisi.');
     const changes = [];

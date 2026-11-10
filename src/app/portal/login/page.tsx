@@ -1,5 +1,5 @@
 'use client';
-import { useEffect,useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { workspaceBrowser,workspaceOAuthRedirectTo } from '@/lib/workspace/browser';
 import { ClientPortalFrame,useClientLocale } from '@/features/workspace/client-locale';
@@ -11,9 +11,11 @@ const BENEFITS=[['benefit1','benefit1copy'],['benefit2','benefit2copy'],['benefi
 
 function LoginContent(){
     const {t}=useClientLocale();
-    const [error,setError]=useState('');
+    // Read the OAuth callback flag during the lazy state initialiser instead of
+    // an effect. The page is client-rendered, so window is available on first
+    // render and the redirect result shows immediately.
+    const [error,setError]=useState(() => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('error')==='callback' ? t('authError') : '');
     const [busy,setBusy]=useState(false);
-    useEffect(()=>{if(new URLSearchParams(window.location.search).get('error')==='callback')setError(t('authError'));},[t]);
     async function login(){setBusy(true);setError('');try{const {error:authError}=await workspaceBrowser().auth.signInWithOAuth({provider:'google',options:{redirectTo:workspaceOAuthRedirectTo('portal')}});if(authError)throw authError;}catch{setError(t('authError'));setBusy(false);}}
     return <ClientPortalFrame>
         <main className="workspace ws-login-page">

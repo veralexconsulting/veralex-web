@@ -64,11 +64,22 @@ export default function OwnerDashboard({ unavailable = false }: { unavailable?: 
 
     useEffect(() => {
         const controller = new AbortController();
-        if (data) setRefreshing(true); else setLoading(true);
-        setError(null);
-        load(controller.signal)
-            .catch((cause: unknown) => { if (!controller.signal.aborted) setError(cause instanceof Error ? cause.message : 'Data analitik belum dapat dimuat.'); })
-            .finally(() => { if (!controller.signal.aborted) { setLoading(false); setRefreshing(false); } });
+        // Loading flags are set inside the async body, after the first await, so the
+        // effect never calls setState synchronously during commit
+        // (react-hooks/set-state-in-effect). Aborting still skips every update.
+        (async () => {
+            // Yield one microtask first so no setState runs during the commit phase.
+            await Promise.resolve();
+            if (controller.signal.aborted) return;
+            setRefreshing(Boolean(data)); setLoading(!data); setError(null);
+            try {
+                await load(controller.signal);
+            } catch (cause: unknown) {
+                if (!controller.signal.aborted) setError(cause instanceof Error ? cause.message : 'Data analitik belum dapat dimuat.');
+            } finally {
+                if (!controller.signal.aborted) { setLoading(false); setRefreshing(false); }
+            }
+        })();
         return () => controller.abort();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [load, attempt]);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useWorkspace } from './store';
 import { taskLabels, type Project, type Stage, type Task, type TaskStatus } from './model';
 import { ConfirmDialog } from './ui';
@@ -63,7 +63,7 @@ export function ProjectWorkflowEditor({ project }: { project: Project }) {
         <label className="ws-check ws-span-2"><input type="checkbox" checked={stageDraft.clientVisible} onChange={event => setStageDraft({ ...stageDraft, clientVisible: event.target.checked })} />Tampilkan tahap kepada klien</label>
         <div className="ws-inline-actions ws-span-2"><button className="ws-button ws-button-primary">Simpan tahap</button><button type="button" className="ws-button ws-button-quiet" onClick={() => setEditId('')}>Batal</button></div>
       </form>}
-      <div className="ws-task-list">{stage.tasks.map((task, index) => <TaskEditor key={task.id} projectId={project.id} stage={stage} task={task} index={index} count={stage.tasks.length} onEdit={(changes, reason) => updateTask(stage.id, task.id, changes, reason)} onMove={direction => moveTask(stage, index, direction)} onRemove={() => removeTask(stage, task)} />)}</div>
+      <div className="ws-task-list">{stage.tasks.map((task, index) => <TaskEditor key={`${task.id}:${task.status}:${task.note ?? ''}:${task.title}:${task.conditional ? 1 : 0}:${task.dueAt ?? ''}`} projectId={project.id} stage={stage} task={task} index={index} count={stage.tasks.length} onEdit={(changes, reason) => updateTask(stage.id, task.id, changes, reason)} onMove={direction => moveTask(stage, index, direction)} onRemove={() => removeTask(stage, task)} />)}</div>
       <AddTask stage={stage} onAdd={(title, conditional) => commit(project.stages.map(item => item.id === stage.id ? { ...item, tasks: [...item.tasks, { id: newId(), title, conditional, status: 'pending' }] } : item), `menambahkan tugas ${title}`)} />
       <p className="ws-stage-criteria"><strong>Kriteria selesai:</strong> {stage.completionCriteria}</p>
     </section>)}
@@ -84,8 +84,9 @@ function TaskEditor({ projectId, stage, task, index, count, onEdit, onMove, onRe
   const { setTaskStatus } = useWorkspace();
   const [editing, setEditing] = useState(false); const [title, setTitle] = useState(task.title); const [conditional, setConditional] = useState(task.conditional); const [dueAt,setDueAt]=useState(task.dueAt||'');
   const [status, setStatus] = useState<TaskStatus>(task.status); const [reason, setReason] = useState(task.note || ''); const [error, setError] = useState(''); const [saving, setSaving] = useState(false);
-  useEffect(()=>{setStatus(task.status);setReason(task.note||'');setError('');},[task.status,task.note]);
-  useEffect(()=>{setTitle(task.title);setConditional(task.conditional);setDueAt(task.dueAt||'');},[task.title,task.conditional,task.dueAt]);
+  // Local edits are seeded from props once; the parent remounts this editor via a
+  // key that includes these fields, so a server update arrives as fresh initial
+  // state instead of being copied in by an effect (react-hooks/set-state-in-effect).
   async function saveStatus() {
     setSaving(true);setError('');
     try { await setTaskStatus(projectId, task.id, status, reason); }
