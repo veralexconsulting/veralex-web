@@ -1,4 +1,4 @@
-import { notFound, redirect } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import type { Metadata } from 'next';
 import {
     getServicePageData,
@@ -86,7 +86,7 @@ export default async function ServicePage({ params }: Props) {
     // The Indonesian version of this page is /services/[slug] — no id locale
     // copy exists, so send visitors to the real Indonesian page instead of
     // silently rendering the English one.
-    if (lang === 'id') redirect(`/services/${slug}`);
+    if (lang === 'id') permanentRedirect(`/services/${slug}`);
 
     const service = getServicePageData(lang, slug);
     if (!service) {

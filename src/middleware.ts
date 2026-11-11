@@ -8,8 +8,33 @@ const WORKSPACE_ADMIN_PUBLIC = ['/admin/login','/admin/aktivasi'];
 const OWNER_UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const OWNER_AREA = ['/aksesraffi','/aksesraffi/login','/aksesraffi/ganti-password'];
 
+/*
+ * /id/* is not a real route: Indonesian is the default language and lives on
+ * the unprefixed URLs (/services/pt-pma, /about-us). A 307 from a route's own
+ * `redirect()` only answers for the handful of pages that exist under /[lang];
+ * everything else (/id, /id/about-us, any typo under the prefix) simply
+ * 404'd. They also lose their authority signal, because 307 is temporary.
+ *
+ * Answering here, before routing, with a 308 covers the whole prefix at once
+ * and tells search engines the move is permanent. Only /id/... is anchored at
+ * the start of the path, so a future English page at /services/id-card is not
+ * caught. The 308 preserves the method, which is what makes it correct for the
+ * POST requests Next's server actions issue as well.
+ */
+function idPrefixRedirect(pathname: string, req: NextRequest): NextResponse | undefined {
+  if (pathname !== '/id' && !pathname.startsWith('/id/')) return undefined;
+  // Built from nextUrl so the query string (utm_*, gclid, anything) survives the
+  // hop — those are how paid and campaign traffic is attributed, and dropping
+  // them on an /id redirect would lose the click. `pathname` alone has no search.
+  const target = req.nextUrl.clone();
+  target.pathname = pathname.replace(/^\/id/, '') || '/';
+  return NextResponse.redirect(target, 308);
+}
+
 export async function middleware(req: NextRequest) {
   let res=NextResponse.next({request:req}); const pathname=req.nextUrl.pathname;
+  const idRedirect=idPrefixRedirect(pathname,req);
+  if(idRedirect)return idRedirect;
   const configured=Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL&&process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
   if(OWNER_AREA.some(route=>pathname===route)){
     // Refreshes the owner session here because a Server Component cannot write cookies.
