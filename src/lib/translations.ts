@@ -193,15 +193,12 @@ export const translations: Record<Lang, Record<string, string>> = {
         'pricing.title': 'Paket Bundling',
         'pricing.subtitle': 'Hemat lebih banyak dengan paket bundling kami',
         'pricing.bestValue': 'Best Value',
-        'pricing.save': 'Hemat',
         'pricing.cta': 'Ambil Paket Ini',
         'pricing.noHiddenFees': 'Tanpa biaya tersembunyi',
         'pricing.eyebrow': 'Hemat dengan Bundling',
         'pricing.custom.question': 'Butuh paket custom sesuai kebutuhan Anda?',
         'pricing.custom.desc': 'Kami susun paket sesuai struktur bisnis, jumlah investor, dan dokumen yang sudah Anda miliki.',
         'pricing.custom.cta': 'Minta Penawaran Khusus',
-        'pricing.regularPrice': 'Harga normal',
-        'pricing.vsSeparate': 'vs. terpisah',
 
         // Pricing Packages
         'pricing.starter': 'Starter Business',
@@ -634,15 +631,12 @@ export const translations: Record<Lang, Record<string, string>> = {
         'pricing.title': 'Bundle Packages',
         'pricing.subtitle': 'Save more with our bundle packages',
         'pricing.bestValue': 'Best Value',
-        'pricing.save': 'Save',
         'pricing.cta': 'Get This Package',
         'pricing.noHiddenFees': 'No hidden fees',
         'pricing.eyebrow': 'Bundle & Save',
         'pricing.custom.question': 'Need a custom package for your needs?',
         'pricing.custom.desc': 'We assemble a package around your business structure, number of investors, and the documents you already hold.',
         'pricing.custom.cta': 'Request Custom Quote',
-        'pricing.regularPrice': 'Regular price',
-        'pricing.vsSeparate': 'vs. separate',
 
         // Pricing Packages
         'pricing.starter': 'Starter Business',
@@ -1075,15 +1069,12 @@ export const translations: Record<Lang, Record<string, string>> = {
         'pricing.title': '精选打包套餐',
         'pricing.subtitle': '选择全合规打包套餐，享受更优惠的价格与优先加急处理服务',
         'pricing.bestValue': '最高性价比',
-        'pricing.save': '直降',
         'pricing.cta': '选择此套餐',
         'pricing.noHiddenFees': '无任何隐藏费用',
         'pricing.eyebrow': '打包更省',
         'pricing.custom.question': '需要根据您的具体业务量身定制方案？',
         'pricing.custom.desc': '我们会根据您的企业架构、投资人人数以及已有文件，为您组合合适的套餐。',
         'pricing.custom.cta': '获取专属定制报价',
-        'pricing.regularPrice': '原价',
-        'pricing.vsSeparate': '对比单项办理',
 
         // Pricing Packages
         'pricing.starter': '初创企业套餐 (Starter Business)',
