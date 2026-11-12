@@ -87,9 +87,53 @@ sitemap. They are currently declared as English/Chinese pages holding Indonesian
 text — an unresolved question for Pasha (either translate them, or stop
 publishing the untranslated prefixes).
 
+**RESOLVED 2026-11-12 — see the entry below.**
+
 ---
 
-## 2026-11-11 — `/id/*` is a permanent redirect, not a route
+## 2026-11-12 — Untranslated EN/ZH service pages are noindexed
+
+**Decision (Pasha).** Only four service slugs have real English and Chinese
+copy: `pt-pma`, `itas-investor-1-tahun`, `itas-investor-2-tahun`,
+`pendaftaran-merek`. The other 17 slugs still render at `/en/services/<slug>`
+and `/zh/services/<slug>`, but they show the **Indonesian** catalogue text.
+Those 34 URLs are now:
+
+- served with `<meta name="robots" content="noindex, follow">`;
+- excluded from the sitemap (50 URLs total, of which 8 are locale service pages,
+  down from 42);
+- stripped of their hreflang alternates — the hreflang set now comes from
+  `hasTranslatedServicePage()`, not from "does this URL exist";
+- canonicalised to `/services/<slug>`, so anything already indexed consolidates
+  onto the real Indonesian page instead of onto a page we are dropping;
+- stripped of their page-level `Service` JSON-LD (the site-wide `LegalService`
+  catalogue stays, it is a different node).
+
+**Why.** Three URL prefixes serving identical Indonesian text is textbook
+duplicate content: it splits ranking signals across three URLs, burns crawl
+budget, and tells Google the site publishes English and Chinese pages that are
+not actually in those languages. Google is also known to treat hreflang that
+points at wrong-language pages as an unreliable cluster.
+
+**What this costs.** Any organic reach those pages had in English/Chinese
+queries goes away. That was accepted: they were ranking (if at all) on
+Indonesian text under a foreign prefix.
+
+**How to reverse it.** Translate a slug's copy into `src/data/services/en|zh/`
+and register it in `enServicePages` / `zhServicePages`. The noindex, the sitemap
+entry and the hreflang all flip automatically — nothing else to edit.
+
+**Not done.** The URLs are *not* redirected to the Indonesian page (Pasha's
+rule: no URL removal without a 301, but also these are live ad landing pages).
+They render normally for anyone who lands on them; they are simply not indexed.
+
+**Related bug fixed on the way.** `hasServicePage()` returned true for any
+locale and any known slug — "does a URL exist", not "is there a translation".
+Four call sites read it as the latter, so the language toggle and the nav sent
+visitors to `/zh/services/...` pages full of Indonesian text. It is now split
+into `hasTranslatedServicePage()` and `isUntranslatedLocalePage()`.
+
+**Test:** `scripts/check-untranslated-noindex.mjs`.
 
 **Decision.** Middleware answers any path under the `/id` segment with a 308 to
 the unprefixed URL, preserving the query string.

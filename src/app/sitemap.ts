@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 import { serviceData } from '@/lib/serviceData';
-import { getAllServicePageSlugs, hasServicePage, serviceHreflangs } from '@/lib/servicePageData';
+import { getAllServicePageSlugs, hasTranslatedServicePage, serviceHreflangs } from '@/lib/servicePageData';
 import { articles } from '@/lib/articles';
 import { sitemapLanguages } from '@/lib/sitemapAlternates';
 
@@ -89,9 +89,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
         const slugs = getAllServicePageSlugs(locale);
         const localePrioritySlugs = ['pt-pma', 'itas-investor-1-tahun', 'itas-investor-2-tahun', 'pendaftaran-merek', 'kitas-kerja'];
         return slugs
-            // Guard against a slug that has no page in this locale: declaring a
-            // locale URL that only redirects would put a duplicate in the file.
-            .filter((slug) => hasServicePage(locale, slug))
+            // Only pages with real translated copy belong in the sitemap. Every
+            // other /en and /zh service URL renders the Indonesian catalogue and
+            // is served with noindex (see docs/DECISIONS.md 2026-11-12), so
+            // listing it here would contradict its own robots tag.
+            .filter((slug) => hasTranslatedServicePage(locale, slug))
             .map((slug) => ({
                 url: `${baseUrl}/${locale}/services/${slug}`,
                 lastModified: now,

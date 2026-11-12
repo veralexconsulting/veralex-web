@@ -4,7 +4,7 @@ import { useState, useEffect, useId, useRef } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useLang } from '@/lib/useLang';
 import { Lang } from '@/lib/translations';
-import { hasServicePage } from '@/lib/servicePageData';
+import { hasTranslatedServicePage } from '@/lib/servicePageData';
 
 const LANG_FLAGS: Record<Lang, string> = { en: '🇬🇧', id: '🇮🇩', zh: '🇨🇳' };
 const LANG_NAMES: Record<Lang, string> = { en: 'English', id: 'Bahasa Indonesia', zh: '简体中文' };
@@ -41,7 +41,7 @@ export default function LanguageToggle({ className = '', compact = false }: { cl
         if (legalSlug) { router.push(`${next === 'en' ? '' : `/${next}`}/${legalSlug}`); return; }
         const serviceSlug = seg === 'services' ? rest[0] : (['en', 'id', 'zh'].includes(seg) && rest[0] === 'services' ? rest[1] : null);
         if (serviceSlug) {
-            router.push(hasServicePage(next, serviceSlug) ? (next === 'id' ? `/services/${serviceSlug}` : `/${next}/services/${serviceSlug}`) : `/services/${serviceSlug}`);
+            router.push(hasTranslatedServicePage(next, serviceSlug) ? (next === 'id' ? `/services/${serviceSlug}` : `/${next}/services/${serviceSlug}`) : `/services/${serviceSlug}`);
             return;
         }
         if (seg === 'en' || seg === 'id' || seg === 'zh') {

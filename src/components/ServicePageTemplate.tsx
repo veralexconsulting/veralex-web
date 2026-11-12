@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { hasServicePage, type RelatedService, type ServicePageData } from '@/lib/servicePageData';
+import { hasTranslatedServicePage, type RelatedService, type ServicePageData } from '@/lib/servicePageData';
 import FaqAccordion from '@/components/FaqAccordion';
 import OrderModal from '@/components/OrderModal';
 import WhatsAppCta from '@/components/WhatsAppCta';
@@ -157,7 +157,7 @@ export default function ServicePageTemplate({ service, relatedServices, lang }: 
                             <h2 className="svc-h3">{dict.related}</h2>
                             <div className="svc-related-grid">
                                 {relatedServices.map((s) => (
-                                    <Link key={s.slug} href={hasServicePage(activeLang as Lang, s.slug) ? `/${lang}/services/${s.slug}` : `/services/${s.slug}`} className="service-card" style={{ padding: '1.25rem', textDecoration: 'none' }}>
+                                    <Link key={s.slug} href={hasTranslatedServicePage(activeLang as Lang, s.slug) ? `/${lang}/services/${s.slug}` : `/services/${s.slug}`} className="service-card" style={{ padding: '1.25rem', textDecoration: 'none' }}>
                                         <h4 className="service-title" style={{ fontSize: '0.95rem' }}>{s.title}</h4>
                                         <p className="service-price" style={{ fontSize: '0.9rem' }}><strong>{dict.startingFrom} {s.price}</strong></p>
                                     </Link>

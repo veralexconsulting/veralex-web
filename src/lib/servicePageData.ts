@@ -66,7 +66,11 @@ export const SUPPORTED_LOCALES = ['en', 'zh', 'id'] as const;
 export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
 
 // Indonesian service pages live on the unprefixed /services/[slug] route.
-const idServiceSlugs = new Set(serviceData.map((s) => s.slug));
+// Read lazily: the modules that import serviceData are evaluated later, so a
+// module-level snapshot of `serviceData` would capture an empty array.
+function idServiceSlugs(): Set<string> {
+    return new Set(serviceData.map((s) => s.slug));
+}
 
 export function isValidLocale(locale: string): locale is SupportedLocale {
     return SUPPORTED_LOCALES.includes(locale as SupportedLocale);
@@ -109,27 +113,46 @@ export function getAllServicePageSlugs(locale: SupportedLocale): string[] {
     return Object.keys(enServicePages);
 }
 
-export function hasServicePage(locale: SupportedLocale, slug: string): boolean {
-    if (getServiceBySlug(slug)) return true;
-    if (locale === 'zh') {
-        return Boolean(zhServicePages[slug]);
-    }
-    if (locale === 'id') {
-        return idServiceSlugs.has(slug);
-    }
+/**
+ * True when the locale has *translated* copy for this service.
+ *
+ * Only four slugs are translated (pt-pma, itas-investor-1-tahun,
+ * itas-investor-2-tahun, pendaftaran-merek). Everything else renders the
+ * Indonesian catalogue text under an /en or /zh URL.
+ *
+ * This replaced a `hasServicePage` that returned true for *any* locale and any
+ * known slug — i.e. "does a URL exist", not "is there a translation". Four
+ * call sites read it as the latter, so a Chinese visitor clicking the language
+ * toggle was sent to a Chinese URL filled with Indonesian text.
+ */
+export function hasTranslatedServicePage(locale: SupportedLocale, slug: string): boolean {
+    if (locale === 'id') return idServiceSlugs().has(slug);
+    if (locale === 'zh') return Boolean(zhServicePages[slug]);
     return Boolean(enServicePages[slug]);
 }
 
-// hreflang set for a service slug. Only locales that really have a page are
-// declared — advertising a missing URL is worse than omitting the alternate.
+// hreflang set for a service slug. Only languages that really have translated
+// copy are declared: pointing hreflang at a page that is actually Indonesian
+// is worse than omitting the alternate, because it labels the same content as
+// two languages and teaches Google the cluster is unreliable.
 export function serviceHreflangs(slug: string): Record<string, string> {
     const languages: Record<string, string> = {
         'id': `/services/${slug}`,
         'x-default': `/services/${slug}`,
     };
-    if (hasServicePage('en', slug)) languages['en'] = `/en/services/${slug}`;
-    if (hasServicePage('zh', slug)) languages['zh'] = `/zh/services/${slug}`;
+    if (hasTranslatedServicePage('en', slug)) languages['en'] = `/en/services/${slug}`;
+    if (hasTranslatedServicePage('zh', slug)) languages['zh'] = `/zh/services/${slug}`;
     return languages;
+}
+
+/**
+ * True when an /en or /zh service URL would render untranslated Indonesian
+ * content. Those pages are served with `noindex` so they cannot compete with
+ * the real Indonesian page. See docs/DECISIONS.md (2026-11-12).
+ */
+export function isUntranslatedLocalePage(locale: SupportedLocale, slug: string): boolean {
+    if (locale === 'id') return false;
+    return idServiceSlugs().has(slug) && !hasTranslatedServicePage(locale, slug);
 }
 
 export function getRelatedServices(data: ServicePageData, locale: SupportedLocale = 'en'): RelatedService[] {

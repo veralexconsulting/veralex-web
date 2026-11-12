@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import LanguageToggle from '@/components/LanguageToggle';
 import { serviceData } from '@/lib/serviceData';
-import { hasServicePage } from '@/lib/servicePageData';
+import { hasTranslatedServicePage } from '@/lib/servicePageData';
 import { useLang } from '@/lib/useLang';
 import './PublicNavigation.css';
 
@@ -152,7 +152,7 @@ export default function Navbar() {
     const homeHref = (anchor: string) => pathname === '/' ? anchor : `/${anchor}`;
     const aboutHref = lang === 'en' ? '/about-us' : `/${lang}/about-us`;
     const contactHref = homeHref('#contact');
-    const serviceHref = (slug: string) => lang !== 'id' && hasServicePage(lang, slug) ? `/${lang}/services/${slug}` : `/services/${slug}`;
+    const serviceHref = (slug: string) => lang !== 'id' && hasTranslatedServicePage(lang, slug) ? `/${lang}/services/${slug}` : `/services/${slug}`;
     const serviceName = (slug: string) => {
         const service = serviceData.find(item => item.slug === slug);
         return service ? (lang === 'zh' ? service.titleZh : lang === 'en' ? service.titleEn : service.title) : slug;

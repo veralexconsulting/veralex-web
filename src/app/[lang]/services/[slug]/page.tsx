@@ -4,6 +4,7 @@ import {
     getServicePageData,
     getAllServicePageSlugs,
     getRelatedServices,
+    isUntranslatedLocalePage,
     isValidLocale,
     serviceHreflangs,
     type SupportedLocale,
@@ -45,6 +46,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
     const service = getServicePageData(lang, slug);
     if (!service) {
+        // Untranslated slug: the URL still renders (old links, ad landing pages)
+        // but is noindexed and kept out of the sitemap. See docs/DECISIONS.md.
+        const untranslated = isUntranslatedLocalePage(lang, slug);
         const catalogService = getServiceBySlug(slug);
         if (!catalogService) return {};
         const title = lang === 'zh' ? catalogService.titleZh : catalogService.titleEn;
@@ -54,7 +58,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         return {
             title: metaTitle,
             description: `${description} ${priceCopy}`,
-            alternates: { canonical: `/${lang}/services/${slug}`, languages: serviceHreflangs(slug) },
+            // Untranslated pages: noindex, and canonical pointing at the real
+            // Indonesian page so any residual signal consolidates there
+            // instead of onto a page we are asking Google to drop.
+            ...(untranslated
+                ? { robots: { index: false, follow: true }, alternates: { canonical: `/services/${slug}` } }
+                : { alternates: { canonical: `/${lang}/services/${slug}`, languages: serviceHreflangs(slug) } }),
             openGraph: { title: metaTitle, description: `${description} ${priceCopy}`, url: `/${lang}/services/${slug}`, images: [{ url: '/logo.webp', alt: title }], locale: lang === 'zh' ? 'zh_CN' : 'en_US', type: 'website' },
         };
     }
@@ -92,6 +101,13 @@ export default async function ServicePage({ params }: Props) {
     if (!service) {
         const catalogService = getServiceBySlug(slug);
         if (!catalogService) notFound();
+        // No translated copy exists for this slug, so this URL renders the
+        // Indonesian catalogue under a foreign prefix. It is kept (bookmarks,
+        // ad landing pages) but must not be indexed: two prefixes showing the
+        // same Indonesian text is exactly the duplicate-content pattern that
+        // wastes crawl budget and splits ranking signals. See
+        // docs/DECISIONS.md 2026-11-12.
+        const untranslated = isUntranslatedLocalePage(lang, slug);
         const title = lang === 'zh' ? catalogService.titleZh : catalogService.titleEn;
         const description = lang === 'zh' ? catalogService.descriptionZh : catalogService.descriptionEn;
         const priceNote = catalogService.priceNote?.[lang] || description;
@@ -109,10 +125,12 @@ export default async function ServicePage({ params }: Props) {
             },
             url: `https://www.veralexconsulting.com/${lang}/services/${slug}`,
         };
+        // No structured data on a noindexed page: Service + Offer markup asks
+        // for eligibility in search results the page is excluded from, and the
+        // Service name would name Indonesian content in English.
         return <>
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceBreadcrumbJsonLd(serviceBreadcrumbs(slug, lang))) }} />
-            <ServiceDetailContent service={catalogService} relatedServices={serviceData.filter((item) => item.slug !== slug).slice(0, 4)} lang={lang} />
+            {!untranslated && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />}
+            <ServiceDetailContent service={catalogService} relatedServices={untranslated ? [] : serviceData.filter((item) => item.slug !== slug).slice(0, 4)} lang={lang} />
         </>;
     }
 
