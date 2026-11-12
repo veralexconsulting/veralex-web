@@ -1,7 +1,18 @@
 export interface Article {
     slug: string;
     category: string;
+    /**
+     * Headline shown on the page (the H1). May be long and conversational —
+     * that is fine on a page, but a <title> tag is truncated around 60 chars
+     * in search results, so it is not what the <title> uses.
+     */
     title: string;
+    /**
+     * Search-result title, without the " | VERALEX CONSULTING" suffix the page
+     * appends. Keep it at 44 chars or fewer so the suffix still fits in 60.
+     * Falls back to `title` shortened at a word boundary when absent.
+     */
+    metaTitle?: string;
     description: string;
     publishedAt: string;
     readingMinutes: number;
@@ -32,6 +43,7 @@ export const articles: Article[] = [
         slug: 'lkpm-triwulan-3-2026-batas-15-oktober',
         category: 'Tenggat 15 Oktober',
         title: 'LKPM Triwulan III 2026 Ditutup 15 Oktober: Apa yang Harus Disiapkan Pelaku Usaha Non-UMK?',
+        metaTitle: 'LKPM Triwulan III 2026: Batas 15 Oktober',
         description: 'Periode pelaporan LKPM Juli–September 2026 berlangsung 1–15 Oktober. Cek siapa yang wajib lapor, data yang perlu disiapkan, dan langkah di OSS.',
         publishedAt: '2026-10-08',
         readingMinutes: 4,
@@ -85,6 +97,7 @@ export const articles: Article[] = [
         slug: 'wajib-halal-18-oktober-2026',
         category: 'Tenggat 18 Oktober',
         title: 'Wajib Halal Mulai 18 Oktober 2026: Produk Apa Saja yang Masuk Tahap Ini?',
+        metaTitle: 'Wajib Halal 18 Oktober 2026: Produknya',
         description: 'BPJPH menegaskan tahap wajib halal 18 Oktober 2026 berjalan sesuai jadwal. Pahami kelompok produk yang disebut pemerintah dan langkah cek awal bagi pelaku usaha.',
         publishedAt: '2026-10-08',
         readingMinutes: 5,
@@ -142,6 +155,7 @@ export const articles: Article[] = [
         slug: 'perubahan-kbli-september-2026',
         category: 'Aturan September 2026',
         title: 'KBLI 2025 Diubah Lagi pada September 2026: Tiga Kode Ini Perlu Diperiksa',
+        metaTitle: 'KBLI 2025 Diubah September 2026: Kode KBLI',
         description: 'Peraturan BPS 6/2026 memperbarui judul dan deskripsi kode 27201, 27203, dan 68122. Lihat siapa yang perlu membaca perubahan ini dan apa yang tidak perlu disimpulkan.',
         publishedAt: '2026-10-08',
         readingMinutes: 4,
@@ -192,6 +206,7 @@ export const articles: Article[] = [
         slug: 'nib-oss-pp-28-2025',
         category: 'Perizinan Usaha',
         title: 'Sudah Punya NIB, Apakah Usaha Langsung Boleh Berjalan? Ini yang Perlu Dicek Setelah PP 28/2025',
+        metaTitle: 'Punya NIB: Apa yang Perlu Dicek Setelahnya',
         description: 'PP 28/2025 mengganti aturan perizinan berbasis risiko sebelumnya. Pahami mengapa NIB perlu dibaca bersama tingkat risiko, persyaratan dasar, dan izin penunjang.',
         publishedAt: '2026-10-08',
         readingMinutes: 5,
@@ -248,6 +263,7 @@ export const articles: Article[] = [
         slug: 'kbli-2025-izin-lama',
         category: 'KBLI & OSS',
         title: 'KBLI 2025 Sudah Berlaku: Apakah Izin Usaha Lama Harus Diurus Ulang?',
+        metaTitle: 'KBLI 2025 Berlaku: Izin Lama Harus Diurus?',
         description: 'Jawaban resmi BPS: izin lama tetap berlaku. Pelajari kapan penyesuaian dilakukan otomatis dan kapan perubahan kegiatan usaha perlu diperbarui di OSS dan AHU.',
         publishedAt: '2026-10-08',
         readingMinutes: 5,
@@ -306,6 +322,7 @@ export const articles: Article[] = [
         slug: 'pendaftaran-merek-umk-2026',
         category: 'Merek Dagang',
         title: 'Daftar Merek untuk UMK pada 2026: Dokumen Kini Lebih Fleksibel, Apa yang Harus Disiapkan?',
+        metaTitle: 'Daftar Merek UMK 2026: Dokumen & Syarat',
         description: 'Permenkum 5/2026 memperbarui pendaftaran merek. Simak pilihan bukti status UMK, proses pemeriksaan, dan daftar persiapan sebelum mengajukan merek.',
         publishedAt: '2026-10-08',
         readingMinutes: 5,
@@ -362,6 +379,7 @@ export const articles: Article[] = [
         slug: 'biaya-daftar-merek-2026',
         category: 'Merek Dagang',
         title: 'Biaya Daftar Merek 2026: Rincian Resmi Negara dan Jasa Pendampingan',
+        metaTitle: 'Biaya Daftar Merek 2026: Resmi & Jasa',
         description: 'Rincian biaya pendaftaran merek ke DJKI: mana yang masuk penerimaan negara dan mana yang jasa pendampingan. Plus biaya apa saja yang sering terlewat dari hitungan awal.',
         publishedAt: '2026-11-10',
         readingMinutes: 6,
@@ -426,6 +444,7 @@ export const articles: Article[] = [
         slug: 'cara-daftar-merek-sendiri-vs-jasa',
         category: 'Merek Dagang',
         title: 'Daftar Merek Sendiri atau Pakai Jasa: Apa Bedanya dan Mana yang Cocok?',
+        metaTitle: 'Daftar Merek Sendiri vs Pakai Jasa',
         description: 'Perbandingan jujur antara mengurus merek sendiri lewat DJKI dan memakai jasa pendampingan, termasuk risiko yang sering baru terasa setelah permohonan diajukan.',
         publishedAt: '2026-11-10',
         readingMinutes: 5,
@@ -482,6 +501,7 @@ export const articles: Article[] = [
         slug: 'syarat-pendirian-pt-2026',
         category: 'Pendirian Badan Usaha',
         title: 'Syarat Pendirian PT 2026: Dari Akta Notaris sampai NIB',
+        metaTitle: 'Syarat Pendirian PT 2026: Akta sampai NIB',
         description: 'Urutan syarat pendirian PT dan dokumen yang menyertainya, dari akta pendirian dan SK Kemenkumham hingga NPWP badan hukum dan NIB di OSS.',
         publishedAt: '2026-11-10',
         readingMinutes: 6,
@@ -542,6 +562,7 @@ export const articles: Article[] = [
         slug: 'perbedaan-pt-pmdn-pt-pma',
         category: 'Pendirian Badan Usaha',
         title: 'Bedanya PT PMDN dan PT PMA: Kepemilikan, Modal, dan Kewajiban Setelahnya',
+        metaTitle: 'Beda PT PMDN dan PT PMA: Modal & Sifat',
         description: 'Perbandingan PT PMDN dan PT PMA dari sisi kepemilikan, ketentuan modal, batasan bidang usaha, sampai kewajiban pelaporan yang menyertai masing-masing.',
         publishedAt: '2026-11-10',
         readingMinutes: 5,
@@ -601,6 +622,7 @@ export const articles: Article[] = [
         slug: 'berapa-lama-urus-nib',
         category: 'Perizinan Usaha',
         title: 'Berapa Lama Urus NIB? Faktor yang Menentukan Cepat atau Lambatnya',
+        metaTitle: 'Berapa Lama Urus NIB? Faktor Penentunya',
         description: 'NIB sering disebut bisa terbit dalam hitungan hari, tetapi kenyataannya sangat bergantung pada kesiapan data. Ini faktor yang mempercepat dan memperlambatnya.',
         publishedAt: '2026-11-10',
         readingMinutes: 5,

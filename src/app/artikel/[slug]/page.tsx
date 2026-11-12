@@ -5,6 +5,7 @@ import { ArticleCard } from '@/components/ArticleHighlights';
 import { articles, getArticle } from '@/lib/articles';
 import { getServiceBySlug } from '@/lib/serviceData';
 import { whatsappHref } from '@/lib/marketing';
+import { pageDescription, pageTitle } from '@/lib/seoText';
 import styles from '../articles.module.css';
 
 interface Props {
@@ -20,13 +21,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const article = getArticle(slug);
     if (!article) return {};
 
+    // The <title> uses the short metaTitle (the H1 keeps the long headline),
+    // and the description is trimmed at a word boundary: both were running past
+    // what Google displays, so the tail — usually the useful part — was cut.
+    // The suffix is only appended when there is room for it; pageTitle truncates
+    // at a word boundary otherwise, so no title can exceed the display limit.
+    const title = pageTitle(article.title, { metaTitle: article.metaTitle });
+    const description = pageDescription(article.description);
+
     return {
-        title: `${article.title} | VERALEX CONSULTING`,
-        description: article.description,
+        title,
+        description,
         alternates: { canonical: `/artikel/${slug}` },
         openGraph: {
-            title: article.title,
-            description: article.description,
+            title,
+            description,
             url: `/artikel/${slug}`,
             type: 'article',
             publishedTime: article.publishedAt,
@@ -42,8 +51,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         },
         twitter: {
             card: 'summary_large_image',
-            title: article.title,
-            description: article.description,
+            title,
+            description,
             images: [`/og/artikel-${slug}.png`],
         },
     };

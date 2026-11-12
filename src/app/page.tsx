@@ -12,8 +12,11 @@ import ArticleHighlights from '@/components/ArticleHighlights';
 import ScrollAnimator from '@/components/ScrollAnimator';
 
 export const metadata: Metadata = {
-  title: 'VERALEX CONSULTING | Jasa Pendirian PT, Pendaftaran Merek & KITAS',
-  description: 'Konsultan hukum profesional di Indonesia. Ahli dalam pendirian PT, CV, PT PMA, pendaftaran merek, hak cipta, dan pengurusan ITAS/KITAS. Konsultasi gratis untuk legalitas bisnis Anda.',
+  // 56 chars. The home page overrode the root layout title with a 65-char
+  // version, which Google cut at "& KITAS".
+  title: 'Pendirian PT, Daftar Merek & KITAS | VERALEX',
+  // 148 chars, identical to the layout default so the two cannot drift.
+  description: 'Jasa pendirian PT PMDN & PT PMA, pendaftaran merek DJKI, KITAS kerja dan ITAS investor di Bekasi. Harga jelas, konsultasi gratis.',
   alternates: {
     canonical: '/',
   },

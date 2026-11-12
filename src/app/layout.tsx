@@ -12,9 +12,14 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Jasa Pendirian PT, Pendaftaran Merek & KITAS | VERALEX CONSULTING Bekasi",
+  // Home page title: the brand is already in the H1 and the site name, so the
+  // title leads with what people search for. 56 chars — the previous title ran
+  // to 69 and was truncated in results around "...VERALEX CONSULT".
+  title: "Pendirian PT, Daftar Merek & KITAS | VERALEX",
+  // 148 chars. The old description was 182 and lost its tail (the WhatsApp
+  // call to action) to truncation on both desktop and mobile.
   description:
-    "VERALEX CONSULTING — jasa pendirian PT PMDN, PT PMA, CV, pendaftaran merek dagang DJKI, KITAS kerja, ITAS investor, sertifikasi halal & BPOM di Bekasi dan seluruh Indonesia. Proses cepat, harga transparan, konsultasi GRATIS via WhatsApp!",
+    "Jasa pendirian PT PMDN & PT PMA, pendaftaran merek DJKI, KITAS kerja dan ITAS investor di Bekasi. Harga jelas, konsultasi gratis.",
   keywords:
     "jasa pendirian PT, biaya pendirian PT, daftar merek dagang, pendaftaran merek DJKI, jasa KITAS, PT PMA Indonesia, pendirian CV, konsultan hukum bisnis, jasa legalitas perusahaan, biaya daftar merek, trademark registration Indonesia, company registration Indonesia, investor kitas indonesia, work kitas indonesia",
   authors: [{ name: "VERALEX CONSULTING" }],
@@ -26,9 +31,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "https://www.veralexconsulting.com",
-    title: "Jasa Pendirian PT, Daftar Merek & KITAS | VERALEX CONSULTING",
+    title: "Pendirian PT, Daftar Merek & KITAS | VERALEX",
     description:
-      "Jasa pendirian PT, CV, PT PMA, pendaftaran merek, KITAS kerja, ITAS investor, sertifikasi halal & BPOM. Konsultasi GRATIS, proses cepat & transparan. Hubungi WhatsApp sekarang!",
+      "Jasa pendirian PT PMDN & PT PMA, pendaftaran merek DJKI, KITAS kerja dan ITAS investor di Bekasi. Harga jelas, konsultasi gratis.",
     // 1200x630 is the ratio every social platform crops to. Declaring the
     // square-ish logo here (it is actually 1024x724) is what made shared links
     // letterbox and distort, so this points at a generated card instead.
@@ -39,9 +44,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jasa Pendirian PT, Daftar Merek & KITAS | VERALEX CONSULTING",
+    title: "Pendirian PT, Daftar Merek & KITAS | VERALEX",
     description:
-      "Jasa pendirian PT, pendaftaran merek dagang, KITAS, and legalitas bisnis. Konsultasi GRATIS via WhatsApp!",
+      "Jasa pendirian PT PMDN & PT PMA, pendaftaran merek DJKI, KITAS kerja dan ITAS investor di Bekasi. Harga jelas, konsultasi gratis.",
     images: ["/og/default.png"],
   },
   other: {

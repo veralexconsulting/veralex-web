@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import ServiceDetailContent from '@/components/ServiceDetailContent';
 import { serviceBreadcrumbs, serviceBreadcrumbJsonLd } from '@/lib/serviceBreadcrumbs';
 import { detailedServiceContent, defaultFaqs, type FAQItem } from '@/lib/serviceContent';
+import { pageDescription, pageTitle } from '@/lib/seoText';
 
 interface Props {
     params: Promise<{ slug: string }>;
@@ -42,18 +43,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const extraKeywords = serviceKeywordMap[slug] || `${service.title}, ${service.category}, jasa legalitas, konsultan hukum`;
 
     const priceCopy = service.priceNote ? service.priceNote.id : `Biaya jasa ${service.price}.`;
-    const priceTitle = service.priceLabel === 'from' ? `Mulai ${service.price}` : service.price;
+    // The description is description + price note, which ran to 275 chars on
+    // some slugs; trimmed here so the price (the part people scan for) is not
+    // the part Google cuts.
+    const description = pageDescription(`${service.description} ${priceCopy}`);
     return {
-        title: `Jasa ${service.title} | VERALEX CONSULTING`,
-        description: `${service.description} ${priceCopy}`,
+        title: pageTitle(`Jasa ${service.title}`),
+        description,
         keywords: `jasa ${service.title.toLowerCase()}, ${extraKeywords}, veralex consulting, konsultan legalitas Bekasi, ${service.slug.replace(/-/g, ' ')}`,
         alternates: {
             canonical: `/services/${slug}`,
             languages: serviceHreflangs(slug),
         },
         openGraph: {
-            title: `Jasa ${service.title} | VERALEX CONSULTING - ${priceTitle}`,
-            description: `${service.description} ${priceCopy}`,
+            title: pageTitle(`Jasa ${service.title}`),
+            description,
             url: `/services/${slug}`,
             type: 'website',
             // Generated per slug by scripts/build-og-images.mjs. Falls back to the
@@ -70,8 +74,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         },
         twitter: {
             card: 'summary_large_image',
-            title: `Jasa ${service.title} | VERALEX CONSULTING`,
-            description: `${service.description} ${priceCopy}`,
+            title: pageTitle(`Jasa ${service.title}`),
+            description,
             images: [`/og/${slug}.png`],
         },
     };

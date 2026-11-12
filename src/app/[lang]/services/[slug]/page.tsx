@@ -13,6 +13,7 @@ import ServicePageTemplate from '@/components/ServicePageTemplate';
 import ServiceDetailContent from '@/components/ServiceDetailContent';
 import { serviceData, getServiceBySlug } from '@/lib/serviceData';
 import { serviceBreadcrumbs, serviceBreadcrumbJsonLd } from '@/lib/serviceBreadcrumbs';
+import { pageDescription, pageTitle } from '@/lib/seoText';
 
 interface Props {
     params: Promise<{ lang: string; slug: string }>;
@@ -54,31 +55,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         const title = lang === 'zh' ? catalogService.titleZh : catalogService.titleEn;
         const description = lang === 'zh' ? catalogService.descriptionZh : catalogService.descriptionEn;
         const priceCopy = catalogService.priceNote?.[lang] || description;
-        const metaTitle = `${title} | VERALEX CONSULTING`;
+        const metaTitle = pageTitle(title);
+        const metaDescription = pageDescription(`${description} ${priceCopy}`);
         return {
             title: metaTitle,
-            description: `${description} ${priceCopy}`,
+            description: metaDescription,
             // Untranslated pages: noindex, and canonical pointing at the real
             // Indonesian page so any residual signal consolidates there
             // instead of onto a page we are asking Google to drop.
             ...(untranslated
                 ? { robots: { index: false, follow: true }, alternates: { canonical: `/services/${slug}` } }
                 : { alternates: { canonical: `/${lang}/services/${slug}`, languages: serviceHreflangs(slug) } }),
-            openGraph: { title: metaTitle, description: `${description} ${priceCopy}`, url: `/${lang}/services/${slug}`, images: [{ url: '/logo.webp', alt: title }], locale: lang === 'zh' ? 'zh_CN' : 'en_US', type: 'website' },
+            openGraph: { title: metaTitle, description: metaDescription, url: `/${lang}/services/${slug}`, images: [{ url: '/logo.webp', alt: title }], locale: lang === 'zh' ? 'zh_CN' : 'en_US', type: 'website' },
         };
     }
 
     return {
-        title: service.metaTitle,
-        description: service.metaDescription,
+        // EN/ZH metaTitle already ends in the brand name ("… — VERALEX
+        // CONSULTING"), so no suffix is added; the helper only trims.
+        title: pageTitle(service.title, { metaTitle: service.metaTitle, suffix: '' }),
+        description: pageDescription(service.metaDescription),
         keywords: service.keywords,
         alternates: {
             canonical: `/${lang}/services/${slug}`,
             languages: serviceHreflangs(slug),
         },
         openGraph: {
-            title: service.metaTitle,
-            description: service.metaDescription,
+            // EN/ZH metaTitle already ends in the brand name ("… — VERALEX
+        // CONSULTING"), so no suffix is added; the helper only trims.
+        title: pageTitle(service.title, { metaTitle: service.metaTitle, suffix: '' }),
+            description: pageDescription(service.metaDescription),
             url: `/${lang}/services/${slug}`,
             images: [{ url: service.ogImage || '/logo.webp', alt: service.title }],
             locale: lang === 'zh' ? 'zh_CN' : 'en_US',

@@ -12,7 +12,16 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return { title: lang === 'zh' ? '关于我们 | VERALEX CONSULTING' : 'About Us | VERALEX CONSULTING', alternates: { canonical: lang === 'en' ? '/about-us' : `/${lang}/about-us` } };
+  // /zh/about-us inherited the homepage description, so two indexable pages
+  // shipped identical copy. It now has its own, in Chinese to match the page.
+  const zh = lang === 'zh';
+  return {
+    title: zh ? '关于我们 | VERALEX CONSULTING' : 'About Us | VERALEX CONSULTING',
+    description: zh
+      ? 'VERALEX CONSULTING 是位于印尼勿加泗的企业法律服务顾问，专注公司设立、商标注册、签证居留与产品认证。'
+      : undefined,
+    alternates: { canonical: lang === 'en' ? '/about-us' : `/${lang}/about-us` },
+  };
 }
 
 export default async function Page({ params }: { params: Promise<{ lang: string }> }) {
