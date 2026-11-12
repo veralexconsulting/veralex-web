@@ -2010,6 +2010,11 @@ button {
     font-weight: 700;
     font-size: 0.9rem;
     white-space: nowrap;
+    /* A service name makes the label longer than "Chat Kami"; it must not run
+       off the left edge on a 360px screen. */
+    max-width: min(calc(100vw - 110px), 320px);
+    overflow: hidden;
+    text-overflow: ellipsis;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     /* Hidden until the widget is hovered or focused, so it stops covering the
        testimonial CTA. The link itself is unchanged. */

@@ -107,6 +107,30 @@
 .vnav-mega-head strong { color: #281f1f; font: 600 clamp(1.15rem,2vw,1.55rem) var(--font-inter), 'Inter', system-ui, sans-serif; }
 .vnav-mega-head > a { color: #4a0e0e; font-size: .86rem; font-weight: 750; white-space: nowrap; }
 .vnav-mega-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: clamp(18px,3vw,42px); }
+
+/* Service search: sits under the mega-menu head and above the grouped list.
+   44px tall so it is comfortable with a thumb in the mobile panel, where the
+   same control is reused. */
+.vnav-search { position: relative; margin-bottom: 18px; }
+.vnav-search input {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 14px 10px 40px;
+    border: 1px solid #e2d9d2;
+    border-radius: 10px;
+    background: #fff no-repeat 14px center / 16px 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23816844' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-4.3-4.3'/%3E%3C/svg%3E");
+    color: #302929;
+    font: inherit;
+    font-size: .92rem;
+}
+.vnav-search input::placeholder { color: #8d8280; }
+.vnav-search input:focus-visible { outline: 3px solid #a87f41; outline-offset: 2px; border-color: #a87f41; }
+.vnav-search-results { display: flex; flex-direction: column; gap: 2px; margin-top: 8px; max-height: 320px; overflow-y: auto; overscroll-behavior: contain; }
+.vnav-search-results a { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; padding: 8px 12px; border-radius: 9px; color: #352b29; font-size: .88rem; font-weight: 650; }
+.vnav-search-results a:hover, .vnav-search-results a:focus-visible { background: #f7f4f1; color: #4a0e0e; }
+.vnav-search-results small { color: #8d8280; font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; text-align: right; }
+.vnav-search-empty { margin: 8px 0 0; padding: 10px 12px; color: #6b615e; font-size: .88rem; }
 .vnav-group { min-width: 0; }
 .vnav-group h3 { color: #4a0e0e; font-size: .73rem; line-height: 1.35; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; margin: 0 0 12px; }
 .vnav-group a { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 39px; padding: 5px 0; color: #3c3838; font-size: .82rem; line-height: 1.35; border-bottom: 1px solid transparent; }
@@ -131,6 +155,7 @@
 .vnav-mobile-inner > a.is-active, .vnav-mobile-accordion.is-active { color: #4a0e0e; }
 .vnav-mobile-accordion span { color: #4a0e0e; font-size: 1.35rem; line-height: 1; }
 .vnav-mobile-groups { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; padding: 20px 16px; background: #f8f4f0; border-radius: 10px; }
+.vnav-mobile-groups .vnav-search, .vnav-mobile-groups .vnav-search-empty, .vnav-mobile-all { grid-column: 1 / -1; }
 .vnav-mobile-groups .vnav-group a span { display: none; }
 /* 44px minimum tap target (WCAG 2.5.8 / Lighthouse tap-targets). The shared
    .vnav-group rule is 39px, which is fine for a hover mega-menu and too small

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArticleCard } from '@/components/ArticleHighlights';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import { articles, getArticle } from '@/lib/articles';
 import { getServiceBySlug } from '@/lib/serviceData';
 import { whatsappHref } from '@/lib/marketing';
@@ -84,7 +85,7 @@ export default async function ArticlePage({ params }: Props) {
             <main className={styles.articlePage} lang="id">
                 <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
                 <div className="container">
-                    <Link href="/artikel" className={styles.backLink}>← Semua artikel</Link>
+                    <Breadcrumbs items={[{ label: 'Beranda', href: '/' }, { label: 'Artikel', href: '/artikel' }, { label: article.title }]} />
                     <article className={styles.article}>
                         <header className={styles.articleHero}>
                             <div className={styles.meta}><span>{article.category}</span><span aria-hidden="true">·</span><time dateTime={article.publishedAt}>{date}</time><span aria-hidden="true">·</span><span>{article.readingMinutes} menit baca</span></div>

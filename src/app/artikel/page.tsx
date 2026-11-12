@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ArticleCard } from '@/components/ArticleHighlights';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import { articles } from '@/lib/articles';
 import styles from './articles.module.css';
 
@@ -20,6 +21,7 @@ export default function ArticlesPage() {
         <>
             <main className={styles.page} lang="id">
                 <div className="container">
+                    <Breadcrumbs items={[{ label: 'Beranda', href: '/' }, { label: 'Artikel' }]} />
                     <header className={styles.listHero}>
                         <p className={styles.eyebrow}>Jurnal Veralex</p>
                         <h1>Pahami perubahan aturan sebelum mengambil langkah berikutnya.</h1>

@@ -3,6 +3,7 @@
 
 import { useState, useCallback } from 'react';
 import { useLang } from '@/lib/useLang';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import { whatsappHref } from '@/lib/marketing';
 
 const galleryImages = [
@@ -36,6 +37,7 @@ export default function GalleryPage() {
                 </div>
                 <div className="hero-glow" />
                 <div className="hero-content">
+                    <Breadcrumbs items={[{ label: t('nav.home'), href: '/' }, { label: t('gallery.pageTitle') }]} />
                     <h1 className="hero-title" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>{t('gallery.pageTitle')}</h1>
                     <p className="hero-subtitle">{t('gallery.pageSubtitle')}</p>
                 </div>

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLang } from '@/lib/useLang';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import type { Lang } from '@/lib/translations';
 import styles from './about.module.css';
 
@@ -32,6 +33,7 @@ export default function AboutPage() {
     <main className={styles.page}>
       <header className={styles.hero}>
         <div className={styles.wrap}>
+          <Breadcrumbs items={[{ label: t('nav.home'), href: '/' }, { label: t('about.title') }]} />
           <p className={styles.eyebrow}>{t('about.eyebrow')}</p>
           <h1>{t('about.title')}</h1>
           <p>{t('about.intro')}</p>

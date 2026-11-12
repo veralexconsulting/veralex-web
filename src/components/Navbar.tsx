@@ -40,6 +40,7 @@ export default function Navbar() {
     const [aboutOpen, setAboutOpen] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+    const [serviceQuery, setServiceQuery] = useState('');
     const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
     const [hash, setHash] = useState('');
     const rootRef = useRef<HTMLElement>(null);
@@ -172,6 +173,42 @@ export default function Navbar() {
     const homeActive = pathname === '/' && !aboutActive;
     const galleryActive = pathname === '/gallery';
     const articlesActive = pathname === '/artikel' || pathname.startsWith('/artikel/');
+
+    /*
+     * Service search. One flat index built from the same two arrays the menu
+     * renders, so a service can never be in the menu but missing from search
+     * (or vice versa). Matching is on the visible label only — title in the
+     * visitor's language, plus the Indonesian title as a fallback so an
+     * English-speaking visitor who half-remembers "pendirian PT" still finds it.
+     */
+    const searchIndex = [
+        ...groups.flatMap(group => group.slugs.map(slug => ({ slug, label: serviceName(slug), group: t(`nav.group.${group.key}`) }))),
+        ...products.map(({ key, slug }) => ({ slug, label: t(`services.product.${key}.title`), group: t('nav.group.products') })),
+    ];
+    const query = serviceQuery.trim().toLowerCase();
+    const results = query ? searchIndex.filter(item => {
+        const service = serviceData.find(entry => entry.slug === item.slug);
+        const haystack = `${item.label} ${item.group} ${service?.title ?? ''}`.toLowerCase();
+        return haystack.includes(query);
+    }) : [];
+    const serviceSearch = (
+        <div className="vnav-search">
+            <input
+                type="search"
+                value={serviceQuery}
+                onChange={event => setServiceQuery(event.target.value)}
+                placeholder={t('nav.searchPlaceholder')}
+                aria-label={t('nav.searchLabel')}
+            />
+            {query && (results.length
+                ? <div className="vnav-search-results">
+                    {results.map(item => <Link key={item.slug} href={serviceHref(item.slug)} onClick={close}>
+                        <span>{item.label}</span><small>{item.group}</small>
+                    </Link>)}
+                </div>
+                : <p className="vnav-search-empty">{t('nav.searchEmpty')}</p>)}
+        </div>
+    );
     const menuGroups = <>
         {groups.map(group => <div className="vnav-group" key={group.key}>
             <h3>{t(`nav.group.${group.key}`)}</h3>
@@ -205,7 +242,8 @@ export default function Navbar() {
                         <button ref={servicesTriggerRef} type="button" className={serviceActive ? 'is-active' : undefined} aria-current={serviceActive ? 'page' : undefined} aria-expanded={servicesOpen} aria-controls="vnav-mega" aria-haspopup="true" onClick={openServices}>{t('nav.services')} <span aria-hidden="true" className={`vnav-chevron${servicesOpen ? ' open' : ''}`}>⌄</span></button>
                         {servicesOpen && <div id="vnav-mega" className="vnav-mega" aria-label={t('nav.services')}>
                             <div className="vnav-mega-head"><div><span>{t('nav.explore')}</span><strong>{t('nav.megaTitle')}</strong></div><Link href={homeHref('#services')} onClick={close}>{t('nav.allServices')} <span aria-hidden="true">→</span></Link></div>
-                            <div className="vnav-mega-grid">{menuGroups}</div>
+                            {serviceSearch}
+                            <div className="vnav-mega-grid" hidden={Boolean(query)}>{menuGroups}</div>
                         </div>}
                     </div>
                     <div className="vnav-about" onPointerEnter={event => { if (event.pointerType === 'mouse') openAbout(); }} onPointerLeave={event => { if (event.pointerType === 'mouse') scheduleCloseAbout(); }} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setAboutOpen(false); }}>
@@ -228,7 +266,7 @@ export default function Navbar() {
                 <div className="vnav-mobile-inner">
                     <Link href={homeHref('#hero')} className={homeActive ? 'is-active' : undefined} onClick={close}>{t('nav.home')}</Link>
                     <button type="button" className={`vnav-mobile-accordion${serviceActive ? ' is-active' : ''}`} aria-expanded={mobileServicesOpen} aria-controls="vnav-mobile-services" onClick={() => setMobileServicesOpen(value => !value)}>{t('nav.services')} <span aria-hidden="true">{mobileServicesOpen ? '−' : '+'}</span></button>
-                    {mobileServicesOpen && <div id="vnav-mobile-services" className="vnav-mobile-groups">{menuGroups}<Link className="vnav-mobile-all" href={homeHref('#services')} onClick={close}>{t('nav.allServices')} →</Link></div>}
+                    {mobileServicesOpen && <div id="vnav-mobile-services" className="vnav-mobile-groups">{serviceSearch}{menuGroups}<Link className="vnav-mobile-all" href={homeHref('#services')} onClick={close}>{t('nav.allServices')} →</Link></div>}
                     <button type="button" className={`vnav-mobile-accordion${aboutActive ? ' is-active' : ''}`} aria-expanded={mobileAboutOpen} aria-controls="vnav-mobile-about" onClick={() => setMobileAboutOpen(value => !value)}>{t('nav.about')} <span aria-hidden="true">{mobileAboutOpen ? '−' : '+'}</span></button>
                     {mobileAboutOpen && <div id="vnav-mobile-about" className="vnav-mobile-about">{aboutLinks}</div>}
                     <Link href="/gallery" className={galleryActive ? 'is-active' : undefined} onClick={close}>{t('nav.gallery')}</Link>
