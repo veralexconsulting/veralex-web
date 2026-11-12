@@ -16,10 +16,20 @@ const groups = [
     { key: 'ip', slugs: ['pendaftaran-merek', 'perpanjangan-merek', 'pengalihan-merek', 'hak-cipta', 'desain-industri'] },
     { key: 'immigration', slugs: ['itas-investor-1-tahun', 'itas-investor-2-tahun', 'itas-family', 'kitas-kerja', 'visa-c2', 'visa-d2-1-tahun', 'visa-d2-2-tahun'] },
 ] as const;
-const products: { key: 'halal' | 'bpom' | 'pirt' | 'sni' | 'k3l' | 'postel' | 'pse-lokal' | 'pse-asing'; slug?: string }[] = [
-    { key: 'halal' }, { key: 'bpom', slug: 'izin-bpom' }, { key: 'pirt', slug: 'pirt' },
-    { key: 'sni' }, { key: 'k3l', slug: 'sertifikasi-k3l' }, { key: 'postel', slug: 'sertifikasi-postel' },
-    { key: 'pse-lokal', slug: 'pse-lokal' }, { key: 'pse-asing', slug: 'pse-asing' },
+/*
+ * Every entry here is a real page. `halal` and `sni` used to be listed without
+ * a slug, so they pointed at `/#service-halal` on the homepage instead of a
+ * service page — visitors who clicked a service in the menu landed on the
+ * front page. They are removed until a page exists for them, rather than
+ * pointing at something that does not answer the click.
+ */
+const products: { key: 'bpom' | 'pirt' | 'k3l' | 'postel' | 'pse-lokal' | 'pse-asing'; slug: string }[] = [
+    { key: 'bpom', slug: 'izin-bpom' },
+    { key: 'pirt', slug: 'pirt' },
+    { key: 'k3l', slug: 'sertifikasi-k3l' },
+    { key: 'postel', slug: 'sertifikasi-postel' },
+    { key: 'pse-lokal', slug: 'pse-lokal' },
+    { key: 'pse-asing', slug: 'pse-asing' },
 ] as const;
 
 export default function Navbar() {
@@ -168,7 +178,7 @@ export default function Navbar() {
             {group.slugs.map(slug => <Link key={slug} href={serviceHref(slug)} onClick={close}>{serviceName(slug)}<span aria-hidden="true">↗</span></Link>)}
         </div>)}
         <div className="vnav-group"><h3>{t('nav.group.products')}</h3>
-            {products.map(({ key, slug }) => <Link key={key} href={slug ? serviceHref(slug) : homeHref(`#service-${key}`)} onClick={close}>{t(`services.product.${key}.title`)}<span aria-hidden="true">↗</span></Link>)}
+            {products.map(({ key, slug }) => <Link key={key} href={serviceHref(slug)} onClick={close}>{t(`services.product.${key}.title`)}<span aria-hidden="true">↗</span></Link>)}
         </div>
     </>;
     const aboutLinks = <>
@@ -206,7 +216,11 @@ export default function Navbar() {
                     <Link href="/artikel" className={articlesActive ? 'is-active' : undefined} aria-current={articlesActive ? 'page' : undefined} onClick={close}>{t('nav.articles')}</Link>
                 </div>
                 <div className="vnav-actions"><Link className="vnav-track" href="/portal/login" onClick={close}>{t('nav.track')} <span aria-hidden="true">↗</span></Link><div className="vnav-language"><LanguageToggle /></div></div>
-                <div className="vnav-mobile-header"><LanguageToggle compact /><button ref={mobileTriggerRef} className="vnav-toggle" type="button" aria-label={mobileOpen ? t('nav.close') : t('nav.open')} aria-controls="vnav-mobile" aria-expanded={mobileOpen} onClick={() => { setMobileOpen(value => !value); setServicesOpen(false); setAboutOpen(false); }}><span/><span/><span/></button></div>
+                <div className="vnav-mobile-header"><LanguageToggle compact /><button ref={mobileTriggerRef} className="vnav-toggle" type="button" aria-label={mobileOpen ? t('nav.close') : t('nav.open')} aria-controls="vnav-mobile" aria-expanded={mobileOpen} onClick={() => { const opening = !mobileOpen; setMobileOpen(opening); setServicesOpen(false); setAboutOpen(false);
+    /* Opening the menu is the first tap, so the service list expands with
+       it: every service is then one more tap away (hamburger -> service)
+       instead of two. */
+    if (opening) setMobileServicesOpen(true); }}><span/><span/><span/></button></div>
             </div>
         </nav>
         {mobileOpen && createPortal(<div className="vnav-mobile-overlay" onPointerDown={event => { if (event.target === event.currentTarget) { close(); mobileTriggerRef.current?.focus(); } }}>

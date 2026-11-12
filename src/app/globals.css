@@ -4372,6 +4372,22 @@ section {
 }
 
 .svc-breadcrumb a { color: #635653; text-decoration: none; }
+/*
+ * Links inside the trail were 21px tall (the line box of a .83rem font), which
+ * is well under the 44px tap target a thumb needs on a phone. The padding grows
+ * the hit area without changing where the text sits; negative margins keep the
+ * trail's spacing identical.
+ */
+.svc-breadcrumb a,
+.svc-breadcrumb span[aria-current='page'] {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding-block: 6px;
+}
+@media (max-width: 768px) {
+    .svc-breadcrumb a { min-height: 44px; padding-block: 12px; margin-block: -12px; }
+}
 .svc-breadcrumb a:hover { color: #4a0e0e; text-decoration: underline; text-underline-offset: 3px; }
 .svc-breadcrumb a:focus-visible { outline: 3px solid #c8a15a; outline-offset: 3px; }
 .svc-breadcrumb [aria-current="page"] { color: #4a0e0e; font-weight: 650; }
@@ -5695,6 +5711,10 @@ body.modal-open .floating-whatsapp {
 
 .reviews-dots { display: flex; justify-content: center; gap: 8px; margin-top: 4px; }
 .reviews-dots button {
+    /* The visible dot stays 9px, but the hit area is 33px: a ::after overlay
+       that extends 12px past the dot on every side. A 9px button is unhittable
+       with a thumb, and the dot itself is too small a design element to grow. */
+    position: relative;
     width: 9px;
     height: 9px;
     padding: 0;
@@ -5703,6 +5723,12 @@ body.modal-open .floating-whatsapp {
     background: rgba(74, 14, 14, .22);
     cursor: pointer;
     transition: background-color .2s ease, transform .2s ease;
+}
+.reviews-dots button::after {
+    content: '';
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
 }
 .reviews-dots button.is-active { background: #4A0E0E; transform: scale(1.25); }
 .reviews-dots button:focus-visible { outline: 2px solid #C8A15A; outline-offset: 3px; }

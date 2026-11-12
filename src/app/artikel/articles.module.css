@@ -68,6 +68,11 @@
     font-size: 0.88rem;
     font-weight: 700;
     white-space: nowrap;
+    /* Line-height alone gave these a 24px hit area. The padding lifts them to a
+       thumb-friendly height without moving the text. */
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
 }
 
 .allLink:hover,

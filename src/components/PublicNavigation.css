@@ -132,6 +132,10 @@
 .vnav-mobile-accordion span { color: #4a0e0e; font-size: 1.35rem; line-height: 1; }
 .vnav-mobile-groups { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; padding: 20px 16px; background: #f8f4f0; border-radius: 10px; }
 .vnav-mobile-groups .vnav-group a span { display: none; }
+/* 44px minimum tap target (WCAG 2.5.8 / Lighthouse tap-targets). The shared
+   .vnav-group rule is 39px, which is fine for a hover mega-menu and too small
+   for a thumb. */
+.vnav-mobile-groups .vnav-group a { min-height: 44px; padding: 8px 0; }
 .vnav-mobile-all { display: flex; align-items: center; min-height: 44px; color: #4a0e0e; font-size: .85rem; font-weight: 750; }
 .vnav-mobile-about { display: flex; flex-direction: column; padding: 9px 16px; background: #f8f4f0; border-radius: 10px; }
 .vnav-mobile-about a { display: flex; align-items: center; justify-content: space-between; min-height: 46px; color: #4a0e0e; font-size: .91rem; font-weight: 650; }
