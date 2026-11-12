@@ -180,7 +180,14 @@ export default function Navbar() {
         <nav id="navbar" ref={rootRef} className={`navbar vnav${scrolled ? ' scrolled' : ''}`} aria-label={t('nav.main')}>
             <div className="container vnav-bar">
                 <Link href="/" className="vnav-brand" aria-label={`VERALEX CONSULTING — ${t('nav.home')}`} onClick={close}>
-                    <Image src="/logo.webp" alt="VERALEX CONSULTING" width={1024} height={724} sizes="(max-width: 375px) 54px, (max-width: 560px) 58px, (max-width: 1080px) 62px, 78px" priority />
+                    {/*
+                     * An explicit small `sizes` keeps next/image from emitting
+                     * the full 32w→3840w srcset for a 62px logo: that srcset
+                     * made the browser download three variants of the same
+                     * file (2 KB + 4 KB + 11 KB) for one 62px slot, the last
+                     * of them at Low priority after the LCP.
+                     */}
+                    <Image src="/logo.webp" alt="VERALEX CONSULTING" width={1024} height={724} sizes="96px" priority />
                 </Link>
                 <div className="vnav-desktop">
                     <Link href={homeHref('#hero')} className={homeActive ? 'is-active' : undefined} aria-current={homeActive ? 'page' : undefined} onClick={close}>{t('nav.home')}</Link>

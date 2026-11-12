@@ -58,11 +58,11 @@ export const metadata: Metadata = {
     ICBM: "-6.2484, 106.9860",
     "format-detection": "telephone=no",
   },
-  icons: {
-    icon: "/logo.webp",
-    shortcut: "/logo.webp",
-    apple: "/logo.webp",
-  },
+  // No `icons` block: Next generates /favicon.ico from src/app/icon.* and links
+  // it once. Declaring logo.webp here as icon + shortcut + apple made Chrome
+  // fetch the 22 KB webp twice at High priority *after* the navbar had already
+  // fetched a resized copy, which is the largest third-party-free item left on
+  // the homepage critical path.
 };
 
 export const viewport: Viewport = {

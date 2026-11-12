@@ -130,7 +130,11 @@ export default function HeroSection() {
                         height={1380}
                         priority
                         quality={90}
-                        sizes="(max-width: 1024px) 90vw, 480px"
+                        // The image renders 300px wide on phones (240px under
+                        // 380px), not 90vw: the old hint fetched the 750w file
+                        // — 27 KB — for a 300px box, and on reduced-motion
+                        // visits it is the LCP element.
+                        sizes="(max-width: 380px) 240px, (max-width: 1024px) 300px, 480px"
                         className="hero-team-img"
                     />
                 </div>

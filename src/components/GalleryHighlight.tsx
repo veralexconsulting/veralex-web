@@ -45,7 +45,15 @@ export default function GalleryHighlight() {
                                     height={240}
                                     sizes="(max-width: 480px) 220px, (max-width: 768px) 250px, 300px"
                                     quality={72}
-                                    loading={i < 3 ? 'eager' : 'lazy'}
+                                    /*
+                                     * Lazy for every slide. Three of them were
+                                     * `eager`, which made the browser preload
+                                     * them at High priority — the gallery strip
+                                     * sits well below the fold, so those three
+                                     * requests competed with the hero for
+                                     * bandwidth before the visitor had scrolled.
+                                     */
+                                    loading="lazy"
                                 />
                             </div>
                         ))}
