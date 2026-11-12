@@ -258,6 +258,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         'contact.email_sub': 'Hubungi kami via email formal',
         'contact.wa_sub': 'Respon cepat & gratis konsultasi',
         'contact.address_sub': 'Klik untuk melihat di Google Maps',
+        'contact.show_map': 'Lihat peta lokasi',
         'contact.send': 'Kirim Pesan',
 
         // Floating WhatsApp
@@ -696,6 +697,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         'contact.email_sub': 'Contact us via formal email',
         'contact.wa_sub': 'Fast response & free consultation',
         'contact.address_sub': 'Click to view on Google Maps',
+        'contact.show_map': 'View location map',
         'contact.send': 'Send Message',
 
         // Floating WhatsApp
@@ -1134,6 +1136,7 @@ export const translations: Record<Lang, Record<string, string>> = {
         'contact.email_sub': '通过正式电子邮件与我们沟通',
         'contact.wa_sub': '快速响应与免费在线咨询',
         'contact.address_sub': '点击在谷歌地图中查看导航',
+        'contact.show_map': '查看位置地图',
         'contact.send': '发送留言',
 
         // Floating WhatsApp

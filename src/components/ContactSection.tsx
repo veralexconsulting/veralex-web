@@ -2,6 +2,11 @@
 
 import { useLang } from '@/lib/useLang';
 import { whatsappHref } from '@/lib/marketing';
+import MapEmbed from './MapEmbed';
+
+// Kept out of the JSX so the click-to-load component receives a stable string.
+const MAP_EMBED_SRC =
+    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.1158580649774!2d106.9859546!3d-6.2484439!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e698c17bbf5cbb7%3A0x6b4122d251f28b4d!2sJl.%20Utama%20Raya%20No.348%2C%20RT.003%2BRW.026%2C%20Kayuringin%20Jaya%2C%20Kec.%20Bekasi%20Sel.%2C%20Kota%20Bks%2C%20Jawa%20Barat%2017144!5e0!3m2!1sid!2sid!4v1719416000000!5m2!1sid!2sid';
 
 export default function ContactSection() {
     const { t } = useLang();
@@ -126,6 +131,47 @@ export default function ContactSection() {
                         display: block;
                     }
 
+                    /* Click-to-load stand-in for the map. Same box as the
+                       iframe it replaces, so nothing shifts when it is
+                       swapped in. 44px min target, visible focus ring. */
+                    .contact-map-placeholder {
+                        position: absolute;
+                        inset: 0;
+                        width: 100%;
+                        height: 100%;
+                        min-height: 44px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 0.75rem;
+                        padding: 1.5rem;
+                        cursor: pointer;
+                        border: 0;
+                        background: linear-gradient(160deg, rgba(201, 162, 39, 0.10), rgba(255, 255, 255, 0.5));
+                        color: var(--text-primary, #1a1a1a);
+                        font-family: inherit;
+                        font-size: 1rem;
+                        font-weight: 600;
+                        text-align: center;
+                    }
+
+                    .contact-map-placeholder:hover,
+                    .contact-map-placeholder:focus-visible {
+                        background: linear-gradient(160deg, rgba(201, 162, 39, 0.18), rgba(255, 255, 255, 0.6));
+                    }
+
+                    .contact-map-placeholder:focus-visible {
+                        outline: 3px solid #c9a227;
+                        outline-offset: -3px;
+                    }
+
+                    .contact-map-placeholder svg {
+                        width: 40px;
+                        height: 40px;
+                        color: #c9a227;
+                    }
+
                     @media (max-width: 480px) {
                         .contact-map-side {
                             min-height: 320px;
@@ -192,15 +238,13 @@ export default function ContactSection() {
                         </a>
                     </div>
 
-                    {/* Right Column: Google Maps Embed */}
+                    {/* Right Column: Google Maps Embed (click-to-load) */}
                     <div className="contact-map-side">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.1158580649774!2d106.9859546!3d-6.2484439!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e698c17bbf5cbb7%3A0x6b4122d251f28b4d!2sJl.%20Utama%20Raya%20No.348%2C%20RT.003%2BRW.026%2C%20Kayuringin%20Jaya%2C%20Kec.%20Bekasi%20Sel.%2C%20Kota%20Bks%2C%20Jawa%20Barat%2017144!5e0!3m2!1sid!2sid!4v1719416000000!5m2!1sid!2sid"
+                        <MapEmbed
+                            src={MAP_EMBED_SRC}
                             title={`${t('contact.address')} — ${t('contact.address_value')}`}
-                            allowFullScreen={true}
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                        ></iframe>
+                            label={t('contact.show_map')}
+                        />
                     </div>
                 </div>
             </div>
