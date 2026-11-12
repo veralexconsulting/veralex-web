@@ -21,6 +21,15 @@ const nextConfig: NextConfig = {
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'X-DNS-Prefetch-Control', value: 'on' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+          // The canonical host is www. Matching bare-domain traffic is
+          // redirected to www by Vercel's domain settings, but that redirect
+          // answers 307 (temporary) — measured 2026-11-12:
+          //   https://veralexconsulting.com/services/pt-pma -> 307 -> www
+          // A temporary redirect does not consolidate authority, so the
+          // canonical https://www origin advertises itself in every response,
+          // including the ones the bare domain hands back. That makes the
+          // preference explicit to any crawler that ignores redirects.
+          { key: 'Link', value: '<https://www.veralexconsulting.com/>; rel="canonical"' },
         ],
       },
       // App areas are client components and cannot export metadata, so the
