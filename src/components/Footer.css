@@ -36,8 +36,13 @@
 }
 
 /* ── Band 1: CTA ── */
+/*
+ * The CTA band sits on top of the footer as a single rounded slab. It is the
+ * one raised surface in the footer — the link columns below stay flat.
+ */
 .footer-cta {
     background: var(--color-primary-light);
+    border-radius: var(--radius-xl);
     border-bottom: 1px solid rgba(200, 161, 90, 0.32);
 }
 
@@ -76,7 +81,7 @@
     justify-content: center;
     min-height: 44px;
     padding: 10px 20px;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     font-family: var(--font-jakarta);
     font-size: 0.88rem;
     font-weight: 700;
@@ -369,7 +374,7 @@
 .footer :is(a, button):focus-visible {
     outline: 2px solid #FFFFFF;
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: var(--radius-sm);
 }
 
 /* ── Responsive ── */

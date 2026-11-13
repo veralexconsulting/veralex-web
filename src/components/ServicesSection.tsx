@@ -56,7 +56,7 @@ const Price = ({
                         fontSize: '0.65rem',
                         fontWeight: 700,
                         padding: '1px 6px',
-                        borderRadius: '4px',
+                        borderRadius: 'var(--radius-sm)',
                         letterSpacing: '0.5px',
                         textTransform: 'uppercase',
                     }}>
@@ -106,7 +106,7 @@ export default function ServicesSection() {
                                             fontSize: '0.68rem',
                                             fontWeight: 700,
                                             padding: '2px 8px',
-                                            borderRadius: '12px',
+                                            borderRadius: 'var(--radius-pill)',
                                             letterSpacing: '0.5px',
                                             textTransform: 'uppercase',
                                         }}>

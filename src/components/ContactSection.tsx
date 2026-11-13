@@ -49,19 +49,20 @@ export default function ContactSection() {
                         align-items: flex-start;
                         gap: 1.25rem;
                         padding: 1.5rem;
-                        background: var(--bg-glass);
-                        border: var(--border-gold);
+                        background: var(--bg-card);
+                        border: 1px solid #E9E4DE;
                         border-radius: var(--radius-lg);
+                        box-shadow: var(--shadow-sm);
                         text-decoration: none;
-                        transition: var(--transition-normal);
+                        transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
                         min-width: 0;
                         width: 100%;
                     }
 
                     .corporate-contact-item:hover {
-                        transform: translateY(-3px);
-                        box-shadow: var(--shadow-gold);
-                        border-color: var(--color-gold);
+                        transform: var(--lift-card);
+                        box-shadow: var(--shadow-md);
+                        border-color: var(--border-gold-strong);
                     }
 
                     .contact-item-icon {
@@ -112,10 +113,10 @@ export default function ContactSection() {
 
                     .contact-map-side {
                         position: relative;
-                        border: var(--border-gold);
-                        border-radius: var(--radius-lg);
+                        border: 1px solid #E9E4DE;
+                        border-radius: var(--radius-xl);
                         overflow: hidden;
-                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+                        box-shadow: var(--shadow-md);
                         min-height: 350px;
                         background: rgba(255, 255, 255, 0.4);
                         min-width: 0;
@@ -128,6 +129,7 @@ export default function ContactSection() {
                         width: 100%;
                         height: 100%;
                         border: 0;
+                        border-radius: var(--radius-xl);
                         display: block;
                     }
 

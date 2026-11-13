@@ -66,20 +66,26 @@
     padding: clamp(1.5rem, 2.4vw, 2.25rem);
     background: var(--bg-card);
     border: 1px solid #E4DFD9;
+    border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
-    transition: border-color var(--transition-normal), box-shadow var(--transition-normal), transform var(--transition-normal);
+    transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
 }
 
 .pricing-card:hover {
-    transform: translateY(-3px);
+    transform: var(--lift-card);
     border-color: #D3CDC5;
     box-shadow: var(--shadow-md);
 }
 
-/* Featured is marked by weight and rule, not by scale. */
+/* Featured is marked by weight, rule and depth — not by a thicker border or a
+   larger box, so the grid stays even. */
 .pricing-card.featured {
     border-color: rgba(74, 14, 14, 0.45);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-lg);
+}
+
+.pricing-card.featured:hover {
+    box-shadow: var(--shadow-lg);
 }
 
 .pricing-card.featured::before {

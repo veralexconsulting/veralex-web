@@ -37,12 +37,23 @@
     --border-gold-strong: 1px solid #D3CDC5;
     --border-accent: 1px solid rgba(74, 14, 14, 0.24);
 
-    /* Shadows — neutral black, not tinted red */
-    --shadow-sm: 0 1px 2px rgba(24, 22, 20, 0.05);
-    --shadow-md: 0 4px 16px rgba(24, 22, 20, 0.07);
-    --shadow-lg: 0 12px 40px rgba(24, 22, 20, 0.1);
-    --shadow-gold: 0 4px 16px rgba(24, 22, 20, 0.08);
-    --shadow-gold-strong: 0 12px 36px rgba(24, 22, 20, 0.12);
+    /*
+     * Shadows — warm, layered, never pure black.
+     *
+     * Each step is two shadows: a tight one that defines the edge and a wide,
+     * low-alpha one that reads as ambient light. One single-shadow value per
+     * level looked flat, and anything stronger than this turned a clean legal
+     * site into a game UI. Colour basis is #2a1a1a (a warm near-black), so
+     * shadows sit on the warm paper ground instead of greying it out.
+     */
+    --shadow-color: 42, 26, 26;
+    --shadow-xs: 0 1px 2px rgba(var(--shadow-color), 0.06);
+    --shadow-sm: 0 2px 4px rgba(var(--shadow-color), 0.05), 0 4px 12px rgba(var(--shadow-color), 0.06);
+    --shadow-md: 0 4px 8px rgba(var(--shadow-color), 0.05), 0 12px 28px rgba(var(--shadow-color), 0.09);
+    --shadow-lg: 0 8px 16px rgba(var(--shadow-color), 0.06), 0 24px 48px rgba(var(--shadow-color), 0.12);
+    /* Maroon-branded lift, only for solid maroon buttons. RGB is
+       --color-primary (74, 14, 14) at brand-strength alpha. */
+    --shadow-brand: 0 6px 16px rgba(74, 14, 14, 0.28);
 
     /* Typography — one modern grotesque for both roles.
      * The display serif (Playfair) made the site read as a 2015 editorial
@@ -84,12 +95,32 @@
     --transition-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 
-    /* Border Radius */
-    --radius-sm: 0px;
-    /* Sharp corners for high fashion/legal luxury feeling */
-    --radius-md: 0px;
-    --radius-lg: 0px;
-    --radius-xl: 0px;
+    /*
+     * Border Radius — one scale for the whole site.
+     *
+     * The site used to be all 0px ("sharp corners for luxury feeling"), which
+     * made every card, input and button read as the same flat rectangle. The
+     * scale below is the only place radii are defined: components reference
+     * these tokens and never hardcode a value.
+     *
+     *   sm    inputs, badges, chips, small tags
+     *   md    buttons, dropdowns, small cards, list items
+     *   lg    service / pricing / testimonial / tracking cards, modals
+     *   xl    large panels, highlighted sections, hero & gallery imagery
+     *   pill  floating navbar, language picker, pill badges
+     */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-pill: 999px;
+    /* Inner radius for a card nested in a card: outer minus the padding
+       between them (--radius-lg - 8px). */
+    --radius-lg-inset: 8px;
+
+    /* Motion for the hover lift shared by buttons and clickable cards. */
+    --lift: translateY(-2px);
+    --lift-card: translateY(-4px);
 }
 
 /* ===== CSS Reset & Base ===== */
@@ -142,6 +173,18 @@ html {
 
 :is(#services, #pricing, #contact, [id^="service-"], [id^="services-"]) {
     scroll-margin-top: 110px;
+}
+
+/*
+ * Phones: keep the depth cheap. The largest radius steps down one level and
+ * the heaviest shadow steps down to md, so cards stay light to paint on a
+ * device that renders many of them while scrolling.
+ */
+@media (max-width: 768px) {
+    :root {
+        --radius-xl: var(--radius-lg);
+        --shadow-lg: var(--shadow-md);
+    }
 }
 
 body {
@@ -255,16 +298,21 @@ button {
     font-size: 0.95rem;
     font-weight: 700;
     text-align: center;
-    transition: all 0.4s ease;
+    transition: background-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
     border: none;
-    box-shadow: 0 5px 20px rgba(74, 14, 14, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-    border-radius: 2px;
+    box-shadow: var(--shadow-brand);
+    border-radius: var(--radius-md);
 }
 
 .btn-editorial-solid:hover {
-    box-shadow: 0 6px 18px rgba(24, 22, 20, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.14);
-    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    transform: var(--lift);
     color: #ffffff;
+}
+
+.btn-editorial-solid:active {
+    transform: none;
+    box-shadow: var(--shadow-sm);
 }
 
 .btn {
@@ -276,12 +324,20 @@ button {
     font-size: 1rem;
     font-weight: 500;
     /* Less bold for elegance */
-    border-radius: var(--radius-xl);
-    /* Pill shape for premium feel */
-    transition: var(--transition-normal);
+    border-radius: var(--radius-md);
+    transition: background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
     position: relative;
     overflow: hidden;
     letter-spacing: 0.02em;
+}
+
+/*
+ * Landing-page primary CTA is the one pill on the page: it sits alone in the
+ * hero, so the softer shape reads as the single main action. Everything else
+ * uses --radius-md.
+ */
+.hero-cta .btn-editorial-solid {
+    border-radius: var(--radius-pill);
 }
 
 /* Premium Tactile UX: snappy scale down on click/tap */
@@ -296,38 +352,44 @@ button {
 .btn-primary {
     background: var(--color-gold);
     color: #ffffff;
-    box-shadow: 0 4px 15px rgba(74, 14, 14, 0.2);
+    box-shadow: var(--shadow-brand);
 }
 
 .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(74, 14, 14, 0.3);
+    transform: var(--lift);
+    box-shadow: var(--shadow-lg);
 }
 
+.btn-primary:active {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+}
+
+/* The glossy sweep that used to run across primary buttons is gone: it read as
+   a web-app "shine" and the refresh of radii/shadows deliberately adds no new
+   gloss. The element stays in the DOM but paints nothing. */
 .btn-primary::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-    transition: 0.6s ease;
-}
-
-.btn-primary:hover::before {
-    left: 100%;
+    content: none;
 }
 
 .btn-outline {
     background: transparent;
     color: var(--text-primary);
-    border: 1px solid rgba(26, 26, 26, 0.3);
+    border: 1px solid var(--border-gold-strong);
+    box-shadow: none;
 }
 
+/* Outline buttons fill with the pale cream ground on hover — no shadow, so the
+   solid maroon button remains the only raised one in a row of actions. */
 .btn-outline:hover {
-    background: rgba(26, 26, 26, 0.05);
-    border-color: rgba(26, 26, 26, 0.55);
+    background: var(--bg-sunken);
+    border-color: var(--color-gold);
+    transform: var(--lift);
+    box-shadow: none;
+}
+
+.btn-outline:active {
+    transform: none;
 }
 
 .btn-nav {
@@ -406,7 +468,7 @@ button {
 .auth-link-nav {
     border: 1px solid rgba(74, 14, 14, 0.3);
     padding: 8px 24px;
-    border-radius: 0;
+    border-radius: var(--radius-md);
     /* Sharp corners for luxury */
 }
 
@@ -497,8 +559,7 @@ button {
     min-height: 34px;
     background: rgba(255, 255, 255, 0.85);
     border: 1px solid rgba(74, 14, 14, 0.22);
-    border-radius: 999px;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-pill);
     transition: var(--transition-fast);
 }
 
@@ -515,7 +576,7 @@ button {
     height: 24px;
     font-size: 1rem;
     line-height: 1;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     opacity: 0.45;
     filter: grayscale(0.35);
     transition: var(--transition-fast);
@@ -525,7 +586,7 @@ button {
     opacity: 1;
     filter: none;
     background: rgba(74, 14, 14, 0.12);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-xs);
 }
 
 .flag-lang-toggle-wrapper {
@@ -544,8 +605,8 @@ button {
     padding: 6px;
     background: rgba(255, 255, 255, 0.98);
     border: 1px solid rgba(74, 14, 14, 0.18);
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
 }
 
 .flag-lang-dropdown-option {
@@ -559,7 +620,7 @@ button {
     color: var(--text-primary);
     background: transparent;
     border: none;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     text-align: left;
     transition: var(--transition-fast);
@@ -700,7 +761,8 @@ button {
     z-index: 0;
 }
 
-/* Hairline maroon rule closing the section. */
+/* Hairline maroon rule closing the section — an inset edge, not a card lift,
+   so a full-width section never floats. */
 .hero-overlay {
     position: absolute;
     inset: 0;
@@ -753,9 +815,10 @@ button {
     width: 100%;
     height: auto;
     max-width: 520px;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
     filter:
-        drop-shadow(0 34px 44px rgba(45, 8, 8, 0.24))
-        drop-shadow(0 6px 12px rgba(45, 8, 8, 0.16));
+        drop-shadow(0 18px 28px rgba(var(--shadow-color), 0.14));
 }
 
 /* Contact shadow at the baseline, so the group is standing rather than pasted. */
@@ -767,10 +830,9 @@ button {
     transform: translateX(-50%);
     width: 78%;
     height: 30px;
-    border-radius: 50%;
     background: radial-gradient(ellipse at center,
-            rgba(45, 8, 8, 0.26) 0%,
-            rgba(45, 8, 8, 0.12) 45%,
+            rgba(var(--shadow-color), 0.16) 0%,
+            rgba(var(--shadow-color), 0.07) 45%,
             transparent 72%);
     filter: blur(7px);
     pointer-events: none;
@@ -809,7 +871,7 @@ button {
     padding: 6px 14px;
     background: rgba(74, 14, 14, 0.04);
     border: 1px solid rgba(74, 14, 14, 0.18);
-    border-radius: 20px;
+    border-radius: var(--radius-pill);
     color: #4A0E0E;
     font-family: var(--font-jakarta), var(--font-body);
     font-size: 0.74rem;
@@ -901,7 +963,7 @@ button {
 }
 
 .hero-cta .btn-editorial-solid {
-    box-shadow: 0 6px 18px rgba(74, 14, 14, 0.18);
+    box-shadow: var(--shadow-brand);
 }
 
 /* Stats strip */
@@ -982,35 +1044,32 @@ button {
     width: 100%;
 }
 
+/*
+ * Homepage service rows.
+ *
+ * These used to react by growing a maroon underline across the row and
+ * shifting the text 2rem right — a border animation that read as a table.
+ * The row is now its own rounded target: on hover it takes --radius-md, a
+ * pale cream ground, --shadow-xs and a hairline inset, which is also what
+ * makes the whole row read as clickable. Padding is negative-compensated so
+ * nothing on the page moves when the hover state appears.
+ */
 .service-row-luxury {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2.5rem 0;
+    margin-inline: -1rem;
+    padding: 2.5rem 1rem;
     border-bottom: 1px solid rgba(74, 14, 14, 0.15);
-    transition: var(--transition-slow);
+    border-radius: var(--radius-md);
+    transition: background-color 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
     position: relative;
-    overflow: hidden;
-}
-
-.service-row-luxury::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 1px;
-    background: var(--color-gold);
-    transition: var(--transition-slow);
-}
-
-.service-row-luxury:hover::before {
-    width: 100%;
 }
 
 .service-row-luxury:hover {
-    padding-left: 2rem;
-    background: linear-gradient(90deg, rgba(74, 14, 14, 0.03) 0%, transparent 100%);
+    background: var(--bg-card-hover);
+    box-shadow: var(--shadow-xs);
+    border-bottom-color: transparent;
 }
 
 .service-row-left {
@@ -1068,6 +1127,26 @@ button {
 }
 
 /* Product Cards */
+/*
+ * .service-card is the shared card for related-service links (service pages)
+ * and the gallery tiles. It had no definition of its own — every page styled
+ * it with inline padding — so the radius and depth now live here, once.
+ */
+.service-card {
+    background: var(--bg-card);
+    border: 1px solid #E9E4DE;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+.service-card:hover {
+    transform: var(--lift-card);
+    border-color: var(--border-gold-strong);
+    box-shadow: var(--shadow-md);
+}
+
 .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -1075,19 +1154,19 @@ button {
 }
 
 .product-card {
-    background: var(--bg-glass);
-    backdrop-filter: blur(10px);
-    border: var(--border-gold);
-    border-radius: var(--radius-md);
+    background: var(--bg-card);
+    border: 1px solid #E9E4DE;
+    border-radius: var(--radius-lg);
     padding: 1.5rem;
     text-align: center;
-    transition: var(--transition-normal);
+    box-shadow: var(--shadow-sm);
+    transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
 }
 
 .product-card:hover {
-    transform: translateY(-3px);
-    border-color: rgba(74, 14, 14, 0.5);
-    box-shadow: var(--shadow-gold);
+    transform: var(--lift-card);
+    border-color: var(--border-gold-strong);
+    box-shadow: var(--shadow-md);
 }
 
 @media (max-width: 480px) {
@@ -1153,17 +1232,18 @@ button {
 }
 
 .bundle-card {
-    background: var(--bg-glass);
-    border: var(--border-gold);
+    background: var(--bg-card);
+    border: 1px solid #E9E4DE;
     border-radius: var(--radius-lg);
     padding: 2rem;
-    transition: var(--transition-normal);
     box-shadow: var(--shadow-sm);
+    transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
 }
 
 .bundle-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-gold);
+    transform: var(--lift-card);
+    border-color: var(--border-gold-strong);
+    box-shadow: var(--shadow-md);
 }
 
 .bundle-name {
@@ -1217,17 +1297,18 @@ button {
 }
 
 .testimonial-card {
-    background: var(--bg-glass);
-    border: var(--border-gold);
+    background: var(--bg-card);
+    border: 1px solid #E9E4DE;
     border-radius: var(--radius-lg);
     padding: 2rem;
-    transition: var(--transition-normal);
     box-shadow: var(--shadow-sm);
+    transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
 }
 
 .testimonial-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-gold);
+    transform: var(--lift-card);
+    border-color: var(--border-gold-strong);
+    box-shadow: var(--shadow-md);
 }
 
 .testimonial-content {
@@ -1298,18 +1379,19 @@ button {
 }
 
 .why-legal-item {
-    background: var(--bg-glass);
-    border: var(--border-gold);
+    background: var(--bg-card);
+    border: 1px solid #E9E4DE;
     border-radius: var(--radius-md);
     padding: 1rem 1.5rem;
     color: var(--text-secondary);
-    transition: var(--transition-normal);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-xs);
+    transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
 }
 
 .why-legal-item:hover {
-    border-color: var(--color-gold);
-    transform: translateX(5px);
+    border-color: var(--border-gold-strong);
+    transform: var(--lift);
+    box-shadow: var(--shadow-sm);
 }
 
 /* ===== CTA Section ===== */
@@ -1351,19 +1433,20 @@ button {
 }
 
 .contact-card {
-    background: var(--bg-glass);
-    border: var(--border-gold);
+    background: var(--bg-card);
+    border: 1px solid #E9E4DE;
     border-radius: var(--radius-lg);
     padding: 2rem;
     text-align: center;
-    transition: var(--transition-normal);
     display: block;
     box-shadow: var(--shadow-sm);
+    transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
 }
 
 .contact-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-gold);
+    transform: var(--lift-card);
+    border-color: var(--border-gold-strong);
+    box-shadow: var(--shadow-md);
 }
 
 .contact-icon {
@@ -1629,7 +1712,7 @@ button {
     font-size: 0.7rem;
     font-weight: 700;
     padding: 4px 10px;
-    border-radius: 20px;
+    border-radius: var(--radius-pill);
     margin-top: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -1682,20 +1765,17 @@ button {
     display: flex;
     align-items: center;
     gap: 1rem;
-    background: var(--bg-glass);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: var(--border-gold);
+    background: var(--bg-card);
+    border: 1px solid #E9E4DE;
     border-radius: var(--radius-md);
     padding: 1rem 1.25rem;
-    transition: var(--transition-normal);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-xs);
+    transition: border-color 200ms ease, box-shadow 200ms ease;
 }
 
 .benefit-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(74, 14, 14, 0.4);
-    box-shadow: var(--shadow-gold);
+    border-color: var(--border-gold-strong);
+    box-shadow: var(--shadow-sm);
 }
 
 .benefit-card.bonus {
@@ -1794,11 +1874,12 @@ button {
     flex-shrink: 0;
     width: 300px;
     height: 220px;
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-xl);
     overflow: hidden;
     background: var(--bg-card);
     border: var(--border-gold);
-    transition: border-color var(--transition-normal);
+    box-shadow: var(--shadow-md);
+    transition: border-color 200ms ease, box-shadow 200ms ease;
 }
 
 /*
@@ -1807,7 +1888,8 @@ button {
  * The border is enough of a cue.
  */
 .gallery-slide:hover {
-    border-color: var(--color-gold);
+    border-color: var(--border-gold-strong);
+    box-shadow: var(--shadow-lg);
 }
 
 .gallery-slide img {
@@ -1914,13 +1996,18 @@ button {
     align-items: center;
     gap: 10px;
     border-radius: var(--radius-md);
-    transition: var(--transition-normal);
-    box-shadow: var(--shadow-gold);
+    box-shadow: var(--shadow-brand);
+    transition: transform 200ms ease, box-shadow 200ms ease;
 }
 
 .btn-whatsapp:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-gold-strong);
+    transform: var(--lift);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-whatsapp:active {
+    transform: none;
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-whatsapp svg {
@@ -1983,15 +2070,15 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+    box-shadow: var(--shadow-md);
     z-index: 9999;
-    transition: var(--transition-normal);
+    transition: transform 200ms ease, box-shadow 200ms ease;
     animation: float-wa 3s ease-in-out infinite;
 }
 
 .floating-whatsapp:hover {
-    transform: scale(1.08);
-    box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
+    transform: scale(1.04);
+    box-shadow: var(--shadow-lg);
 }
 
 .floating-whatsapp svg {
@@ -2015,7 +2102,7 @@ button {
     max-width: min(calc(100vw - 110px), 320px);
     overflow: hidden;
     text-overflow: ellipsis;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-md);
     /* Hidden until the widget is hovered or focused, so it stops covering the
        testimonial CTA. The link itself is unchanged. */
     opacity: 0;
@@ -2281,7 +2368,7 @@ section {
         padding: 6px 12px;
         font-size: 0.78rem;
         font-weight: 700;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+        box-shadow: var(--shadow-md);
     }
 
     /* Mobile fullscreen nav */
@@ -2411,7 +2498,7 @@ section {
     place-items: center;
     overflow: hidden;
     border: 1px solid #eee9e5;
-    border-radius: 9px;
+    border-radius: var(--radius-sm);
     background: #fff;
 }
 /*
@@ -2760,7 +2847,7 @@ section {
 .panel-sidebar-logo {
     width: 36px;
     height: 36px;
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
 }
 
 .panel-sidebar-name {
@@ -2914,7 +3001,7 @@ section {
 .stat-card:hover {
     transform: translateY(-5px);
     border-color: rgba(212, 175, 55, 0.4);
-    box-shadow: 0 10px 30px -10px rgba(212, 175, 55, 0.15);
+    box-shadow: var(--shadow-md);
 }
 
 .stat-card:hover::after {
@@ -2961,7 +3048,7 @@ section {
     padding: 4px 12px;
     font-size: 0.75rem;
     font-weight: 600;
-    border-radius: 20px;
+    border-radius: var(--radius-pill);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -3116,7 +3203,7 @@ section {
 .order-card:hover {
     border-color: rgba(212, 175, 55, 0.4);
     transform: translateY(-4px);
-    box-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.15);
+    box-shadow: var(--shadow-md);
 }
 
 .order-card:hover::after {
@@ -3181,12 +3268,10 @@ section {
 
 .detail-section {
     background: linear-gradient(135deg, rgba(84, 13, 13, 0.3) 0%, rgba(45, 8, 8, 0.6) 100%);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(212, 175, 55, 0.2);
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-lg);
     padding: 2rem;
-    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    box-shadow: var(--shadow-md);
 }
 
 .detail-section-title {
@@ -3331,7 +3416,7 @@ section {
     align-items: center;
     justify-content: center;
     background: rgba(212, 175, 55, 0.1);
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     flex-shrink: 0;
 }
 
@@ -3388,7 +3473,7 @@ section {
 .service-select-card.selected {
     border-color: var(--color-gold);
     background: rgba(212, 175, 55, 0.08);
-    box-shadow: 0 0 16px rgba(212, 175, 55, 0.15);
+    box-shadow: var(--shadow-sm);
 }
 
 .service-select-name {
@@ -3565,7 +3650,7 @@ section {
     color: var(--text-muted);
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
+    border-radius: var(--radius-md);
     cursor: pointer;
     transition: var(--transition-fast);
 }
@@ -3731,7 +3816,7 @@ section {
     margin-top: 0.75rem;
     padding: 0.625rem 0.875rem;
     background: rgba(248, 113, 113, 0.08);
-    border-radius: 6px;
+    border-radius: var(--radius-sm);
     font-size: 0.82rem;
     color: #f87171;
     line-height: 1.5;
@@ -3944,7 +4029,7 @@ section {
     font-size: 1rem;
     background: rgba(212, 175, 55, 0.1);
     padding: 0.5rem 1rem;
-    border-radius: 20px;
+    border-radius: var(--radius-pill);
     margin-top: 0.5rem;
 }
 
@@ -3987,7 +4072,7 @@ section {
     width: 100%;
     height: 6px;
     background: rgba(255, 255, 255, 0.06);
-    border-radius: 3px;
+    border-radius: var(--radius-pill);
     margin-bottom: 1.25rem;
     overflow: hidden;
 }
@@ -3995,7 +4080,7 @@ section {
 .progress-bar-fill {
     height: 100%;
     background: linear-gradient(90deg, var(--color-gold), #34d399);
-    border-radius: 3px;
+    border-radius: var(--radius-pill);
     transition: width 0.5s ease;
     min-width: 0;
 }
@@ -4011,7 +4096,7 @@ section {
 .step-status-badge {
     display: inline-block;
     padding: 2px 8px;
-    border-radius: 12px;
+    border-radius: var(--radius-sm);
     font-size: 0.7rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -4417,7 +4502,7 @@ section {
     display: inline-block;
     background: rgba(74, 14, 14, 0.08);
     border: 1px solid rgba(74, 14, 14, 0.2);
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-pill);
     padding: 6px 18px;
     font-size: 0.8rem;
     letter-spacing: 0.06em;
@@ -4448,6 +4533,7 @@ section {
     border-radius: var(--radius-lg);
     padding: 2rem;
     margin: 2.5rem 0;
+    box-shadow: var(--shadow-md);
 }
 
 .svc-card-label {
@@ -4478,7 +4564,7 @@ section {
     font-size: 0.7rem;
     font-weight: 700;
     padding: 3px 9px;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
     letter-spacing: 0.06em;
     text-transform: uppercase;
     border: 1px solid rgba(200, 161, 90, 0.45);
@@ -4682,7 +4768,7 @@ section {
     border: var(--border-gold-strong);
     border-radius: var(--radius-xl);
     padding: 2rem;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
+    box-shadow: var(--shadow-lg);
     animation: svcSlideUp 0.25s ease;
 }
 
@@ -4812,7 +4898,8 @@ section {
     font-size: 1rem;
     font-family: inherit;
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    box-shadow: var(--shadow-xs);
+    transition: border-color 200ms ease, box-shadow 200ms ease;
     -webkit-appearance: none;
     appearance: none;
 }
@@ -4823,7 +4910,9 @@ section {
 
 .order-modal-field input:focus {
     border-color: var(--color-gold);
-    box-shadow: 0 0 0 3px rgba(74, 14, 14, 0.12);
+    box-shadow: var(--shadow-xs);
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
 }
 
 .order-modal-field input[aria-invalid='true'] {
@@ -4917,11 +5006,11 @@ section {
 }
 
 .faq-item {
-    background: var(--bg-glass);
-    border: var(--border-gold);
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    transition: border-color 0.3s ease;
+    background: var(--bg-card);
+    border: 1px solid #E9E4DE;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: border-color 200ms ease, box-shadow 200ms ease;
 }
 
 .faq-item.open {
@@ -5481,7 +5570,7 @@ body.modal-open .floating-whatsapp {
     background: #fff;
     border: 1px solid #E4DFD9;
     border-top: 1px solid #E4DFD9;
-    box-shadow: 0 12px 34px rgba(47, 27, 27, .055);
+    box-shadow: var(--shadow-sm);
 }
 .svc-page .svc-card-label { color: #6d605b; font-weight: 700; }
 .svc-page .svc-price-old { color: #746b67; }
@@ -5618,7 +5707,7 @@ body.modal-open .floating-whatsapp {
     margin: 0 -6px;
 }
 .reviews-track::-webkit-scrollbar { display: none; }
-.reviews-track:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 4px; border-radius: 14px; }
+.reviews-track:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 4px; border-radius: var(--radius-lg); }
 
 .review-card {
     flex: 0 0 calc((100% - 40px) / 3);
@@ -5628,8 +5717,8 @@ body.modal-open .floating-whatsapp {
     flex-direction: column;
     background: #FFFFFF;
     border: 1px solid rgba(30, 30, 30, 0.09);
-    border-radius: 16px;
-    box-shadow: 0 14px 34px -20px rgba(0, 0, 0, .55);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
     padding: 22px 22px 18px;
     color: #1E1E1E;
 }
@@ -5679,7 +5768,7 @@ body.modal-open .floating-whatsapp {
     text-underline-offset: 3px;
     cursor: pointer;
 }
-.review-more:focus-visible { outline: 2px solid #C8A15A; outline-offset: 2px; border-radius: 4px; }
+.review-more:focus-visible { outline: 2px solid #C8A15A; outline-offset: 2px; border-radius: var(--radius-sm); }
 
 .review-foot {
     display: flex;
@@ -5703,10 +5792,10 @@ body.modal-open .floating-whatsapp {
     display: grid;
     place-items: center;
     border: 1px solid rgba(74, 14, 14, .25);
-    border-radius: 50%;
+    border-radius: var(--radius-sm);
     background: #FFFFFF;
     color: #4A0E0E;
-    box-shadow: 0 8px 22px -12px rgba(0, 0, 0, .5);
+    box-shadow: var(--shadow-sm);
     cursor: pointer;
 }
 .reviews-arrow.is-prev { left: 0; }
@@ -5746,7 +5835,7 @@ body.modal-open .floating-whatsapp {
     min-height: 46px;
     padding: 12px 22px;
     border: 1px solid #4A0E0E;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: #FFFFFF;
     color: #4A0E0E;
     font-size: .875rem;
@@ -5793,10 +5882,10 @@ body.modal-open .floating-whatsapp {
   width: min(100%, 560px);
   background: #fff;
   border: 1px solid #e8e4e0;
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   padding: clamp(26px, 5vw, 42px);
   text-align: center;
-  box-shadow: 0 18px 50px rgba(44, 28, 22, .06);
+  box-shadow: var(--shadow-md);
 }
 .ws-fallback-brand { display: inline-block; margin-bottom: 22px; line-height: 0; }
 .ws-fallback-brand img { display: block; width: 140px; height: auto; }
@@ -5831,7 +5920,7 @@ body.modal-open .floating-whatsapp {
   min-height: 44px;
   padding: 10px 20px;
   border: 0;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   background: #4a0e0e;
   color: #fff;
   font-size: 14px;
@@ -5854,3 +5943,75 @@ body.modal-open .floating-whatsapp {
   font-size: 11px;
 }
 .ws-fallback-ref code { font-family: ui-monospace, monospace; }
+
+/* ================================================
+   DEPTH CONTRACT — radius & shadow house rules
+   ================================================
+   Everything above raises surfaces with the --shadow-* scale and shapes them
+   with the --radius-* scale. Two rules keep that from getting out of hand, and
+   they live here so they apply to every component at once:
+
+   1. Reduced motion — the hover lift is decorative. Users who asked for less
+      motion get the shadow step (state feedback) but no movement.
+   2. Touch — a hover lift on a touch screen either never fires or sticks after
+      a tap. Lifting is therefore limited to devices that can actually hover.
+   ================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    .btn,
+    .btn-primary,
+    .btn-outline,
+    .btn-editorial-solid,
+    .btn-whatsapp,
+    .product-card,
+    .bundle-card,
+    .testimonial-card,
+    .contact-card,
+    .service-card,
+    .why-legal-item,
+    .benefit-card,
+    .pricing-card,
+    .ws-project-card,
+    .corporate-contact-item {
+        transition: none;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:active,
+    .btn-outline:hover,
+    .btn-editorial-solid:hover,
+    .btn-whatsapp:hover,
+    .product-card:hover,
+    .bundle-card:hover,
+    .testimonial-card:hover,
+    .contact-card:hover,
+    .service-card:hover,
+    .why-legal-item:hover,
+    .benefit-card:hover,
+    .pricing-card:hover,
+    .pricing-card.featured:hover,
+    .ws-project-card:hover,
+    .corporate-contact-item:hover,
+    .floating-whatsapp:hover {
+        transform: none;
+    }
+}
+
+@media (hover: none) {
+    .btn-primary:hover,
+    .btn-outline:hover,
+    .btn-editorial-solid:hover,
+    .btn-whatsapp:hover,
+    .product-card:hover,
+    .bundle-card:hover,
+    .testimonial-card:hover,
+    .contact-card:hover,
+    .service-card:hover,
+    .why-legal-item:hover,
+    .benefit-card:hover,
+    .pricing-card:hover,
+    .ws-project-card:hover,
+    .corporate-contact-item:hover {
+        transform: none;
+    }
+}

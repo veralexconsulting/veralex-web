@@ -80,6 +80,7 @@
     flex: 0 0 34px;
     height: 34px;
     border: var(--border-gold);
+    border-radius: var(--radius-md);
     color: var(--color-gold);
     background: var(--bg-glass);
 }
@@ -135,11 +136,12 @@
 .tracking-primary {
     background: var(--color-gold-gradient);
     color: #ffffff;
+    box-shadow: var(--shadow-brand);
 }
 
 .tracking-primary:hover {
     color: #ffffff;
-    box-shadow: var(--shadow-gold-strong);
+    box-shadow: var(--shadow-lg);
 }
 
 .tracking-secondary {
@@ -155,8 +157,9 @@
 /* ── Portal preview card ── */
 .tracking-preview {
     background: var(--bg-card);
-    border: var(--border-gold);
-    box-shadow: var(--shadow-md);
+    border: 1px solid #E4DFD9;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
     overflow: hidden;
 }
 
@@ -253,6 +256,7 @@
     padding: 1rem 1.15rem;
     background: var(--color-gold-gradient);
     color: #ffffff;
+    border-radius: var(--radius-md);
 }
 
 .tracking-current > span {
@@ -276,6 +280,7 @@
     height: 4px;
     margin-top: 0.85rem;
     background: rgba(255, 255, 255, 0.22);
+    border-radius: var(--radius-md);
     overflow: hidden;
 }
 
@@ -283,6 +288,7 @@
     display: block;
     height: 100%;
     background: #ffffff;
+    border-radius: var(--radius-md);
 }
 
 .tracking-current small {
@@ -370,7 +376,7 @@
     border-width: 2px;
     background: var(--bg-card);
     color: var(--color-gold);
-    box-shadow: 0 0 0 4px rgba(24, 22, 20, 0.06);
+    box-shadow: 0 0 0 4px rgba(var(--shadow-color), 0.06);
 }
 
 .tracking-preview-steps strong {
