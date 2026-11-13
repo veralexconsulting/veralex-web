@@ -106,13 +106,20 @@ test('responsive card sizing and mobile peek are in the stylesheet', () => {
 });
 
 test('the client logo marquee is a seamless, accessible, reduced-motion-aware loop', () => {
-    // _archive holds the previous logo set; only the active ones count.
+    // Every logo in public/logoclient must be rendered. The archived JPGs live
+    // in assets/archive/logoclient, outside public/, so they never reach the
+    // deployed site; what is in public/ is what the page must show.
     const existing = readdirSync('public/logoclient', { withFileTypes: true })
         .filter((entry) => entry.isFile())
         .map((entry) => entry.name);
     assert.ok(existing.length >= 7, 'every supplied logo is kept');
     for (const file of existing) {
         assert.ok(marquee.includes(`/logoclient/${file}`), `${file} is still used`);
+    }
+    // The 2026-08-31 batch was archived in 19dc44a and is back in the marquee;
+    // this keeps it from disappearing again without anyone noticing.
+    for (const file of ['IMG-20260831-WA0013', 'IMG-20260831-WA0019']) {
+        assert.ok(marquee.includes(`/logoclient/${file}.webp`), `${file} is in the marquee`);
     }
     assert.ok(/width=\{logo\.width\}/.test(marquee) && /height=\{logo\.height\}/.test(marquee), 'original proportions preserved');
     assert.ok(/object-fit: contain/.test(css), 'logos are never distorted');
