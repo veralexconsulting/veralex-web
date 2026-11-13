@@ -22,12 +22,15 @@
     color: #FBF7F2;
     font-family: var(--font-body);
     /*
-     * Padding rather than margin: the floating WhatsApp button is fixed to the
-     * viewport's bottom-right corner, so the footer needs its own clearance or
-     * the base strip's last link ends up underneath it on a phone.
+     * Clearance for the floating WhatsApp button, which is fixed to the
+     * viewport's bottom-right corner and would otherwise cover the legal links
+     * in the base strip. The button is 65px tall and sits 30px from the bottom
+     * (55px / 20px on phones), so the strip needs roughly one button-height of
+     * room below its last line of text — not the full 96px this used to
+     * reserve, which left a visible empty band under the copyright.
      */
-    padding-bottom: 96px;
-    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: 40px;
+    padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
 }
 
 .footer a {
@@ -116,18 +119,48 @@
 
 /* ── Band 2: main grid ── */
 .footer-main {
-    padding-block: 64px 0;
+    padding-block: 56px 0;
 }
 
+/*
+ * Four columns on desktop: identity | services A | services B | company+contact.
+ *
+ * The services tracks are deliberately the widest because they carry the long
+ * left-aligned link labels; the identity column only needs room for a 34ch
+ * tagline, and the meta column holds short link text.
+ */
 .footer-grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1.4fr) minmax(0, 0.85fr) minmax(0, 1.25fr);
-    gap: 40px clamp(24px, 3vw, 48px);
+    grid-template-columns:
+        minmax(0, 1.05fr)
+        minmax(0, 1fr)
+        minmax(0, 0.95fr)
+        minmax(0, 1.05fr);
+    gap: 32px clamp(20px, 2.6vw, 40px);
     align-items: start;
 }
 
 .footer-col,
 .footer-brand {
+    min-width: 0;
+}
+
+/*
+ * The two service columns are one <nav> so screen readers hear a single
+ * "Layanan, per kategori" landmark rather than two identically named ones.
+ * The nav spans two of the outer grid's tracks and hands them down with
+ * subgrid, so its two lists sit in the same columns as the identity and meta
+ * blocks instead of drifting out of alignment with them.
+ */
+.footer-services {
+    display: grid;
+    grid-column: span 2;
+    grid-template-columns: subgrid;
+    gap: 32px clamp(20px, 2.6vw, 40px);
+    align-items: start;
+}
+
+.footer-col-services {
     min-width: 0;
 }
 
@@ -258,14 +291,27 @@
     transform: scaleX(1);
 }
 
+/* "All services" belongs to the service <nav>, not to either column, so it is
+   pinned under the second service column without affecting either list's
+   height. */
 .footer-link-all {
     display: inline-block;
+    grid-column: 2;
     margin-top: 20px;
     font-weight: 700;
     color: #FFFFFF;
 }
 
-/* ── Column 4: contact ── */
+/* ── Column 4: company + contact ── */
+/*
+ * Both headings stack in one column. The company list is short, so the contact
+ * block follows it with a little air rather than a divider — a hairline here
+ * would compete with the coverage rule below the grid.
+ */
+.footer-contact-block {
+    margin-top: 28px;
+}
+
 .footer-nap {
     margin: 0 0 16px;
     font-style: normal;
@@ -303,8 +349,8 @@
     align-items: baseline;
     flex-wrap: wrap;
     gap: 4px 16px;
-    margin-top: 48px;
-    padding-block: 20px;
+    margin-top: 40px;
+    padding-block: 16px;
     border-top: 1px solid rgba(200, 161, 90, 0.28);
 }
 
@@ -336,7 +382,7 @@
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 8px 32px;
-    padding-block: 20px;
+    padding-block: 16px;
 }
 
 .footer-copyright {
@@ -378,16 +424,43 @@
 }
 
 /* ── Responsive ── */
+/*
+ * Tablet: two columns. Identity and the services nav each take a track; the
+ * services nav keeps its own two-column split inside that half, and the meta
+ * column drops below.
+ */
 @media (max-width: 1024px) {
     .footer-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 40px 32px;
     }
+
+    .footer-services {
+        grid-column: span 1;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0 24px;
+    }
+
+    .footer-link-all {
+        grid-column: 1 / -1;
+        margin-top: 12px;
+    }
+}
+
+/*
+ * Narrow tablet / large phone: the services nav keeps its two lists side by
+ * side at full width, and the meta block drops to its own row.
+ */
+@media (max-width: 760px) {
+    .footer-services {
+        grid-column: 1 / -1;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 @media (max-width: 640px) {
     .footer {
-        padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
     }
 
     .footer-cta-inner {
@@ -412,6 +485,22 @@
     .footer-grid {
         grid-template-columns: minmax(0, 1fr);
         gap: 32px;
+    }
+
+    /* One list per row on a phone: two side-by-side lists of 11 links each
+       would wrap every label. */
+    .footer-services {
+        grid-column: 1 / -1;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
+    }
+
+    .footer-link-all {
+        grid-column: 1 / -1;
+    }
+
+    .footer-contact-block {
+        margin-top: 24px;
     }
 
     .footer-logo {

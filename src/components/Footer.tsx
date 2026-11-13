@@ -45,6 +45,35 @@ const MAPS_HREF = 'https://share.google/akVh44V0JlkMeDs3';
 const PHONE_DISPLAY = '+62 812 1947 6385';
 const PHONE_HREF = `tel:+${WHATSAPP_NUMBER}`;
 
+/*
+ * How the service categories are dealt out across the two footer columns.
+ *
+ * They pair up as "give the company its legal shape" (formation, marks, product
+ * permits) against "let it operate" (people who come to run it, the systems it
+ * runs on). Keeping the pairs together matters more than balancing the counts:
+ * a visitor looking for a visa should find every visa link in one list, not
+ * split across the fold.
+ *
+ * Any category the groups file does not name falls into the last column, so
+ * adding a category to serviceData can never silently drop it from the footer.
+ */
+const SERVICE_COLUMN_ORDER: string[][] = [
+    ['business', 'ip', 'products'],
+    ['immigration', 'pse'],
+];
+
+const SERVICE_COLUMNS: typeof SERVICE_FOOTER_GROUPS[] = (() => {
+    const columns = SERVICE_COLUMN_ORDER.map((keys) =>
+        SERVICE_FOOTER_GROUPS.filter((group) => keys.includes(group.key)),
+    );
+    const placed = new Set(SERVICE_COLUMN_ORDER.flat());
+    const leftover = SERVICE_FOOTER_GROUPS.filter((group) => !placed.has(group.key));
+    if (leftover.length > 0) {
+        columns[columns.length - 1] = [...columns[columns.length - 1], ...leftover];
+    }
+    return columns.filter((column) => column.length > 0);
+})();
+
 export default function Footer() {
     const { t, lang } = useLang();
     // English lives on the unprefixed legal URLs; /zh has its own copy.
@@ -121,62 +150,95 @@ export default function Footer() {
                         </nav>
                     </div>
 
-                    {/* Column 2 — services, grouped from serviceData */}
-                    <nav className="footer-col footer-col-services" aria-label={t('footer.servicesAria')}>
-                        <h2 className="footer-heading">{t('footer.services')}</h2>
-                        {SERVICE_FOOTER_GROUPS.map((group) => (
-                            <div className="footer-group" key={group.key}>
-                                <h3 className="footer-group-title">{t(group.label)}</h3>
-                                <ul>
-                                    {group.slugs.map((slug) => (
-                                        <li key={slug}>
-                                            <Link href={`/services/${slug}`} className="footer-link">
-                                                {serviceFooterLabel(slug, lang)}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
+                    {/*
+                     * Columns 2 and 3 — services, grouped from serviceData.
+                     *
+                     * This was one wide column holding all five categories, so
+                     * it ran to 22 links and set the height of the whole band:
+                     * every other column ended in empty space beside it. The
+                     * groups are now split across two adjacent columns —
+                     * getting-established work (company, trademarks, product
+                     * permits) on the left, people-and-systems work (visas,
+                     * electronic-system registrations) on the right — which
+                     * roughly halves the depth. The split is by category, not
+                     * by alphabetical chunk, so each column still reads as a
+                     * holding / operating pair rather than "first half, rest".
+                     */}
+                    <nav
+                        className="footer-services"
+                        aria-label={t('footer.servicesAria')}
+                    >
+                        {SERVICE_COLUMNS.map((groups, columnIndex) => (
+                            <div className="footer-col footer-col-services" key={columnIndex}>
+                                {/* Only the first column prints the section
+                                    heading; two identical headings would read
+                                    as two separate sections. */}
+                                {columnIndex === 0 && (
+                                    <h2 className="footer-heading">{t('footer.services')}</h2>
+                                )}
+                                {groups.map((group) => (
+                                    <div className="footer-group" key={group.key}>
+                                        <h3 className="footer-group-title">{t(group.label)}</h3>
+                                        <ul>
+                                            {group.slugs.map((slug) => (
+                                                <li key={slug}>
+                                                    <Link href={`/services/${slug}`} className="footer-link">
+                                                        {serviceFooterLabel(slug, lang)}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
                             </div>
                         ))}
-                        <Link href="/#services" className="footer-link footer-link-all">{t('footer.allServicesLink')} →</Link>
+                        {/* The "all services" link closes the second column, so
+                            it sits under the last list instead of floating in
+                            the gap between the two. */}
+                        <Link href="/#services" className="footer-link footer-link-all">
+                            {t('footer.allServicesLink')} →
+                        </Link>
                     </nav>
 
-                    {/* Column 3 — company */}
-                    <nav className="footer-col" aria-label={t('footer.companyAria')}>
-                        <h2 className="footer-heading">{t('footer.company')}</h2>
-                        <ul>
-                            {companyLinks.map((link) => (
-                                <li key={link.href}>
-                                    <Link href={link.href} className="footer-link">{link.label}</Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </nav>
+                    {/* Column 4 — company + contact, stacked under one heading
+                        pair so the grid stays four columns wide. */}
+                    <div className="footer-col footer-col-meta">
+                        <nav aria-label={t('footer.companyAria')}>
+                            <h2 className="footer-heading">{t('footer.company')}</h2>
+                            <ul>
+                                {companyLinks.map((link) => (
+                                    <li key={link.href}>
+                                        <Link href={link.href} className="footer-link">{link.label}</Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </nav>
 
-                    {/* Column 4 — contact (NAP identical to the contact page) */}
-                    <div className="footer-col footer-col-contact">
-                        <h2 className="footer-heading">{t('footer.contact')}</h2>
-                        <address className="footer-nap">
-                            <p className="footer-nap-line footer-nap-address">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS.pin}</svg>
-                                <span>{t('footer.address')}</span>
-                            </p>
-                            <a href={whatsappHref(t('wa.message.legal'))} target="_blank" rel="noopener noreferrer" className="footer-nap-line footer-link">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS.whatsapp}</svg>
-                                <span>WhatsApp</span>
+                        {/* NAP identical to the contact page */}
+                        <div className="footer-contact-block">
+                            <h2 className="footer-heading">{t('footer.contact')}</h2>
+                            <address className="footer-nap">
+                                <p className="footer-nap-line footer-nap-address">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS.pin}</svg>
+                                    <span>{t('footer.address')}</span>
+                                </p>
+                                <a href={whatsappHref(t('wa.message.legal'))} target="_blank" rel="noopener noreferrer" className="footer-nap-line footer-link">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS.whatsapp}</svg>
+                                    <span>WhatsApp</span>
+                                </a>
+                                <a href={PHONE_HREF} className="footer-nap-line footer-link">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS.phone}</svg>
+                                    <span>{PHONE_DISPLAY}</span>
+                                </a>
+                                <a href={`mailto:${contactEmail}`} className="footer-nap-line footer-link">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS.mail}</svg>
+                                    <span>{contactEmail}</span>
+                                </a>
+                            </address>
+                            <a href={MAPS_HREF} target="_blank" rel="noopener noreferrer" className="footer-link footer-maps-link">
+                                {t('footer.mapsLabel')} ↗
                             </a>
-                            <a href={PHONE_HREF} className="footer-nap-line footer-link">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS.phone}</svg>
-                                <span>{PHONE_DISPLAY}</span>
-                            </a>
-                            <a href={`mailto:${contactEmail}`} className="footer-nap-line footer-link">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS.mail}</svg>
-                                <span>{contactEmail}</span>
-                            </a>
-                        </address>
-                        <a href={MAPS_HREF} target="_blank" rel="noopener noreferrer" className="footer-link footer-maps-link">
-                            {t('footer.mapsLabel')} ↗
-                        </a>
+                        </div>
                     </div>
                 </div>
 
