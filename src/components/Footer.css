@@ -1,136 +1,140 @@
 /*
  * Footer.
  *
- * Rebuilt from a single 4-column grid — which forced the 1024x724 logo into a
- * 44px square and squashed it — into four stacked bands:
+ * Four bands on the maroon ground the site already uses for primary actions:
  *
- *   1. masthead  brand statement on the left, social accounts on the right
- *   2. columns   services / navigation / legal / contact
- *   3. coverage  quiet single line about where we operate
- *   4. base      disclaimer, copyright, language switch on their own ground
+ *   1. cta        closing question + WhatsApp / project tracking
+ *   2. grid       identity | services | company | contact
+ *   3. coverage   one quiet line under the grid
+ *   4. base       copyright and the legal links
  *
- * Every band is a separate grid, so one tall block can never stretch or
- * squeeze its neighbours.
+ * Colours are the existing tokens (--color-primary, --color-primary-dark,
+ * --color-primary-darker); nothing new is introduced for the ground or text.
  */
 
 .footer {
     position: relative;
+    /* Below the floating navbar (10020) and the floating WhatsApp button
+       (9999) so those never sit behind footer text. */
     z-index: 10;
-    background: var(--bg-card);
-    border-top: var(--border-gold);
+    isolation: isolate;
+    background: var(--color-primary);
+    color: #FBF7F2;
+    font-family: var(--font-body);
+    /*
+     * Padding rather than margin: the floating WhatsApp button is fixed to the
+     * viewport's bottom-right corner, so the footer needs its own clearance or
+     * the base strip's last link ends up underneath it on a phone.
+     */
+    padding-bottom: 96px;
+    padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
 }
 
-/* ── Band 1: masthead ── */
-.footer-masthead {
-    display: grid;
-    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-    gap: clamp(2rem, 5vw, 4.5rem);
-    align-items: start;
-    padding: clamp(2.75rem, 5vw, 3.75rem) 0 clamp(2rem, 3.5vw, 2.75rem);
-    border-bottom: var(--border-gold);
+.footer a {
+    color: inherit;
+    text-decoration: none;
 }
 
-.footer-brand {
+/* ── Band 1: CTA ── */
+.footer-cta {
+    background: var(--color-primary-light);
+    border-bottom: 1px solid rgba(200, 161, 90, 0.32);
+}
+
+.footer-cta-inner {
     display: flex;
-    align-items: flex-start;
-    gap: clamp(1rem, 2vw, 1.5rem);
-    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px 32px;
+    padding-block: 24px;
 }
 
-/*
- * The logo already contains the wordmark and "est. 2019", so it is shown at
- * its native 1024x724 ratio with no width/height pair fighting it. 132px tall
- * keeps the wordmark inside it legible on a light background.
- */
-.footer-logo-img {
-    flex-shrink: 0;
-    width: auto;
-    height: clamp(96px, 10vw, 132px);
-    object-fit: contain;
-}
-
-.footer-brand-text {
-    min-width: 0;
-    padding-top: 0.15rem;
-}
-
-.footer-legal-name {
-    margin: 0 0 0.7rem;
-    font-family: var(--font-jakarta), var(--font-body);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--color-gold);
-}
-
-.footer-desc {
-    max-width: 46ch;
+.footer-cta-title {
     margin: 0;
-    font-family: var(--font-jakarta), var(--font-body);
-    font-size: 0.88rem;
-    line-height: 1.75;
-    color: var(--text-secondary);
+    font-family: var(--font-heading);
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    color: #FFFFFF;
+    text-wrap: balance;
 }
 
-/* ── Social ── */
-.footer-social-list {
+.footer-cta-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+    gap: 12px;
 }
 
-.footer-social-link {
+/* Text sits on the lightened maroon band, not the darker base: white on
+   #6B1515 is ~9:1, and the gold outline reads as a button edge, not text. */
+.footer-cta-primary,
+.footer-cta-secondary {
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
-    padding: 0.45rem 0.7rem;
-    border: 1px solid rgba(26, 26, 26, 0.12);
-    font-family: var(--font-jakarta), var(--font-body);
-    font-size: 0.74rem;
-    font-weight: 500;
-    line-height: 1.2;
-    color: var(--text-secondary);
-    text-decoration: none;
-    transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-family: var(--font-jakarta);
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: center;
+    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
 }
 
-.footer-social-link svg {
-    flex-shrink: 0;
-    color: var(--color-gold);
+.footer-cta-primary {
+    border: 1px solid #FFFFFF;
+    background: #FFFFFF;
+    color: var(--color-primary) !important;
 }
 
-.footer-social-link:hover,
-.footer-social-link:focus-visible {
-    color: var(--color-gold);
-    border-color: rgba(74, 14, 14, 0.35);
-    background: rgba(24, 22, 20, 0.035);
+.footer-cta-primary:hover,
+.footer-cta-primary:focus-visible {
+    background: #F3EBE2;
+    border-color: #F3EBE2;
 }
 
-/* ── Band 2: columns ── */
-.footer-columns {
+.footer-cta-secondary {
+    border: 1px solid rgba(200, 161, 90, 0.7);
+    background: transparent;
+    color: #FFFFFF !important;
+}
+
+.footer-cta-secondary:hover,
+.footer-cta-secondary:focus-visible {
+    border-color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* ── Band 2: main grid ── */
+.footer-main {
+    padding-block: 64px 0;
+}
+
+.footer-grid {
     display: grid;
-    /* Link columns are narrow on purpose; only contact needs the extra room. */
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 0.75fr) minmax(0, 1fr) minmax(0, 1.45fr);
-    gap: clamp(1.75rem, 3vw, 2.75rem);
-    padding: clamp(2rem, 3.5vw, 2.75rem) 0;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1.4fr) minmax(0, 0.85fr) minmax(0, 1.25fr);
+    gap: 40px clamp(24px, 3vw, 48px);
+    align-items: start;
 }
 
-.footer-col {
+.footer-col,
+.footer-brand {
     min-width: 0;
 }
 
-.footer-col-title {
-    margin: 0 0 1rem;
-    font-family: var(--font-jakarta), var(--font-body);
-    font-size: 0.7rem;
+.footer-heading {
+    margin: 0 0 20px;
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
     font-weight: 700;
-    letter-spacing: 0.15em;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-gold);
+    color: #C8A15A;
 }
 
 .footer-col ul {
@@ -139,103 +143,153 @@
     list-style: none;
 }
 
-/*
- * Links are inline-block with a small vertical rhythm rather than block
- * elements with margins: the tap area stays on the text and the 44px rule on
- * small screens can grow the target without the gaps collapsing.
- */
-.footer-link {
-    display: inline-block;
-    padding: 0.2rem 0;
-    font-family: var(--font-jakarta), var(--font-body);
-    font-size: 0.86rem;
-    line-height: 1.55;
-    color: var(--text-secondary);
-    text-decoration: none;
-    background: none;
-    border: 0;
-    cursor: pointer;
-    transition: color var(--transition-fast);
+/* ── Column 1: identity ── */
+.footer-logo {
+    display: block;
+    width: auto;
+    height: 72px;
+    margin-bottom: 20px;
+    object-fit: contain;
 }
 
-.footer-col li + li {
-    margin-top: 0.05rem;
+.footer-name {
+    margin: 0 0 12px;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #FFFFFF;
+    overflow-wrap: anywhere;
+}
+
+.footer-tagline {
+    max-width: 34ch;
+    margin: 0 0 24px;
+    font-size: 0.875rem;
+    line-height: 1.7;
+    /* #E9DFD5 on #4A0E0E: ~10:1 — well past AA for body text. */
+    color: #E9DFD5;
+}
+
+.footer-social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.footer-social-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(200, 161, 90, 0.5);
+    border-radius: 50%;
+    color: #E9DFD5;
+    transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease;
+}
+
+.footer-social-btn:hover,
+.footer-social-btn:focus-visible {
+    color: var(--color-primary);
+    border-color: #C8A15A;
+    background: #C8A15A;
+}
+
+/* ── Column 2: services ── */
+.footer-group + .footer-group {
+    margin-top: 20px;
+}
+
+.footer-group-title {
+    margin: 0 0 8px;
+    font-family: var(--font-jakarta);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #FFFFFF;
+}
+
+/* ── Shared link style (all columns, legal strip, contact rows) ── */
+.footer-link {
+    position: relative;
+    display: inline-block;
+    padding-block: 2px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: #E9DFD5;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    transition: color 150ms ease;
+}
+
+/*
+ * Focus-visible and hover both darken the text to white and draw an
+ * underline; the underline is stated in the same colour as the text because on
+ * this ground a gold line under white text is the "gold accent" the site uses
+ * for dividers, not a second colour to read.
+ */
+.footer-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: #C8A15A;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 150ms ease, background-color 150ms ease;
 }
 
 .footer-link:hover,
 .footer-link:focus-visible {
-    color: var(--color-gold);
+    color: #FFFFFF;
+}
+
+.footer-link:hover::after,
+.footer-link:focus-visible::after {
+    transform: scaleX(1);
 }
 
 .footer-link-all {
-    margin-top: 0.35rem;
-    font-weight: 600;
-    color: var(--color-gold);
+    display: inline-block;
+    margin-top: 20px;
+    font-weight: 700;
+    color: #FFFFFF;
 }
 
-.legal-cookie-trigger {
-    text-align: left;
-}
-
-/* ── Contact ── */
-.footer-contact-list {
+/* ── Column 4: contact ── */
+.footer-nap {
+    margin: 0 0 16px;
+    font-style: normal;
     display: flex;
     flex-direction: column;
-    gap: 0.95rem;
+    gap: 12px;
 }
 
-.footer-contact-item {
+.footer-nap-line {
     display: flex;
     align-items: flex-start;
-    gap: 0.65rem;
-    color: var(--text-secondary);
-    text-decoration: none;
-    transition: color var(--transition-fast);
+    gap: 10px;
 }
 
-.footer-contact-item svg {
-    flex-shrink: 0;
-    margin-top: 0.15rem;
-    color: var(--color-gold);
+.footer-nap-line svg {
+    flex: 0 0 auto;
+    margin-top: 3px;
+    color: #C8A15A;
 }
 
-.footer-contact-item > span {
-    min-width: 0;
-}
-
-.footer-contact-item strong {
-    display: block;
-    font-family: var(--font-jakarta), var(--font-body);
-    font-size: 0.88rem;
-    font-weight: 600;
-    line-height: 1.45;
-    color: var(--text-primary);
-    overflow-wrap: anywhere;
-}
-
-.footer-contact-item small {
-    display: block;
-    margin-top: 0.1rem;
-    font-family: var(--font-jakarta), var(--font-body);
-    font-size: 0.74rem;
-    font-weight: 400;
-    color: var(--text-muted);
-}
-
-.footer-contact-item:hover strong {
-    color: var(--color-gold);
-}
-
-/* The address is the longest string in the footer; let it wrap, not overflow. */
-.footer-address {
-    font-size: 0.84rem;
+.footer-nap-address {
+    font-size: 0.875rem;
     line-height: 1.6;
-    font-weight: 500;
+    color: #E9DFD5;
 }
 
-.footer-maps {
-    color: var(--color-gold);
-    font-weight: 600;
+.footer-maps-link {
+    font-weight: 700;
+    color: #FFFFFF;
 }
 
 /* ── Band 3: coverage ── */
@@ -243,39 +297,32 @@
     display: flex;
     align-items: baseline;
     flex-wrap: wrap;
-    gap: 0.4rem 1rem;
-    margin-top: -0.5rem;
-    padding: 0 0 clamp(1.75rem, 3vw, 2.5rem);
+    gap: 4px 16px;
+    margin-top: 48px;
+    padding-block: 20px;
+    border-top: 1px solid rgba(200, 161, 90, 0.28);
 }
 
-.footer-coverage .footer-col-title {
-    margin: 0;
+.footer-coverage-label {
+    font-family: var(--font-jakarta);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #C8A15A;
 }
 
 .footer-coverage p {
-    flex: 1 1 24ch;
-    max-width: 78ch;
     margin: 0;
-    font-family: var(--font-jakarta), var(--font-body);
-    font-size: 0.8rem;
-    line-height: 1.7;
-    color: var(--text-muted);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: #E9DFD5;
 }
 
 /* ── Band 4: base strip ── */
 .footer-base {
-    background: #EFEDE9;
-    border-top: var(--border-gold);
-    padding: clamp(1.25rem, 2.5vw, 1.75rem) 0;
-}
-
-.footer-disclaimer {
-    max-width: 82ch;
-    margin: 0 0 1rem;
-    font-family: var(--font-jakarta), var(--font-body);
-    font-size: 0.74rem;
-    line-height: 1.65;
-    color: var(--text-muted);
+    background: var(--color-primary-dark);
+    border-top: 1px solid rgba(200, 161, 90, 0.28);
 }
 
 .footer-base-row {
@@ -283,79 +330,141 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 0.85rem 1.5rem;
+    gap: 8px 32px;
+    padding-block: 20px;
 }
 
 .footer-copyright {
     margin: 0;
-    font-family: var(--font-jakarta), var(--font-body);
-    font-size: 0.78rem;
-    color: var(--text-muted);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: #E9DFD5;
+}
+
+.footer-legal {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0 24px;
+}
+
+.footer-legal .footer-link {
+    font-size: 0.8125rem;
+}
+
+/* The cookie-settings control is a <button>; it must match the <a> links
+   beside it exactly, so the browser defaults are cleared here. */
+.legal-cookie-trigger {
+    padding-block: 2px;
+    border: 0;
+    background: none;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    text-align: left;
+    cursor: pointer;
+}
+
+/* ── Focus ── */
+.footer :is(a, button):focus-visible {
+    outline: 2px solid #FFFFFF;
+    outline-offset: 3px;
+    border-radius: 2px;
 }
 
 /* ── Responsive ── */
 @media (max-width: 1024px) {
-    .footer-masthead {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 1.75rem;
-    }
-
-    .footer-columns {
+    .footer-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 2rem clamp(1.5rem, 4vw, 3rem);
+        gap: 40px 32px;
     }
 }
 
 @media (max-width: 640px) {
-    .footer-brand {
+    .footer {
+        padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+    }
+
+    .footer-cta-inner {
         flex-direction: column;
-        gap: 1rem;
+        align-items: flex-start;
+        padding-block: 20px;
     }
 
-    .footer-logo-img {
-        height: 84px;
+    .footer-cta-actions {
+        width: 100%;
     }
 
-    /*
-     * Stacking all four columns made the mobile footer ~1500px tall. Three
-     * short link columns fit side by side at this width if the gaps shrink,
-     * and contact keeps the full row because its strings are long.
-     */
-    .footer-columns {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1.75rem 1.25rem;
+    .footer-cta-primary,
+    .footer-cta-secondary {
+        flex: 1 1 100%;
     }
 
-    .footer-col:nth-child(3) {
-        grid-column: 1;
+    .footer-main {
+        padding-top: 40px;
     }
 
-    .footer-col-contact {
-        grid-column: 1 / -1;
-        padding-top: 0.25rem;
+    .footer-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+    }
+
+    .footer-logo {
+        height: 64px;
+        margin-bottom: 16px;
+    }
+
+    .footer-tagline {
+        max-width: none;
+    }
+
+    /* Rows, not inline links: 44px tap targets for every footer link. */
+    .footer-link,
+    .legal-cookie-trigger {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+        padding-block: 10px;
+    }
+
+    .footer-nap-line.footer-link {
+        padding-block: 10px;
+    }
+
+    .footer-maps-link {
+        min-height: 44px;
+        padding-block: 10px;
     }
 
     .footer-coverage {
-        flex-direction: column;
-        gap: 0.5rem;
+        margin-top: 32px;
+        padding-block: 16px;
     }
 
     .footer-base-row {
-        align-items: flex-start;
         flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
     }
 
-    /* Comfortable tap targets once the columns are stacked. */
-    .footer-link {
-        padding: 0.4rem 0;
-        font-size: 0.9rem;
+    .footer-legal {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        width: 100%;
+    }
+
+    .footer-legal li {
+        width: 100%;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .footer-link,
-    .footer-social-link,
-    .footer-contact-item {
+    .footer-link::after,
+    .footer-social-btn,
+    .footer-cta-primary,
+    .footer-cta-secondary {
         transition: none;
     }
 }

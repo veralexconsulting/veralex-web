@@ -1,11 +1,11 @@
 'use client';
 
 import { useLang } from '@/lib/useLang';
-import { whatsappHref } from '@/lib/marketing';
+import { whatsappHref, WHATSAPP_NUMBER } from '@/lib/marketing';
 import { contactEmail, socialAccounts } from '@/lib/social';
+import { SERVICE_FOOTER_GROUPS, serviceFooterLabel } from '@/lib/serviceFooterGroups';
 import Image from 'next/image';
 import Link from 'next/link';
-import LanguageToggle from '@/components/LanguageToggle';
 import './Footer.css';
 
 /*
@@ -28,6 +28,7 @@ const ICONS = {
         </>
     ),
     mail: <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />,
+    phone: <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />,
     pin: (
         <>
             <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -36,89 +37,162 @@ const ICONS = {
     ),
 };
 
+/*
+ * Same destination the contact section links to, so the footer and the contact
+ * card can never send a visitor to two different places for one address.
+ */
+const MAPS_HREF = 'https://share.google/akVh44V0JlkMeDs3';
+const PHONE_DISPLAY = '+62 812 1947 6385';
+const PHONE_HREF = `tel:+${WHATSAPP_NUMBER}`;
+
 export default function Footer() {
     const { t, lang } = useLang();
-    const legalPrefix = lang === 'en' ? '' : `/${lang}`;
+    // English lives on the unprefixed legal URLs; /zh has its own copy.
+    const legalPrefix = lang === 'zh' ? '/zh' : '';
+    // Copyright year follows the visitor's clock. Formatted in UTC so the
+    // server render and the first client render agree across a new year.
+    const copyright = t('footer.copyrightNow').replace('{year}', String(new Date().getUTCFullYear()));
+
+    const companyLinks = [
+        { href: lang === 'en' ? '/about-us' : `/${lang}/about-us`, label: t('footer.linkAbout') },
+        { href: '/gallery', label: t('footer.linkGallery') },
+        { href: '/artikel', label: t('footer.linkArticles') },
+        { href: '/portal/login', label: t('footer.linkPortal') },
+        { href: '/#contact', label: t('footer.linkContact') },
+    ];
 
     return (
         <footer className="footer">
-            <div className="container">
-                {/*
-                 * Row 1 — the brand block spans the full width so the logo has
-                 * room to breathe at its native ratio, and the link columns sit
-                 * below it in their own band. A 4-column grid forced the logo
-                 * into a 44px square and squashed it.
-                 */}
-                <div className="footer-masthead">
+            {/* Band 1 — closing call to action */}
+            <div className="footer-cta">
+                <div className="container footer-cta-inner">
+                    <p className="footer-cta-title">{t('footer.ctaTitle')}</p>
+                    <div className="footer-cta-actions">
+                        <a
+                            href={whatsappHref(t('wa.message.legal'))}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="footer-cta-primary"
+                        >
+                            {t('footer.ctaWhatsapp')}
+                        </a>
+                        <Link href="/portal/login" className="footer-cta-secondary">{t('footer.ctaTrack')}</Link>
+                    </div>
+                </div>
+            </div>
+
+            <div className="container footer-main">
+                <div className="footer-grid">
+                    {/* Column 1 — identity */}
                     <div className="footer-brand">
                         <Image
                             src="/logo.webp"
-                            alt="PT. Veralex Consulting Indonesia"
+                            alt={t('footer.legalName')}
                             width={1024}
                             height={724}
                             sizes="180px"
-                            className="footer-logo-img"
+                            className="footer-logo"
                         />
-                        <div className="footer-brand-text">
-                            <p className="footer-legal-name">PT. Veralex Consulting Indonesia</p>
-                            <p className="footer-desc">{t('footer.desc')}</p>
-                        </div>
+                        <p className="footer-name">{t('footer.legalName')}</p>
+                        {/*
+                         * `footer.tagline` is new copy and needs an editorial
+                         * sign-off; until then the existing, approved
+                         * description runs here.
+                         */}
+                        <p className="footer-tagline">{t('footer.desc')}</p>
+                        <nav aria-label={t('footer.socialAria')}>
+                            <ul className="footer-social">
+                                {socialAccounts.map((account) => (
+                                    <li key={account.key}>
+                                        <a
+                                            href={account.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="footer-social-btn"
+                                            aria-label={`${account.label} — ${account.handle}`}
+                                        >
+                                            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                                                <path d={SOCIAL_ICONS[account.key]} fill="currentColor" />
+                                            </svg>
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </nav>
                     </div>
 
-                    <div className="footer-social">
-                        <h2 className="footer-col-title">{t('footer.follow')}</h2>
-                        <ul className="footer-social-list">
-                            {socialAccounts.map((account) => (
-                                <li key={account.key}>
-                                    <a
-                                        href={account.href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="footer-social-link"
-                                        aria-label={`${account.label} ${account.handle}`}
-                                    >
-                                        <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" focusable="false">
-                                            <path d={SOCIAL_ICONS[account.key]} fill="currentColor" />
-                                        </svg>
-                                        <span>{account.handle}</span>
-                                    </a>
+                    {/* Column 2 — services, grouped from serviceData */}
+                    <nav className="footer-col footer-col-services" aria-label={t('footer.servicesAria')}>
+                        <h2 className="footer-heading">{t('footer.services')}</h2>
+                        {SERVICE_FOOTER_GROUPS.map((group) => (
+                            <div className="footer-group" key={group.key}>
+                                <h3 className="footer-group-title">{t(group.label)}</h3>
+                                <ul>
+                                    {group.slugs.map((slug) => (
+                                        <li key={slug}>
+                                            <Link href={`/services/${slug}`} className="footer-link">
+                                                {serviceFooterLabel(slug, lang)}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
+                        <Link href="/#services" className="footer-link footer-link-all">{t('footer.allServicesLink')} →</Link>
+                    </nav>
+
+                    {/* Column 3 — company */}
+                    <nav className="footer-col" aria-label={t('footer.companyAria')}>
+                        <h2 className="footer-heading">{t('footer.company')}</h2>
+                        <ul>
+                            {companyLinks.map((link) => (
+                                <li key={link.href}>
+                                    <Link href={link.href} className="footer-link">{link.label}</Link>
                                 </li>
                             ))}
                         </ul>
+                    </nav>
+
+                    {/* Column 4 — contact (NAP identical to the contact page) */}
+                    <div className="footer-col footer-col-contact">
+                        <h2 className="footer-heading">{t('footer.contact')}</h2>
+                        <address className="footer-nap">
+                            <p className="footer-nap-line footer-nap-address">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS.pin}</svg>
+                                <span>{t('footer.address')}</span>
+                            </p>
+                            <a href={whatsappHref(t('wa.message.legal'))} target="_blank" rel="noopener noreferrer" className="footer-nap-line footer-link">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS.whatsapp}</svg>
+                                <span>WhatsApp</span>
+                            </a>
+                            <a href={PHONE_HREF} className="footer-nap-line footer-link">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS.phone}</svg>
+                                <span>{PHONE_DISPLAY}</span>
+                            </a>
+                            <a href={`mailto:${contactEmail}`} className="footer-nap-line footer-link">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS.mail}</svg>
+                                <span>{contactEmail}</span>
+                            </a>
+                        </address>
+                        <a href={MAPS_HREF} target="_blank" rel="noopener noreferrer" className="footer-link footer-maps-link">
+                            {t('footer.mapsLabel')} ↗
+                        </a>
                     </div>
                 </div>
 
-                {/* Row 2 — navigation and contact */}
-                <div className="footer-columns">
-                    <nav className="footer-col" aria-labelledby="footer-services">
-                        <h2 className="footer-col-title" id="footer-services">{t('footer.services')}</h2>
-                        <ul>
-                            <li><Link href="/services/pt-pma" className="footer-link">{t('footer.svcPma')}</Link></li>
-                            <li><Link href="/services/pendaftaran-merek" className="footer-link">{t('footer.svcMerek')}</Link></li>
-                            <li><Link href="/services/pt-pmdn" className="footer-link">{t('footer.svcPmdn')}</Link></li>
-                            <li><Link href="/services/pt-perorangan" className="footer-link">{t('footer.svcPerorangan')}</Link></li>
-                            <li><Link href="/services/pendirian-cv" className="footer-link">{t('footer.svcCv')}</Link></li>
-                            <li><Link href="/services/itas-investor-1-tahun" className="footer-link">{t('footer.svcItas')}</Link></li>
-                            <li><Link href="/services/kitas-kerja" className="footer-link">{t('footer.svcKitas')}</Link></li>
-                            <li><Link href="/#services" className="footer-link footer-link-all">{t('footer.allServices')} →</Link></li>
-                        </ul>
-                    </nav>
+                {/* Row — coverage, one quiet line under the grid */}
+                <div className="footer-coverage">
+                    <span className="footer-coverage-label">{t('footer.coverage')}</span>
+                    <p>{t('footer.coverageLine')}</p>
+                </div>
+            </div>
 
-                    <nav className="footer-col" aria-labelledby="footer-nav">
-                        <h2 className="footer-col-title" id="footer-nav">{t('footer.nav')}</h2>
-                        <ul>
-                            <li><Link href="/" className="footer-link">{t('nav.home')}</Link></li>
-                            <li><Link href="/#services" className="footer-link">{t('nav.services')}</Link></li>
-                            <li><Link href="/#pricing" className="footer-link">{t('nav.pricing')}</Link></li>
-                            <li><Link href="/gallery" className="footer-link">{t('nav.gallery')}</Link></li>
-                            <li><Link href="/artikel" className="footer-link">{t('nav.articles')}</Link></li>
-                            <li><Link href="/#contact" className="footer-link">{t('nav.contact')}</Link></li>
-                        </ul>
-                    </nav>
-
-                    <nav className="footer-col" aria-labelledby="footer-legal">
-                        <h2 className="footer-col-title" id="footer-legal">{t('footer.legal')}</h2>
-                        <ul>
+            {/* Base strip */}
+            <div className="footer-base">
+                <div className="container footer-base-row">
+                    <p className="footer-copyright">{copyright}</p>
+                    <nav aria-label={t('footer.legalAria')}>
+                        <ul className="footer-legal">
                             <li><Link href={`${legalPrefix}/privacy-policy`} className="footer-link">{t('legal.privacy')}</Link></li>
                             <li><Link href={`${legalPrefix}/terms-and-conditions`} className="footer-link">{t('legal.terms')}</Link></li>
                             <li>
@@ -128,56 +202,6 @@ export default function Footer() {
                             </li>
                         </ul>
                     </nav>
-
-                    <div className="footer-col footer-col-contact">
-                        <h2 className="footer-col-title">{t('footer.contact')}</h2>
-                        <ul className="footer-contact-list">
-                            <li>
-                                <a href={whatsappHref(t('wa.message.legal'))} target="_blank" rel="noopener noreferrer" className="footer-contact-item">
-                                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS.whatsapp}</svg>
-                                    <span>
-                                        <strong>+62 812 1947 6385</strong>
-                                        <small>{t('footer.waLabel')}</small>
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href={`mailto:${contactEmail}`} className="footer-contact-item">
-                                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS.mail}</svg>
-                                    <span>
-                                        <strong className="footer-contact-email">{contactEmail}</strong>
-                                        <small>{t('footer.emailLabel')}</small>
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://share.google/akvQh44V0JlkMeDs3" target="_blank" rel="noopener noreferrer" className="footer-contact-item is-address">
-                                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{ICONS.pin}</svg>
-                                    <span>
-                                        <strong className="footer-address">{t('footer.address')}</strong>
-                                        <small className="footer-maps">{t('footer.mapsLabel')} →</small>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                {/* Row 3 — service coverage, quiet */}
-                <div className="footer-coverage">
-                    <h2 className="footer-col-title">{t('footer.coverage')}</h2>
-                    <p>{t('footer.coverageText')}</p>
-                </div>
-            </div>
-
-            {/* Row 4 — legal strip, full-bleed so it reads as the closing rule */}
-            <div className="footer-base">
-                <div className="container">
-                    <p className="footer-disclaimer">{t('footer.disclaimer')}</p>
-                    <div className="footer-base-row">
-                        <p className="footer-copyright">{t('footer.copyright')}</p>
-                        <LanguageToggle />
-                    </div>
                 </div>
             </div>
         </footer>
