@@ -15,6 +15,14 @@ export interface Article {
     metaTitle?: string;
     description: string;
     publishedAt: string;
+    /**
+     * Last date the article's copy changed (YYYY-MM-DD). The sitemap uses it as
+     * lastModified, so it must be a real revision date, not a build date.
+     * Defaults to `publishedAt` (the last commit that touched this file, when
+     * the articles were published in one go); set an explicit, later date when
+     * an article is revised without the others.
+     */
+    updatedAt: string;
     readingMinutes: number;
     lead: string;
     takeaways: string[];
@@ -46,6 +54,7 @@ export const articles: Article[] = [
         metaTitle: 'LKPM Triwulan III 2026: Batas 15 Oktober',
         description: 'Periode pelaporan LKPM Juli–September 2026 berlangsung 1–15 Oktober. Cek siapa yang wajib lapor, data yang perlu disiapkan, dan langkah di OSS.',
         publishedAt: '2026-10-08',
+        updatedAt: '2026-10-08',
         readingMinutes: 4,
         lead: 'Tinggal beberapa hari menuju akhir periode LKPM Triwulan III 2026. Bagi pelaku usaha non-UMK yang wajib lapor triwulanan, laporan kegiatan Juli sampai September perlu disampaikan melalui OSS pada 1–15 Oktober 2026. Jangan menunggu hari terakhir untuk memeriksa proyek dan angka realisasi.',
         takeaways: [
@@ -100,6 +109,7 @@ export const articles: Article[] = [
         metaTitle: 'Wajib Halal 18 Oktober 2026: Produknya',
         description: 'BPJPH menegaskan tahap wajib halal 18 Oktober 2026 berjalan sesuai jadwal. Pahami kelompok produk yang disebut pemerintah dan langkah cek awal bagi pelaku usaha.',
         publishedAt: '2026-10-08',
+        updatedAt: '2026-10-08',
         readingMinutes: 5,
         lead: 'Tanggal 18 Oktober 2026 tinggal hitungan hari. BPJPH dan Kantor Staf Presiden kembali menegaskan jadwal pemberlakuan tahap wajib halal ini pada September 2026. Bagi usaha makanan, kosmetik, obat bahan alam, hingga barang gunaan tertentu, pertanyaan mendesaknya adalah: produk saya termasuk kategori yang harus disertifikasi pada tahap ini atau tidak?',
         takeaways: [
@@ -158,6 +168,7 @@ export const articles: Article[] = [
         metaTitle: 'KBLI 2025 Diubah September 2026: Kode KBLI',
         description: 'Peraturan BPS 6/2026 memperbarui judul dan deskripsi kode 27201, 27203, dan 68122. Lihat siapa yang perlu membaca perubahan ini dan apa yang tidak perlu disimpulkan.',
         publishedAt: '2026-10-08',
+        updatedAt: '2026-10-08',
         readingMinutes: 4,
         lead: 'Belum lama pelaku usaha menyesuaikan diri dengan KBLI 2025, BPS menerbitkan perubahan lagi. Peraturan BPS Nomor 6 Tahun 2026 berlaku sejak 10 September 2026 dan menyoroti tiga kode terkait industri baterai serta pengelolaan kawasan pariwisata. Ini pembaruan spesifik, bukan perintah bagi semua perusahaan untuk mengurus ulang izin.',
         takeaways: [
@@ -209,6 +220,7 @@ export const articles: Article[] = [
         metaTitle: 'Punya NIB: Apa yang Perlu Dicek Setelahnya',
         description: 'PP 28/2025 mengganti aturan perizinan berbasis risiko sebelumnya. Pahami mengapa NIB perlu dibaca bersama tingkat risiko, persyaratan dasar, dan izin penunjang.',
         publishedAt: '2026-10-08',
+        updatedAt: '2026-10-08',
         readingMinutes: 5,
         lead: 'Nomor Induk Berusaha (NIB) sering dianggap sebagai tanda bahwa semua urusan izin selesai. Padahal, dokumen yang dibutuhkan ditentukan oleh kegiatan dan tingkat risiko usaha. Sebelum membuka cabang, meluncurkan produk, atau menandatangani kontrak baru, ada baiknya memeriksa status perizinan secara utuh.',
         takeaways: [
@@ -266,6 +278,7 @@ export const articles: Article[] = [
         metaTitle: 'KBLI 2025 Berlaku: Izin Lama Harus Diurus?',
         description: 'Jawaban resmi BPS: izin lama tetap berlaku. Pelajari kapan penyesuaian dilakukan otomatis dan kapan perubahan kegiatan usaha perlu diperbarui di OSS dan AHU.',
         publishedAt: '2026-10-08',
+        updatedAt: '2026-10-08',
         readingMinutes: 5,
         lead: 'Kabar pembaruan KBLI sering memicu pertanyaan yang sama: apakah NIB dan izin lama menjadi tidak sah? BPS menegaskan bahwa penerapan KBLI 2025 tidak otomatis mewajibkan pelaku usaha mengurus izin baru. Yang penting adalah memahami apakah kegiatan usaha Anda berubah secara substansial.',
         takeaways: [
@@ -325,6 +338,7 @@ export const articles: Article[] = [
         metaTitle: 'Daftar Merek UMK 2026: Dokumen & Syarat',
         description: 'Permenkum 5/2026 memperbarui pendaftaran merek. Simak pilihan bukti status UMK, proses pemeriksaan, dan daftar persiapan sebelum mengajukan merek.',
         publishedAt: '2026-10-08',
+        updatedAt: '2026-10-08',
         readingMinutes: 5,
         lead: 'Pemilik usaha kecil sering menunda pendaftaran merek karena mengira harus memiliki satu jenis surat rekomendasi tertentu. Aturan pendaftaran merek yang berlaku sejak 23 Februari 2026 memberi pilihan dokumen yang lebih luas untuk membuktikan status UMK. Namun, kelengkapan administrasi tetap perlu diikuti pemeriksaan nama dan kelas merek yang cermat.',
         takeaways: [
@@ -382,6 +396,7 @@ export const articles: Article[] = [
         metaTitle: 'Biaya Daftar Merek 2026: Resmi & Jasa',
         description: 'Rincian biaya pendaftaran merek ke DJKI: mana yang masuk penerimaan negara dan mana yang jasa pendampingan. Plus biaya apa saja yang sering terlewat dari hitungan awal.',
         publishedAt: '2026-11-10',
+        updatedAt: '2026-11-10',
         readingMinutes: 6,
         lead: 'Pertanyaan pertama hampir setiap pemilik usaha sebelum mendaftar merek adalah berapa biayanya. Jawaban yang jujur harus memisahkan dua hal yang sering dicampur dalam satu angka: biaya yang dibayarkan ke negara, dan biaya jasa pendampingan. Tanpa pemisahan itu, calon pemohon sulit menilai apa yang sebenarnya dibeli.',
         takeaways: [
@@ -447,6 +462,7 @@ export const articles: Article[] = [
         metaTitle: 'Daftar Merek Sendiri vs Pakai Jasa',
         description: 'Perbandingan jujur antara mengurus merek sendiri lewat DJKI dan memakai jasa pendampingan, termasuk risiko yang sering baru terasa setelah permohonan diajukan.',
         publishedAt: '2026-11-10',
+        updatedAt: '2026-11-10',
         readingMinutes: 5,
         lead: 'Mendaftarkan merek sendiri memang dimungkinkan. DJKI menyediakan jalur permohonan yang terbuka bagi siapa saja, dan biayanya lebih murah karena tidak ada jasa yang dibayar. Pertanyaannya bukan mana yang lebih murah, melainkan pada titik mana pekerjaan itu berubah dari sekadar mengisi formulir menjadi pekerjaan yang menuntut penilaian.',
         takeaways: [
@@ -504,6 +520,7 @@ export const articles: Article[] = [
         metaTitle: 'Syarat Pendirian PT 2026: Akta sampai NIB',
         description: 'Urutan syarat pendirian PT dan dokumen yang menyertainya, dari akta pendirian dan SK Kemenkumham hingga NPWP badan hukum dan NIB di OSS.',
         publishedAt: '2026-11-10',
+        updatedAt: '2026-11-10',
         readingMinutes: 6,
         lead: 'Mendirikan PT adalah urutan, bukan daftar centang yang bisa dikerjakan dalam urutan bebas. Akta pendirian menjadi dasar SK Kemenkumham, SK menjadi dasar NPWP badan hukum, dan semuanya menjadi dasar NIB. Memahami urutan ini membuat prosesnya jauh lebih singkat daripada mengerjakan semuanya sekaligus lalu memperbaiki yang keliru.',
         takeaways: [
@@ -565,6 +582,7 @@ export const articles: Article[] = [
         metaTitle: 'Beda PT PMDN dan PT PMA: Modal & Sifat',
         description: 'Perbandingan PT PMDN dan PT PMA dari sisi kepemilikan, ketentuan modal, batasan bidang usaha, sampai kewajiban pelaporan yang menyertai masing-masing.',
         publishedAt: '2026-11-10',
+        updatedAt: '2026-11-10',
         readingMinutes: 5,
         lead: 'Banyak investor menanyakan perbedaan PT PMDN dan PT PMA seolah keduanya pilihan yang setara. Keduanya memang sama-sama perseroan terbatas, tetapi berada di bawah kerangka aturan yang berbeda. Perbedaan itu menentukan siapa yang boleh memiliki, berapa modal yang harus ditempatkan, dan apa yang wajib dilaporkan setelah perusahaan berjalan.',
         takeaways: [
@@ -625,6 +643,7 @@ export const articles: Article[] = [
         metaTitle: 'Berapa Lama Urus NIB? Faktor Penentunya',
         description: 'NIB sering disebut bisa terbit dalam hitungan hari, tetapi kenyataannya sangat bergantung pada kesiapan data. Ini faktor yang mempercepat dan memperlambatnya.',
         publishedAt: '2026-11-10',
+        updatedAt: '2026-11-10',
         readingMinutes: 5,
         lead: 'NIB menjadi dokumen pertama yang dicari setiap pelaku usaha yang baru berdiri. Pertanyaan yang paling sering muncul adalah berapa lama prosesnya. Jawaban yang berguna bukan satu angka, melainkan pemahaman tentang apa yang membuatnya cepat dan apa yang membuatnya berulang kali tertahan.',
         takeaways: [

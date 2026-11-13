@@ -22,12 +22,24 @@ export interface ServiceItem {
     features: string[];
     featuresEn: string[];
     featuresZh: string[];
+    /**
+     * Last date this entry's copy changed (YYYY-MM-DD). The sitemap uses it as
+     * the service page's lastModified, so it must be a real revision date, not
+     * a build date. Defaults are the last commit that touched this file; bump
+     * the value by hand when only an entry's copy changes.
+     */
+    updatedAt: string;
 }
+
+// Last commit (2026-11-09) that touched a service entry. Give an entry its own
+// date there once its copy is edited without the others.
+const SERVICE_DATA_UPDATED_AT = '2026-11-09';
 
 export const serviceData: ServiceItem[] = [
     // === Kekayaan Intelektual ===
     {
         slug: 'pendaftaran-merek',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Kekayaan Intelektual',
         categoryEn: 'Intellectual Property',
         categoryZh: '知识产权保护',
@@ -44,6 +56,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'perpanjangan-merek',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Kekayaan Intelektual',
         categoryEn: 'Intellectual Property',
         categoryZh: '知识产权保护',
@@ -60,6 +73,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'pengalihan-merek',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Kekayaan Intelektual',
         categoryEn: 'Intellectual Property',
         categoryZh: '知识产权保护',
@@ -76,6 +90,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'hak-cipta',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Kekayaan Intelektual',
         categoryEn: 'Intellectual Property',
         categoryZh: '知识产权保护',
@@ -92,6 +107,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'desain-industri',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Kekayaan Intelektual',
         categoryEn: 'Intellectual Property',
         categoryZh: '知识产权保护',
@@ -110,6 +126,7 @@ export const serviceData: ServiceItem[] = [
     // === Legalitas Perusahaan ===
     {
         slug: 'pt-pmdn',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Legalitas Perusahaan',
         categoryEn: 'Company Formation',
         categoryZh: '公司设立与合规',
@@ -138,6 +155,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'pt-pma',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Legalitas Perusahaan',
         categoryEn: 'Company Formation',
         categoryZh: '公司设立与合规',
@@ -154,6 +172,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'pt-perorangan',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Legalitas Perusahaan',
         categoryEn: 'Company Formation',
         categoryZh: '公司设立与合规',
@@ -170,6 +189,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'pendirian-cv',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Legalitas Perusahaan',
         categoryEn: 'Company Formation',
         categoryZh: '公司设立与合规',
@@ -188,6 +208,7 @@ export const serviceData: ServiceItem[] = [
     // === Visa & ITAS ===
     {
         slug: 'itas-investor-1-tahun',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Visa & ITAS',
         categoryEn: 'Visa & ITAS',
         categoryZh: '签证与居留许可',
@@ -204,6 +225,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'itas-investor-2-tahun',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Visa & ITAS',
         categoryEn: 'Visa & ITAS',
         categoryZh: '签证与居留许可',
@@ -220,6 +242,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'itas-family',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Visa & ITAS',
         categoryEn: 'Visa & ITAS',
         categoryZh: '签证与居留许可',
@@ -260,6 +283,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'visa-c2',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Visa & ITAS',
         categoryEn: 'Visa & ITAS',
         categoryZh: '签证与居留许可',
@@ -276,6 +300,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'visa-d2-1-tahun',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Visa & ITAS',
         categoryEn: 'Visa & ITAS',
         categoryZh: '签证与居留许可',
@@ -292,6 +317,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'visa-d2-2-tahun',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Visa & ITAS',
         categoryEn: 'Visa & ITAS',
         categoryZh: '签证与居留许可',
@@ -308,6 +334,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'kitas-kerja',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Visa & ITAS',
         categoryEn: 'Visa & ITAS',
         categoryZh: '签证与居留许可',
@@ -324,6 +351,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'sertifikasi-postel',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Perizinan & Sertifikasi Produk', categoryEn: 'Product Licensing & Certification', categoryZh: '产品许可与认证',
         title: 'Sertifikasi POSTEL', titleEn: 'POSTEL Certification', titleZh: 'POSTEL 认证',
         description: 'Pendampingan pengurusan sertifikasi POSTEL untuk perangkat telekomunikasi.',
@@ -341,6 +369,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'izin-bpom',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Perizinan & Sertifikasi Produk', categoryEn: 'Product Licensing & Certification', categoryZh: '产品许可与认证',
         title: 'Registrasi BPOM', titleEn: 'BPOM Product Registration', titleZh: 'BPOM 产品注册',
         description: 'Pendampingan pengurusan registrasi BPOM. Cakupan dan persyaratan dibahas sesuai produk.',
@@ -359,6 +388,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'pirt',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Perizinan & Sertifikasi Produk', categoryEn: 'Product Licensing & Certification', categoryZh: '产品许可与认证',
         title: 'PIRT (Pangan Industri Rumah Tangga)', titleEn: 'PIRT (Home Industry Food)', titleZh: 'PIRT（家庭食品工业许可）',
         description: 'Pendampingan pengurusan PIRT. Ketersediaan layanan bergantung pada kesesuaian produk dan kategori usaha.',
@@ -382,6 +412,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'sertifikasi-k3l',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Perizinan & Sertifikasi Produk', categoryEn: 'Product Licensing & Certification', categoryZh: '产品许可与认证',
         title: 'Sertifikasi K3L', titleEn: 'K3L Certification', titleZh: 'K3L 认证',
         description: 'Pendampingan pengurusan sertifikasi K3L untuk produk yang memerlukan pemenuhan ketentuan terkait.',
@@ -401,6 +432,7 @@ export const serviceData: ServiceItem[] = [
     // === Perizinan Sistem Elektronik (PSE) ===
     {
         slug: 'pse-lokal',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Perizinan Sistem Elektronik',
         categoryEn: 'Electronic System Licensing',
         categoryZh: '电子系统许可',
@@ -437,6 +469,7 @@ export const serviceData: ServiceItem[] = [
     },
     {
         slug: 'pse-asing',
+        updatedAt: SERVICE_DATA_UPDATED_AT,
         category: 'Perizinan Sistem Elektronik',
         categoryEn: 'Electronic System Licensing',
         categoryZh: '电子系统许可',
