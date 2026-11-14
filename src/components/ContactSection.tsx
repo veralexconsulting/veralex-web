@@ -133,47 +133,6 @@ export default function ContactSection() {
                         display: block;
                     }
 
-                    /* Click-to-load stand-in for the map. Same box as the
-                       iframe it replaces, so nothing shifts when it is
-                       swapped in. 44px min target, visible focus ring. */
-                    .contact-map-placeholder {
-                        position: absolute;
-                        inset: 0;
-                        width: 100%;
-                        height: 100%;
-                        min-height: 44px;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center;
-                        gap: 0.75rem;
-                        padding: 1.5rem;
-                        cursor: pointer;
-                        border: 0;
-                        background: linear-gradient(160deg, rgba(201, 162, 39, 0.10), rgba(255, 255, 255, 0.5));
-                        color: var(--text-primary, #1a1a1a);
-                        font-family: inherit;
-                        font-size: 1rem;
-                        font-weight: 600;
-                        text-align: center;
-                    }
-
-                    .contact-map-placeholder:hover,
-                    .contact-map-placeholder:focus-visible {
-                        background: linear-gradient(160deg, rgba(201, 162, 39, 0.18), rgba(255, 255, 255, 0.6));
-                    }
-
-                    .contact-map-placeholder:focus-visible {
-                        outline: 3px solid #c9a227;
-                        outline-offset: -3px;
-                    }
-
-                    .contact-map-placeholder svg {
-                        width: 40px;
-                        height: 40px;
-                        color: #c9a227;
-                    }
-
                     @media (max-width: 480px) {
                         .contact-map-side {
                             min-height: 320px;
@@ -240,12 +199,11 @@ export default function ContactSection() {
                         </a>
                     </div>
 
-                    {/* Right Column: Google Maps Embed (click-to-load) */}
+                    {/* Right Column: Google Maps Embed */}
                     <div className="contact-map-side">
                         <MapEmbed
                             src={MAP_EMBED_SRC}
                             title={`${t('contact.address')} — ${t('contact.address_value')}`}
-                            label={t('contact.show_map')}
                         />
                     </div>
                 </div>

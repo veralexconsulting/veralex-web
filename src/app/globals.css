@@ -922,7 +922,7 @@ button {
 }
 
 .hero-title-slide.is-rotating {
-    animation: heroTitleIn 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: heroTitleIn 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes heroTitleIn {

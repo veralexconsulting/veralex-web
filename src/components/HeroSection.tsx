@@ -6,7 +6,10 @@ import { useLang } from '@/lib/useLang';
 import { whatsappHref } from '@/lib/marketing';
 import { businessFacts } from '@/lib/businessFacts';
 
-const ROTATE_MS = 5200;
+/* Kept in step with the 420ms `.hero-title-slide.is-rotating` animation: the
+   headline is fully faded in well before the next swap, so the rotation reads
+   as a quick lift rather than a long crossfade. */
+const ROTATE_MS = 3200;
 
 /* A headline is split into its given claim and its promise on the second line. */
 const splitHeadline = (title: string) => {

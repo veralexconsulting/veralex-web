@@ -22,15 +22,21 @@ const groups = [
  * service page — visitors who clicked a service in the menu landed on the
  * front page. They are removed until a page exists for them, rather than
  * pointing at something that does not answer the click.
+ *
+ * `labelKey` is spelled out per service instead of being built from the slug.
+ * The two PSE registrations used to interpolate `services.product.pse-lokal`
+ * and `services.product.pse-asing`, keys that never existed — their real copy
+ * lives under `services.pse.lokal` / `services.pse.asing`. Because `t()` falls
+ * back to the key itself, the menu printed the raw key with a trailing arrow.
  */
-const products: { key: 'bpom' | 'pirt' | 'k3l' | 'postel' | 'pse-lokal' | 'pse-asing'; slug: string }[] = [
-    { key: 'bpom', slug: 'izin-bpom' },
-    { key: 'pirt', slug: 'pirt' },
-    { key: 'k3l', slug: 'sertifikasi-k3l' },
-    { key: 'postel', slug: 'sertifikasi-postel' },
-    { key: 'pse-lokal', slug: 'pse-lokal' },
-    { key: 'pse-asing', slug: 'pse-asing' },
-] as const;
+const products: { labelKey: string; slug: string }[] = [
+    { labelKey: 'services.product.bpom.title', slug: 'izin-bpom' },
+    { labelKey: 'services.product.pirt.title', slug: 'pirt' },
+    { labelKey: 'services.product.k3l.title', slug: 'sertifikasi-k3l' },
+    { labelKey: 'services.product.postel.title', slug: 'sertifikasi-postel' },
+    { labelKey: 'services.pse.lokal.title', slug: 'pse-lokal' },
+    { labelKey: 'services.pse.asing.title', slug: 'pse-asing' },
+];
 
 export default function Navbar() {
     const { t, lang } = useLang();
@@ -183,7 +189,7 @@ export default function Navbar() {
      */
     const searchIndex = [
         ...groups.flatMap(group => group.slugs.map(slug => ({ slug, label: serviceName(slug), group: t(`nav.group.${group.key}`) }))),
-        ...products.map(({ key, slug }) => ({ slug, label: t(`services.product.${key}.title`), group: t('nav.group.products') })),
+        ...products.map(({ labelKey, slug }) => ({ slug, label: t(labelKey), group: t('nav.group.products') })),
     ];
     const query = serviceQuery.trim().toLowerCase();
     const results = query ? searchIndex.filter(item => {
@@ -215,7 +221,7 @@ export default function Navbar() {
             {group.slugs.map(slug => <Link key={slug} href={serviceHref(slug)} onClick={close}>{serviceName(slug)}<span aria-hidden="true">↗</span></Link>)}
         </div>)}
         <div className="vnav-group"><h3>{t('nav.group.products')}</h3>
-            {products.map(({ key, slug }) => <Link key={key} href={serviceHref(slug)} onClick={close}>{t(`services.product.${key}.title`)}<span aria-hidden="true">↗</span></Link>)}
+            {products.map(({ labelKey, slug }) => <Link key={slug} href={serviceHref(slug)} onClick={close}>{t(labelKey)}<span aria-hidden="true">↗</span></Link>)}
         </div>
     </>;
     const aboutLinks = <>
