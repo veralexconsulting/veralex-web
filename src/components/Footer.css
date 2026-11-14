@@ -1,472 +1,497 @@
 /*
- * Footer.
+ * Footer — professional law-firm style.
  *
- * Four bands on the maroon ground the site already uses for primary actions:
+ * Two pieces:
+ *   1. .footer-cta-wrap  a rounded CTA card floating on the page background,
+ *      dropped half over the dark footer below it (negative bottom margin).
+ *   2. .site-footer      a near-black dark ground holding the link grid, the
+ *      coverage line, and the bottom bar — all inside the site container.
  *
- *   1. cta        closing question + WhatsApp / project tracking
- *   2. grid       identity | services | company | contact
- *   3. coverage   one quiet line under the grid
- *   4. base       copyright and the legal links
- *
- * Colours are the existing tokens (--color-primary, --color-primary-dark,
- * --color-primary-darker); nothing new is introduced for the ground or text.
+ * Tokens are scoped here (one place): the footer's own colours plus the gold
+ * accent, which this file uses sparingly for column headings and hover.
+ * Radii and shadows reuse the global tokens.
  */
+.footer-cta-wrap,
+.site-footer {
+    --footer-bg: #1c0a0c;
+    --footer-text: rgba(245, 238, 228, 0.72);
+    --footer-text-strong: #f5eee4;
+    --footer-line: rgba(255, 255, 255, 0.08);
+    --gold: #c8a15a;
+}
 
-.footer {
+/* ── 1. CTA card ── */
+.footer-cta-wrap {
     position: relative;
-    /* Below the floating navbar (10020) and the floating WhatsApp button
-       (9999) so those never sit behind footer text. */
-    z-index: 10;
-    isolation: isolate;
-    background: var(--color-primary);
-    color: #FBF7F2;
-    font-family: var(--font-body);
-    /*
-     * Clearance for the floating WhatsApp button, which is fixed to the
-     * viewport's bottom-right corner and would otherwise cover the legal links
-     * in the base strip. The button is 65px tall and sits 30px from the bottom
-     * (55px / 20px on phones), so the strip needs roughly one button-height of
-     * room below its last line of text — not the full 96px this used to
-     * reserve, which left a visible empty band under the copyright.
-     */
-    padding-bottom: 40px;
-    padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+    z-index: 2;
+    /* .container sets margin: 0 auto; the two-class selector is what beats
+       it: half of the card height sinks into the dark footer. */
+}
+.container.footer-cta-wrap {
+    margin-bottom: -56px;
 }
 
-.footer a {
-    color: inherit;
-    text-decoration: none;
-}
-
-/* ── Band 1: CTA ── */
-/*
- * The CTA band sits on top of the footer as a single rounded slab. It is the
- * one raised surface in the footer — the link columns below stay flat.
- */
-.footer-cta {
-    background: var(--color-primary-light);
-    border-radius: var(--radius-xl);
-    border-bottom: 1px solid rgba(200, 161, 90, 0.32);
-}
-
-.footer-cta-inner {
+.footer-cta-card {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px 32px;
-    padding-block: 24px;
+    gap: 24px 40px;
+    padding: 32px 40px;
+    border-radius: var(--radius-xl);
+    background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 60%, var(--color-primary-dark) 100%);
+    box-shadow: var(--shadow-lg);
+}
+
+.footer-cta-copy {
+    min-width: 0;
 }
 
 .footer-cta-title {
     margin: 0;
     font-family: var(--font-heading);
-    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    font-size: clamp(1.5rem, 2.2vw, 1.75rem);
     font-weight: 600;
-    line-height: 1.4;
+    line-height: 1.35;
     letter-spacing: -0.01em;
-    color: #FFFFFF;
+    color: var(--footer-text-strong);
     text-wrap: balance;
+}
+
+.footer-cta-subtitle {
+    margin: 6px 0 0;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgba(245, 238, 228, 0.8);
 }
 
 .footer-cta-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
+    flex: 0 0 auto;
 }
 
-/* Text sits on the lightened maroon band, not the darker base: white on
-   #6B1515 is ~9:1, and the gold outline reads as a button edge, not text. */
 .footer-cta-primary,
 .footer-cta-secondary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 44px;
-    padding: 10px 20px;
-    border-radius: var(--radius-pill);
+    height: 48px;
+    padding: 0 24px;
+    border-radius: var(--radius-md);
     font-family: var(--font-jakarta);
-    font-size: 0.88rem;
-    font-weight: 700;
-    line-height: 1.3;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1;
     text-align: center;
-    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+    transition: background-color 150ms ease, border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
 }
 
 .footer-cta-primary {
-    border: 1px solid #FFFFFF;
-    background: #FFFFFF;
+    border: 1px solid var(--footer-text-strong);
+    background: var(--footer-text-strong);
     color: var(--color-primary) !important;
+    box-shadow: var(--shadow-sm);
 }
 
 .footer-cta-primary:hover,
 .footer-cta-primary:focus-visible {
-    background: #F3EBE2;
-    border-color: #F3EBE2;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 .footer-cta-secondary {
-    border: 1px solid rgba(200, 161, 90, 0.7);
+    border: 1px solid rgba(245, 238, 228, 0.4);
     background: transparent;
-    color: #FFFFFF !important;
+    color: var(--footer-text-strong) !important;
 }
 
 .footer-cta-secondary:hover,
 .footer-cta-secondary:focus-visible {
-    border-color: #FFFFFF;
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(245, 238, 228, 0.1);
+    border-color: rgba(245, 238, 228, 0.7);
 }
 
-/* ── Band 2: main grid ── */
-.footer-main {
-    padding-block: 56px 0;
+/* ── 2. Dark footer ground ── */
+.footer-cta-wrap a,
+.site-footer a {
+    color: inherit;
+    text-decoration: none;
 }
 
-/*
- * Four columns on desktop: identity | services A | services B | company+contact.
- *
- * The services tracks are deliberately the widest because they carry the long
- * left-aligned link labels; the identity column only needs room for a 34ch
- * tagline, and the meta column holds short link text.
- */
+.site-footer {
+    position: relative;
+    /* Below the CTA card (2), the floating navbar and the floating WhatsApp
+       button, which never sit behind footer text. */
+    z-index: 1;
+    background: var(--footer-bg);
+    color: var(--footer-text);
+    /* 120px = the 56px the card overlaps + 64px of air below it. */
+    padding-top: 120px;
+    padding-bottom: 32px;
+}
+
+/* ── Grid ── */
 .footer-grid {
     display: grid;
-    grid-template-columns:
-        minmax(0, 1.05fr)
-        minmax(0, 1fr)
-        minmax(0, 0.95fr)
-        minmax(0, 1.05fr);
-    gap: 32px clamp(20px, 2.6vw, 40px);
+    grid-template-columns: 1.2fr 2.2fr 0.9fr 1.3fr;
+    column-gap: 48px;
+    row-gap: 40px;
     align-items: start;
 }
 
-.footer-col,
-.footer-brand {
+.footer-brand,
+.footer-services,
+.footer-company,
+.footer-contact,
+.footer-acc {
     min-width: 0;
 }
 
-/*
- * The two service columns are one <nav> so screen readers hear a single
- * "Layanan, per kategori" landmark rather than two identically named ones.
- * The nav spans two of the outer grid's tracks and hands them down with
- * subgrid, so its two lists sit in the same columns as the identity and meta
- * blocks instead of drifting out of alignment with them.
- */
-.footer-services {
-    display: grid;
-    grid-column: span 2;
-    grid-template-columns: subgrid;
-    gap: 32px clamp(20px, 2.6vw, 40px);
-    align-items: start;
-}
+/* Every column keeps its own links in one unbroken block — no CSS columns,
+   no wrapping across tracks, so a group heading can never drift away from
+   its list. */
 
-.footer-col-services {
-    min-width: 0;
-}
-
+/* Headings: small, gold, uppercase — the only gold besides hover. */
 .footer-heading {
     margin: 0 0 20px;
     font-family: var(--font-heading);
-    font-size: 0.78rem;
-    font-weight: 700;
+    font-size: 0.75rem;
+    font-weight: 600;
     line-height: 1.4;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #C8A15A;
+    color: var(--gold);
 }
 
-.footer-col ul {
+.footer-brand ul,
+.footer-services ul,
+.footer-company ul,
+.footer-contact-list,
+.footer-acc ul {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-/* ── Column 1: identity ── */
-.footer-logo {
+/* ── Column 1: brand ── */
+.footer-logo-box {
     display: block;
-    width: auto;
+    width: 72px;
     height: 72px;
-    margin-bottom: 20px;
+    padding: 6px;
+    border: 1px solid rgba(200, 161, 90, 0.25);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.footer-logo-img {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
 }
 
 .footer-name {
-    margin: 0 0 12px;
+    margin: 16px 0 0;
     font-family: var(--font-heading);
-    font-size: 1rem;
+    font-size: 1.125rem;
     font-weight: 600;
     line-height: 1.4;
-    color: #FFFFFF;
+    color: var(--footer-text-strong);
     overflow-wrap: anywhere;
 }
 
-.footer-tagline {
-    max-width: 34ch;
-    margin: 0 0 24px;
+.footer-desc {
+    max-width: 320px;
+    margin: 12px 0 0;
     font-size: 0.875rem;
     line-height: 1.7;
-    /* #E9DFD5 on #4A0E0E: ~10:1 — well past AA for body text. */
-    color: #E9DFD5;
+    color: var(--footer-text);
 }
 
 .footer-social {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 .footer-social-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
-    border: 1px solid rgba(200, 161, 90, 0.5);
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 50%;
-    color: #E9DFD5;
-    transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease;
+    color: var(--footer-text-strong);
+    transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease, transform 150ms ease;
 }
 
 .footer-social-btn:hover,
 .footer-social-btn:focus-visible {
-    color: var(--color-primary);
-    border-color: #C8A15A;
-    background: #C8A15A;
+    color: var(--footer-text-strong);
+    border-color: var(--gold);
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-2px);
 }
 
-/* ── Column 2: services ── */
-.footer-group + .footer-group {
-    margin-top: 20px;
+/* ── Column 2: services, 2x2 sub-grid ── */
+/* Named footer-services-grid: globals.css styles a .services-grid for the
+   homepage services section, and the two collided below 1024px. */
+.footer-services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
 }
 
 .footer-group-title {
-    margin: 0 0 8px;
-    font-family: var(--font-jakarta);
+    margin: 0 0 12px;
+    font-family: var(--font-heading);
     font-size: 0.8125rem;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.4;
-    color: #FFFFFF;
+    color: var(--footer-text-strong);
 }
 
-/* ── Shared link style (all columns, legal strip, contact rows) ── */
-.footer-link {
-    position: relative;
+.footer-all-link {
     display: inline-block;
-    padding-block: 2px;
+    margin-top: 24px;
+    color: var(--gold);
+}
+
+/* ── Shared link style ── */
+.footer-link {
+    display: inline-block;
+    padding-block: 6px;
     font-family: var(--font-body);
     font-size: 0.875rem;
-    line-height: 1.5;
-    color: #E9DFD5;
+    line-height: 1.4;
+    color: var(--footer-text);
     text-decoration: none;
     overflow-wrap: anywhere;
     transition: color 150ms ease;
 }
 
-/*
- * Focus-visible and hover both darken the text to white and draw an
- * underline; the underline is stated in the same colour as the text because on
- * this ground a gold line under white text is the "gold accent" the site uses
- * for dividers, not a second colour to read.
- */
-.footer-link::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 1px;
-    background: #C8A15A;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 150ms ease, background-color 150ms ease;
-}
-
 .footer-link:hover,
 .footer-link:focus-visible {
-    color: #FFFFFF;
+    color: var(--footer-text-strong);
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
 }
 
-.footer-link:hover::after,
-.footer-link:focus-visible::after {
-    transform: scaleX(1);
-}
-
-/* "All services" belongs to the service <nav>, not to either column, so it is
-   pinned under the second service column without affecting either list's
-   height. */
-.footer-link-all {
-    display: inline-block;
-    grid-column: 2;
-    margin-top: 20px;
-    font-weight: 700;
-    color: #FFFFFF;
-}
-
-/* ── Column 4: company + contact ── */
-/*
- * Both headings stack in one column. The company list is short, so the contact
- * block follows it with a little air rather than a divider — a hairline here
- * would compete with the coverage rule below the grid.
- */
-.footer-contact-block {
-    margin-top: 28px;
-}
-
-.footer-nap {
-    margin: 0 0 16px;
+/* ── Column 4: contact ── */
+.footer-contact {
     font-style: normal;
+}
+
+.footer-contact-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
 }
 
-.footer-nap-line {
+.footer-contact-row {
     display: flex;
     align-items: flex-start;
-    gap: 10px;
-}
-
-.footer-nap-line svg {
-    flex: 0 0 auto;
-    margin-top: 3px;
-    color: #C8A15A;
-}
-
-.footer-nap-address {
+    gap: 12px;
     font-size: 0.875rem;
     line-height: 1.6;
-    color: #E9DFD5;
+}
+
+.footer-contact-row svg {
+    flex: 0 0 auto;
+    margin-top: 3px;
+    color: var(--gold);
 }
 
 .footer-maps-link {
-    font-weight: 700;
-    color: #FFFFFF;
+    margin-top: 16px;
+    color: var(--gold);
 }
 
-/* ── Band 3: coverage ── */
-.footer-coverage {
+/* ── Coverage line ── */
+.footer-region {
     display: flex;
     align-items: baseline;
     flex-wrap: wrap;
     gap: 4px 16px;
-    margin-top: 40px;
-    padding-block: 16px;
-    border-top: 1px solid rgba(200, 161, 90, 0.28);
+    margin-top: 48px;
+    padding: 24px 0;
+    border-top: 1px solid var(--footer-line);
 }
 
-.footer-coverage-label {
-    font-family: var(--font-jakarta);
-    font-size: 0.72rem;
-    font-weight: 700;
+.footer-region-label {
+    font-family: var(--font-heading);
+    font-size: 0.6875rem;
+    font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #C8A15A;
+    color: var(--gold);
 }
 
-.footer-coverage p {
+.footer-region p {
     margin: 0;
     font-size: 0.8125rem;
     line-height: 1.6;
-    color: #E9DFD5;
+    color: var(--footer-text);
 }
 
-/* ── Band 4: base strip ── */
-.footer-base {
-    background: var(--color-primary-dark);
-    border-top: 1px solid rgba(200, 161, 90, 0.28);
-}
-
-.footer-base-row {
+/* ── Bottom bar ── */
+.footer-bottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px 32px;
-    padding-block: 16px;
+    gap: 12px 24px;
+    /* 96px on the right keeps the last link clear of the floating WhatsApp
+       button, which is fixed to the viewport's bottom-right corner. */
+    padding: 24px 96px 24px 0;
+    border-top: 1px solid var(--footer-line);
 }
 
 .footer-copyright {
     margin: 0;
     font-size: 0.8125rem;
     line-height: 1.6;
-    color: #E9DFD5;
+    color: var(--footer-text);
 }
 
 .footer-legal {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0 24px;
+    gap: 4px 24px;
 }
 
-.footer-legal .footer-link {
+.footer-legal .footer-link,
+.legal-cookie-trigger {
     font-size: 0.8125rem;
 }
 
 /* The cookie-settings control is a <button>; it must match the <a> links
    beside it exactly, so the browser defaults are cleared here. */
 .legal-cookie-trigger {
-    padding-block: 2px;
+    padding-block: 6px;
     border: 0;
     background: none;
     font-family: var(--font-body);
-    font-size: 0.8125rem;
-    line-height: 1.5;
+    line-height: 1.4;
     text-align: left;
+    color: var(--footer-text);
     cursor: pointer;
 }
 
-/* ── Focus ── */
-.footer :is(a, button):focus-visible {
-    outline: 2px solid #FFFFFF;
-    outline-offset: 3px;
-    border-radius: var(--radius-sm);
+/* ── Mobile accordions (<details>) ── */
+.footer-acc-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 52px;
+    border-bottom: 1px solid var(--footer-line);
+    cursor: pointer;
+    list-style: none;
 }
 
-/* ── Responsive ── */
+.footer-acc-summary::-webkit-details-marker {
+    display: none;
+}
+
+.footer-acc-summary .footer-heading {
+    margin: 0;
+}
+
+.footer-acc-chevron {
+    flex: 0 0 auto;
+    color: var(--gold);
+    transition: transform 150ms ease;
+}
+
+.footer-acc[open] .footer-acc-chevron {
+    transform: rotate(180deg);
+}
+
+.footer-acc-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-block: 20px 8px;
+}
+
+.footer-acc .footer-all-link {
+    margin-top: 8px;
+}
+
+.footer-acc-body > ul {
+    padding-block: 8px;
+}
+
+/* Variant visibility: plain columns from 768px up, accordions below. */
+@media (max-width: 767.98px) {
+    .footer-desktop-only {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) {
+    .footer-mobile-only {
+        display: none;
+    }
+}
+
+/* ── Focus ── */
+.footer-cta-wrap :is(a):focus-visible,
+.site-footer :is(a, button, summary):focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
+/* ── Tablet (768–1023px) ── */
 /*
- * Tablet: two columns. Identity and the services nav each take a track; the
- * services nav keeps its own two-column split inside that half, and the meta
- * column drops below.
+ * Two columns: brand beside contact, services across the full width below
+ * them (its 2x2 sub-grid intact), then the company list.
  */
-@media (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1023.98px) {
     .footer-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 40px 32px;
+        row-gap: 40px;
+    }
+
+    .footer-brand {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .footer-contact {
+        grid-column: 2;
+        grid-row: 1;
     }
 
     .footer-services {
-        grid-column: span 1;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0 24px;
+        grid-column: 1 / -1;
+        grid-row: 2;
     }
 
-    .footer-link-all {
+    .footer-company {
         grid-column: 1 / -1;
-        margin-top: 12px;
+        grid-row: 3;
     }
 }
 
-/*
- * Narrow tablet / large phone: the services nav keeps its two lists side by
- * side at full width, and the meta block drops to its own row.
- */
-@media (max-width: 760px) {
-    .footer-services {
-        grid-column: 1 / -1;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 640px) {
-    .footer {
-        padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+/* ── Mobile (<768px) ── */
+@media (max-width: 767.98px) {
+    .container.footer-cta-wrap {
+        margin-bottom: -40px;
     }
 
-    .footer-cta-inner {
+    .footer-cta-card {
         flex-direction: column;
         align-items: flex-start;
-        padding-block: 20px;
+        padding: 24px;
+        border-radius: 20px;
     }
 
     .footer-cta-actions {
@@ -478,87 +503,67 @@
         flex: 1 1 100%;
     }
 
-    .footer-main {
-        padding-top: 40px;
+    .site-footer {
+        padding-top: 80px;
+        /* Clearance for the floating WhatsApp button, fixed to the
+           viewport's bottom-right corner. */
+        padding-bottom: 96px;
+        padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px));
     }
 
     .footer-grid {
         grid-template-columns: minmax(0, 1fr);
-        gap: 32px;
+        row-gap: 0;
     }
 
-    /* One list per row on a phone: two side-by-side lists of 11 links each
-       would wrap every label. */
-    .footer-services {
-        grid-column: 1 / -1;
+    /* The brand column closes with its social icons; the accordions and the
+       contact block get their own vertical rhythm through the summary
+       heights and their own margins. */
+    .footer-brand {
+        padding-bottom: 8px;
+    }
+
+    .footer-services-grid {
         grid-template-columns: minmax(0, 1fr);
-        gap: 0;
     }
 
-    .footer-link-all {
-        grid-column: 1 / -1;
+    .footer-contact {
+        padding-top: 32px;
     }
 
-    .footer-contact-block {
-        margin-top: 24px;
+    .footer-region {
+        margin-top: 40px;
     }
 
-    .footer-logo {
-        height: 64px;
-        margin-bottom: 16px;
-    }
-
-    .footer-tagline {
-        max-width: none;
-    }
-
-    /* Rows, not inline links: 44px tap targets for every footer link. */
-    .footer-link,
-    .legal-cookie-trigger {
-        display: flex;
-        align-items: center;
-        min-height: 44px;
-        padding-block: 10px;
-    }
-
-    .footer-nap-line.footer-link {
-        padding-block: 10px;
-    }
-
-    .footer-maps-link {
-        min-height: 44px;
-        padding-block: 10px;
-    }
-
-    .footer-coverage {
-        margin-top: 32px;
-        padding-block: 16px;
-    }
-
-    .footer-base-row {
-        flex-direction: column;
+    .footer-bottom {
+        flex-direction: column-reverse;
         align-items: flex-start;
         gap: 4px;
+        padding-right: 0;
     }
 
     .footer-legal {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0;
-        width: 100%;
-    }
-
-    .footer-legal li {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 4px 20px;
         width: 100%;
     }
 }
 
+/* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
-    .footer-link,
-    .footer-link::after,
-    .footer-social-btn,
     .footer-cta-primary,
-    .footer-cta-secondary {
+    .footer-cta-secondary,
+    .footer-social-btn,
+    .footer-acc-chevron,
+    .footer-link {
         transition: none;
+    }
+
+    .footer-cta-primary:hover,
+    .footer-cta-primary:focus-visible,
+    .footer-social-btn:hover,
+    .footer-social-btn:focus-visible {
+        transform: none;
     }
 }
