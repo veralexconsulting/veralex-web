@@ -58,7 +58,7 @@ export default function GalleryPage() {
                                     src={`/gallery/${img}`}
                                     alt={`Bukti layanan VERALEX ${idx + 1}`}
                                     loading="lazy"
-                                    style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: 'var(--radius-lg)' }}
+                                    style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: 'var(--radius-lg-inset)', display: 'block' }}
                                 />
                             </div>
                         ))}
@@ -106,7 +106,7 @@ export default function GalleryPage() {
                     <img
                         src={`/gallery/${galleryImages[lightboxIdx]}`}
                         alt={`Bukti layanan ${lightboxIdx + 1}`}
-                        style={{ maxWidth: '90vw', maxHeight: '85vh', objectFit: 'contain', borderRadius: '12px' }}
+                        style={{ maxWidth: '90vw', maxHeight: '85vh', objectFit: 'contain', borderRadius: 'var(--radius-lg)' }}
                         onClick={(e) => e.stopPropagation()}
                     />
                     <button
@@ -124,7 +124,7 @@ export default function GalleryPage() {
                         style={{
                             position: 'absolute', top: 20, right: 20,
                             background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white', fontSize: '1.5rem',
-                            padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer',
+                            padding: '0.5rem 1rem', borderRadius: 'var(--radius-sm)', cursor: 'pointer',
                         }}
                     >
                         ✕

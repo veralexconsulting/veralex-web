@@ -56,7 +56,7 @@
     border: 1px solid rgba(74, 14, 14, 0.18);
     background: #fff;
     color: var(--maroon);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     padding: 8px 14px;
     font: inherit;
     font-size: 13px;
@@ -71,7 +71,9 @@
 .owner-custom label { display: flex; gap: 6px; align-items: center; font-size: 12px; color: var(--ink); }
 .owner-custom input {
     border: 1px solid rgba(74, 14, 14, 0.2);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
+    background: #fff;
+    box-shadow: var(--shadow-xs);
     padding: 8px 10px;
     font: inherit;
     font-size: 13px;
@@ -82,7 +84,7 @@
 
 .owner-button {
     border: 0;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     background: var(--maroon);
     color: #fff;
     font: inherit;
@@ -102,7 +104,7 @@
     justify-content: space-between;
     background: #fff;
     border-left: 4px solid var(--maroon);
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     padding: 12px 14px;
     font-size: 14px;
 }
@@ -110,7 +112,7 @@
     border: 1px solid var(--maroon);
     background: transparent;
     color: var(--maroon);
-    border-radius: 8px;
+    border-radius: var(--radius-md);
     padding: 7px 14px;
     font: inherit;
     font-weight: 600;
@@ -123,7 +125,8 @@
     background: #fff;
     border: 1px solid rgba(74, 14, 14, 0.08);
     border-top: 3px solid var(--gold);
-    border-radius: 14px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
     padding: 14px 16px;
     display: flex;
     flex-direction: column;
@@ -135,7 +138,7 @@
 .owner-card-tile small { font-size: 11px; color: rgba(30, 30, 30, 0.55); overflow-wrap: anywhere; }
 
 .owner-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
-.owner-panel { background: #fff; border: 1px solid rgba(74, 14, 14, 0.08); border-radius: 16px; padding: 16px; }
+.owner-panel { background: #fff; border: 1px solid rgba(74, 14, 14, 0.08); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: 16px; }
 .owner-panel > header { margin-bottom: 12px; }
 .owner-panel h2 { margin: 0; font-family: var(--font-heading); font-size: 1.1rem; color: var(--maroon); }
 .owner-panel header p { margin: 2px 0 0; font-size: 12px; color: rgba(30, 30, 30, 0.55); }
@@ -146,7 +149,12 @@
 .owner-chart-labels { flex-wrap: wrap; gap: 6px; justify-content: flex-start; }
 .owner-chart-labels span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-.owner-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.owner-table-wrap {
+    overflow: hidden auto;
+    border: 1px solid rgba(74, 14, 14, 0.08);
+    border-radius: var(--radius-lg);
+    -webkit-overflow-scrolling: touch;
+}
 .owner-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .owner-table th, .owner-table td { text-align: left; padding: 9px 10px; border-bottom: 1px solid rgba(74, 14, 14, 0.08); }
 .owner-table thead th { color: rgba(30, 30, 30, 0.55); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
@@ -161,7 +169,7 @@
 .owner-footnote { margin: 12px 0 0; font-size: 11px; color: rgba(30, 30, 30, 0.55); }
 .owner-stamp { padding: 16px; }
 
-.owner-skeleton { border-radius: 14px; background: linear-gradient(90deg, rgba(74, 14, 14, 0.06) 25%, rgba(200, 161, 90, 0.18) 50%, rgba(74, 14, 14, 0.06) 75%); background-size: 200% 100%; animation: owner-pulse 1.4s ease-in-out infinite; }
+.owner-skeleton { border-radius: var(--radius-lg); background: linear-gradient(90deg, rgba(74, 14, 14, 0.06) 25%, rgba(200, 161, 90, 0.18) 50%, rgba(74, 14, 14, 0.06) 75%); background-size: 200% 100%; animation: owner-pulse 1.4s ease-in-out infinite; }
 .owner-skeleton-tile { height: 96px; }
 .owner-skeleton-chart { height: 244px; }
 @keyframes owner-pulse { from { background-position: 200% 0; } to { background-position: -200% 0; } }
@@ -181,12 +189,12 @@
     max-width: 420px;
     background: #fff;
     border: 1px solid rgba(74, 14, 14, 0.1);
-    border-radius: 18px;
+    border-radius: var(--radius-xl);
     padding: 28px 24px;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    box-shadow: 0 24px 60px rgba(45, 8, 8, 0.08);
+    box-shadow: var(--shadow-lg);
 }
 .owner-logo { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; align-self: center; }
 .owner-title { margin: 0; font-family: var(--font-heading); font-size: clamp(1.4rem, 5vw, 1.8rem); color: var(--maroon); text-align: center; }
@@ -194,7 +202,8 @@
 .owner-field { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: var(--maroon); }
 .owner-field input {
     border: 1px solid rgba(74, 14, 14, 0.2);
-    border-radius: 10px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-xs);
     padding: 11px 12px;
     font: inherit;
     font-weight: 400;
@@ -224,7 +233,7 @@
     padding: 10px 8px;
     min-height: 40px;
 }
-.owner-error { margin: 0; background: rgba(74, 14, 14, 0.06); border-left: 3px solid var(--maroon); border-radius: 8px; padding: 10px 12px; font-size: 13px; color: var(--maroon); }
+.owner-error { margin: 0; background: rgba(74, 14, 14, 0.06); border-left: 3px solid var(--maroon); border-radius: var(--radius-sm); padding: 10px 12px; font-size: 13px; color: var(--maroon); }
 .owner-note { margin: 0; font-size: 11px; color: rgba(30, 30, 30, 0.5); text-align: center; }
 .owner-link { border: 0; background: transparent; color: var(--maroon); font: inherit; font-size: 13px; font-weight: 600; text-decoration: underline; cursor: pointer; padding: 8px; min-height: 40px; }
 .owner-checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); font-size: 12px; color: rgba(30, 30, 30, 0.45); }
