@@ -17,7 +17,25 @@ const galleryImages = [
     'IMG-20260121-WA0018.jpg', 'IMG-20260121-WA0019.jpg', 'IMG-20260121-WA0020.jpg',
     'IMG-20260121-WA0023.jpg', 'IMG-20260121-WA0024.jpg', 'IMG-20260121-WA0025.jpg',
     'IMG-20260121-WA0026.jpg', 'IMG-20260121-WA0027.jpg',
+    // Ditambahkan 2026-11-15: sesi penandatanganan dokumen klien.
+    'IMG-20261110-WA0055.jpg', 'IMG-20261110-WA0056.jpg', 'IMG-20261110-WA0057.jpg',
+    'IMG-20261110-WA0058.jpg', 'IMG-20261110-WA0059.jpg', 'IMG-20261110-WA0060.jpg',
 ];
+
+/*
+ * Alt text per image. The grid used to render "Bukti layanan VERALEX 1..30",
+ * which told Google nothing and told a screen-reader user nothing either — 30
+ * identical descriptions. These describe what is actually in the frame; keep
+ * them accurate when photos are added or replaced.
+ */
+const galleryAlt: Record<string, string> = {
+    'IMG-20261110-WA0055.jpg': 'Penandatanganan dokumen legalitas oleh klien VERALEX',
+    'IMG-20261110-WA0056.jpg': 'Klien menandatangani berkas akta pendirian perusahaan',
+    'IMG-20261110-WA0057.jpg': 'Penandatanganan dokumen pendirian badan usaha di hadapan konsultan',
+    'IMG-20261110-WA0058.jpg': 'Klien menandatangani berkas perizinan usaha',
+    'IMG-20261110-WA0059.jpg': 'Proses tanda tangan dokumen legalitas perusahaan',
+    'IMG-20261110-WA0060.jpg': 'Penandatanganan dokumen legalitas oleh klien perempuan VERALEX',
+};
 
 export default function GalleryPage() {
     const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
@@ -56,7 +74,7 @@ export default function GalleryPage() {
                             >
                                 <img
                                     src={`/gallery/${img}`}
-                                    alt={`Bukti layanan VERALEX ${idx + 1}`}
+                                    alt={galleryAlt[img] ?? `Bukti layanan VERALEX ${idx + 1}`}
                                     loading="lazy"
                                     style={{ width: '100%', height: '280px', objectFit: 'cover', borderRadius: 'var(--radius-lg-inset)', display: 'block' }}
                                 />
@@ -105,7 +123,7 @@ export default function GalleryPage() {
                     </button>
                     <img
                         src={`/gallery/${galleryImages[lightboxIdx]}`}
-                        alt={`Bukti layanan ${lightboxIdx + 1}`}
+                        alt={galleryAlt[galleryImages[lightboxIdx]] ?? `Bukti layanan ${lightboxIdx + 1}`}
                         style={{ maxWidth: '90vw', maxHeight: '85vh', objectFit: 'contain', borderRadius: 'var(--radius-lg)' }}
                         onClick={(e) => e.stopPropagation()}
                     />
