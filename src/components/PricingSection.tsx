@@ -1,5 +1,6 @@
 'use client';
 
+import { useId, useState } from 'react';
 import { useLang } from '@/lib/useLang';
 import { whatsappHref } from '@/lib/marketing';
 import { packages as pricePackages, formatRupiah } from '@/data/pricing';
@@ -8,6 +9,7 @@ import './PricingSection.css';
 const CHECK = 'M4.5 12.5l4.5 4.5L19.5 6.5';
 const SPARK = 'M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1';
 const PLUS = 'M12 5v14M5 12h14';
+const CHEVRON = 'M6 9l6 6 6-6';
 
 const Icon = ({ d, size = 16, strokeWidth = 2 }: { d: string; size?: number; strokeWidth?: number }) => (
     <svg
@@ -37,8 +39,75 @@ const splitPrice = (price: string) => {
     return { head: millions, tail: rest };
 };
 
+/*
+ * Folds the inclusion list on phones only.
+ *
+ * It is a real `hidden` container rather than a CSS height trick: a collapsed
+ * region that is still in the tab order or in the accessibility tree is worse
+ * than no collapse at all. The state lives in React, so the transition is
+ * skipped (see the CSS) — an animated `hidden` cannot be done without a
+ * measuring library, and the scroll cost of animating here is not worth it.
+ * From 768px up the CSS shows the contents and hides the toggle, so desktop
+ * never loses information.
+ */
+function MobileFold({
+    count,
+    label,
+    openLabel,
+    children,
+}: {
+    count: number;
+    label: string;
+    openLabel: string;
+    children: React.ReactNode;
+}) {
+    const [open, setOpen] = useState(false);
+    const regionId = useId();
+
+    return (
+        <div className={`pricing-fold${open ? ' is-open' : ''}`}>
+            <button
+                type="button"
+                className="pricing-fold-toggle"
+                aria-expanded={open}
+                aria-controls={regionId}
+                onClick={() => setOpen((value) => !value)}
+            >
+                <span>{open ? openLabel : `${label} (${count})`}</span>
+                <svg
+                    width={16}
+                    height={16}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                    focusable="false"
+                >
+                    <path d={CHEVRON} />
+                </svg>
+            </button>
+            <div className="pricing-fold-region" id={regionId} hidden={!open}>
+                {children}
+            </div>
+        </div>
+    );
+}
+
 export default function PricingSection() {
     const { t } = useLang();
+    const baseId = useId();
+    /*
+     * Which package is open. The first render always starts on the featured
+     * package, which is also the one the desktop grid emphasises — so the
+     * mobile panel and the desktop grid agree on the recommended choice.
+     * It is only ever used below 768px (the tab bar and the panel are hidden
+     * above that, and the tabs are not focusable there), so a phone visitor
+     * opening the page on desktop width is never affected.
+     */
+    const [activeKey, setActiveKey] = useState<string>('investor');
 
     /*
      * Prices come from src/data/pricing.ts, never typed here. The package copy
@@ -107,14 +176,67 @@ export default function PricingSection() {
                     <p className="section-subtitle fade-in">{t('pricing.subtitle')}</p>
                 </header>
 
-                <div className="pricing-grid">
+                {/*
+                 * Mobile package switcher.
+                 *
+                 * Three full cards stacked on a phone meant ~2,100px of scroll
+                 * and three competing CTAs; the price the visitor actually
+                 * wanted to compare was always one screen away. On phones the
+                 * cards become one panel with a tab row (WAI-ARIA tabs: arrows
+                 * move, Home/End jump, only the selected tab is in the tab
+                 * order) so the three prices sit side by side and the body
+                 * below stays in one place while you compare.
+                 *
+                 * Hidden at >=768px, where the three-column grid takes over and
+                 * all three cards are visible at once.
+                 */}
+                <div className="pricing-switcher fade-in" role="tablist" aria-label={t('pricing.title')}>
+                    {packages.map((pkg) => {
+                        const selected = pkg.key === activeKey;
+                        return (
+                            <button
+                                key={pkg.key}
+                                type="button"
+                                role="tab"
+                                id={`${baseId}-tab-${pkg.key}`}
+                                aria-selected={selected}
+                                aria-controls={`${baseId}-panel`}
+                                tabIndex={selected ? 0 : -1}
+                                className={`pricing-tab${selected ? ' is-active' : ''}`}
+                                onClick={() => setActiveKey(pkg.key)}
+                                onKeyDown={(event) => {
+                                    const keys = packages.map((p) => p.key);
+                                    const index = keys.indexOf(pkg.key);
+                                    let next = -1;
+                                    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') next = (index + 1) % keys.length;
+                                    else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') next = (index - 1 + keys.length) % keys.length;
+                                    else if (event.key === 'Home') next = 0;
+                                    else if (event.key === 'End') next = keys.length - 1;
+                                    if (next < 0) return;
+                                    event.preventDefault();
+                                    setActiveKey(keys[next]);
+                                    document.getElementById(`${baseId}-tab-${keys[next]}`)?.focus();
+                                }}
+                            >
+                                <span className="pricing-tab-name">
+                                    {pkg.name}
+                                    {pkg.badge && <span className="pricing-tab-badge">{pkg.badge}</span>}
+                                </span>
+                                <span className="pricing-tab-price">{pkg.price}</span>
+                            </button>
+                        );
+                    })}
+                </div>
+
+                <div className="pricing-grid" id={`${baseId}-panel`} role="tabpanel">
                     {packages.map((pkg) => {
                         const { head, tail } = splitPrice(pkg.price);
 
                         return (
                             <article
                                 key={pkg.key}
-                                className={`pricing-card fade-in${pkg.featured ? ' featured' : ''}`}
+                                data-package={pkg.key}
+                                className={`pricing-card fade-in${pkg.featured ? ' featured' : ''}${pkg.key === activeKey ? ' is-active' : ''}`}
                             >
                                 {pkg.badge && (
                                     <span className="pricing-badge">
@@ -138,16 +260,30 @@ export default function PricingSection() {
 
                                 <div className="pricing-divider" aria-hidden="true" />
 
-                                <ul className="pricing-features">
-                                    {pkg.features.map((f) => (
-                                        <li className="pricing-feature" key={f}>
-                                            <span className="pricing-feature-mark" aria-hidden="true">
-                                                <Icon d={CHECK} size={12} strokeWidth={2.6} />
-                                            </span>
-                                            <span>{f}</span>
-                                        </li>
-                                    ))}
-                                </ul>
+                                {/*
+                                 * On phones the inclusion list folds behind a
+                                 * button so the price and the CTA fit in one
+                                 * thumb-reachable screen. `hidden` (not CSS
+                                 * display) keeps it out of the a11y tree while
+                                 * closed and is removed at >=768px where every
+                                 * card is expanded.
+                                 */}
+                                <MobileFold
+                                    count={pkg.features.length}
+                                    label={t('pricing.mobile.fold')}
+                                    openLabel={t('pricing.mobile.unfold')}
+                                >
+                                    <ul className="pricing-features">
+                                        {pkg.features.map((f) => (
+                                            <li className="pricing-feature" key={f}>
+                                                <span className="pricing-feature-mark" aria-hidden="true">
+                                                    <Icon d={CHECK} size={12} strokeWidth={2.6} />
+                                                </span>
+                                                <span>{f}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </MobileFold>
 
                                 <div className="pricing-card-foot">
                                     <a

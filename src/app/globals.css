@@ -175,6 +175,14 @@ html {
     scroll-margin-top: 110px;
 }
 
+/* Phones: the fixed bar is 60px, so 110px of offset left a 50px hole of dead
+   space above every jumped-to heading. Match the bar instead. */
+@media (max-width: 768px) {
+    :is(#services, #pricing, #contact, [id^="service-"], [id^="services-"]) {
+        scroll-margin-top: calc(72px + env(safe-area-inset-top, 0px));
+    }
+}
+
 /*
  * Phones: keep the depth cheap. The largest radius steps down one level and
  * the heaviest shadow steps down to md, so cards stay light to paint on a
@@ -251,6 +259,24 @@ button {
     margin: 0 auto 4rem;
     /* Increased margin for whitespace */
     font-weight: 300;
+}
+
+/* Phones: a 64px drop between a section's subtitle and its first block is
+   desktop whitespace, not phone whitespace — it reads as a gap where content
+   failed to load, especially where a category header follows. Scaled to the
+   mobile rhythm instead. */
+@media (max-width: 768px) {
+    .section-title {
+        margin-bottom: 0.6rem;
+    }
+
+    .section-subtitle {
+        max-width: 42ch;
+        margin-bottom: 1.75rem;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        text-wrap: pretty;
+    }
 }
 
 .category-title {
@@ -418,7 +444,16 @@ button {
     border-bottom: 1px solid rgba(74, 14, 14, 0.15);
 }
 
-.navbar .container {
+/*
+ * Legacy `.navbar .container` grid (1fr auto 1fr for a centred logo) is scoped
+ * with :not(.vnav). Navbar.tsx renders `<nav class="navbar vnav">` and a single
+ * `.container.vnav-bar` child; while the rule applied to it, that child was
+ * forced into three 1fr/auto/1fr tracks — brand, desktop links, actions were
+ * scattered across the three columns and the mobile header was pushed into a
+ * second row, which is the broken bar. The public bar is a flex row, so it
+ * opts out here.
+ */
+.navbar:not(.vnav) .container {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     align-items: center;
@@ -1038,6 +1073,43 @@ button {
     display: inline-block;
 }
 
+/* Above 768px the heading only wraps the toggle so the accordion markup works
+   everywhere, and it must not behave like a button: `pointer-events: none` on
+   the button lets a click fall through to the heading. (Declared here, not in a
+   min-width block, so it can be switched back on inside the phone block below,
+   which comes later in the file.) */
+.category-title-luxury .category-toggle {
+    cursor: inherit;
+    pointer-events: none;
+}
+/* The category toggle exists for the phone accordion only; above 768px the
+   heading is a plain heading and this button is not interactive (see the
+   mobile block below, which enables it). */
+.category-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0;
+    background: none;
+    border: 0;
+    font: inherit;
+    color: inherit;
+    letter-spacing: inherit;
+    text-align: left;
+    cursor: default;
+}
+
+.category-toggle-label {
+    flex: 1;
+    min-width: 0;
+}
+
+.category-toggle-count,
+.category-toggle-chevron {
+    display: none;
+}
+
 .services-list-luxury {
     display: flex;
     flex-direction: column;
@@ -1074,6 +1146,41 @@ button {
 
 .service-row-left {
     max-width: 70%;
+}
+
+/* Title + optional badge (e.g. the trademark discount), kept on one axis. */
+.service-row-head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.service-row-badge {
+    background: #4A0E0E;
+    color: #ffffff;
+    font-family: var(--font-jakarta), var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.service-row-was {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 0.8em;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-decoration: line-through;
+}
+
+.service-row-consult {
+    font-size: 0.85rem;
+    color: var(--text-muted);
 }
 
 .service-row-title {
@@ -1522,6 +1629,38 @@ button {
 .scale-in.visible {
     opacity: 1;
     transform: scale(1);
+}
+
+/*
+ * Respect the OS "reduce motion" setting by removing the offset, not just the
+ * duration. With transition-duration alone these elements still start at
+ * opacity 0 and depend on a class being added — if the observer never fires
+ * the copy is invisible. Cutting the transform and starting fully opaque
+ * makes the preference harmless.
+ */
+@media (prefers-reduced-motion: reduce) {
+    .fade-in,
+    .slide-in-left,
+    .slide-in-right,
+    .scale-in {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+/* On phones the reveal is a short lift, never a sideways slide: a horizontal
+   offset can widen the visual viewport and shift the whole column. */
+@media (max-width: 768px) {
+    .slide-in-left,
+    .slide-in-right {
+        transform: translateY(16px);
+    }
+
+    .slide-in-left.visible,
+    .slide-in-right.visible {
+        transform: translateY(0);
+    }
 }
 
 /* ===== Responsive ===== */
@@ -2241,14 +2380,16 @@ section {
     /* Buttons, team width and button sizing come from the canonical hero block. */
 
     /* Section headings no longer drop to 1.5rem. Above the fold the hero owns
-       the largest type; below it every section shares one scale. */
+       the largest type; below it every section shares one scale. Margins are
+       part of that scale: the desktop subtitle carries margin-bottom: 4rem,
+       which on a phone is an eighth of a screen of nothing between a heading
+       and the content it introduces (see the 768px block under .section-title). */
     .section-title {
         font-size: clamp(1.65rem, 6.4vw, 2.15rem);
     }
 
-
     .section-subtitle {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
     }
 
     .category-title {
@@ -5313,6 +5454,174 @@ span {
         font-size: clamp(1.65rem, 7vw, 2.1rem);
         white-space: normal;
         overflow-wrap: anywhere;
+    }
+
+    /*
+     * Services on a phone: five collapsible categories instead of 24 rows.
+     *
+     * Measured before: the section was 5,294px — 36% of the homepage — as an
+     * undivided list. Now a closed category is one 56px header, and only one
+     * category is open at a time. Rows are also tighter (they carry no
+     * description on impact — title, price, chevron), because four lines of
+     * body copy per row was what made scanning impossible.
+     */
+    .services {
+        padding-top: var(--stack-lg);
+    }
+
+    .services-category {
+        margin-bottom: 0;
+        border-bottom: 1px solid #E4DFD9;
+    }
+
+    .services-category:last-child {
+        border-bottom: 0;
+    }
+
+    .category-title-luxury {
+        display: block;
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: 0;
+        font-size: 1.06rem;
+        line-height: 1.3;
+    }
+
+    .category-title-luxury .category-toggle {
+        gap: 0.7rem;
+        min-height: 60px;
+        padding: 0.85rem 0;
+        cursor: pointer;
+        /* Switched back on for the accordion: the rule above (declared for
+           desktop, before this block) disables the button. */
+        pointer-events: auto;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .category-title-luxury .category-toggle:focus-visible {
+        outline: 2px solid var(--color-gold);
+        outline-offset: 2px;
+    }
+
+    .category-toggle-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        min-width: 24px;
+        height: 24px;
+        padding: 0 7px;
+        border-radius: var(--radius-pill);
+        background: rgba(74, 14, 14, 0.07);
+        color: var(--color-gold);
+        font-family: var(--font-jakarta), var(--font-body);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+    }
+
+    .category-toggle-chevron {
+        display: inline-flex;
+        flex-shrink: 0;
+        color: var(--text-muted);
+        transition: transform var(--transition-fast);
+    }
+
+    .services-category.is-open .category-toggle-chevron {
+        transform: rotate(180deg);
+        color: var(--color-gold);
+    }
+
+    /* Collapse is CSS-only below 768px, so desktop keeps every row visible
+       even if the state says otherwise. Two lists per category: the phone rows
+       (no descriptions) and the full desktop list. Only one is ever displayed,
+       so the 24 rows are never duplicated for a reader or a crawler. */
+    .services-category .services-list-luxury {
+        display: none;
+    }
+
+    .services-category.is-open .services-list-compact {
+        display: flex;
+        padding-bottom: 0.75rem;
+    }
+
+    .services-list-desktop,
+    .services-category.is-open .services-list-desktop {
+        display: none;
+    }
+
+    /* Compact rows: no per-row divider (the card border does that job now). */
+    .services-list-compact .service-row-luxury {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.75rem;
+        min-height: 62px;
+        margin-inline: 0;
+        padding: 0.7rem 0.85rem;
+        border-bottom: 0;
+        border-radius: var(--radius-md);
+    }
+
+    .services-list-compact .service-row-luxury + .service-row-luxury {
+        margin-top: 2px;
+    }
+
+    .services-list-compact .service-row-luxury:active {
+        background: var(--bg-card-hover);
+    }
+
+    .services-list-compact .service-row-left {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .services-list-compact .service-row-title {
+        margin-bottom: 0.15rem;
+        font-size: 0.97rem;
+        line-height: 1.3;
+        letter-spacing: 0;
+    }
+
+    /* The description is the reason a row was four lines tall. It stays on the
+       service page, which the row links to. */
+    .services-list-compact .service-row-desc {
+        display: none;
+    }
+
+    .services-list-compact .service-row-right {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.3rem;
+        width: auto;
+        flex-shrink: 0;
+        padding-top: 0;
+        border-top: 0;
+        text-align: right;
+    }
+
+    /* Price above the chevron rather than beside it, so long prices such as
+       "Biaya Jasa: Rp10.000.000" do not squeeze the title to two characters. */
+    .services-list-compact .service-row-price {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        font-size: 0.86rem;
+        line-height: 1.35;
+        max-width: 42vw;
+        overflow-wrap: anywhere;
+    }
+
+    .services-list-compact .service-row-price .price-start-from {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+    }
+
+    .services-list-compact .service-row-right > svg {
+        color: var(--text-muted);
+        opacity: 0.55;
+        flex-shrink: 0;
     }
 }
 

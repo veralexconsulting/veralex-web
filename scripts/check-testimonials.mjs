@@ -102,7 +102,7 @@ test('responsive card sizing and mobile peek are in the stylesheet', () => {
     assert.ok(/overflow-x: auto/.test(css) && /scroll-snap-type: x mandatory/.test(css), 'native swipe and snap');
     assert.ok(/-webkit-line-clamp: 4/.test(css) && /\.review-text\.is-open p/.test(css), 'clamped excerpt that can be expanded');
     assert.ok(/@media \(prefers-reduced-motion: reduce\) \{[\s\S]*?scroll-behavior: auto/.test(css), 'reduced motion respected');
-    assert.ok(/border-radius: 16px/.test(css) && /#FFFFFF/.test(css), 'white cards with rounded corners');
+    assert.ok(/border-radius: (16px|var\(--radius-lg\))/.test(css) && /#FFFFFF/.test(css), 'white cards with rounded corners');
 });
 
 test('the client logo marquee is a seamless, accessible, reduced-motion-aware loop', () => {

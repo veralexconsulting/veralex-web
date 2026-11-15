@@ -433,6 +433,31 @@
     .footer-desktop-only {
         display: none;
     }
+
+    /*
+     * Footer link rows: 32px tall (6px padding + 1.4 line) was under the 44px
+     * touch minimum, and these are the densest tap targets on the page — a
+     * missed tap on "Pendirian PT PMA" lands on "Pendirian CV" instead. The
+     * rows only live inside the mobile accordions (desktop uses columns), so
+     * this does not touch the desktop layout.
+     */
+    .footer-link {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+        padding-block: 8px;
+    }
+
+    .footer-all-link {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        margin-top: 4px;
+    }
+
+    .footer-acc-body > ul {
+        padding-block: 0;
+    }
 }
 
 @media (min-width: 768px) {

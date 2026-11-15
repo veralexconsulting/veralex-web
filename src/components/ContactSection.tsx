@@ -138,6 +138,84 @@ export default function ContactSection() {
                             min-height: 320px;
                         }
                     }
+
+                    /*
+                     * Phones: the four channel cards were 300px+ each with a
+                     * redundant subtitle line, so the section ran 1,277px and
+                     * the address (the reason people open this section on a
+                     * phone — to check or navigate) sat below four full screens
+                     * of cards. They become dense tappable rows: icon, label,
+                     * value, chevron. The subtitles stay for desktop.
+                     */
+                    @media (max-width: 767px) {
+                        .corporate-contact-container {
+                            gap: 1.25rem;
+                        }
+
+                        .contact-info-side {
+                            gap: 0.5rem;
+                        }
+
+                        .corporate-contact-item {
+                            align-items: center;
+                            gap: 0.85rem;
+                            padding: 0.85rem 0.9rem;
+                            border-radius: var(--radius-md);
+                            box-shadow: none;
+                        }
+
+                        .corporate-contact-item:active {
+                            background: var(--bg-card-hover);
+                        }
+
+                        .contact-item-icon {
+                            width: 38px;
+                            height: 38px;
+                        }
+
+                        .contact-item-icon svg {
+                            width: 18px;
+                            height: 18px;
+                        }
+
+                        .contact-item-content h5 {
+                            margin-bottom: 0.1rem;
+                            font-family: var(--font-jakarta), var(--font-body);
+                            font-size: 0.72rem;
+                            font-weight: 700;
+                            letter-spacing: 0.08em;
+                            text-transform: uppercase;
+                            color: var(--text-muted);
+                        }
+
+                        .contact-item-content p {
+                            font-size: 0.92rem;
+                            line-height: 1.45;
+                            color: var(--text-primary);
+                            font-weight: 500;
+                        }
+
+                        .contact-item-sub {
+                            display: none;
+                        }
+
+                        .contact-item-chevron {
+                            margin-left: auto;
+                            flex-shrink: 0;
+                            color: var(--text-muted);
+                            opacity: 0.6;
+                        }
+                    }
+
+                    .contact-item-chevron {
+                        display: none;
+                    }
+
+                    @media (max-width: 767px) {
+                        .contact-item-chevron {
+                            display: block;
+                        }
+                    }
                 `}</style>
 
                 <div className="corporate-contact-container fade-in">
@@ -153,8 +231,11 @@ export default function ContactSection() {
                             <div className="contact-item-content">
                                 <h5>Email</h5>
                                 <p>veralexconsulting@gmail.com</p>
-                                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>{t('contact.email_sub')}</p>
+                                <p className="contact-item-sub" style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>{t('contact.email_sub')}</p>
                             </div>
+                                <svg className="contact-item-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                    <path d="M9 5l7 7-7 7" />
+                                </svg>
                         </a>
 
                         {/* WhatsApp Card */}
@@ -167,8 +248,11 @@ export default function ContactSection() {
                             <div className="contact-item-content">
                                 <h5>WhatsApp</h5>
                                 <p>+62 812 1947 6385</p>
-                                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>{t('contact.wa_sub')}</p>
+                                <p className="contact-item-sub" style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>{t('contact.wa_sub')}</p>
                             </div>
+                                <svg className="contact-item-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                    <path d="M9 5l7 7-7 7" />
+                                </svg>
                         </a>
 
                         <a href="tel:+6281219476385" className="corporate-contact-item" data-cta-location="contact_phone">
@@ -181,6 +265,9 @@ export default function ContactSection() {
                                 <h5>{t('brand.call')}</h5>
                                 <p>+62 812 1947 6385</p>
                             </div>
+                                <svg className="contact-item-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                    <path d="M9 5l7 7-7 7" />
+                                </svg>
                         </a>
 
                         {/* Address Card */}
@@ -193,9 +280,12 @@ export default function ContactSection() {
                             </div>
                             <div className="contact-item-content">
                                 <h5>{t('contact.address')}</h5>
-                                <p style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>{t('contact.address_value')}</p>
-                                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>{t('contact.address_sub')}</p>
+                                <p className="contact-item-value" style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>{t('contact.address_value')}</p>
+                                <p className="contact-item-sub" style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>{t('contact.address_sub')}</p>
                             </div>
+                                <svg className="contact-item-chevron" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                    <path d="M9 5l7 7-7 7" />
+                                </svg>
                         </a>
                     </div>
 

@@ -395,8 +395,24 @@
     border-color: rgba(74, 14, 14, 0.45);
 }
 
-/* ── Responsive ── */
-@media (max-width: 900px) {
+/* ── Mobile package switcher ──
+ *
+ * Rendered always (so React never has to know the viewport) but only laid out
+ * below 768px. `display: none` also takes the buttons out of the tab order on
+ * desktop, which is what we want: there, all three cards are visible.
+ */
+.pricing-switcher {
+    display: none;
+}
+
+/* ── Responsive ──
+ *
+ * 768px is the single mobile breakpoint for this section, matching the tab
+ * switcher and the rest of the phone rules. It used to be 900px, which sent
+ * tablets in portrait (820px) the three stacked full cards — 1,900px of
+ * pricing for three prices that would have fitted side by side at 310px each.
+ */
+@media (max-width: 768px) {
     .pricing-card:not(.featured) .pricing-card-head::before {
         display: none;
     }
@@ -413,33 +429,335 @@
     }
 }
 
-@media (max-width: 640px) {
-
-    /* Stacked cards do not need the badge gutter. */
-    /* Cards stack, so each block needs its own edge. */
-    .pricing-card:not(.featured) .pricing-card-head {
-        padding-bottom: 1.2rem;
-        border-bottom: 1px solid rgba(26, 26, 26, 0.09);
+/*
+ * Phones: one package at a time.
+ *
+ * Measured before this change at 390px: the section was 2145px tall, the first
+ * card ended 690px below its top (price and CTA separated by a full screen),
+ * and three maroon CTAs competed inside one scroll. Now:
+ *
+ *   1. a three-up tab row shows every price side by side, so comparison needs
+ *      no scrolling;
+ *   2. only the selected package renders, at the same vertical position, so
+ *      switching does not move the page under the thumb;
+ *   3. the inclusion list folds behind a button — price and CTA fit in one
+ *      screen, the detail is one tap away;
+ *   4. the body is one continuous surface: a divider instead of a card border,
+ *      only the recommended package keeps its card and accent rule, so the
+ *      Gold "Best Value" mark is the only thing shouting.
+ */
+@media (max-width: 768px) {
+    .pricing {
+        /* The section still owns its top/bottom rhythm; only the sides change:
+           cards now run edge to edge inside the gutter. */
+        padding-block: clamp(2.5rem, 9vw, 3.5rem);
     }
 
+    .pricing-head {
+        margin-bottom: 1.5rem;
+    }
+
+    .pricing-head .section-title {
+        margin-bottom: 0.6rem;
+        font-size: clamp(1.65rem, 6.4vw, 2.15rem);
+    }
+
+    .pricing-head .section-subtitle {
+        max-width: 34ch;
+        font-size: 0.9rem;
+        line-height: 1.6;
+        text-wrap: pretty;
+    }
+
+    /* ── Tab row ── */
+    .pricing-switcher {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+        /* iOS Safari paints a grey flash on tap targets without this. */
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .pricing-tab {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 3px;
+        min-height: 62px;
+        /* 4px, not 6px: at 320px the tab is ~97px wide and the padding was
+           what pushed "Rp13.000.000" onto two lines. */
+        padding: 9px 4px 10px;
+        text-align: center;
+        background: transparent;
+        border: 1px solid #E4DFD9;
+        border-radius: 0;
+        cursor: pointer;
+        font: inherit;
+        color: var(--text-secondary);
+        transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+    }
+
+    .pricing-tab.is-active {
+        background: var(--color-gold);
+        border-color: var(--color-gold);
+        color: #ffffff;
+    }
+
+    .pricing-tab:focus-visible {
+        outline: 2px solid var(--color-gold);
+        outline-offset: 2px;
+    }
+
+    .pricing-tab-name {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        font-family: var(--font-jakarta), var(--font-body);
+        font-size: 0.7rem;
+        font-weight: 650;
+        line-height: 1.25;
+        letter-spacing: 0.01em;
+    }
+
+    /* One badge in a 110px-wide tab would wrap the name onto three lines. The
+       mark it carries is repeated, larger, on the panel below. */
+    .pricing-tab-badge {
+        display: none;
+    }
+
+    .pricing-tab-price {
+        font-family: var(--font-heading);
+        /* Sized from the viewport so "Rp13.000.000" always fits one line in a
+           third of the screen: ~0.98rem at 390px, ~0.8rem at 320px. Never
+           wraps — a price broken across two lines reads as two numbers. */
+        font-size: clamp(0.78rem, 3.9vw, 0.98rem);
+        font-weight: 600;
+        line-height: 1.15;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+    }
+
+    /* ── Shared card surface ── */
+    .pricing-grid {
+        max-width: none;
+        gap: 8px;
+        margin: 8px 0 clamp(1.5rem, 5vw, 2rem);
+    }
+
+    .pricing-grid > .pricing-card {
+        display: none;
+    }
+
+    /* Only the selected package is in the layout — and in the a11y tree. */
+    .pricing-grid > .pricing-card.is-active {
+        display: flex;
+        animation: pricing-panel-in 260ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .pricing-card,
+    .pricing-card:hover,
+    .pricing-card.featured,
+    .pricing-card.featured:hover {
+        transform: none;
+        padding: 1.15rem 1rem 1rem;
+        background: var(--bg-card);
+        border: 1px solid #E4DFD9;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
+    }
+
+    /* Keep a short accent rule only on the recommended package. */
+    .pricing-card.featured::before {
+        display: block;
+        background: var(--color-gold);
+    }
+
+    .pricing-badge {
+        margin-bottom: 0.7rem;
+        padding: 0.26rem 0.55rem;
+        font-size: 0.62rem;
+    }
+
+    /* ── Panel head: name left, price right ──
+       Same information, one row instead of three, so the CTA stays above the
+       fold on a 390x844 device. */
+    .pricing-card-head {
+        margin-bottom: 0;
+    }
+
+    .pricing-name {
+        margin-bottom: 0.2rem;
+        font-size: 1.02rem;
+    }
+
+    .pricing-summary {
+        font-size: 0.8rem;
+        line-height: 1.45;
+    }
+
+    .pricing-figure {
+        padding: 0.85rem 0 0.95rem;
+    }
+
+    .pricing-price-head {
+        font-size: 2.1rem;
+    }
+
+    .pricing-price-tail {
+        font-size: 0.95rem;
+    }
+
+    .pricing-price-currency {
+        font-size: 0.72rem;
+    }
+
+    /* The rule between head and figure did its job in the tall desktop card;
+       in the compact panel the whitespace separates them already. */
+    .pricing-card > .pricing-divider {
+        display: none;
+    }
+
+    /* Shown here rather than in the tab row (which has no room for it), and
+       kept on one line so it cannot add a row above the price. */
+    .pricing-badge {
+        white-space: nowrap;
+    }
+
+    /* ── Collapsible inclusions ── */
+    .pricing-fold {
+        margin: 0 0 0.9rem;
+    }
+
+    .pricing-fold-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        width: 100%;
+        min-height: 42px;
+        padding: 0.5rem 0.75rem;
+        background: #F8F7F5;
+        border: 1px solid transparent;
+        border-radius: var(--radius-sm);
+        font-family: var(--font-jakarta), var(--font-body);
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--color-gold);
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .pricing-fold-toggle svg {
+        flex-shrink: 0;
+        transition: transform var(--transition-fast);
+    }
+
+    .pricing-fold.is-open .pricing-fold-toggle svg {
+        transform: rotate(180deg);
+    }
+
+    .pricing-fold-toggle:focus-visible {
+        outline: 2px solid var(--color-gold);
+        outline-offset: 2px;
+    }
+
+    .pricing-fold-region {
+        padding-top: 0.85rem;
+    }
+
+    .pricing-features {
+        margin: 0 0 0.25rem;
+    }
+
+    .pricing-feature {
+        gap: 0.55rem;
+        margin-bottom: 0.55rem;
+        font-size: 0.84rem;
+        line-height: 1.45;
+    }
+
+    .pricing-feature-mark {
+        width: 17px;
+        height: 17px;
+    }
+
+    /* ── CTA ── */
+    .pricing-cta {
+        min-height: 48px;
+        border-radius: var(--radius-sm);
+        font-size: 0.9rem;
+    }
+
+    .pricing-note {
+        margin-top: 0.55rem;
+        font-size: 0.7rem;
+    }
+
+    /* ── Custom offer, folded into one compact block ── */
     .pricing-custom {
-        align-items: flex-start;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+        padding: 1rem;
+        border-radius: var(--radius-lg);
+    }
+
+    .pricing-custom-title {
+        font-size: 0.95rem;
+        line-height: 1.35;
+    }
+
+    .pricing-custom-desc {
+        margin-top: 0.25rem;
+        font-size: 0.8rem;
+        line-height: 1.5;
     }
 
     .pricing-custom-cta {
         width: 100%;
+        min-height: 46px;
         justify-content: center;
+        border-radius: var(--radius-sm);
+    }
+}
+
+@keyframes pricing-panel-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@media (max-width: 380px) {
+    .pricing-tab-name {
+        font-size: 0.66rem;
+    }
+
+    .pricing-price-head {
+        font-size: 1.9rem;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .pricing-card,
     .pricing-cta,
-    .pricing-custom-cta {
+    .pricing-custom-cta,
+    .pricing-tab,
+    .pricing-fold-toggle svg {
         transition: none;
     }
 
     .pricing-card:hover {
         transform: none;
+    }
+
+    .pricing-grid > .pricing-card.is-active {
+        animation: none;
     }
 }

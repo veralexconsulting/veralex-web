@@ -1,32 +1,15 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 import { useLang } from '@/lib/useLang';
 import { getServiceBySlug } from '@/lib/serviceData';
 
 const servicePrice = (slug: string) => getServiceBySlug(slug)!.price;
 const trademark = getServiceBySlug('pendaftaran-merek')!;
 
-/* SVG icon paths for service categories and tags */
 const ICONS = {
-    doc: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
-    refresh: 'M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15',
-    swap: 'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4',
-    shield: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z',
-    layout: 'M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm0 8a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zm12 0a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z',
-    globe: 'M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
-    building: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
-    bank: 'M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z',
-    world: 'M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9',
-    briefcase: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
-    user: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zm-4 7a7 7 0 00-7 7h14a7 7 0 00-7-7z',
-    sun: 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z',
-    check: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
-    flask: 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z',
-    bolt: 'M13 10V3L4 14h7v7l9-11h-7z',
     arrowRight: 'M9 5l7 7-7 7',
-    wifi: 'M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0',
-    info: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
 };
 
 const SvgIcon = ({ d, size = 24, strokeWidth = 1.5 }: { d: string; size?: number; strokeWidth?: number }) => (
@@ -35,54 +18,207 @@ const SvgIcon = ({ d, size = 24, strokeWidth = 1.5 }: { d: string; size?: number
     </svg>
 );
 
-const Price = ({
-    from,
-    amount,
-    originalAmount,
-    discountBadge,
-}: {
-    from: string;
-    amount: string;
-    originalAmount?: string;
-    discountBadge?: string;
-}) => (
-    <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '2px' }}>
-        {originalAmount && (
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
-                {discountBadge && (
-                    <span style={{
-                        background: '#4A0E0E',
-                        color: '#ffffff',
-                        fontSize: '0.65rem',
-                        fontWeight: 700,
-                        padding: '1px 6px',
-                        borderRadius: 'var(--radius-sm)',
-                        letterSpacing: '0.5px',
-                        textTransform: 'uppercase',
-                    }}>
-                        {discountBadge}
-                    </span>
-                )}
-                <span style={{
-                    textDecoration: 'line-through',
-                    color: 'var(--text-muted)',
-                    fontSize: '0.85rem',
-                    fontWeight: 400,
-                }}>
-                    {originalAmount}
-                </span>
+/* One definition per row, shared by the desktop list and the phone accordion. */
+type Row = {
+    key: string;
+    slug?: string;
+    href?: string;
+    title: string;
+    desc?: string;
+    note?: string;
+    price?: string;
+    priceLabel?: string;
+    originalPrice?: string;
+    badge?: string;
+};
+
+/*
+ * Row → element.
+ *
+ * `compact` is the phone accordion: the one-line row renders *without* the
+ * description (that is what made each of the 24 rows four lines tall). The
+ * description stays in the desktop markup, which keeps the words on the page
+ * for search engines and for the wide layout.
+ */
+function ServiceRow({ row, compact = false }: { row: Row; compact?: boolean }) {
+    const inner = (
+        <>
+            <div className="service-row-left">
+                <div className="service-row-head">
+                    <h4 className="service-row-title">{row.title}</h4>
+                    {row.badge && <span className="service-row-badge">{row.badge}</span>}
+                </div>
+                {row.desc && !compact && <p className="service-row-desc">{row.desc}</p>}
             </div>
-        )}
-        <span className="service-row-price" style={originalAmount ? { color: 'var(--color-gold)', fontWeight: 600 } : undefined}>
-            <span className="price-start-from">{from} </span>
-            {amount}
-        </span>
-    </div>
-);
+            <div className="service-row-right">
+                {row.price ? (
+                    <span className="service-row-price">
+                        {row.priceLabel && <span className="price-start-from">{row.priceLabel} </span>}
+                        {row.originalPrice && <s className="service-row-was">{row.originalPrice}</s>}
+                        {row.price}
+                    </span>
+                ) : (
+                    <span className="service-row-price service-row-consult">{row.note}</span>
+                )}
+                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
+            </div>
+        </>
+    );
+
+    if (!row.href) {
+        return <div className="service-row-luxury" id={row.slug ? `service-${row.slug}` : undefined} style={{ cursor: 'default' }}>{inner}</div>;
+    }
+    return (
+        <Link href={row.href} className="service-row-luxury" id={row.slug ? `service-${row.slug}` : undefined}>
+            {inner}
+        </Link>
+    );
+}
 
 export default function ServicesSection() {
     const { t, lang } = useLang();
     const priceFrom = t('price.startFrom');
+
+    /*
+     * Phones only: which category is expanded.
+     *
+     * Before this, the five categories were one continuous list of 24 rows
+     * (5,294px — 36% of the homepage on a 390px screen) with nothing to mark
+     * where one ended and the next began. The first category starts open so the
+     * section is never an empty wall of headings; opening another closes it, so
+     * the section cannot grow back to its old height.
+     *
+     * From 768px up the CSS ignores this state entirely — every category is
+     * open, and the toggle is not clickable.
+     */
+    const [openCategory, setOpenCategory] = useState<string | null>('ip');
+    const panelRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+    /*
+     * A breadcrumb on a service page links to /#services-itas and friends. With
+     * categories collapsed on a phone, that link would land on a closed header,
+     * so the matching category is opened first. The browser has already done
+     * its own jump by the time this effect runs, and opening a category changes
+     * the heights above the target — so the scroll is corrected once the new
+     * layout is painted, immediately (not smoothly: this is the landing, not a
+     * navigation the visitor initiated).
+     */
+    useEffect(() => {
+        const applyHash = () => {
+            const match = /^#services-(.+)$/.exec(window.location.hash);
+            if (!match) return false;
+            const el = document.getElementById(`services-${match[1]}`);
+            if (!el) return false;
+            setOpenCategory(match[1]);
+            window.requestAnimationFrame(() => {
+                window.requestAnimationFrame(() => {
+                    el.scrollIntoView({ block: 'start', behavior: 'auto' });
+                });
+            });
+            return true;
+        };
+        applyHash();
+        window.addEventListener('hashchange', applyHash);
+        return () => window.removeEventListener('hashchange', applyHash);
+    }, []);
+
+    /* Keeps the heading the visitor just tapped/closed on screen instead of
+     * dropping them into the content above it. */
+    const toggleCategory = (key: string, currentlyOpen: boolean) => {
+        setOpenCategory(currentlyOpen ? null : key);
+        if (currentlyOpen) {
+            const panel = panelRefs.current[key];
+            window.requestAnimationFrame(() => panel?.scrollIntoView({ block: 'start', behavior: 'smooth' }));
+        }
+    };
+
+    /* ── Category data ──
+       Prices live in serviceData; copy lives in translations. Nothing here is
+       typed money. */
+
+    const ipRows: Row[] = [
+        {
+            key: 'trademark',
+            slug: 'pendaftaran-merek',
+            href: '/services/pendaftaran-merek',
+            title: t('services.ip.trademark.title'),
+            desc: t('services.ip.trademark.desc'),
+            price: trademark.price,
+            originalPrice: trademark.originalPrice ?? undefined,
+            badge: trademark.discountBadge ?? undefined,
+        },
+        { key: 'renewal', slug: 'perpanjangan-merek', href: '/services/perpanjangan-merek', title: t('services.ip.renewal.title'), desc: t('services.ip.renewal.desc'), price: servicePrice('perpanjangan-merek') },
+        { key: 'transfer', slug: 'pengalihan-merek', href: '/services/pengalihan-merek', title: t('services.ip.transfer.title'), desc: t('services.ip.transfer.desc'), price: servicePrice('pengalihan-merek') },
+        { key: 'copyright', slug: 'hak-cipta', href: '/services/hak-cipta', title: t('services.ip.copyright.title'), desc: t('services.ip.copyright.desc'), price: servicePrice('hak-cipta') },
+        { key: 'design', slug: 'desain-industri', href: '/services/desain-industri', title: t('services.ip.design.title'), desc: t('services.ip.design.desc'), price: servicePrice('desain-industri') },
+    ];
+
+    const companyRows: Row[] = [
+        { key: 'pt', slug: 'pt-pmdn', href: '/services/pt-pmdn', title: t('services.company.pt.title'), desc: t('services.company.pt.desc'), price: servicePrice('pt-pmdn') },
+        { key: 'pma', slug: 'pt-pma', href: '/services/pt-pma', title: t('services.company.pma.title'), desc: t('services.company.pma.desc'), price: servicePrice('pt-pma') },
+        { key: 'perorangan', slug: 'pt-perorangan', href: '/services/pt-perorangan', title: t('services.company.perorangan.title'), desc: t('services.company.perorangan.desc'), price: servicePrice('pt-perorangan') },
+        { key: 'cv', slug: 'pendirian-cv', href: '/services/pendirian-cv', title: t('services.company.cv.title'), desc: t('services.company.cv.desc'), price: servicePrice('pendirian-cv') },
+    ];
+
+    const itasRows: Row[] = [
+        { key: 'investor1', title: t('services.itas.investor1.title'), desc: t('services.itas.investor1.desc'), href: '/services/itas-investor-1-tahun', price: servicePrice('itas-investor-1-tahun'), priceLabel: priceFrom },
+        { key: 'investor2', title: t('services.itas.investor2.title'), desc: t('services.itas.investor2.desc'), href: '/services/itas-investor-2-tahun', price: servicePrice('itas-investor-2-tahun'), priceLabel: priceFrom },
+        { key: 'family', title: t('services.itas.family.title'), desc: t('services.itas.family.desc'), href: '/services/itas-family', price: servicePrice('itas-family'), priceLabel: priceFrom },
+        { key: 'visac2', title: t('services.itas.visac2.title'), desc: t('services.itas.visac2.desc'), href: '/services/visa-c2', price: servicePrice('visa-c2'), priceLabel: priceFrom },
+        { key: 'visad21', title: t('services.itas.visad2.1.title'), desc: t('services.itas.visad2.1.desc'), href: '/services/visa-d2-1-tahun', price: servicePrice('visa-d2-1-tahun'), priceLabel: priceFrom },
+        { key: 'visad22', title: t('services.itas.visad2.2.title'), desc: t('services.itas.visad2.2.desc'), href: '/services/visa-d2-2-tahun', price: servicePrice('visa-d2-2-tahun'), priceLabel: priceFrom },
+        { key: 'kitas', title: t('services.itas.kitas.title'), desc: t('services.itas.kitas.desc'), href: '/services/kitas-kerja', price: servicePrice('kitas-kerja'), priceLabel: priceFrom },
+    ];
+
+    const productRows: Row[] = (['halal', 'sni', 'bpom', 'pirt', 'k3l', 'postel'] as const).map((key) => {
+        const slugMap: Record<string, string | undefined> = {
+            halal: undefined, sni: undefined, bpom: 'izin-bpom', pirt: 'pirt', k3l: 'sertifikasi-k3l', postel: 'sertifikasi-postel',
+        };
+        const slug = slugMap[key];
+        const itemService = slug ? getServiceBySlug(slug) : undefined;
+        const note = itemService?.priceNote?.[lang] || itemService?.priceNote?.en
+            || itemService?.promotionNote?.[lang];
+        return {
+            key,
+            slug,
+            href: slug ? `/services/${slug}` : undefined,
+            title: t(`services.product.${key}.title`),
+            desc: t(`services.product.${key}.desc`),
+            note: itemService ? note : undefined,
+            price: itemService
+                ? `${itemService.priceLabel === 'from' ? `${priceFrom} ` : `${t('price.serviceFee')}: `}${itemService.price}${itemService.priceUnit ? ` / ${itemService.priceUnit[lang]}` : ''}`
+                : t('price.consult'),
+        };
+    });
+
+    const pseRows: Row[] = (['lokal', 'asing'] as const).map((key) => {
+        const slug = key === 'lokal' ? 'pse-lokal' : 'pse-asing';
+        const itemService = getServiceBySlug(slug);
+        return {
+            key,
+            slug: `pse-${key}`,
+            href: `/services/${slug}`,
+            title: t(`services.pse.${key}.title`),
+            desc: t(`services.pse.${key}.desc`),
+            note: itemService?.priceNote?.[lang] || itemService?.priceNote?.en,
+            price: itemService?.price,
+            priceLabel: t('price.serviceFee') + ':',
+        };
+    });
+
+    /*
+     * `anchor` keeps the ids that are already linked from service-page
+     * breadcrumbs (src/lib/serviceBreadcrumbs.ts) and indexed by Google:
+     * #services-ip, #services-company, #services-itas, #services-products,
+     * #services-pse.
+     */
+    const categories = [
+        { key: 'ip', anchor: 'ip', title: t('services.ip.title'), rows: ipRows },
+        { key: 'company', anchor: 'company', title: t('services.company.title'), rows: companyRows },
+        { key: 'itas', anchor: 'itas', title: t('services.itas.title'), rows: itasRows },
+        { key: 'products', anchor: 'products', title: t('services.product.title'), rows: productRows },
+        { key: 'pse', anchor: 'pse', title: t('services.pse.title'), rows: pseRows },
+    ];
 
     return (
         <section className="services" id="services">
@@ -90,240 +226,48 @@ export default function ServicesSection() {
                 <h2 className="section-title fade-in">{t('services.title')}</h2>
                 <p className="section-subtitle fade-in">{t('services.subtitle')}</p>
 
-                {/* Kekayaan Intelektual */}
-                <div className="services-category fade-in" id="services-ip">
-                    <h3 className="category-title-luxury">{t('services.ip.title')}</h3>
-                    <div className="services-list-luxury">
+                {categories.map((cat) => {
+                    const open = openCategory === cat.key;
+                    return (
+                        <div
+                            key={cat.key}
+                            id={`services-${cat.anchor}`}
+                            className={`services-category fade-in${open ? ' is-open' : ''}`}
+                            ref={(node) => { panelRefs.current[cat.key] = node; }}
+                        >
+                            <h3 className="category-title-luxury">
+                                <button
+                                    type="button"
+                                    className="category-toggle"
+                                    aria-expanded={open}
+                                    aria-controls={`services-${cat.anchor}-list`}
+                                    onClick={() => toggleCategory(cat.key, open)}
+                                >
+                                    <span className="category-toggle-label">{cat.title}</span>
+                                    <span className="category-toggle-count" aria-hidden="true">{cat.rows.length}</span>
+                                    <span className="category-toggle-chevron" aria-hidden="true">
+                                        <SvgIcon d="M6 9l6 6 6-6" size={18} strokeWidth={2} />
+                                    </span>
+                                </button>
+                            </h3>
 
-                        <Link href="/services/pendaftaran-merek" className="service-row-luxury">
-                            <div className="service-row-left">
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap' }}>
-                                    <h4 className="service-row-title" style={{ margin: 0 }}>{t('services.ip.trademark.title')}</h4>
-                                    {trademark.discountBadge && (
-                                        <span style={{
-                                            background: '#4A0E0E',
-                                            color: '#ffffff',
-                                            fontSize: '0.68rem',
-                                            fontWeight: 700,
-                                            padding: '2px 8px',
-                                            borderRadius: 'var(--radius-pill)',
-                                            letterSpacing: '0.5px',
-                                            textTransform: 'uppercase',
-                                        }}>
-                                            {trademark.discountBadge}
-                                        </span>
-                                    )}
+                            {/* Desktop: every category, every row, with descriptions. */}
+                            <div className="services-list-luxury services-list-desktop" id={`services-${cat.anchor}-list`}>
+                                {cat.rows.map((row) => <ServiceRow key={row.key} row={row} />)}
+                            </div>
+
+                            {/* Phone: only the open category, as compact rows. The
+                                desktop list above is display:none here, so the
+                                rows are not duplicated for screen readers —
+                                exactly one of the two lists is rendered. */}
+                            {open && (
+                                <div className="services-list-luxury services-list-compact">
+                                    {cat.rows.map((row) => <ServiceRow key={row.key} row={row} compact />)}
                                 </div>
-                                <p className="service-row-desc">{t('services.ip.trademark.desc')}</p>
-                            </div>
-                            <div className="service-row-right">
-                                <Price from={priceFrom} amount={trademark.price} originalAmount={trademark.originalPrice} discountBadge={trademark.discountBadge} />
-                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
-                            </div>
-                        </Link>
-
-                        <Link href="/services/perpanjangan-merek" className="service-row-luxury">
-                            <div className="service-row-left">
-                                <h4 className="service-row-title">{t('services.ip.renewal.title')}</h4>
-                                <p className="service-row-desc">{t('services.ip.renewal.desc')}</p>
-                            </div>
-                            <div className="service-row-right">
-                                <Price from={priceFrom} amount={servicePrice('perpanjangan-merek')} />
-                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
-                            </div>
-                        </Link>
-
-                        <Link href="/services/pengalihan-merek" className="service-row-luxury">
-                            <div className="service-row-left">
-                                <h4 className="service-row-title">{t('services.ip.transfer.title')}</h4>
-                                <p className="service-row-desc">{t('services.ip.transfer.desc')}</p>
-                            </div>
-                            <div className="service-row-right">
-                                <Price from={priceFrom} amount={servicePrice('pengalihan-merek')} />
-                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
-                            </div>
-                        </Link>
-
-                        <Link href="/services/hak-cipta" className="service-row-luxury">
-                            <div className="service-row-left">
-                                <h4 className="service-row-title">{t('services.ip.copyright.title')}</h4>
-                                <p className="service-row-desc">{t('services.ip.copyright.desc')}</p>
-                            </div>
-                            <div className="service-row-right">
-                                <Price from={priceFrom} amount={servicePrice('hak-cipta')} />
-                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
-                            </div>
-                        </Link>
-
-                        <Link href="/services/desain-industri" className="service-row-luxury">
-                            <div className="service-row-left">
-                                <h4 className="service-row-title">{t('services.ip.design.title')}</h4>
-                                <p className="service-row-desc">{t('services.ip.design.desc')}</p>
-                            </div>
-                            <div className="service-row-right">
-                                <Price from={priceFrom} amount={servicePrice('desain-industri')} />
-                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
-                            </div>
-                        </Link>
-
-                    </div>
-                </div>
-
-                {/* Legalitas Perusahaan */}
-                <div className="services-category fade-in" id="services-company" style={{ marginTop: '80px' }}>
-                    <h3 className="category-title-luxury">{t('services.company.title')}</h3>
-                    <div className="services-list-luxury">
-
-                        <Link href="/services/pt-pmdn" className="service-row-luxury">
-                            <div className="service-row-left">
-                                <h4 className="service-row-title">{t('services.company.pt.title')}</h4>
-                                <p className="service-row-desc">{t('services.company.pt.desc')}</p>
-                            </div>
-                            <div className="service-row-right">
-                                <Price from={priceFrom} amount={servicePrice('pt-pmdn')} />
-                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
-                            </div>
-                        </Link>
-
-                        <Link href="/services/pt-pma" className="service-row-luxury">
-                            <div className="service-row-left">
-                                <h4 className="service-row-title">{t('services.company.pma.title')}</h4>
-                                <p className="service-row-desc">{t('services.company.pma.desc')}</p>
-                            </div>
-                            <div className="service-row-right">
-                                <Price from={priceFrom} amount={servicePrice('pt-pma')} />
-                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
-                            </div>
-                        </Link>
-
-                        <Link href="/services/pt-perorangan" className="service-row-luxury">
-                            <div className="service-row-left">
-                                <h4 className="service-row-title">{t('services.company.perorangan.title')}</h4>
-                                <p className="service-row-desc">{t('services.company.perorangan.desc')}</p>
-                            </div>
-                            <div className="service-row-right">
-                                <Price from={priceFrom} amount={servicePrice('pt-perorangan')} />
-                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
-                            </div>
-                        </Link>
-
-                        <Link href="/services/pendirian-cv" className="service-row-luxury">
-                            <div className="service-row-left">
-                                <h4 className="service-row-title">{t('services.company.cv.title')}</h4>
-                                <p className="service-row-desc">{t('services.company.cv.desc')}</p>
-                            </div>
-                            <div className="service-row-right">
-                                <Price from={priceFrom} amount={servicePrice('pendirian-cv')} />
-                                <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
-                            </div>
-                        </Link>
-
-                    </div>
-                </div>
-
-                {/* Visa & ITAS */}
-                <div className="services-category fade-in" id="services-itas" style={{ marginTop: '80px' }}>
-                    <h3 className="category-title-luxury">{t('services.itas.title')}</h3>
-                    <div className="services-list-luxury">
-                        {[
-                            { title: t('services.itas.investor1.title'), desc: t('services.itas.investor1.desc'), slug: 'itas-investor-1-tahun' },
-                            { title: t('services.itas.investor2.title'), desc: t('services.itas.investor2.desc'), slug: 'itas-investor-2-tahun' },
-                            { title: t('services.itas.family.title'), desc: t('services.itas.family.desc'), slug: 'itas-family' },
-                            { title: t('services.itas.visac2.title'), desc: t('services.itas.visac2.desc'), slug: 'visa-c2' },
-                            { title: t('services.itas.visad2.1.title'), desc: t('services.itas.visad2.1.desc'), slug: 'visa-d2-1-tahun' },
-                            { title: t('services.itas.visad2.2.title'), desc: t('services.itas.visad2.2.desc'), slug: 'visa-d2-2-tahun' },
-                            { title: t('services.itas.kitas.title'), desc: t('services.itas.kitas.desc'), slug: 'kitas-kerja' },
-                        ].map((item) => (
-                            <Link key={item.slug} href={`/services/${item.slug}`} className="service-row-luxury">
-                                <div className="service-row-left">
-                                    <h4 className="service-row-title">{item.title}</h4>
-                                    <p className="service-row-desc">{item.desc}</p>
-                                </div>
-                                <div className="service-row-right">
-                                    <span className="service-row-price"><span className="price-start-from">{priceFrom} </span>{servicePrice(item.slug)}</span>
-                                    <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Legalitas Produk */}
-                <div className="services-category fade-in" id="services-products" style={{ marginTop: '80px' }}>
-                    <h3 className="category-title-luxury">{t('services.product.title')}</h3>
-                    <div className="services-list-luxury">
-                        {[
-                            { key: 'halal', slug: undefined },
-                            { key: 'sni', slug: undefined },
-                            { key: 'bpom', slug: 'izin-bpom' },
-                            { key: 'pirt', slug: 'pirt' },
-                            { key: 'k3l', slug: 'sertifikasi-k3l' },
-                            { key: 'postel', slug: 'sertifikasi-postel' },
-                        ].map((item) => {
-                            const itemService = item.slug ? getServiceBySlug(item.slug) : undefined;
-                            const localizedNote = itemService?.priceNote?.[lang] || itemService?.priceNote?.en;
-                            const desc = t(`services.product.${item.key}.desc`);
-                            const content = (
-                                <>
-                                    <div className="service-row-left">
-                                        <h4 className="service-row-title">{t(`services.product.${item.key}.title`)}</h4>
-                                        <p className="service-row-desc">{desc}</p>
-                                        {localizedNote && <p className="service-row-desc" style={{ marginTop: '0.35rem', opacity: 0.8 }}>{localizedNote}</p>}
-                                        {itemService?.promotionNote && <p className="service-row-desc" style={{ marginTop: '0.3rem', opacity: 0.8 }}>{itemService.promotionNote[lang]}</p>}
-                                    </div>
-                                    <div className="service-row-right">
-                                        {itemService ? (
-                                            <span className="service-row-price">
-                                                <span className="price-start-from">
-                                                    {itemService.priceLabel === 'from' ? `${priceFrom} ` : `${t('price.serviceFee')}: `}
-                                                </span>
-                                                {itemService.price}{itemService.priceUnit ? ` / ${itemService.priceUnit[lang]}` : ''}
-                                            </span>
-                                        ) : (
-                                            <span className="service-row-price" style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-                                                {t('price.consult')}
-                                            </span>
-                                        )}
-                                        <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
-                                    </div>
-                                </>
-                            );
-                            return item.slug
-                                ? <Link key={item.key} id={`service-${item.key}`} href={`/services/${item.slug}`} className="service-row-luxury">{content}</Link>
-                                : <div key={item.key} id={`service-${item.key}`} className="service-row-luxury" style={{ cursor: 'default' }}>{content}</div>;
-                        })}
-                    </div>
-                </div>
-
-                {/* Perizinan Sistem Elektronik (PSE) */}
-                <div className="services-category fade-in" id="services-pse" style={{ marginTop: '80px' }}>
-                    <h3 className="category-title-luxury">{t('services.pse.title')}</h3>
-                    <div className="services-list-luxury">
-                        {[
-                            { key: 'lokal', slug: 'pse-lokal' },
-                            { key: 'asing', slug: 'pse-asing' },
-                        ].map((item) => {
-                            const itemService = getServiceBySlug(item.slug);
-                            const localizedNote = itemService?.priceNote?.[lang] || itemService?.priceNote?.en;
-                            return (
-                                <Link key={item.key} id={`service-pse-${item.key}`} href={`/services/${item.slug}`} className="service-row-luxury">
-                                    <div className="service-row-left">
-                                        <h4 className="service-row-title">{t(`services.pse.${item.key}.title`)}</h4>
-                                        <p className="service-row-desc">{t(`services.pse.${item.key}.desc`)}</p>
-                                        {localizedNote && <p className="service-row-desc" style={{ marginTop: '0.35rem', opacity: 0.8 }}>{localizedNote}</p>}
-                                    </div>
-                                    <div className="service-row-right">
-                                        <span className="service-row-price">
-                                            <span className="price-start-from">{t('price.serviceFee')}: </span>
-                                            {itemService?.price}
-                                        </span>
-                                        <SvgIcon d={ICONS.arrowRight} size={18} strokeWidth={2} />
-                                    </div>
-                                </Link>
-                            );
-                        })}
-                    </div>
-                </div>
+                            )}
+                        </div>
+                    );
+                })}
             </div>
         </section>
     );

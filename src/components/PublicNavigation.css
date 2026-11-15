@@ -182,6 +182,12 @@
     .vnav-toggle span { width: 20px; height: 2px; background: #4a0e0e; border-radius: 2px; }
 }
 @media (max-width: 600px) { .vnav-mobile-groups { grid-template-columns: 1fr; gap: 18px; } }
+/*
+ * No second background/shadow on `.vnav-bar` here. The bar's white wash and its
+ * single bottom hairline come from `.navbar.vnav`; adding a cream fill plus a
+ * drop shadow on the inner bar changed the navbar's shape. Layout lives in this
+ * file, the bar's surfaces stay where they were defined.
+ */
 /* The existing horizontal Why Legal reveal otherwise extends the 1024px page by 9px. */
 @media (min-width: 769px) and (max-width: 1080px) {
     .why-legal .slide-in-left, .why-legal .slide-in-right { transform: translateY(20px); }
