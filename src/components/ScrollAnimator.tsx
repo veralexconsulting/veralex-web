@@ -5,33 +5,42 @@ import { useEffect } from 'react';
 /*
  * Reveal-on-scroll.
  *
- * Two problems this version fixes, both of which showed up as "the page is
- * blank for a second, then everything pops in" on a phone:
+ * Three problems this version fixes, all of which could leave content
+ * invisible on a phone:
  *
  *   1. The observer was created once on mount and only ever watched elements
  *      that already existed. Content rendered after that — e.g. anything
  *      re-created when the language resolves from localStorage on the first
- *      client pass — stayed at `opacity: 0` forever. Sections such as
- *      "Mengapa Legalitas Penting?" were measurable (350px + 452px of layout)
- *      but completely invisible.
+ *      client pass — stayed at `opacity: 0` forever.
  *
  *   2. The per-card stagger wrote inline `opacity: 0` + `translateY(30px)`
  *      and cleared it with setTimeout. When the section was already on screen
  *      at load, or the observer fired before the nodes were measured, cards
  *      could keep that inline style for the whole visit.
  *
- * Now: elements are observed when they mount (MutationObserver), the reveal is
- * a class rather than inline styles, and a safety net un-hides anything still
+ *   3. Revealed elements are marked by adding the `visible` class directly to
+ *      the DOM, but React components don't include `visible` in their JSX
+ *      className. When a component re-renders (e.g. toggling an accordion),
+ *      React overwrites the class attribute and strips `visible`, snapping the
+ *      element back to `opacity: 0`. We remember revealed elements and re-apply
+ *      `visible` if React removes it.
+ *
+ * Elements are observed when they mount (MutationObserver), the reveal is a
+ * class rather than inline styles, and a safety net un-hides anything still
  * hidden after the page settles, so content can never be permanently invisible.
  * Everything degrades to "visible" when IntersectionObserver is unavailable or
  * motion is reduced.
  */
 export default function ScrollAnimator() {
     useEffect(() => {
+        const REVEAL = '.fade-in, .slide-in-left, .slide-in-right';
+        const revealed = new WeakSet<Element>();
+
         const revealNow = () => {
-            document
-                .querySelectorAll('.fade-in:not(.visible), .slide-in-left:not(.visible), .slide-in-right:not(.visible)')
-                .forEach((el) => el.classList.add('visible'));
+            document.querySelectorAll(REVEAL).forEach((el) => {
+                revealed.add(el);
+                el.classList.add('visible');
+            });
         };
 
         if (typeof IntersectionObserver === 'undefined') {
@@ -43,6 +52,7 @@ export default function ScrollAnimator() {
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
+                        revealed.add(entry.target);
                         entry.target.classList.add('visible');
                         observer.unobserve(entry.target);
                     }
@@ -51,9 +61,15 @@ export default function ScrollAnimator() {
             { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
         );
 
-        const REVEAL = '.fade-in, .slide-in-left, .slide-in-right';
         const register = (el: Element) => {
-            if (el.matches(REVEAL) && !el.classList.contains('visible')) observer.observe(el);
+            if (!el.matches(REVEAL)) return;
+            if (revealed.has(el) || el.classList.contains('visible')) {
+                // Preserve reveal across React re-renders that clobber className.
+                revealed.add(el);
+                el.classList.add('visible');
+                return;
+            }
+            observer.observe(el);
         };
         const observe = (root: ParentNode) => {
             if (root instanceof Element) register(root);
@@ -63,15 +79,27 @@ export default function ScrollAnimator() {
         observe(document);
 
         // Catch elements that appear later (language resolution, client-only
-        // sections, portals) instead of only the ones present at mount.
+        // sections, portals) and restore `visible` if React re-renders strip it.
         const mutations = new MutationObserver((records) => {
             records.forEach((record) => {
-                record.addedNodes.forEach((node) => {
-                    if (node instanceof Element) observe(node);
-                });
+                if (record.type === 'childList') {
+                    record.addedNodes.forEach((node) => {
+                        if (node instanceof Element) observe(node);
+                    });
+                } else if (record.type === 'attributes') {
+                    const el = record.target;
+                    if (el instanceof Element && revealed.has(el) && !el.classList.contains('visible')) {
+                        el.classList.add('visible');
+                    }
+                }
             });
         });
-        mutations.observe(document.body, { childList: true, subtree: true });
+        mutations.observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['class'],
+        });
 
         // Safety net: nothing on this page may stay invisible. If something
         // never intersected — a zero-height wrapper, a font swap that shifted

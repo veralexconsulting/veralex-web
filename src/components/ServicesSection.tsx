@@ -257,9 +257,10 @@ export default function ServicesSection() {
                             </div>
 
                             {/* Phone: only the open category, as compact rows. The
-                                desktop list above is display:none here, so the
-                                rows are not duplicated for screen readers —
-                                exactly one of the two lists is rendered. */}
+                                compact list is hidden by default (desktop) and shown
+                                by the mobile media query when the category is open,
+                                while the desktop list is hidden on phones — so exactly
+                                one of the two lists is visible at any viewport. */}
                             {open && (
                                 <div className="services-list-luxury services-list-compact">
                                     {cat.rows.map((row) => <ServiceRow key={row.key} row={row} compact />)}

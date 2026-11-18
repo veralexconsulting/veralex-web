@@ -1117,6 +1117,15 @@ button {
 }
 
 /*
+ * Phone accordion renders a compact list alongside the desktop list in the DOM.
+ * Only one must be visible at a time: the compact list is hidden by default
+ * (desktop) and revealed inside the mobile media query when its category is open.
+ */
+.services-list-compact {
+    display: none;
+}
+
+/*
  * Homepage service rows.
  *
  * These used to react by growing a maroon underline across the row and
